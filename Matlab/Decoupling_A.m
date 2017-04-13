@@ -19,11 +19,12 @@ function CL = Decoupling_A(TF,Constrains)
 % To Do : Add set point weight b
 
 % System Size
-sys_size = size(TF)
+sys_size = size(TF);
 % Check if size is 2x2
 if sys_size ~= [2 2]
     error('The size of the system is not 2x2! Unable to handle system')
 end
+
 % Check for constrains
 if size(Constrains) ~= [1 4]
     error('Give constrains with [k1 k2 MS1 MS2]')
@@ -107,6 +108,6 @@ for outputs = 1:sys_size(2)
 end
 b = 0;
 % Closing the loop for set point weight b = 0
-CL = feedback(TF*D*(K_i+b*K_p),eye(2));
+CL = (eye(2)+TF*D*(K_i+K_p)) \ TF*D*(K_i+b*K_p);
 end
 
