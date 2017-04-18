@@ -98,7 +98,7 @@ for outputs = 1:sys_size(2)
        a1 = 1+2*Damping*b 
        b1 = -1*sqrt(b^2/(T*K) )
        c1 = -1*abs(k(1,sys_size(2))) / abs(kc(1,sys_size(2)-outputs+1)*MProd)
-       if abs(kI) +c1 > 1e-5
+       if abs(a1*kI+b1*sqrt(kI)) + c1 > 1e-5
         kI = min([( -b1 + sqrt( b1^2 -4*a1*c1 ) ) / (2*a1) ,( -b1 - sqrt( b1^2 -4*a1*c1 ) ) / (2*a1)])
         kI = kI^2
         kP = (2*Damping*T*sqrt(kI*K/T)-1)/K
