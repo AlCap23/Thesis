@@ -5,9 +5,6 @@ function CL = Decoupling_A(TF,Constrains)
 %   by Aström, Johansson and Wang
 %   http://ieeexplore.ieee.org/abstract/document/946038/
 %
-
-%% Changelog
-%  2017/04/18 added corrected set point weight
 %% Inputs
 %  TF - a Transfer Function (MIMO) with 2 inputs and 2 outputs
 %  Contrains - an array with constrains for the development of the
@@ -41,7 +38,7 @@ MProd = prod(MS); % Sensitivy Product
 
 % Set omega and b
 omega = 200; % Crossover at 200 rad/s
-b = 0.2; % Set point weight
+b = 0; % Set point weight
 
 % Get the Decoupler D
 D = inv(dcgain(TF));
@@ -68,7 +65,7 @@ else
 end
 
 % Interaction from Q
-kc = [k12, k21]
+kc = [k12, k21];
 
 % Assume set point weighting and make controller
 K_p = tf('s'); % proportional gain
@@ -87,24 +84,17 @@ for outputs = 1:sys_size(2)
    % Set Point Weight b > 0:
    % Can be simplified by using the same formula for every check. Do
    % another check nested inside the first
-   if b > 0
+   if b > 0 && abs(k(1,sys_size(2))) / abs(kc(1,sys_size(2)-outputs+1)*MProd) / abs(kP*b*omega+1) > 1e-5
        % If the condition is not met, calculate kI and kP
        % Calculate the terms
        Damping = 1; % Assume High Damping
        T = Q(outputs,outputs).Denominator{1,1}(end-1); % Time Constant of Process
        K = Q(outputs,outputs).Numerator{1,1}(end); % Process Gain
-       % Calculate ki from quadratic equation for sqrt(ki) based on Pole
-       % Placement
-       a1 = 1+2*Damping*b 
-       b1 = -1*sqrt(b^2/(T*K) )
-       c1 = -1*abs(k(1,sys_size(2))) / abs(kc(1,sys_size(2)-outputs+1)*MProd)
-       if abs(kI) +c1 > 1e-5
-        kI = min([( -b1 + sqrt( b1^2 -4*a1*c1 ) ) / (2*a1) ,( -b1 - sqrt( b1^2 -4*a1*c1 ) ) / (2*a1)])
-        kI = kI^2
-        kP = (2*Damping*T*sqrt(kI*K/T)-1)/K
-       end
-       K_p(outputs,outputs) = pid(kP);
-       K_i(outputs,outputs) = pid(0,kI);
+       % Calculate ki from quadratic equation for sqrt(ki)
+       a1 = 1+2*Damping*b ; 
+       b1 = -1*sqrt(b^2/(T*K) );
+       c1 = -1*abs(k(1,sys_size(2))) / abs(kc(1,sys_size(2)-outputs+1)*MProd);
+       kI = Min(( -b1 + sqrt( b1^2  ),)
        
    % Check for setpoint weight is zero:
    elseif abs(kI) - abs(k(1,sys_size(2))) / abs(kc(1,sys_size(2)-outputs+1)*MProd) > 1e-5

@@ -1,0 +1,107 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{reflection}[2][Reflection]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{proposition}[2][Proposition]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+ 
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+%\renewcommand{\qedsymbol}{\filledbox}
+ 
+\title{Set Point Weighting for Decoupling}%replace X with the appropriate number
+\author{Julius Martensen\\ %replace with your name
+Written as a part of the Master Thesis} %if necessary, replace with your course title
+ 
+\maketitle
+
+The Transfer Function of the Closed Loop of a Plant with a Set Point Weighted Controller is given by:
+
+\begin{align*}
+y = \left[ I + G~(C_p+C_i)\right]^{-1} ~ G(b~C_p + C_i ) ~r 
+\end{align*}
+
+Where $G \in \mathbf{C}^{n \times n}$ is the transfer function of the plant, $C_i \in \mathbf{C}^{n \times n}$ the transfer function of the integral controller, $C_p \in \mathbf{C}^{n \times n}$ the transfer function of the proportional controller, $y \in \mathbf{R}^n$  the output of the plant, $r \in \mathbf{R}^{n \times n}$ and $b \in \mathbf{R}$ the set point weight which describes the influence of the set point on the closed loop. \\
+
+From above, it is clear that the denominator is not influenced by the weight. Hence we can assume a constant characteristic equation of the closed loop.\\
+
+Assuming a first order transfer function for the plant, we can extract the roots of the characteristic equation - see e.g. Aström, Haggalund, Advanced PID p.175 ff - to be:
+
+\begin{align*}
+\omega_0 &= ~ \sqrt{ \frac{k_i ~k}{T} }
+\end{align*}
+Where $\omega_0 \in \mathbf{R}^{+}$ are also called the critical frequency. $k_i \in \mathbf{R}^{+}$ is the integral gain and $k_p \in \mathbf{R}^{+}$ the proportional gain of the controller of the form:
+
+\begin{align*}
+C_i &= \frac{1}{T_i~s} ~= ~\frac{k_i}{k_p ~s} \\
+C_p &= k_p
+\end{align*}
+$T \in \mathbf{R}^{+} $ is the Time Constant of the Process Model with a gain $K \in \mathbf{R}^{+}$ given by:
+
+\begin{align*}
+G &= ~\frac{K}{T~s+1}
+\end{align*}
+
+The proportional gain $k_p$ can be calculated via:
+
+\begin{align*}
+k_p &= \frac{2~\zeta ~T ~\omega_0 -1}{K}
+\end{align*}
+
+$\zeta \in \left[ 0, 1 \right]$ is the damping of the function. \\
+
+Regarding the Paper by Aström et al. the interaction from input M to output N for a controller of the given form can be written as:
+
+\begin{align*}
+|I_N| \leq |k_{NM}||k_{p,M} ~b_M~\omega+k_{i,M}| |M_{s,N}~M_{s,M}|
+\end{align*}
+
+Where the interaction $I_N \in \mathbf{R}$ and the Maximum Sensitivity $M_S \in \mathbf{R}$ are given while the interaction indexes $k_{NM} \in \mathbf{R}$ from N to M is given by the Taylor series approximation of the Matrix Q. \\
+
+Assume $I_N, M_{s,N},M_{s,M}$ to be given we can rewrite the equation to be:
+
+\begin{align*}
+|k_p~b~\omega + k_i| \leq \underbrace{\frac{|I_N|}{|k_{NM}~M_{s,N}~M_{s_M} |} }_{ \alpha}
+\end{align*}
+
+
+Assuming furthermore the critical frequency to be an upper bound of the inequality and using the already established equations for $k_p$ and $\omega_0$:
+
+\begin{align*}
+|\alpha| &\leq | \frac{2~\zeta ~T ~\omega_0 -1}{K} ~b ~  \omega_0  + k_i| \\
+& \leq | \frac{2~\zeta ~T ~\sqrt{ \frac{k_i ~k}{T} } -1}{K} ~b ~  \sqrt{ \frac{k_i ~k}{T} } + k_i| \\
+& \leq |(1+2 ~\zeta ~b) ~k_i - \sqrt{\frac{b^2}{T~K}}\sqrt{k_i}|
+\end{align*}
+We can substitute $\sqrt{k_i} = x $ and rewrite:
+\begin{align*}
+|(1+2~\zeta~b)~x^2 - \sqrt{\frac{b^2}{T~K}} ~x | - |\alpha | \geq 0
+\end{align*}
+And solve the quadratic equation:
+\begin{align*}
+x_{1,2} = \frac{\sqrt{\frac{b^2}{T~K}} \pm \sqrt{\frac{b^2}{T~K} + 4 ~ (1+2~\zeta~b) ~\alpha}}{2 ~(1+2~\zeta~b)}
+\end{align*}
+ 
+\end{document}
