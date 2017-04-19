@@ -1,4 +1,4 @@
-function [ G_M ] = Relay_Identification( G )
+function [ G_M ] = Relay_Identification(G)
 %Relay_Identification Approximates a given system G by a FOTD Model
 %   Detailed explanation goes here
 
@@ -7,25 +7,49 @@ function [ G_M ] = Relay_Identification( G )
 t_start = 0; % Start Time in s
 t_end = 1000; % Stop Time in s
 dt = 0.1; % Time Step in s
-
-% Plant Parameter
-Num = G.Numerator{:,:};
-Den = G.Denominator{:,:};
-L = G.OutputDelay;
-
 % Tuning Parameters
 u0 = 20 ; % Constant Input on the Plant
 y0 = dcgain(G)*u0; % Set Point / Working Point
 h = 1; % Hysterisis for Relay
 d1 = 10; % Upper Limit of the Output
 d2 = 3; % Lower Limit of the Output
+L = G.OutputDelay % Time Delay
+TF = tf(G)
 
 %% Simulink
 
+% Load the system
 load_system('Relay_Auto_Tuning.slx');
-sim('Relay_Auto_Tuning.slx');
+% Set the needed Parameter
+% Model Parameter
+set_param('Relay_Auto_Tuning',...
+    'StartTime',num2str(t_start),...
+    'StopTime',num2str(t_end),...
+    'FixedStep',num2str(dt));
+% Constant Input
+set_param('Relay_Auto_Tuning/SteadyStateInput','Value',num2str(u0));
+% Constant Output
+set_param('Relay_Auto_Tuning/SteadyStateOutput','Value',num2str(y0));
+% Relay Settings
+set_param('Relay_Auto_Tuning/Relay',...
+    'OnSwitchValue',num2str(h),...
+    'OffSwitchValue',num2str(-h),...
+    'OnOutputValue',num2str(d1),...
+    'OffOutputValue',num2str(-d2));
+% Delay Settings
+set_param('Relay_Auto_Tuning/Transport Delay',...
+    'DelayTime',num2str(L),...
+    'InitialOutput',num2str(y0));
+% Plant Settings
+set_param('Relay_Auto_Tuning/Plant',...
+     'Numerator','TF.Numerator{:,:}',...
+     'Denominator','TF.Denominator{:,:}');
 
-plot(y)
+    
+%open_system('Relay_Auto_Tuning.slx','loadonly');
+sim('Relay_Auto_Tuning.slx');
+%plot(y)
+
 %% Get the Plant Parameter
 % Take sample from the middle of the Test
 time_limit = round(length(y.Time)/4) ; % Assume half the time is sufficient 

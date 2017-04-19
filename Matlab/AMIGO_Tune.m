@@ -22,7 +22,13 @@ function C = AMIGO_Tune(FOTD, TYPE)
 
 % Check System Order
 if order(FOTD) ~=1
-    error('System is of higher Order! First Order Time Delay Model is requiered!')
+    disp('System is of higher Order! First Order Time Delay Model is requiered!')
+    disp('Reduced Model is used')
+    FOTD = tf(reduce(FOTD,1));
+    % Normalize
+    FOTD = tf(FOTD.Numerator{:,:} / FOTD.Denominator{:,:}(end),...
+        FOTD.Denominator{:,:} / FOTD.Denominator{:,:}(end),...
+        'OutputDelay',FOTD.OutputDelay)
 end
 
 % Get System Parameter
@@ -30,10 +36,14 @@ K_P = FOTD.Numerator{:,:}(end);
 T = FOTD.Denominator{:,:}(end-1);
 L = FOTD.OutputDelay;
 
-% If the Output Delay is smaller than 0.2*T use 0.2*T instead
-if L < 0.2*T
-    L = 0.2*T;
+% If the Output Delay is smaller than 1e-2 use 1e-2 instead
+if L < 1e-2
+    L = 1e-2;
     disp('Output Delay is zero or small! Algorithm uses 0.2*T instead!')
+end
+
+if ~exist('TYPE','var')
+    TYPE = 'PI';
 end
 
 switch TYPE
