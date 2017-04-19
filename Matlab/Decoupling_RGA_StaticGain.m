@@ -1,4 +1,4 @@
-function CL = Decoupling_RGA_DC(TF,Constrains)
+function CL = Decoupling_RGA_StaticGain(TF,Constrains)
 
 % System Size
 sys_size = size(TF);

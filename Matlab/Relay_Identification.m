@@ -1,35 +1,31 @@
-%% Relay Auto Tuning Experiment
+function [ G_M ] = Relay_Identification( G )
+%Relay_Identification Approximates a given system G by a FOTD Model
+%   Detailed explanation goes here
 
-% Hygiene
-clear all
-close all
-clc
-
-%% Initialize Variables
-
+%% Initialize Variables for Experiment
 % Simulation
 t_start = 0; % Start Time in s
 t_end = 1000; % Stop Time in s
 dt = 0.1; % Time Step in s
 
 % Plant Parameter
-Num = [10]; % Numerator of the Transfer Function
-Den = [10,1]; % Denumerator of the Transfer Function
-L = 9; % Time Delay of the Transfer Function
+Num = G.Numerator{:,:};
+Den = G.Denominator{:,:};
+L = G.OutputDelay;
 
 % Tuning Parameters
-u0 = 2 ; % Constant Input on the Plant
-y0 = dcgain(tf(Num,Den))*u0; % Set Point / Working Point
-h = 0.1; % Hysterisis for Relay
-d1 = 5; % Upper Limit of the Output
-d2 = 2; % Lower Limit of the Output
+u0 = 20 ; % Constant Input on the Plant
+y0 = dcgain(G)*u0; % Set Point / Working Point
+h = 1; % Hysterisis for Relay
+d1 = 10; % Upper Limit of the Output
+d2 = 3; % Lower Limit of the Output
 
 %% Simulink
 
 load_system('Relay_Auto_Tuning.slx');
 sim('Relay_Auto_Tuning.slx');
 
-
+plot(y)
 %% Get the Plant Parameter
 % Take sample from the middle of the Test
 time_limit = round(length(y.Time)/4) ; % Assume half the time is sufficient 
@@ -58,7 +54,7 @@ I_y = sum(y_Data(ypeakloc(1):ypeakloc(2))-y0)*sample_rate;
 % Get the integral action of the input
 I_u = (upeaks(1)-u0)*t_on + (u_Min-u0)*t_off;
 % Static Gain
-K_P = I_y/I_u
+K_P = I_y/I_u;
 % Calculate the normalized time , Time Constant and Delay
 rho = max(t_on,t_off)/min(t_on,t_off); % Half Period as given in Eq. 10
 gamma = max(d1,d2) / min(d1,d2); % Asymetry level, Eq. 7
@@ -66,16 +62,12 @@ tau = (gamma-rho) / (gamma-1) / (0.35*rho + 0.65); %Normalized Time, Eq.9
 % Time Constant
 T_on = t_on / log( (h/abs(K_P)-d2+exp(tau/(1-tau))*(d1+d2)) / (d1-h/abs(K_P)) );
 T_off = t_off / log( (h/abs(K_P)-d1+exp(tau/(1-tau))*(d1+d2)) / (d2-h/abs(K_P)) );
-T = 1/2*(T_on+T_off)
-L = T* (tau/(1-tau))
+T = 1/2*(T_on+T_off);
+L = T* (tau/(1-tau));
 
-%% Postprocess Data
+%% Make FOTD Model
 
-figure()
-plot(u)
-hold on
-plot(y)
-grid on
-xlabel('Time [s]');
-ylabel('Input and Output');
-title('Relay Autotuning');
+G_M = tf(K_P,[T,1],'OutputDelay',L);
+
+end
+
