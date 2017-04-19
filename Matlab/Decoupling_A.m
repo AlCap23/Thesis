@@ -128,6 +128,8 @@ switch Method
         end
     case 'AMIGO'
         for outputs = 1:sys_size(2)
+            Q(outputs,outputs)
+            disp(outputs)
             % Get a AMIGO Rule tuned controller
             TunedControl = AMIGO_Tune(Q(outputs,outputs),'PI');
             % Get the parameter

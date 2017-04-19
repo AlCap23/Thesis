@@ -24,11 +24,7 @@ function C = AMIGO_Tune(FOTD, TYPE)
 if order(FOTD) ~=1
     disp('System is of higher Order! First Order Time Delay Model is requiered!')
     disp('Reduced Model is used')
-    FOTD = tf(reduce(FOTD,1));
-    % Normalize
-    FOTD = tf(FOTD.Numerator{:,:} / FOTD.Denominator{:,:}(end),...
-        FOTD.Denominator{:,:} / FOTD.Denominator{:,:}(end),...
-        'OutputDelay',FOTD.OutputDelay)
+    FOTD = Relay_Identification(FOTD);
 end
 
 % Get System Parameter

@@ -13,7 +13,7 @@ if ~exist('Constrains','var')
     Constrains = [sqrt(2), sqrt(2)];
 end
 
-MS = Constrains(1,3:4); % Maximum of the sensitivity
+MS = Constrains(1,1:2); % Maximum of the sensitivity
 PM = 2*asin(1/2./MS); % Phase Margin is at least 2 arcsin(1/2/Ms)
 MProd = prod(MS); % Sensitivy Product
 
@@ -25,12 +25,12 @@ switch TYPE
         CW = Inf; % Initialize Crossover Frequency at Infinity
         % Loop over every Transfer Function
         for outputs = 1:sys_size(2)
-            for inputs = 1:sys_size(2)
+            for inputs = 1:sys_size(1)
                 % Get the stability margin and with it the crossover
                 [Gm, Pm, Wgm, Wpm] = margin(TF(outputs,inputs));
                 if Wpm < CW
                     % Set crossover
-                    CW = Wpm;
+                    CW = Wpm
                 end
             end
         end

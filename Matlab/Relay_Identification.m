@@ -10,45 +10,21 @@ dt = 0.1; % Time Step in s
 % Tuning Parameters
 u0 = 20 ; % Constant Input on the Plant
 y0 = dcgain(G)*u0; % Set Point / Working Point
-h = 1; % Hysterisis for Relay
+h = 0.5; % Hysterisis for Relay
 d1 = 10; % Upper Limit of the Output
 d2 = 3; % Lower Limit of the Output
 L = G.OutputDelay % Time Delay
-TF = tf(G)
-
+[Num, Den] = tfdata(G,'v')
 %% Simulink
 
 % Load the system
 load_system('Relay_Auto_Tuning.slx');
-% Set the needed Parameter
-% Model Parameter
-set_param('Relay_Auto_Tuning',...
-    'StartTime',num2str(t_start),...
-    'StopTime',num2str(t_end),...
-    'FixedStep',num2str(dt));
-% Constant Input
-set_param('Relay_Auto_Tuning/SteadyStateInput','Value',num2str(u0));
-% Constant Output
-set_param('Relay_Auto_Tuning/SteadyStateOutput','Value',num2str(y0));
-% Relay Settings
-set_param('Relay_Auto_Tuning/Relay',...
-    'OnSwitchValue',num2str(h),...
-    'OffSwitchValue',num2str(-h),...
-    'OnOutputValue',num2str(d1),...
-    'OffOutputValue',num2str(-d2));
-% Delay Settings
-set_param('Relay_Auto_Tuning/Transport Delay',...
-    'DelayTime',num2str(L),...
-    'InitialOutput',num2str(y0));
-% Plant Settings
-set_param('Relay_Auto_Tuning/Plant',...
-     'Numerator','TF.Numerator{:,:}',...
-     'Denominator','TF.Denominator{:,:}');
-
     
-%open_system('Relay_Auto_Tuning.slx','loadonly');
-sim('Relay_Auto_Tuning.slx');
-%plot(y)
+% Simulate the system IN THE CURRENT WORKSPACE
+res =  sim('Relay_Auto_Tuning.slx','SrcWorkspace','current');
+y = res.y;
+u = res.u;
+
 
 %% Get the Plant Parameter
 % Take sample from the middle of the Test
@@ -84,13 +60,13 @@ rho = max(t_on,t_off)/min(t_on,t_off); % Half Period as given in Eq. 10
 gamma = max(d1,d2) / min(d1,d2); % Asymetry level, Eq. 7
 tau = (gamma-rho) / (gamma-1) / (0.35*rho + 0.65); %Normalized Time, Eq.9
 % Time Constant
-T_on = t_on / log( (h/abs(K_P)-d2+exp(tau/(1-tau))*(d1+d2)) / (d1-h/abs(K_P)) );
-T_off = t_off / log( (h/abs(K_P)-d1+exp(tau/(1-tau))*(d1+d2)) / (d2-h/abs(K_P)) );
+T_on = t_on / log( ((h/abs(K_P))-d2+exp(tau/(1-tau))*(d1+d2)) / (d1- (h/abs(K_P)) ) );
+T_off = t_off / log( ((h/abs(K_P))-d1+exp(tau/(1-tau))*(d1+d2)) / (d2- (h/abs(K_P)) ) );
 T = 1/2*(T_on+T_off);
 L = T* (tau/(1-tau));
 
 %% Make FOTD Model
-
+K_P,T,L
 G_M = tf(K_P,[T,1],'OutputDelay',L);
 
 end
