@@ -46,12 +46,14 @@ end
 
 % Get the maximum of each row
 sys_pair = zeros(sys_size(2),1);
+
 for output = 1:sys_size(2)
     [val, sys_pair(output,1)] = max(RGA(output,:));
 end
 
 % Make the PID for the pairing
 C = tf('s');
+
 for output = 1:sys_size(2)
     opts = pidtuneOptions('PhaseMargin',PM(1,output));
     C(output,sys_pair(output,1)) = pidtune(TF(output,sys_pair(output,1)),'PI',opts);

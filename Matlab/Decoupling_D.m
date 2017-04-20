@@ -3,27 +3,36 @@ function CL = Decoupling_D(TF,Constrains)
 % System Size
 sys_size = size(TF);
 
+% Constrains
+if ~exist('Constrains','var')
+    Constrains = [sqrt(2), sqrt(2)];
+end
+
 % Get the Phase Margins
-MS = Constrains(1,3:4); % Maximum of the sensitivity
+MS = Constrains(1,1:2); % Maximum of the sensitivity
 PM = 2*asin(1/2./MS); % Phase Margin is at least 2 arcsin(1/2/Ms)
 
-% Get the disturbance
-D = tf('s');
+% Subdivide the transferfunction in main Diagonal and minor diagonal
+G_M = tf('s');
+G_m = tf('s');
 
-% Get the static Gain
-G0 = dcgain(TF);
-
-for outputs = 1:sys_size(1)
-    clear CTF
-    for inputs = 1:sys_size(2)
-        if inputs == outputs
-            CTF = tf(0,1);
+for outputs = 1:sys_size(2)
+    for inputs = 1:sys_size(1)
+        if outputs == inputs
+            % Main Diagonal TF
+            G_M(outputs,inputs) = TF(outputs,inputs);
         else
-            CTF = TF(outputs,inputs);
+            % Minor Diagonal TF
+            G_m(outputs,inputs) = TF(outputs,inputs);
         end
-        D(outputs,inputs) = CTF / TF(inputs,inputs);
     end
 end
+
+% Get the disturbance Decoupling
+D = eye(sys_size)-inv(G_M)*G_m
+%D = dcgain(D)
+% Get a corrected system
+%Q = TF*D;
 
 % Make the PID for main diagonal
 C = tf('s');
@@ -36,6 +45,6 @@ for output = 1:sys_size(2)
 end
 
 % Make the closed loop
-CL = feedback(TF*(eye(sys_size)-D)*C,eye(sys_size));
+CL = feedback(TF*D*C,eye(sys_size));
 
 end

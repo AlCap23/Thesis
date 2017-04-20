@@ -57,11 +57,19 @@ Q = TF*D;
 % Get the small signal constants k12( influence of input 2 on output 1 )
 % and k21
 % Check if the Numerator is zero, would mean no coupling
-k12 = dcgain(Q(1,2));
-k21 = dcgain(Q(2,1));
+if ~isempty(Q(1,2).Numerator{:,:})
+    k12 = Q(1,2).Numerator{:,:}(end-1) / Q(1,2).Denominator{:,:}(end);
+else
+    k12 = 0;
+end
+if ~isempty(Q(2,1).Numerator{:,:})
+    k21 = Q(2,1).Numerator{:,:}(end-1) / Q(2,1).Denominator{:,:}(end);
+else
+    k21 = 0
+end
 
 % Interaction from Q
-kc = [k12, k21]
+kc = [k12, k21];
 
 % Assume set point weighting and make controller
 K_p = tf('s'); % proportional gain
