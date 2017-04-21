@@ -1,0 +1,12 @@
+Studyname	Samples		Order		TSum		k		L		d1		d2		mu			Time			dt
+				System Order	Time Constants	Plant Gain	Time Delay	Upper Output	Lower Output	Estimates Histerysis	Simulation Time		Time Step Simulation
+
+
+FOTD		500		1		200+-50		1		0.1...0.6*T	5		2		10			2000			.01
+To Benchmark the performance of the AMIGO Rules; Uniform Distribution
+
+PT9		200		9		200+-50		1		0.1...0.6*T	5		2		10			2000			.01
+To Benchmark the performance of the AMIGO Rules on higher Systems
+
+ASYM		500		3		250		1		0.6*T		10		1...9		10			4000			.01
+To Benchmark the influence of the asymmetry of the relay; Uniform Distribution		

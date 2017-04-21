@@ -1,5 +1,4 @@
-
-function [ G_M ] = Relay_Identification(G)
+function [ G_M, gamma] = Relay_Identification(G)
 %Approximates a given system G by a First Order Time Delay (FOTD) Model.
 %The Process is described in "Asymmetric relay autotuning - Practical
 %features for industrial use" by Berner, Hägglund, Aström, DOI http://dx.doi.org/10.1016/j.conengprac.2016.05.017
@@ -10,15 +9,15 @@ function [ G_M ] = Relay_Identification(G)
 %% Initialize Variables for Experiment
 % Simulation
 t_start = 0; % Start Time in s
-t_end = 2000; % Stop Time in s, High Order require more Time
+t_end = 4000; % Stop Time in s, High Order require more Time
 dt = 0.01; % Time Step in s
 
 % Relay Parameters
 u0 = 10 ; % Constant Input on the Plant
 y0 = dcgain(G)*u0; % Set Point / Working Point
 mu = 5; % Parameter for estimating hysteresis -> High Value is better for Benchmark
-d1 = 5; % Upper Limit of the Output
-d2 = 2; % Lower Limit of the Output
+d1 = 10; % Upper Limit of the Output
+d2 = randi([1,9]); % Lower Limit of the Output
 h = min(d1,d2)*abs(dcgain(G))/mu; % Hysterisis for Relay, from Eq. 19
 L = G.OutputDelay; % Time Delay
 
@@ -80,7 +79,7 @@ L = T* (tau/(1-tau)); % Eq.16, checked
 
 
 %% Make FOTD Model
-%K_P,T,L, tau, rho, gamma
+K_P,T,L, tau, rho, gamma
 G_M = tf(K_P,[T,1],'OutputDelay',L);
 
 end

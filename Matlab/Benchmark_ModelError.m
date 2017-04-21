@@ -6,10 +6,10 @@ close all
 clc
 
 %% Parameter
-Max_Order = 9;
-Max_Sample = 200;
+Max_Order = 3;
+Max_Sample = 500;
 % Create Sum Time Constant
-TSum = 200+randi([-50,50]);
+TSum = 250;
 %% Benchmark
 
 % Preallocate space
@@ -17,6 +17,8 @@ TSum = 200+randi([-50,50]);
 % Store the maximum Sensitivity
 MS = zeros(Max_Order,Max_Sample,2);
 ACC = zeros(Max_Order,Max_Sample);
+GAM = zeros(Max_Order,Max_Sample);
+
 % Outer Loop over the order of the System
 for Systemorder = 1:Max_Order
    % Inner Loop over Samples
@@ -26,13 +28,14 @@ for Systemorder = 1:Max_Order
        % Create Time Constant
        T = TSum/Systemorder;
        % Create Delay from 0.1*T <= L <= 0.6*T
-       L = (rand*0.5+0.1)*T;
+       L = 0.6*T;
        % Create The Transfer Function
        G = tf(Num, [T,1],'OutputDelay',L);
        % Create High Systemorder
        G = G^Systemorder;
        % Create the FOTD
-       G_M = Relay_Identification(G);
+       [G_M, gamma] = Relay_Identification(G);
+       GAM(Systemorder,Sample) = gamma;
        % Get the Accuracy of the Model
        ss_acc = dcgain(G_M)/dcgain(G); % Steady State accuracy
        l_acc = G_M.OutputDelay / G.OutputDelay; % Time Delay accuracy
