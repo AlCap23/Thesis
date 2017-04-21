@@ -1,3 +1,4 @@
+
 function [ G_M ] = Relay_Identification(G)
 %Approximates a given system G by a First Order Time Delay (FOTD) Model.
 %The Process is described in "Asymmetric relay autotuning - Practical
@@ -9,15 +10,22 @@ function [ G_M ] = Relay_Identification(G)
 %% Initialize Variables for Experiment
 % Simulation
 t_start = 0; % Start Time in s
-t_end = 1000; % Stop Time in s
-dt = 0.1; % Time Step in s
-% Tuning Parameters
-u0 = 20 ; % Constant Input on the Plant
+t_end = 2000; % Stop Time in s, High Order require more Time
+dt = 0.01; % Time Step in s
+
+% Relay Parameters
+u0 = 10 ; % Constant Input on the Plant
 y0 = dcgain(G)*u0; % Set Point / Working Point
-h = 0.5; % Hysterisis for Relay
-d1 = 10; % Upper Limit of the Output
-d2 = 3; % Lower Limit of the Output
+mu = 5; % Parameter for estimating hysteresis -> High Value is better for Benchmark
+d1 = 5; % Upper Limit of the Output
+d2 = 2; % Lower Limit of the Output
+h = min(d1,d2)*abs(dcgain(G))/mu; % Hysterisis for Relay, from Eq. 19
 L = G.OutputDelay; % Time Delay
+
+% Set a small delay if none is given ( for stability of the simulation )
+if L < 1e-1
+    L = 1e-1;
+end
 [Num, Den] = tfdata(G,'v'); % Get the Transfer Function Data
 %% Simulink
 
@@ -29,7 +37,7 @@ res =  sim('Relay_Auto_Tuning.slx','SrcWorkspace','current');
 y = res.y; % Output of the Plant as timeseries
 u = res.u; % Input of the Plant as timeseries
 
-
+%plot(y)
 %% Get the Plant Parameter
 % Take sample from the middle of the Test
 time_limit = round(length(y.Time)/4) ; % Assume half the time is sufficient 
@@ -63,14 +71,16 @@ K_P = I_y/I_u; % Eq. 13, checked
 rho = max(t_on,t_off)/min(t_on,t_off); % Half Period as given in Eq. 10, checked
 gamma = max(d1,d2) / min(d1,d2); % Asymetry level, Eq. 7, checked
 tau = (gamma-rho) / (gamma-1) / (0.35*rho + 0.65); % Normalized Time, Eq.9, checked
+
 % Time Constant
 T_on = t_on / log( ((h/abs(K_P))-d2+exp(tau/(1-tau))*(d1+d2)) / (d1- (h/abs(K_P)) ) ); % Eq. 14, checked
 T_off = t_off / log( ((h/abs(K_P))-d1+exp(tau/(1-tau))*(d1+d2)) / (d2- (h/abs(K_P)) ) ); % Eq. 15, checked
 T = 1/2*(T_on+T_off); % Get mean of the Time Constants to make error from t_on / t_off smaller
 L = T* (tau/(1-tau)); % Eq.16, checked
 
+
 %% Make FOTD Model
-% K_P,T,L
+%K_P,T,L, tau, rho, gamma
 G_M = tf(K_P,[T,1],'OutputDelay',L);
 
 end

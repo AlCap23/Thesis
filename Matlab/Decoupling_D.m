@@ -28,23 +28,32 @@ for outputs = 1:sys_size(2)
     end
 end
 
-% Get the disturbance Decoupling
-D = eye(sys_size)-inv(G_M)*G_m
-%D = dcgain(D)
-% Get a corrected system
-%Q = TF*D;
-
-% Make the PID for main diagonal
-C = tf('s');
-
+% Get the Decoupling
+% Make PID for the main Diagonal
+C = tf('s')
 for output = 1:sys_size(2)
     % Tunes for the Phase Margin, which is essentially f(MS)
    opts = pidtuneOptions('PhaseMargin',PM(1,outputs));
    % Tune a PI Controller
-   TunedControl = pidtune(TF(output,output),'PI',opts);
+   TunedControl = pidtune(G_M(output,output),'PI',opts);
 end
+H = feedback(G_M*C,eye(sys_size));
+C = inv(TF)*H*inv(eye(sys_size)-H);
+
+% Get a corrected system
+%Q = TF*D;
+
+% Make the PID for main diagonal
+% C = tf('s');
+% 
+% for output = 1:sys_size(2)
+%     % Tunes for the Phase Margin, which is essentially f(MS)
+%    opts = pidtuneOptions('PhaseMargin',PM(1,outputs));
+%    % Tune a PI Controller
+%    TunedControl = pidtune(TF(output,output),'PI',opts);
+% end
 
 % Make the closed loop
-CL = feedback(TF*D*C,eye(sys_size));
+CL = feedback(TF*C,eye(sys_size));
 
 end
