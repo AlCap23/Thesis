@@ -7,7 +7,7 @@ clc
 
 %% Parameter
 Max_Order = 1;
-Max_Sample = 20;
+Max_Sample = 5;
 % Create Sum Time Constant
 TSum = 10;
 %% Benchmark
@@ -15,8 +15,7 @@ TSum = 10;
 % Preallocate space
 
 % Store the maximum Sensitivity
-IAE = zeros(Max_Sample,2);
-IAW = IAE;
+IE = zeros(Max_Sample,2);
 
 % Outer Loop over the order of the System
 for Systemorder = 1:Max_Order
@@ -72,15 +71,13 @@ for Systemorder = 1:Max_Order
        
        CL2 = CF*feedback(G,CR,+1);
        %% Simulate the Output
-       % Ideal derivative
-       D = tf([1,0],1);
        % Simulation Time
        dt = 0.1;
        time = 0:dt:1000;
        % Input with offset
        u_0 = ones(2,length(time));
        u_1 = zeros(size(u_0));
-       u_2 = u_1;
+       u_2 = u1;
        u_1(1,:) = ones(size(u_1(1,:)));
        u_2(2,:) = ones(size(u_2(2,:)));
        %u(1,:) = ones(1,length(u));       
@@ -89,21 +86,15 @@ for Systemorder = 1:Max_Order
        y1 = lsim(CL1,u_0,time);
        y2 = lsim(CL2,u_0,time);
        % Derive Absolut Integrated Error
-       IAE(Sample,1) = dt*mean(sum(abs(u_0'-y1)))/time(end);
-       IAE(Sample,2) = dt*mean(sum(abs(u_0'-y2)))/time(end);
-       % Get the waviness
-       y1 = lsim(D*CL1,u_0,time);
-       y2 = lsim(D*CL2,u_0,time);
-       % Integrated Waviness
-       IAW(Sample,1) = dt*mean(sum(abs(y1)))/time(end);
-       IAW(Sample,2) = dt*mean(sum(abs(y2)))/time(end);
+       IAE(Sample,1) = dt*mean(sum(abs(u'-y1)));
+       IAE(Sample,2) = dt*mean(sum(abs(u'-y2)));
+       % Get the "w
+       
        
        
    end       
    % Normalize the IAE to Maximum
-   %IAE_max = max(max(IAE));
-   %IAE = IAE./max(max(IAE));
-   %IAW_max = max(max(IAW));
-   %IAW = IAW./max(max(IAW));
+   IAE = IAE./max(max(IAE));
+   
    
 end

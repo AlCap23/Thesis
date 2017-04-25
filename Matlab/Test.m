@@ -1,4 +1,4 @@
-function C = Decoupling_A(TF,Constrains,Method)
+function C = Test(TF,Constrains,Method)
 %% Decouples a MIMO System based on
 %
 %   Design of decoupled PID controllers for MIMO systems
@@ -50,21 +50,23 @@ b = 0; % Set point weight
 D = inv(dcgain(TF));
 
 % Get the new system Q
-Q = TF*D;
+TF2 = TF; % Make a substituion for a IO Delay System
+TF2.IODelay = zeros(size(TF.IODelay)); % Set the Delay to zero
+Q = TF2*D
 
 
 % Get the small signal constants k12( influence of input 2 on output 1 )
 % and k21
 % Check if the Numerator is zero, would mean no coupling
-if ~isempty(Q(1,2).Denominator{:,:}) && length(Q(1,2).Denominator{:,:}) > 1
+if ~isempty(Q(1,2).Numerator{:,:})
     k12 = Q(1,2).Numerator{:,:}(end-1) / Q(1,2).Denominator{:,:}(end);
 else
     k12 = 0;
 end
-if ~isempty(Q(2,1).Denominator{:,:}) && length(Q(2,1).Denominator{:,:}) > 1
+if ~isempty(Q(2,1).Numerator{:,:})
     k21 = Q(2,1).Numerator{:,:}(end-1) / Q(2,1).Denominator{:,:}(end);
 else
-    k21 = 0;
+    k21 = 0
 end
 
 % Interaction from Q
@@ -86,7 +88,7 @@ switch Method
             % Tunes for the Phase Margin, which is essentially f(MS)
             opts = pidtuneOptions('PhaseMargin',PM(1,outputs));
             % Tune a PI Controller
-            TunedControl = pidtune(Q(outputs,outputs),'PI',opts);
+            TunedControl = pidtune(TF(outputs,outputs),'PI',opts);
             % Get the parameter
             [kP,kI] = piddata(TunedControl);
             
@@ -103,27 +105,27 @@ switch Method
                 K = Q(outputs,outputs).Numerator{1,1}(end); % Process Gain
                 % Calculate ki from quadratic equation for sqrt(ki) based on Pole
                 % Placement
-                a1 = 1+2*Damping*b;
-                b1 = -1*sqrt(b^2/(T*K) );
-                c1 = -1*abs(k(1,sys_size(2))) / abs(kc(1,sys_size(2)-outputs+1)*MProd);
+                a1 = 1+2*Damping*b
+                b1 = -1*sqrt(b^2/(T*K) )
+                c1 = -1*abs(k(1,sys_size(2))) / abs(kc(1,sys_size(2)-outputs+1)*MProd)
                 if abs(a1*kI+b1*sqrt(kI)) + c1 > 1e-5
-                    kI = min([( -b1 + sqrt( b1^2 -4*a1*c1 ) ) / (2*a1) ,( -b1 - sqrt( b1^2 -4*a1*c1 ) ) / (2*a1)]);
-                    kI = kI^2;
-                    kP = (2*Damping*T*sqrt(kI*K/T)-1)/K;
+                    kI = min([( -b1 + sqrt( b1^2 -4*a1*c1 ) ) / (2*a1) ,( -b1 - sqrt( b1^2 -4*a1*c1 ) ) / (2*a1)])
+                    kI = kI^2
+                    kP = (2*Damping*T*sqrt(kI*K/T)-1)/K
                 end
                 K_p(outputs,outputs) = kP;
                 K_i(outputs,outputs) = kI;
                 
                 % Check for setpoint weight is zero:
-            elseif abs(kI) - abs(k(1,sys_size(2))) / abs(kc(1,sys_size(2)-outputs+1)*MProd) > 1e-2
+            elseif abs(kI) - abs(k(1,sys_size(2))) / abs(kc(1,sys_size(2)-outputs+1)*MProd) > 1e-5
                 % If the Condition is not met, scale kI down and calculate kP via
                 % Pole Placement
                 kI = k(1,sys_size(2)) / abs(kc(1,sys_size(2)-outputs+1)*MProd);
                 % From Pole Placement, Aström Häggalund, PID Control p.174
                 Damping = 1.0; % Assume high damping
-                omega = sqrt(abs(kI*Q(outputs,outputs).Numerator{1,1}(end)*Q(outputs,outputs).Denominator{1,1}(end-1)));
+                omega = sqrt(abs(kI*TF(outputs,outputs).Numerator{1,1}(end)*TF(outputs,outputs).Denominator{1,1}(end-1)));
                 % Assume the small signal equation / Taylor series approximation
-                kP = (2*Damping*omega*Q(outputs,outputs).Denominator{1,1}(end-1) -1)/Q(outputs,outputs).Numerator{1,1}(end);
+                kP = (2*Damping*omega*TF(outputs,outputs).Denominator{1,1}(end-1) -1)/TF(outputs,outputs).Numerator{1,1}(end);
                 % Get the parameter
                 K_p(outputs,outputs) =kP;
                 K_i(outputs,outputs) = kI;
@@ -136,7 +138,7 @@ switch Method
     case 'AMIGO'
         for outputs = 1:sys_size(2)
             % Get a AMIGO Rule tuned controller
-            TunedControl = AMIGO_Tune(Q(outputs,outputs),'PI');
+            TunedControl = AMIGO_Tune(TF(outputs,outputs),'PI');
             % Get the parameter
             [kP,kI] = piddata(TunedControl);
             
@@ -153,21 +155,14 @@ switch Method
                 K = Q(outputs,outputs).Numerator{1,1}(end); % Process Gain
                 % Calculate ki from quadratic equation for sqrt(ki) based on Pole
                 % Placement
-                a1 = 1+2*Damping*b;
-                b1 = -1*sqrt(b^2/(T*K) );
-                c1 = -1*abs(k(1,sys_size(2))) / abs(kc(1,sys_size(2)-outputs+1)*MProd);
+                a1 = 1+2*Damping*b
+                b1 = -1*sqrt(b^2/(T*K) )
+                c1 = -1*abs(k(1,sys_size(2))) / abs(kc(1,sys_size(2)-outputs+1)*MProd)
                 % Check the decoupling condition iteratively
-                % Iteration of the Detuning
-                counter = 0; % counter for break
                 while abs(a1*kI+b1*sqrt(kI)) + c1 > 1e-5
-                    if counter > 1000
-                        break
-                    end
-                    TunedControl = AMIGO_Detune(TunedControl,Q(outputs,outputs));
+                    TunedControl = AMIGO_Detune(TunedControl,TF(outputs,outputs));
                     % Get the parameter
-                    [kP,kI] = piddata(TunedControl);
-                    % Add a count
-                    counter = counter+1;
+                    [kP,kI] = piddata(TunedControl);                    
                 end
                 % Get the parameter
                 [kP,kI] = piddata(TunedControl); 
@@ -176,21 +171,13 @@ switch Method
                 K_i(outputs,outputs) = kI;
                 
                 % Check for setpoint weight is zero:
-            elseif abs(kI) - abs(k(1,sys_size(2))) / abs(kc(1,sys_size(2)-outputs+1)*MProd) > 1e-4
+            elseif abs(kI) - abs(k(1,sys_size(2))) / abs(kc(1,sys_size(2)-outputs+1)*MProd) > 1e-5
                 % If the Condition is not met, scale kI down and calculate kP via
                 % Iteration of the Detuning
-                counter = 0; % counter for break
                 while abs(kI) - abs(k(1,sys_size(2))) / abs(kc(1,sys_size(2)-outputs+1)*MProd) > 1e-5
-                    if counter > 1000
-                        break
-                    end
-                    
-                    TunedControl = AMIGO_Detune(TunedControl,Q(outputs,outputs));
+                    TunedControl = AMIGO_Detune(TunedControl,TF(outputs,outputs));
                     % Get the parameter
-                    [kP,kI] = piddata(TunedControl);
-                    % Add a count
-                    counter = counter+1;
-                    counter
+                    [kP,kI] = piddata(TunedControl);                    
                 end
                 % Get the parameter
                 [kP,kI] = piddata(TunedControl); 
@@ -205,7 +192,7 @@ switch Method
         end
 end 
 % Create a PID Controller with Set Point Weight
-C = pid2(K_p,K_i,0,0,b,0);
+C = pid2(K_p,K_i,0,0.1,b,0);
 
 % Closing the loop for set point weight b = 0
 %CL = (eye(2)+TF*D*(K_i+K_p)) \ TF*D*(K_i+b*K_p);

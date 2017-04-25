@@ -9,21 +9,21 @@ function [ G_M, gamma] = Relay_Identification(G)
 %% Initialize Variables for Experiment
 % Simulation
 t_start = 0; % Start Time in s
-t_end = 10000; % Stop Time in s, High Order require more Time
-dt = 0.04; % Time Step in s
+t_end = 6000; % Stop Time in s, High Order require more Time
+dt = 0.01; % Time Step in s
 
 % Relay Parameters
 u0 = 10 ; % Constant Input on the Plant
 y0 = dcgain(G)*u0; % Set Point / Working Point
-mu = 15; % Parameter for estimating hysteresis -> High Value is better for Benchmark
-d1 = 5; % Upper Limit of the Output
+mu = 10; % Parameter for estimating hysteresis -> High Value is better for Benchmark
+d1 = 10; % Upper Limit of the Output
 d2 = 2; % Lower Limit of the Output
 h = min(d1,d2)*abs(dcgain(G))/mu; % Hysterisis for Relay, from Eq. 19
 L = G.OutputDelay; % Time Delay
 
 % Set a small delay if none is given ( for stability of the simulation )
-if L < 1e-1
-    L = 1e-1;
+if L < 0.5*G.Denominator{:,:}(end-1)
+    L = 0.5*G.Denominator{:,:}(end-1);
 end
 [Num, Den] = tfdata(G,'v'); % Get the Transfer Function Data
 %% Simulink

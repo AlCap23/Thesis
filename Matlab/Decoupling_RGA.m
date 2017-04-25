@@ -1,5 +1,5 @@
-function CL = Decoupling_RGA(TF,Constrains,TYPE)
-
+function C = Decoupling_RGA(TF,Constrains,TYPE)
+% Returns the controller
 % Set Standard Type
 if ~exist('TYPE','var')
     TYPE = 'DC';
@@ -10,6 +10,7 @@ sys_size = size(TF);
 
 % Constrains
 if ~exist('Constrains','var')
+    % Set MS to sqrt(2)
     Constrains = [sqrt(2), sqrt(2)];
 end
 
@@ -58,6 +59,7 @@ for output = 1:sys_size(2)
     opts = pidtuneOptions('PhaseMargin',PM(1,output));
     C(output,sys_pair(output,1)) = pidtune(TF(output,sys_pair(output,1)),'PI',opts);
 end
+
 % Close the loop
-CL = feedback(TF*C,eye(2));
+%CL = feedback(TF*C,eye(2));
 end
