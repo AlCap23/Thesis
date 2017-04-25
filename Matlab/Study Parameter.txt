@@ -10,3 +10,6 @@ To Benchmark the performance of the AMIGO Rules on higher Systems
 
 ASYM		500		3		250		1		0.6*T		10		1...9		10			4000			.01
 To Benchmark the influence of the asymmetry of the relay; Uniform Distribution		
+
+PTR3       500     3       200+-50     1       0.1...0.6*T 5       2       15          4000            .01
+To Benchmark random systems ( Not 1/(T*s+1)^n but 1/(Sum_n T_n s^n +1))  

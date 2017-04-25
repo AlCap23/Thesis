@@ -9,15 +9,15 @@ function [ G_M, gamma] = Relay_Identification(G)
 %% Initialize Variables for Experiment
 % Simulation
 t_start = 0; % Start Time in s
-t_end = 4000; % Stop Time in s, High Order require more Time
-dt = 0.01; % Time Step in s
+t_end = 10000; % Stop Time in s, High Order require more Time
+dt = 0.04; % Time Step in s
 
 % Relay Parameters
 u0 = 10 ; % Constant Input on the Plant
 y0 = dcgain(G)*u0; % Set Point / Working Point
-mu = 5; % Parameter for estimating hysteresis -> High Value is better for Benchmark
-d1 = 10; % Upper Limit of the Output
-d2 = randi([1,9]); % Lower Limit of the Output
+mu = 15; % Parameter for estimating hysteresis -> High Value is better for Benchmark
+d1 = 5; % Upper Limit of the Output
+d2 = 2; % Lower Limit of the Output
 h = min(d1,d2)*abs(dcgain(G))/mu; % Hysterisis for Relay, from Eq. 19
 L = G.OutputDelay; % Time Delay
 
@@ -39,7 +39,7 @@ u = res.u; % Input of the Plant as timeseries
 %plot(y)
 %% Get the Plant Parameter
 % Take sample from the middle of the Test
-time_limit = round(length(y.Time)/4) ; % Assume half the time is sufficient 
+time_limit = round(length(y.Time)/10) ; % Assume half the time is sufficient 
 y_Data = y.Data(time_limit:end); % Get the Amplitude of the plant
 u_Data = u.Data(time_limit:end); % Get the Input
 time_Data = y.Time(time_limit:end); % Get the Time Sample
@@ -79,7 +79,7 @@ L = T* (tau/(1-tau)); % Eq.16, checked
 
 
 %% Make FOTD Model
-K_P,T,L, tau, rho, gamma
+%K_P,T,L, tau, rho, gamma
 G_M = tf(K_P,[T,1],'OutputDelay',L);
 
 end

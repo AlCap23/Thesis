@@ -18,8 +18,7 @@ function CL = Decoupling_A(TF,Constrains,Method)
 %       'AMIGO' uses the Amigo tuning / detuning rules in an iterative fashion
 
 %% Output
-%  CL - the closed Loop transfer function
-
+%  C - A 2-Dof Controller with Set Point Weight
 %% Code
 
 % Inital Commit on 2017/04/12
@@ -48,10 +47,10 @@ omega = 200; % Crossover at 200 rad/s
 b = 0; % Set point weight
 
 % Get the Decoupler D
-D = inv(dcgain(TF));
+D = inv(dcgain(TF))
 
 % Get the new system Q
-Q = TF*D;
+Q = pade(TF,10)*D
 
 
 % Get the small signal constants k12( influence of input 2 on output 1 )
@@ -136,8 +135,6 @@ switch Method
         end
     case 'AMIGO'
         for outputs = 1:sys_size(2)
-            Q(outputs,outputs)
-            disp(outputs)
             % Get a AMIGO Rule tuned controller
             TunedControl = AMIGO_Tune(Q(outputs,outputs),'PI');
             % Get the parameter
@@ -192,8 +189,10 @@ switch Method
             end
         end
 end 
-        
+% Create a PID Controller with Set Point Weight
+CL = pid2(kP,kI,0,0.1,b,0);
+
 % Closing the loop for set point weight b = 0
-CL = (eye(2)+TF*D*(K_i+K_p)) \ TF*D*(K_i+b*K_p);
+%CL = (eye(2)+TF*D*(K_i+K_p)) \ TF*D*(K_i+b*K_p);
 end
 
