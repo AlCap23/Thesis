@@ -7,7 +7,7 @@ clc
 
 %% Parameter
 Max_Order = 1;
-Max_Sample = 20;
+Max_Sample = 1;
 % Create Sum Time Constant
 TSum = 10;
 %% Benchmark
