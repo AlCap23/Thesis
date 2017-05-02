@@ -55,6 +55,12 @@ end
 % Make the PID for the pairing
 C = tf('s');
 
+for output = 1:2
+    for input = 1:2
+        C(output,input) = tf(0,1);
+    end
+end
+
 for output = 1:sys_size(2)
     opts = pidtuneOptions('PhaseMargin',PM(1,output));
     C(output,sys_pair(output,1)) = pidtune(TF(output,sys_pair(output,1)),'PI',opts);
