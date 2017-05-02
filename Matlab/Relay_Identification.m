@@ -39,7 +39,7 @@ u = res.u; % Input of the Plant as timeseries
 %plot(y)
 %% Get the Plant Parameter
 % Take sample from the middle of the Test
-time_limit = round(length(y.Time)/10) ; % Assume half the time is sufficient 
+time_limit = round(length(y.Time)/2) ; % Assume half the time is sufficient 
 y_Data = y.Data(time_limit:end); % Get the Amplitude of the plant
 u_Data = u.Data(time_limit:end); % Get the Input
 time_Data = y.Time(time_limit:end); % Get the Time Sample

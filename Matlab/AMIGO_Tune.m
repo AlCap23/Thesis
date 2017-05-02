@@ -24,18 +24,27 @@ if order(FOTD) ~=1
     disp('System is of higher Order! First Order Time Delay Model is requiered!')
     disp('Reduced Model is used')
     % Approximate a System with Relay_Identification
-    FOTD = Relay_Identification(FOTD);
+    %FOTD = Relay_Identification(FOTD);
+    FOTD = tf(reduce(ss(FOTD),1));
 end
 
 % Get System Parameter
 K_P = FOTD.Numerator{:,:}(end);
 T = FOTD.Denominator{:,:}(end-1);
-L = FOTD.OutputDelay;
+if FOTD.OutputDelay >0
+    L = FOTD.OutputDelay;
+elseif FOTD.InputDelay >0
+    L = FOTD.InputDelay;
+elseif FOTD.IODelay >0
+    L = FOTD.IODelay;
+else
+    L = 0;
+end
 
 % If the Output Delay is smaller than 1e-2 use 1e-2 instead
-if L < 1e-2
-    L = 1e-2;
-    disp('Output Delay is zero or small! Algorithm uses L = 0.01 instead!')
+if L < 0.3*T
+    L = 0.3*T;
+    disp('Output Delay is zero or small! Algorithm uses L = 0.3*T instead!')
 end
 
 % Check if Type is given and set PI as Standard

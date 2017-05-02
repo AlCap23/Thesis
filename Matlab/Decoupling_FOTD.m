@@ -77,10 +77,10 @@ end
 % Test for interaction
 % First Loop
 gamma = k(1)/MProd;
-[kp,ki] = piddata(C(1,1));
+[kp,ki] = piddata(C(2,2));
 counter = 0;
-while abs(K(2)*(L(1)+T(1)-L(2)-T(2))*(kp*b+ki))- abs(gamma) >1e-5
-    counter
+while abs(abs(K(2)*(L(1)+T(1)-L(2)-T(2))*(ki))- abs(gamma)) >1e-3
+    %counter
     if counter > 1e4
         break
     end
@@ -95,10 +95,10 @@ K_i(1,1) = ki;
 
 % Second Loop
 gamma = k(2)/MProd;
-[kp,ki] = piddata(C(2,2));
+[kp,ki] = piddata(C(1,1));
 counter = 0;
-while abs(K(3)*(L(4)+T(4)-L(3)-T(3))*(kp*b+ki))- abs(gamma) > 1e-5
-    counter
+while abs(abs(K(3)*(-L(4)-T(4)+L(3)+T(3))*(ki))- abs(gamma)) > 1e-3
+    %counter
     if counter > 1e4
         break
     end

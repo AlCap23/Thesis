@@ -43,14 +43,13 @@ PM = 2*asin(1/2./MS); % Phase Margin is at least 2 arcsin(1/2/Ms)
 MProd = prod(MS); % Sensitivy Product
 
 % Set omega and b
-omega = 200; % Crossover at 200 rad/s
 b = 0; % Set point weight
 
 % Get the Decoupler D
 D = inv(dcgain(TF));
 
 % Get the new system Q
-Q = TF*D;
+Q = pade(TF,6)*D;
 
 
 % Get the small signal constants k12( influence of input 2 on output 1 )
