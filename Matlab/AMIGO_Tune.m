@@ -43,10 +43,16 @@ else
 end
 
 % If the Output Delay is smaller than 1e-2 use 1e-2 instead
-if L < 0.3*T
-    L = 0.3*T;
-    disp('Output Delay is zero or small! Algorithm uses L = 0.3*T instead!')
+if L < 0.2*T 
+    if 0.2*T < 1e-2
+        L = 1e-2;
+    else
+        L = 0.2*T;
+    end
+    
+    disp('Output Delay is zero or small! Algorithm uses L = 0.1*T instead!')
 end
+
 
 % Check if Type is given and set PI as Standard
 if ~exist('TYPE','var')
