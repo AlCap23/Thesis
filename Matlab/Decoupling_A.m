@@ -1,4 +1,4 @@
-function C = Decoupling_A(TF,Constrains,Method)
+function C = Decoupling_A(TF,Constrains,Method,SetPointWeight)
 %% Decouples a MIMO System based on
 %
 %   Design of decoupled PID controllers for MIMO systems
@@ -7,7 +7,10 @@ function C = Decoupling_A(TF,Constrains,Method)
 %
 
 %% Changelog
-%  2017/04/18 added corrected set point weight
+%  2017/04/18   Added corrected set point weight
+%  2017/05/03   Added Set Point Weight as Input Parameter
+%               Corrected Code
+%               Simplified Input of Transferfunction
 %% Inputs
 %  TF - a Transfer Function (MIMO) with 2 inputs and 2 outputs
 %  Contrains - an array with constrains for the development of the
@@ -16,13 +19,10 @@ function C = Decoupling_A(TF,Constrains,Method)
 %       'Standard' uses a straight approach for the tuning / detuning of the
 %       controller
 %       'AMIGO' uses the Amigo tuning / detuning rules in an iterative fashion
-
+%  SetPointWeight - a scalar Set Point Weight of the Controller
 %% Output
 %  C - A 2-Dof Controller with Set Point Weight as a Matrix of System Size
 %% Code
-
-% Inital Commit on 2017/04/12
-% To Do : Add set point weight b
 
 % System Size
 sys_size = size(TF);
@@ -42,8 +42,12 @@ MS = Constrains(1,3:4); % Maximum of the sensitivity
 PM = 2*asin(1/2./MS); % Phase Margin is at least 2 arcsin(1/2/Ms)
 MProd = prod(MS); % Sensitivy Product
 
-% Set omega and b
-b = 0; % Set point weight
+% Set set point weight
+if ~exist('SetPointWeight','var')
+    b = 1; % Design normal controller
+else
+    b = SetPointWeight; % Use given Set Point Weight
+end
 
 % Get the Decoupler D
 D = inv(dcgain(TF));
@@ -98,16 +102,23 @@ switch Method
                 % If the condition is not met, calculate kI and kP
                 % Calculate the terms
                 Damping = 1; % Assume High Damping
-                T = Q(outputs,outputs).Denominator{1,1}(end-1); % Time Constant of Process
-                K = Q(outputs,outputs).Numerator{1,1}(end); % Process Gain
+                T = Q(outputs,outputs).Denominator{1,1}(end-1)/Q(outputs,outputs).Denominator{1,1}(end); % Time Constant of Process
+                K = Q(outputs,outputs).Numerator{1,1}(end)/Q(outputs,outputs).Denominator{1,1}(end); % Process Gain
                 % Calculate ki from quadratic equation for sqrt(ki) based on Pole
                 % Placement
                 a1 = 1+2*Damping*b;
                 b1 = -1*sqrt(b^2/(T*K) );
                 c1 = -1*abs(k(1,sys_size(2))) / abs(kc(1,sys_size(2)-outputs+1)*MProd);
+                % If the Condition is not met, set kI and kP according to
+                % condition
                 if abs(a1*kI+b1*sqrt(kI)) + c1 > 1e-5
-                    kI = min([( -b1 + sqrt( b1^2 -4*a1*c1 ) ) / (2*a1) ,( -b1 - sqrt( b1^2 -4*a1*c1 ) ) / (2*a1)]);
-                    kI = kI^2;
+                    % Check Discriminant
+                    if b1^2 -4*a1*c1 > 1e-2
+                        kI = min([( -b1 + sqrt( b1^2 -4*a1*c1 ) ) / (2*a1) ,( -b1 - sqrt( b1^2 -4*a1*c1 ) ) / (2*a1)]);
+                        kI = kI^2;
+                    else
+                        kI = c1
+                    end
                     kP = (2*Damping*T*sqrt(kI*K/T)-1)/K;
                 end
                 K_p(outputs,outputs) = kP;
@@ -148,8 +159,8 @@ switch Method
                 % If the condition is not met, calculate kI and kP
                 % Calculate the terms
                 Damping = 1; % Assume High Damping
-                T = Q(outputs,outputs).Denominator{1,1}(end-1); % Time Constant of Process
-                K = Q(outputs,outputs).Numerator{1,1}(end); % Process Gain
+                T = Q(outputs,outputs).Denominator{1,1}(end-1)/Q(outputs,outputs).Denominator{1,1}(end); % Time Constant of Process
+                K = Q(outputs,outputs).Numerator{1,1}(end)/Q(outputs,outputs).Denominator{1,1}(end); % Process Gain
                 % Calculate ki from quadratic equation for sqrt(ki) based on Pole
                 % Placement
                 a1 = 1+2*Damping*b;

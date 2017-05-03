@@ -29,8 +29,9 @@ if order(FOTD) ~=1
 end
 
 % Get System Parameter
-K_P = FOTD.Numerator{:,:}(end);
-T = FOTD.Denominator{:,:}(end-1);
+K_P = dcgain(FOTD);
+T = FOTD.Denominator{:,:}(end-1)/FOTD.Denominator{:,:}(end);
+
 if FOTD.OutputDelay >0
     L = FOTD.OutputDelay;
 elseif FOTD.InputDelay >0
