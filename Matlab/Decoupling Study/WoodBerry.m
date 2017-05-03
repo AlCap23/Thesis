@@ -19,19 +19,19 @@ C1 = Decoupling_RGA(G);
 CL1 = feedback(G*C1,eye(2));
 
 %% Decouple via Aström
-% C2 = Decoupling_A(G,[0.2, 0.2, sqrt(2), sqrt(2)],'AMIGO');
-% % Preprocess PID2 Object -> Set Point Weight
-% C = tf(C2); % Convert to TF
-% CA = C(1); % Set Point Controller
-% CB = C(2); % Feedback Controller
-% for Inputs = 1:2
-%     for Outputs = 1:2
-%         CR(Inputs,Outputs) = CA(:,:,Inputs,Outputs); % w -> u
-%         CY(Inputs,Outputs) = CB(:,:,Inputs,Outputs); % y -> u
-%     end
-% end
-% % Closed Loop 
-% CL2 = CR*feedback(G,CY,+1);
+C2 = Decoupling_A(G,[0.2, 0.2, sqrt(2), sqrt(2)],'AMIGO');
+% Preprocess PID2 Object -> Set Point Weight
+C = tf(C2); % Convert to TF
+CA = C(1); % Set Point Controller
+CB = C(2); % Feedback Controller
+for Inputs = 1:2
+    for Outputs = 1:2
+        CR(Inputs,Outputs) = CA(:,:,Inputs,Outputs); % w -> u
+        CY(Inputs,Outputs) = CB(:,:,Inputs,Outputs); % y -> u
+    end
+end
+% Closed Loop 
+CL2 = CR*feedback(G,CY,+1);
 %% Decouple via Modified Aström
 C3 = Decoupling_FOTD(G,[0.2, 0.2, sqrt(2), sqrt(2)],'AMIGO');
 % Preprocess PID2 Object -> Set Point Weight
