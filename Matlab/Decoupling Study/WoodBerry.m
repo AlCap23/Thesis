@@ -56,6 +56,24 @@ for Inputs = 1:2
 end
 % Closed Loop 
 CL3 = CR*feedback(G,CY,+1);
+%% Decouple via Modified Aström
+C4 = Decoupling_D(G,[0.1, 0.1, sqrt(2), sqrt(2)],'AMIGO',0);
+% Preprocess PID2 Object -> Set Point Weight
+C = tf(C4); % Convert to TF
+CA = C(1); % Set Point Controller
+CB = C(2); % Feedback Controller
+for Inputs = 1:2
+    for Outputs = 1:2
+        CR(Outputs,Inputs) = CA(:,:,Outputs,Inputs); % w -> u
+        CY(Outputs,Inputs) = CB(:,:,Outputs,Inputs); % y -> u
+    end
+end
+GD = G;
+GD.IODelay = zeros(2,2);
+% Get the gamma Matrix
+gamma = [1, -GD(1,2)/GD(1,1);-GD(2,1)/GD(2,2),1]
+% Closed Loop
+CL4 = (gamma*CR)*feedback(G,gamma*CY,+1);
 %% Get Results
 figure()
 step(CL1)
