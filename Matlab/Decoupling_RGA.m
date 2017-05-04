@@ -72,8 +72,9 @@ for output = 1:2
 end
 
 for output = 1:sys_size(2)
-    opts = pidtuneOptions('PhaseMargin',PM(1,output));
-    currentControl = pidtune(TF(output,sys_pair(output,1)),'PI',opts);
+    %opts = pidtuneOptions('PhaseMargin',PM(1,output));
+    %currentControl = pidtune(TF(output,sys_pair(output,1)),'PI',opts);
+    currentControl = AMIGO_Tune(TF(output,sys_pair(output,1)),'PI');
     [kp, ki, kd] = piddata(currentControl);
     K_p(output,sys_pair(output,1)) = kp;
     K_i(output,sys_pair(output,1)) = ki;

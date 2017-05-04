@@ -12,6 +12,7 @@ function C = Decoupling_A(TF,Constrains,Method,SetPointWeight)
 %               Corrected Code
 %               Simplified Input of Transferfunction
 %               Added the Approximation for Q as FOTD
+% 2017/05/04    Corrected the Approximation for Q as FOTD
 %% Inputs
 %  TF - a Transfer Function (MIMO) with 2 inputs and 2 outputs
 %  Contrains - an array with constrains for the development of the
@@ -56,64 +57,31 @@ D = inv(dcgain(TF));
 % Get the new system Q
 Q = pade(TF,6)*D;
 % Check if the main diagonal elements are of order 1
-for Outputs = 1: sys_size(1)
+for output = 1: sys_size(1)
     % Check for TF Order, if one diagonal is of higher Order the process is
     % needed
-    if order(Q(Outputs,Outputs)) ~= 1
-        % Get the needed coefficients
-        KV = zeros(2,2); % Old process Gain
-        LV = zeros(2,2); % Old process Delay
-        TV = zeros(2,2); % Old process Time Constant
-        for Inputs = 1:sys_size(2)
-            for output = 1:sys_size(1)
-                KV(output,Inputs) = dcgain(TF(output,Inputs));
-                TV(output,Inputs) = TF(output,Inputs).Denominator{:,:}(end-1) / TF(Outputs,Inputs).Denominator{:,:}(end);
-                LV(output,Inputs) = TF(output,Inputs).IODelay;
-            end
-        end
-        % Get the main diagonal gain
-        kMajor = KV(1,1)*KV(2,2);
-        % Get the minor diagonal gain
-        kMinor= KV(1,2)*KV(2,1);
-        % Get the determinant / static gain
-        kDet = det(dcgain(TF));
-        % Get first main diagonal
-        if LV(1,1) + LV(1,2) == 0
-            A11 = 0;
-            A12 = TV(1,2);
-            A13 = TV(2,1);
-        elseif LV(1,1)<LV(1,2)
-            dL = LV(1,2)-LV(1,1); % Difference in Delay
-            A11 = dL * kMajor / kDet; % First Area
-            A12 = TV(1,2)*kMajor / kDet; % Second Area
-            A13 = TV(1,1)*(-kMinor) / kDet; % Third Area
-        else
-            dL = LV(1,1)-LV(1,2);
-            A11 = dL * (-kMinor) / kDet;
-            A12 = TV(1,1)*(-kMinor)/kDet;
-            A13 = TV(1,2)* kMajor / kDet;
-        end
-        Q(1,1) = tf(1,[A11+A12+A13,1],'IODelay',max(LV(1,1),LV(1,2)));
+    if order(Q(output,output)) ~= 1
         
-        % Get second main diagonal
-        if LV(1,2) + LV(2,2) == 0
-            A11 = 0;
-            A12 = TV(1,2);
-            A13 = TV(2,1);
-        elseif LV(2,1)<LV(2,2)
-            dL = LV(2,2)-LV(2,1); % Difference in Delay
-            A11 = dL * (-kMinor) / kDet; % First Area
-            A12 = TV(2,2)*(-kMinor) / kDet; % Second Area
-            A13 = TV(2,1)*(kMajor) / kDet; % Third Area
-        else
-            dL = LV(2,1)-LV(2,2);
-            A11 = dL * (kMajor) / kDet;
-            A12 = TV(2,1)*(kMajor)/kDet;
-            A13 = TV(2,2)* (-kMinor) / kDet;
-        end
-        Q(2,2) = tf(1,[A11+A12+A13,1],'IODelay',max(LV(2,1),LV(2,2)));
-        % If executed once, quit the outer for loop
-        break
+        % The Transferfunctions needed are of the same Output / Row and
+        % scaled by the same Column of the D Matrix
+        G1 = D(1,output)*TF(output,1);
+        G2 = D(2,output)*TF(output,2);
+        % Get the Coefficients
+        K1 = dcgain(G1);
+        T1 = G1.Denominator{:,:}(end-1)/G1.Denominator{:,:}(end);
+        L1 = G1.IODelay;
+        
+        K2 = dcgain(G2);
+        T2 = G2.Denominator{:,:}(end-1)/G2.Denominator{:,:}(end);
+        L2 = G2.IODelay;
+        
+        % Set new parameter
+        L = max(L1,L2);
+        K = K1+K2;
+        T = (K1*(T1+L1)+K2*(T2+L2))/K-L;
+        
+        % Form new transfer function of the main Diagonal
+        Q(output,output) = tf(K,[T,1],'IODelay',L);
     end
 end
 
@@ -261,7 +229,6 @@ switch Method
                     [kP,kI] = piddata(TunedControl);
                     % Add a count
                     counter = counter+1;
-                    counter
                 end
                 % Get the parameter
                 [kP,kI] = piddata(TunedControl); 
