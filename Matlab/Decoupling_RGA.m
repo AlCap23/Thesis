@@ -1,8 +1,15 @@
-function C = Decoupling_RGA(TF,Constrains,TYPE)
+function C = Decoupling_RGA(TF,Constrains,TYPE,SetPointWeight)
 % Returns the controller
 % Set Standard Type
 if ~exist('TYPE','var')
     TYPE = 'DC';
+end
+% Check for given Set Point Weight
+if ~exist('SetPointWeight','var')
+    % If none is given, make set point weight off controller
+    b = 0; 
+else
+    b = SetPointWeight;
 end
 
 % System Size
@@ -53,7 +60,10 @@ for output = 1:sys_size(2)
 end
 
 % Make the PID for the pairing
-C = tf('s');
+C = tf('s'); % Preallocate Controller
+K_p = zeros(2,2); % Store Parameter
+K_i = zeros(2,2); % Store Parameter
+K_d = zeros(2,2); % Sotre Parameter
 
 for output = 1:2
     for input = 1:2
@@ -63,9 +73,14 @@ end
 
 for output = 1:sys_size(2)
     opts = pidtuneOptions('PhaseMargin',PM(1,output));
-    C(output,sys_pair(output,1)) = pidtune(TF(output,sys_pair(output,1)),'PI',opts);
+    currentControl = pidtune(TF(output,sys_pair(output,1)),'PI',opts);
+    [kp, ki, kd] = piddata(currentControl);
+    K_p(output,sys_pair(output,1)) = kp;
+    K_i(output,sys_pair(output,1)) = ki;
+    K_d(output,sys_pair(output,1)) = kd;
 end
 
+C = pid2(K_p, K_i, K_d, 0, b, 0);
 % Close the loop
 %CL = feedback(TF*C,eye(2));
 end

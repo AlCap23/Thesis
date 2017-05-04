@@ -19,9 +19,18 @@ G = tf({-7.4,136;-1.83,-14},...
     'OutputName',{'Temperature','Pressure'});
 %% Decouple via RGA
 C1 = Decoupling_RGA(G);
-% Closed Loop
-CL1 = feedback(G*C1,eye(2));
-
+% Preprocess PID2 Object -> Set Point Weight
+C = tf(C1); % Convert to TF
+CA = C(1); % Set Point Controller
+CB = C(2); % Feedback Controller
+for Inputs = 1:2
+    for Outputs = 1:2
+        CR(Outputs,Inputs) = CA(:,:,Outputs,Inputs); % w -> u
+        CY(Outputs,Inputs) = CB(:,:,Outputs,Inputs); % y -> u
+    end
+end
+% Closed Loop 
+CL1 = CR*feedback(G,CY,+1);
 %% Decouple via Aström
 C2 = Decoupling_A(G,[0.1, 0.1, 2, 2],'AMIGO',0);
 % Preprocess PID2 Object -> Set Point Weight
