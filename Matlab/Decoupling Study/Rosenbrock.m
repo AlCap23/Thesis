@@ -69,7 +69,7 @@ for Inputs = 1:2
     end
 end
 % Get the gamma Matrix
-gamma = [1, -G(1,2)/G(1,1);-G(2,1)/G(2,2),1]
+gamma = [1, -G(1,2)/dcgain(G(1,1));-G(2,1)/dcgain(G(2,2)),1]
 % Closed Loop
 CL4 = (gamma*CR)*feedback(G,gamma*CY,+1);
 %% Get Results

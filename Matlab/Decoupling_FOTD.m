@@ -43,7 +43,7 @@ MProd = prod(MS); % Sensitivy Product
 
 % Set set point weight
 if ~exist('SetPointWeight','var')
-    b = 1; % Design normal controller
+    b = 0; % Design normal controller
 else
     b = SetPointWeight; % Use given Set Point Weight
 end

@@ -46,7 +46,7 @@ MProd = prod(MS); % Sensitivy Product
 
 % Set set point weight
 if ~exist('SetPointWeight','var')
-    b = 1; % Design normal controller
+    b = 0; % Design normal controller
 else
     b = SetPointWeight; % Use given Set Point Weight
 end
@@ -55,7 +55,7 @@ end
 D = inv(dcgain(TF));
 
 % Get the new system Q
-Q = pade(TF,6)*D;
+Q = pade(TF,6)*D
 % Check if the main diagonal elements are of order 1
 for output = 1: sys_size(1)
     % Check for TF Order, if one diagonal is of higher Order the process is

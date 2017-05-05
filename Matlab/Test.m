@@ -19,11 +19,11 @@ for Sample = 1:Max_Sample
    G2 = tf(K(2),[T(2),1],'IODelay',L(2));
    % Approximate the third
    % Delay
-   LA = mean(L);
+   LA = max(L);
    % Gain
    KA = dcgain(G1+G2);
    % Time Constant
-   TA = (K(1)*(T(1)+L(1)) + K(2)*(T(2)+L(2)))/(K(1)+K(2)) - LA;
+   TA = (K(1)*(T(1)+L(1)) + K(2)*(T(2)+L(2)))/KA - LA;
    % TF
    GA = tf(KA,[TA,1],'IODelay',LA);
    % Plot Step
