@@ -54,9 +54,14 @@ TV = zeros(sys_size); % Process Time Constant
 LV = zeros(sys_size); % Process Delay
 for Outputs = 1:sys_size(1)
    for Inputs = 1:sys_size(2)
-       KV(Outputs,Inputs) = dcgain(TF(Outputs,Inputs))/TF(Outputs,Inputs).Denominator{:,:}(end); % Gain
-       TV(Outputs,Inputs) = TF(Outputs,Inputs).Denominator{:,:}(end-1)/TF(Outputs,Inputs).Denominator{:,:}(end); % Time Constant
+       KV(Outputs,Inputs) = dcgain(TF(Outputs,Inputs)); % Gain
+       if length(TF(Outputs,Inputs).Denominator{:,:}(end)) > 1
+           TV(Outputs,Inputs) = TF(Outputs,Inputs).Denominator{:,:}(end-1)/TF(Outputs,Inputs).Denominator{:,:}(end); % Time Constant
+       else
+           TV(Outputs,Inputs) = 0;
+       end
        LV(Outputs,Inputs) = TF(Outputs,Inputs).IODelay; % Delay
+       
    end
 end
 
@@ -90,7 +95,7 @@ switch Method
             
             % Check for interaction -> if not met, use different parameter
             
-            %% Difference to Aström for coupling!
+            %% Difference to Astrï¿½m for coupling!
             % Get gamma' which is gamma / (K_Input * (T_Output+L_Output -T_Input-L_Input))
             input = sys_size(2)-outputs+1; % (Number of inputs) - (current output) +1 = complementary input
             c1 = -1*abs(k(1,sys_size(2))) / abs(MProd); % Normal Interaction gamma
@@ -132,7 +137,7 @@ switch Method
                 % If the Condition is not met, scale kI down and calculate kP via
                 % Pole Placement
                 kI = - c1;
-                % From Pole Placement, Aström Häggalund, PID Control p.174
+                % From Pole Placement, Astrï¿½m Hï¿½ggalund, PID Control p.174
                 Damping = 1.0; % Assume high damping
                 omega = sqrt(abs(kI*KV(outputs,outputs)*TV(outputs,outputs))); % We could apply omega = omega*L to get an upper bound
                 % Assume the small signal equation / Taylor series approximation
@@ -154,11 +159,11 @@ switch Method
             % Get the parameter
             [kP,kI] = piddata(TunedControl);
             
-            %% Difference to Aström for coupling!
+            %% Difference to Astrï¿½m for coupling!
             % Get gamma' which is gamma / (K_Input * (T_Output+L_Output -T_Input-L_Input))
             input = sys_size(2)-outputs+1; % (Number of inputs) - (current output) +1 = complementary input
             c1 = -1*abs(k(1,sys_size(2))) / abs(MProd); % Normal Interaction gamma
-            c1 = c1 / (KV(input,input)*(TV(outputs,outputs)+LV(outputs,outputs) -TV(input,input)+LV(input,input))); % Modified Interaction gamma'
+            c1 = c1 / (KV(input,input)*(TV(outputs,outputs)+LV(outputs,outputs) -TV(input,input)+LV(input,input))) % Modified Interaction gamma'
             
             %% Normal algorithm
             
@@ -199,7 +204,7 @@ switch Method
                 % If the Condition is not met, scale kI down and calculate kP via
                 % Iteration of the Detuning
                 counter = 0; % counter for break
-                while abs(abs(kI) - abs(c1)) > 1e-5
+                while abs(kI) - abs(c1) > 1e-5
                     if counter > 1000
                         break
                     end

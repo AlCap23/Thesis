@@ -2,7 +2,7 @@ function C = Decoupling_A(TF,Constrains,Method,SetPointWeight)
 %% Decouples a MIMO System based on
 %
 %   Design of decoupled PID controllers for MIMO systems
-%   by Aström, Johansson and Wang
+%   by Astrï¿½m, Johansson and Wang
 %   http://ieeexplore.ieee.org/abstract/document/946038/
 %
 
@@ -132,7 +132,7 @@ switch Method
                 % Calculate the terms
                 Damping = 1; % Assume High Damping
                 T = Q(outputs,outputs).Denominator{1,1}(end-1)/Q(outputs,outputs).Denominator{1,1}(end); % Time Constant of Process
-                K = Q(outputs,outputs).Numerator{1,1}(end)/Q(outputs,outputs).Denominator{1,1}(end); % Process Gain
+                K = dcgain(Q(outputs,outputs)); % Process Gain
                 % Calculate ki from quadratic equation for sqrt(ki) based on Pole
                 % Placement
                 a1 = 1+2*Damping*b;
@@ -158,11 +158,11 @@ switch Method
                 % If the Condition is not met, scale kI down and calculate kP via
                 % Pole Placement
                 kI = k(1,sys_size(2)) / abs(kc(1,sys_size(2)-outputs+1)*MProd);
-                % From Pole Placement, Aström Häggalund, PID Control p.174
+                % From Pole Placement, Astrï¿½m Hï¿½ggalund, PID Control p.174
                 Damping = 1.0; % Assume high damping
-                omega = sqrt(abs(kI*Q(outputs,outputs).Numerator{1,1}(end)*Q(outputs,outputs).Denominator{1,1}(end-1)));
+                omega = sqrt(abs(kI*dcgain(Q(outputs,outputs))*Q(outputs,outputs).Denominator{1,1}(end-1)/Q(outputs,outputs).Denominator{1,1}(end)));
                 % Assume the small signal equation / Taylor series approximation
-                kP = (2*Damping*omega*Q(outputs,outputs).Denominator{1,1}(end-1) -1)/Q(outputs,outputs).Numerator{1,1}(end);
+                kP = (2*Damping*omega*Q(outputs,outputs).Denominator{1,1}(end-1)/Q(outputs,outputs).Denominator{1,1}(end) -1)/dcgain(Q(outputs,outputs));
                 % Get the parameter
                 K_p(outputs,outputs) =kP;
                 K_i(outputs,outputs) = kI;
@@ -189,7 +189,7 @@ switch Method
                 % Calculate the terms
                 Damping = 1; % Assume High Damping
                 T = Q(outputs,outputs).Denominator{1,1}(end-1)/Q(outputs,outputs).Denominator{1,1}(end); % Time Constant of Process
-                K = Q(outputs,outputs).Numerator{1,1}(end)/Q(outputs,outputs).Denominator{1,1}(end); % Process Gain
+                K = dcgain(Q(outputs,outputs)); % Process Gain
                 % Calculate ki from quadratic equation for sqrt(ki) based on Pole
                 % Placement
                 a1 = 1+2*Damping*b;
@@ -243,6 +243,8 @@ switch Method
         end
 end 
 % Create a PID Controller with Set Point Weight
+K_p = D*K_p;
+K_i = D*K_i;
 C = pid2(K_p,K_i,0,0,b,0);
 
 % Closing the loop for set point weight b = 0

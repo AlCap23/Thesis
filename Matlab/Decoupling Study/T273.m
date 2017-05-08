@@ -6,7 +6,7 @@ clear all
 close all
 clc
 
-% Add path for functions
+% Add path for functions -> Windows only
 addpath('C:\Users\juliu\Documents\GIT\New folder\Matlab')
 
 
@@ -31,7 +31,7 @@ for Inputs = 1:2
 end
 % Closed Loop 
 CL1 = CR*feedback(G,CY,+1);
-%% Decouple via Aström
+%% Decouple via Astrï¿½m
 C2 = Decoupling_A(G,[0.1, 0.1, 2, 2],'AMIGO',0);
 % Preprocess PID2 Object -> Set Point Weight
 C = tf(C2); % Convert to TF
@@ -45,7 +45,7 @@ for Inputs = 1:2
 end
 % Closed Loop 
 CL2 = CR*feedback(G,CY,+1);
-%% Decouple via Modified Aström
+%% Decouple via Modified Astrï¿½m
 C3 = Decoupling_FOTD(G,[0.1, 0.1, 2, 2],'AMIGO',0);
 % Preprocess PID2 Object -> Set Point Weight
 C = tf(C3); % Convert to TF
@@ -59,7 +59,7 @@ for Inputs = 1:2
 end
 % Closed Loop
 CL3 = CR*feedback(G,CY,+1);
-% %% Decouple via Modified Aström
+% %% Decouple via Modified Astrï¿½m
 % C4 = Decoupling_D(G,[0.1, 0.1, sqrt(2), sqrt(2)],'AMIGO',0);
 % % Preprocess PID2 Object -> Set Point Weight
 % C = tf(C4); % Convert to TF
