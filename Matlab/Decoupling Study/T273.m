@@ -32,7 +32,7 @@ end
 % Closed Loop 
 CL1 = CR*feedback(G,CY,+1);
 %% Decouple via Astr�m
-C2 = Decoupling_A(G,[0.1, 0.1, 2, 2],'AMIGO',0);
+C2 = Decoupling_A(G,[0.1, 0.1, sqrt(2), sqrt(2)],'AMIGO',0);
 % Preprocess PID2 Object -> Set Point Weight
 C = tf(C2); % Convert to TF
 CA = C(1); % Set Point Controller
@@ -46,7 +46,7 @@ end
 % Closed Loop 
 CL2 = CR*feedback(G,CY,+1);
 %% Decouple via Modified Astr�m
-C3 = Decoupling_FOTD(G,[0.1, 0.1, 2, 2],'AMIGO',0);
+C3 = Decoupling_FOTD(G,[0.1, 0.5, sqrt(2), sqrt(2)],'AMIGO',0);
 % Preprocess PID2 Object -> Set Point Weight
 C = tf(C3); % Convert to TF
 CA = C(1); % Set Point Controller
@@ -85,4 +85,3 @@ grid on
 step(CL2)
 step(CL3)
 legend('RGA','Decoupling with Q Design','Decoupling with G Design')
-fig2plotly()
