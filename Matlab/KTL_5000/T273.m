@@ -47,7 +47,7 @@ G_M.IODelay = zeros(size(G));
 G_D = tf([1,1;1,1]);
 G_D.IODelay = G.IODelay;
 %% Decouple via RGA
-C1 = Decoupling_RGA(G,Constrains,'DC',1);
+C1 = Decoupling_RGA(G,Constrains,'DC',0);
 % Preprocess PID2 Object -> Set Point Weight
 C = tf(C1); % Convert to TF
 CA = C(1); % Set Point Controller
@@ -67,7 +67,7 @@ OL1 = (CR-CY)*G;
 CL1.InputName = {'Fan';'Valve'};
 CL1.OutputName = {'Temperature';'Pressure'};
 %% Decouple via Astr�m
-C2 = Decoupling_A(G,Constrains,'AMIGO',1);
+C2 = Decoupling_A(G,Constrains,'AMIGO',0);
 % Preprocess PID2 Object -> Set Point Weight
 C = tf(C2); % Convert to TF
 CA = C(1); % Set Point Controller
@@ -84,7 +84,7 @@ OL2 = (CR-CY)*G;
 CL2.InputName = {'Fan';'Valve'};
 CL2.OutputName = {'Temperature';'Pressure'};
 %% Decouple via Modified Astr�m
-C3 = Decoupling_FOTD(G,Constrains,'AMIGO',1);
+C3 = Decoupling_FOTD(G,Constrains,'AMIGO',0);
 % Preprocess PID2 Object -> Set Point Weight
 C = tf(C3); % Convert to TF
 CA = C(1); % Set Point Controller
