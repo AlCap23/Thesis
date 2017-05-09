@@ -179,10 +179,10 @@ switch Method
             % PDF ). Calculate the Factor
             % First Loop Correction
             g1 = KV(1,2)*KV(2,1) / ( KV(1,1) * KV(2,2) ) * (TV(1,2)-TV(1,1))/TV(1,1);
-            %g1 = 0;
+            g1 = 0;
             % Second Loop Correction
             g2 = KV(1,2)*KV(2,1) / ( KV(1,1) * KV(2,2) ) * (TV(2,1)-TV(2,2))/TV(2,2);
-            %g2 = 0;
+            g2 = 0;
             c1 = 1*abs(k(1,outputs))*(1-g1)*(1-g2) / abs(MProd); % Normal Interaction gamma 
             c1 = c1 / (KV(outputs,input)*(TV(outputs,outputs)+LV(outputs,outputs) - TV(outputs,input)-LV(outputs,input))); % Modified Interaction gamma'
             
@@ -250,10 +250,10 @@ switch Method
 end
 
 % Create the controller on the minor diagonal
-K_p(1,2) = -KV(1,2)/KV(1,1)*K_p(2,2);
+K_p(1,2) =-KV(1,2)/KV(1,1)*K_p(2,2);
 K_p(2,1) = -KV(2,1)/KV(2,2)*K_p(1,1);
 
-K_i(1,2) = -KV(1,2)/KV(1,1)*K_i(2,2);
+K_i(1,2) =-KV(1,2)/KV(1,1)*K_i(2,2);
 K_i(2,1) = -KV(2,1)/KV(2,2)*K_i(1,1);
 
 % Create a PID Controller with Set Point Weight

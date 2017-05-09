@@ -9,9 +9,9 @@ clc
 
 % Input
 % Operating point
-Current = 5;
+Current = 1;
 % Constrains
-Constrains = [0.05,1,1.2,3];
+Constrains = [0.01,100,sqrt(2),sqrt(2)];
 
 % Add path for functions -> Windows only
 addpath('C:\Users\juliu\Documents\GIT\New folder\Matlab');
@@ -50,6 +50,9 @@ for Inputs = 1:2
         CY(Outputs,Inputs) = CB(:,:,Outputs,Inputs); % y -> u
     end
 end
+% Store the Controller
+CR1 = CR
+CY1 = CY
 % Closed Loop 
 CL1 = CR*feedback(G,CY,+1);
 CL1.InputName = {'Fan';'Valve'};
@@ -82,26 +85,24 @@ for Inputs = 1:2
         CY(Outputs,Inputs) = CB(:,:,Outputs,Inputs); % y -> u
     end
 end
+% Store the controller
+CR3 = CR;
+CY3 = CY;
 % Closed Loop
 CL3 = CR*feedback(G,CY,+1);
 CL3.InputName = {'Fan';'Valve'};
 CL3.OutputName = {'Temperature';'Pressure'};
-%% Decouple via Partial Dynamic
-C4 = Decoupling_D(G,Constrains,'AMIGO',0);
-% Preprocess PID2 Object -> Set Point Weight
-C = tf(C4); % Convert to TF
-CA = C(1); % Set Point Controller
-CB = C(2); % Feedback Controller
-for Inputs = 1:2
-    for Outputs = 1:2
-        CR(Outputs,Inputs) = CA(:,:,Outputs,Inputs); % w -> u
-        CY(Outputs,Inputs) = CB(:,:,Outputs,Inputs); % y -> u
-    end
-end
-% Get the gamma Matrix
-gamma = [1, -G(1,2)/dcgain(G(1,1));-G(2,1)/dcgain(G(2,2)),1]
-% Closed Loop
-CL4 = (gamma*CR)*feedback(G,gamma*CY,+1);
+%% Mixing
+% Since the temperature control is faster from G -> Use G
+CR(:,1) = CR3(:,1);
+CY(:,1) = CY3(:,1);
+% Use RGA for Pressure control
+CR(:,2) = CR1(:,2);
+CY(:,2) = CY1(:,2);
+% Close the loop
+CL4 = CR*feedback(G,CY,+1);
+CL4.InputName = {'Fan';'Valve'};
+CL4.OutputName = {'Temperature';'Pressure'};
 %% Get Results for Step Response
 figure(1)
 step(CL1)
@@ -110,7 +111,7 @@ grid on
 step(CL2)
 step(CL3)
 step(CL4)
-legend('RGA','Decoupling with Q Design','Decoupling with G Design','Partial Dynamic Decoupling')
+legend('RGA','Decoupling with Q Design','Decoupling with G Design')
 
 %% Define a Test Simulation - Constant Temperature
 time = 0:1:10000; % Time
@@ -127,7 +128,7 @@ grid on
 lsim(CL2,u,time)
 lsim(CL3,u,time)
 lsim(CL4,u,time)
-legend('RGA','Decoupling with Q Design','Decoupling with G Design','Partial Dynamic Decoupling')
+legend('RGA','Decoupling with Q Design','Decoupling with G Design')
 
 %% Define a Test Simulation - Constant Pressure
 u = zeros(2,length(time)); % Set Point
@@ -143,4 +144,4 @@ grid on
 lsim(CL2,u,time)
 lsim(CL3,u,time)
 lsim(CL4,u,time)
-legend('RGA','Decoupling with Q Design','Decoupling with G Design','Partial Dynamic Decoupling')
+legend('RGA','Decoupling with Q Design','Decoupling with G Design')
