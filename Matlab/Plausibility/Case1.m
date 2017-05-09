@@ -30,6 +30,7 @@ for Inputs = 1:2
     end
 end
 % Closed Loop 
+S1 = inv(eye(2)+G*CY);
 CL1 = CR*feedback(G,CY,+1);
 %% Decouple via Astr�m
 C2 = Decoupling_A(G,[0.1, 0.1, 2, 2],'AMIGO',0);
@@ -44,6 +45,7 @@ for Inputs = 1:2
     end
 end
 % Closed Loop 
+S2 = inv(eye(2)+G*CY);
 CL2 = CR*feedback(G,CY,+1);
 %% Decouple via Modified Astr�m
 C3 = Decoupling_FOTD(G,[0.1, 0.1, 2, 2],'AMIGO',0);
@@ -58,6 +60,7 @@ for Inputs = 1:2
     end
 end
 % Closed Loop
+S3 = inv(eye(2)+G*CY);
 CL3 = CR*feedback(G,CY,+1);
 % %% Decouple via Modified Astr�m
 % C4 = Decoupling_D(G,[0.1, 0.1, sqrt(2), sqrt(2)],'AMIGO',0);

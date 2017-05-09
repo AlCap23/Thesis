@@ -55,7 +55,7 @@ LV = zeros(sys_size); % Process Delay
 for Outputs = 1:sys_size(1)
    for Inputs = 1:sys_size(2)
        KV(Outputs,Inputs) = dcgain(TF(Outputs,Inputs)); % Gain
-       if length(TF(Outputs,Inputs).Denominator{:,:}(end)) > 1
+       if length(TF(Outputs,Inputs).Denominator{:,:}) > 1
            TV(Outputs,Inputs) = TF(Outputs,Inputs).Denominator{:,:}(end-1)/TF(Outputs,Inputs).Denominator{:,:}(end); % Time Constant
        else
            TV(Outputs,Inputs) = 0;
@@ -175,7 +175,15 @@ switch Method
             TunedControl = C(input,input);
             % Get the parameter
             [kP,kI] = piddata(C(input,input));
-            c1 = -1*abs(k(1,outputs)) / abs(MProd); % Normal Interaction gamma 
+            % We know the Sensitivity of Q is equivalent to S_ii ( see
+            % PDF ). Calculate the Factor
+            % First Loop Correction
+            g1 = KV(1,2)*KV(2,1) / ( KV(1,1) * KV(2,2) ) * (TV(1,2)-TV(1,1))/TV(1,1)
+            %g1 = 0;
+            % Second Loop Correction
+            g2 = KV(1,2)*KV(2,1) / ( KV(1,1) * KV(2,2) ) * (TV(2,1)-TV(2,2))/TV(2,2)
+            %g2 = 0;
+            c1 = 1*abs(k(1,outputs))*(1-g1)*(1-g2) / abs(MProd); % Normal Interaction gamma 
             c1 = c1 / (KV(outputs,input)*(TV(outputs,outputs)+LV(outputs,outputs) - TV(outputs,input)-LV(outputs,input))); % Modified Interaction gamma'
             
             %% Normal algorithm
@@ -196,7 +204,7 @@ switch Method
                 % Check the decoupling condition iteratively
                 % Iteration of the Detuning
                 counter = 0; % counter for break
-                while abs(a1*kI+b1*sqrt(kI)) + c1 > 1e-5
+                while abs(a1*kI+b1*sqrt(kI)) - abs(c1) > 1e-5
                     if counter > 1000
                         break
                     end
@@ -213,11 +221,11 @@ switch Method
                 K_i(input,input) = kI;
                 
                 % Check for setpoint weight is zero:
-            elseif abs(kI) - abs(c1) > 1e-5
+            elseif - abs(c1) + abs(kI)  > 1e-5
                 % If the Condition is not met, scale kI down and calculate kP via
                 % Iteration of the Detuning
                 counter = 0; % counter for break
-                while abs(kI) - abs(c1) > 1e-5
+                while - abs(c1) + abs(kI) > 1e-5
                     if counter > 1000
                         break
                     end

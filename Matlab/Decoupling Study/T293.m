@@ -3,18 +3,22 @@
 %% Preprocessing
 
 clear all
-close all
+%close all
 clc
 
-% Add path for functions
+% Add path for functions -> Windows only
 addpath('C:\Users\juliu\Documents\GIT\New folder\Matlab')
 
 
 %% Define TF
-%  Rosenbrook Function as an example for a MIMO TF without Delay
-G = tf({12.8,-18.9;6.6,-19.4},{[16.7,1],[21,1];[10.9,1],[14.4,1]},'IODelay',[1,3;7,3]);
+% Simulation / Identification 08.05.2017 T = 293 K
+G = tf({-2.5,7.59;-1.69,-13},...
+    {[615,1],[220,1];[150,1],[120,1]},...
+    'IODelay',[92,235;32,27],...
+    'InputName',{'Fan';'Valve'},...
+    'OutputName',{'Temperature','Pressure'});
 %% Decouple via RGA
-C1 = Decoupling_RGA(G);
+C1 = Decoupling_RGA(G,[0.2, 3, 1.5, 1.5],'DC',0);
 % Preprocess PID2 Object -> Set Point Weight
 C = tf(C1); % Convert to TF
 CA = C(1); % Set Point Controller
@@ -27,36 +31,35 @@ for Inputs = 1:2
 end
 % Closed Loop 
 CL1 = CR*feedback(G,CY,+1);
-
-%% Decouple via Aström
-C2 = Decoupling_A(G,[0.2, 0.2, sqrt(2), sqrt(2)],'AMIGO');
+%% Decouple via Astrï¿½m
+C2 = Decoupling_A(G,[0.2, 3, 1.5, 1.5],'AMIGO',0);
 % Preprocess PID2 Object -> Set Point Weight
 C = tf(C2); % Convert to TF
 CA = C(1); % Set Point Controller
 CB = C(2); % Feedback Controller
 for Inputs = 1:2
     for Outputs = 1:2
-        CR(Inputs,Outputs) = CA(:,:,Inputs,Outputs); % w -> u
-        CY(Inputs,Outputs) = CB(:,:,Inputs,Outputs); % y -> u
+        CR(Outputs,Inputs) = CA(:,:,Outputs,Inputs); % w -> u
+        CY(Outputs,Inputs) = CB(:,:,Outputs,Inputs); % y -> u
     end
 end
 % Closed Loop 
 CL2 = CR*feedback(G,CY,+1);
-%% Decouple via Modified Aström
-C3 = Decoupling_FOTD(G,[0.2, 0.2, sqrt(2), sqrt(2)],'AMIGO');
+%% Decouple via Modified Astrï¿½m
+C3 = Decoupling_FOTD(G,[.2, 3, 1.5, 1.5],'AMIGO',0);
 % Preprocess PID2 Object -> Set Point Weight
 C = tf(C3); % Convert to TF
 CA = C(1); % Set Point Controller
 CB = C(2); % Feedback Controller
 for Inputs = 1:2
     for Outputs = 1:2
-        CR(Inputs,Outputs) = CA(:,:,Inputs,Outputs); % w -> u
-        CY(Inputs,Outputs) = CB(:,:,Inputs,Outputs); % y -> u
+        CR(Outputs,Inputs) = CA(:,:,Outputs,Inputs); % w -> u
+        CY(Outputs,Inputs) = CB(:,:,Outputs,Inputs); % y -> u
     end
 end
-% Closed Loop 
+% Closed Loop
 CL3 = CR*feedback(G,CY,+1);
-% %% Decouple via Modified Aström
+% %% Decouple via Modified Astrï¿½m
 % C4 = Decoupling_D(G,[0.1, 0.1, sqrt(2), sqrt(2)],'AMIGO',0);
 % % Preprocess PID2 Object -> Set Point Weight
 % C = tf(C4); % Convert to TF
@@ -75,7 +78,7 @@ CL3 = CR*feedback(G,CY,+1);
 % % Closed Loop
 % CL4 = (gamma*CR)*feedback(G,gamma*CY,+1);
 %% Get Results
-figure()
+figure(1)
 step(CL1)
 hold on
 grid on

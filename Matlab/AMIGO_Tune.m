@@ -50,7 +50,7 @@ if L < 0.2*T
         L = 0.2*T;
     end
     
-    disp('Output Delay is zero or small! Algorithm uses L = 0.1*T instead!')
+    disp('Output Delay is zero or small! Algorithm uses L = 0.2*T instead!')
 end
 
 
