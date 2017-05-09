@@ -29,3 +29,98 @@ TFData = struct('OperatingPoint',Points,...
                 'Valve_Pressure',Data22);
 % Store the struct
 save('KTL80000.mat','TFData')
+%% Analyse the Data
+c = linspace(TFData.OperatingPoint(1),TFData.OperatingPoint(end),length(TFData.OperatingPoint));
+% Static Gains
+figure()
+scatter(TFData.Fan_Temperature(1,:),TFData.Valve_Temperature(1,:),[],c,'filled')
+xlabel('Fan Temperature')
+ylabel('Valve Temperature')
+title('Static Gains influencing Temperature')
+colorbar
+grid on
+xmax = max(max(TFData.Fan_Temperature(1,:)),max(TFData.Valve_Temperature(1,:)));
+xmin = min(min(TFData.Fan_Temperature(1,:)),min(TFData.Valve_Temperature(1,:)));
+axis([xmin xmax xmin xmax])
+
+figure()
+scatter(TFData.Fan_Pressure(1,:),TFData.Valve_Pressure(1,:),[],c,'filled')
+xlabel('Fan Pressure')
+ylabel('Valve Pressure')
+title('Static Gains influencing Pressure')
+colorbar
+grid on
+xmax = max(max(TFData.Fan_Pressure(1,:)),max(TFData.Valve_Pressure(1,:)));
+xmin = min(min(TFData.Fan_Pressure(1,:)),min(TFData.Valve_Pressure(1,:)));
+axis([xmin xmax xmin xmax])
+
+figure()
+plot(TFData.OperatingPoint,abs(TFData.Fan_Temperature(1,:)./TFData.Valve_Temperature(1,:)),'o-')
+hold on
+plot(TFData.OperatingPoint,abs(TFData.Valve_Pressure(1,:)./TFData.Fan_Pressure(1,:)),'o-')
+xlabel('Operating Point')
+ylabel('Relative Influence')
+title('Relative Influence of the Main Couplings')
+grid on
+
+figure()
+scatter(abs(TFData.Fan_Temperature(1,:)./TFData.Valve_Temperature(1,:)),abs(TFData.Valve_Pressure(1,:)./TFData.Fan_Pressure(1,:)),[],c,'filled')
+xlabel('Fan Temperature')
+ylabel('Valve Pressure')
+title('Relative Influence of the Main Couplings')
+colorbar
+grid on
+%xmax = max(max(TFData.Fan_Pressure(1,:)),max(TFData.Valve_Pressure(1,:)));
+%xmin = min(min(TFData.Fan_Pressure(1,:)),min(TFData.Valve_Pressure(1,:)));
+%axis([xmin xmax xmin xmax])
+
+
+% Time Constants
+figure()
+scatter(TFData.Fan_Temperature(2,:),TFData.Valve_Temperature(2,:),[],c,'filled')
+xlabel('Fan Temperature')
+ylabel('Valve Temperature')
+title('Time Constant influencing Temperature')
+colorbar
+grid on
+xmax = max(max(TFData.Fan_Temperature(2,:)),max(TFData.Valve_Temperature(2,:)));
+xmin = min(min(TFData.Fan_Temperature(2,:)),min(TFData.Valve_Temperature(2,:)));
+axis([xmin xmax xmin xmax])
+
+figure()
+scatter(TFData.Fan_Pressure(2,:),TFData.Valve_Pressure(2,:),[],c,'filled')
+xlabel('Fan Pressure')
+ylabel('Valve Pressure')
+title('Time Constant influencing Pressure')
+colorbar
+grid on
+xmax = max(max(TFData.Fan_Pressure(2,:)),max(TFData.Valve_Pressure(2,:)));
+xmin = min(min(TFData.Fan_Pressure(2,:)),min(TFData.Valve_Pressure(2,:)));
+axis([xmin xmax xmin xmax])
+
+
+% Delay
+figure()
+scatter(TFData.Fan_Temperature(3,:),TFData.Valve_Temperature(3,:),[],c,'filled')
+xlabel('Fan Temperature')
+ylabel('Valve Temperature')
+title('Delay influencing Temperature')
+colorbar
+grid on
+xmax = max(max(TFData.Fan_Temperature(3,:)),max(TFData.Valve_Temperature(3,:)));
+xmin = min(min(TFData.Fan_Temperature(3,:)),min(TFData.Valve_Temperature(3,:)));
+axis([xmin xmax xmin xmax])
+
+figure()
+scatter(TFData.Fan_Pressure(3,:),TFData.Valve_Pressure(3,:),[],c,'filled')
+xlabel('Fan Pressure')
+ylabel('Valve Pressure')
+title('Delay Constant influencing Pressure')
+colorbar
+grid on
+xmax = max(max(TFData.Fan_Pressure(3,:)),max(TFData.Valve_Pressure(3,:)));
+xmin = min(min(TFData.Fan_Pressure(3,:)),min(TFData.Valve_Pressure(3,:)));
+axis([xmin xmax xmin xmax])
+
+
+

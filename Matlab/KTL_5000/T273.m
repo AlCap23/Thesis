@@ -9,9 +9,9 @@ clc
 
 % Input
 % Operating point
-Current = 1;
+Current = 9;
 % Constrains
-Constrains = [0.01,100,sqrt(2),sqrt(2)];
+Constrains = [0.01,.5,sqrt(2),sqrt(2)];
 
 % Add path for functions -> Windows only
 addpath('C:\Users\juliu\Documents\GIT\New folder\Matlab');
@@ -38,6 +38,14 @@ end
 
 G.InputName = {'Fan';'Valve'};
 G.OutputName = {'Temperature','Pressure'};
+
+%% Make a Model for Smith Predictor
+% Delay Free Model
+G_M = G;
+G_M.IODelay = zeros(size(G));
+% Delay Model 
+G_D = tf([1,1;1,1]);
+G_D.IODelay = G.IODelay;
 %% Decouple via RGA
 C1 = Decoupling_RGA(G,Constrains,'DC',1);
 % Preprocess PID2 Object -> Set Point Weight
@@ -51,14 +59,15 @@ for Inputs = 1:2
     end
 end
 % Store the Controller
-CR1 = CR
-CY1 = CY
+%CR1 = CR
+%CY1 = CY
 % Closed Loop 
 CL1 = CR*feedback(G,CY,+1);
+OL1 = (CR-CY)*G;
 CL1.InputName = {'Fan';'Valve'};
 CL1.OutputName = {'Temperature';'Pressure'};
 %% Decouple via Astr�m
-C2 = Decoupling_A(G,Constrains,'AMIGO',0);
+C2 = Decoupling_A(G,Constrains,'AMIGO',1);
 % Preprocess PID2 Object -> Set Point Weight
 C = tf(C2); % Convert to TF
 CA = C(1); % Set Point Controller
@@ -71,10 +80,11 @@ for Inputs = 1:2
 end
 % Closed Loop 
 CL2 = CR*feedback(G,CY,+1);
+OL2 = (CR-CY)*G;
 CL2.InputName = {'Fan';'Valve'};
 CL2.OutputName = {'Temperature';'Pressure'};
 %% Decouple via Modified Astr�m
-C3 = Decoupling_FOTD(G,Constrains,'AMIGO',0);
+C3 = Decoupling_FOTD(G,Constrains,'AMIGO',1);
 % Preprocess PID2 Object -> Set Point Weight
 C = tf(C3); % Convert to TF
 CA = C(1); % Set Point Controller
@@ -86,23 +96,24 @@ for Inputs = 1:2
     end
 end
 % Store the controller
-CR3 = CR;
-CY3 = CY;
+%CR3 = CR;
+%CY3 = CY;
 % Closed Loop
 CL3 = CR*feedback(G,CY,+1);
+OL3 = (CR-CY)*G;
 CL3.InputName = {'Fan';'Valve'};
 CL3.OutputName = {'Temperature';'Pressure'};
 %% Mixing
-% Since the temperature control is faster from G -> Use G
-CR(:,1) = CR3(:,1);
-CY(:,1) = CY3(:,1);
-% Use RGA for Pressure control
-CR(:,2) = CR1(:,2);
-CY(:,2) = CY1(:,2);
-% Close the loop
-CL4 = CR*feedback(G,CY,+1);
-CL4.InputName = {'Fan';'Valve'};
-CL4.OutputName = {'Temperature';'Pressure'};
+% % Since the temperature control is faster from G -> Use G
+% CR(:,1) = CR3(:,1);
+% CY(:,1) = CY3(:,1);
+% % Use RGA for Pressure control
+% CR(:,2) = CR1(:,2);
+% CY(:,2) = CY1(:,2);
+% % Close the loop
+% CL4 = CR*feedback(G,CY,+1);
+% CL4.InputName = {'Fan';'Valve'};
+% CL4.OutputName = {'Temperature';'Pressure'};
 %% Get Results for Step Response
 figure(1)
 step(CL1)
@@ -110,7 +121,7 @@ hold on
 grid on
 step(CL2)
 step(CL3)
-step(CL4)
+%step(CL4)
 legend('RGA','Decoupling with Q Design','Decoupling with G Design')
 
 %% Define a Test Simulation - Constant Temperature
@@ -127,7 +138,7 @@ hold on
 grid on
 lsim(CL2,u,time)
 lsim(CL3,u,time)
-lsim(CL4,u,time)
+%lsim(CL4,u,time)
 legend('RGA','Decoupling with Q Design','Decoupling with G Design')
 
 %% Define a Test Simulation - Constant Pressure
@@ -143,5 +154,5 @@ hold on
 grid on
 lsim(CL2,u,time)
 lsim(CL3,u,time)
-lsim(CL4,u,time)
+%lsim(CL4,u,time)
 legend('RGA','Decoupling with Q Design','Decoupling with G Design')
