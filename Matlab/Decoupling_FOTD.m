@@ -127,19 +127,19 @@ switch Method
                 
                 % If the Condition is not met, set kI and kP according to
                 % condition
-                if abs(a1*kI+b1*sqrt(kI)) + c1 > 1e-5
+                if abs(a1*kI+b1*sqrt(kI)) - abs(c1) > 1e-5
                     % Check Discriminant
                     if b1^2 -4*a1*c1 > 1e-2
                         kI = min([( -b1 + sqrt( b1^2 -4*a1*c1 ) ) / (2*a1) ,( -b1 - sqrt( b1^2 -4*a1*c1 ) ) / (2*a1)]);
                         kI = kI^2;
                     else
-                        kI = c1
+                        kI = - abs(c1)
                     end
                     kP = (2*Damping*T*sqrt(kI*K/T)-1)/K;
                 end
                 % Store Controller Parameter
-                K_p(input,input) = kP;
-                K_i(input,input) = kI;
+                K_p(input,input) = kP
+                K_i(input,input) = kI
             % Check for setpoint weight is zero:
             
             elseif abs(kI) - abs(c1) > 1e-5
@@ -178,10 +178,10 @@ switch Method
             % We know the Sensitivity of Q is equivalent to S_ii ( see
             % PDF ). Calculate the Factor
             % First Loop Correction
-            g1 = KV(1,2)*KV(2,1) / ( KV(1,1) * KV(2,2) ) * (TV(1,2)-TV(1,1))/TV(1,1)
+            g1 = KV(1,2)*KV(2,1) / ( KV(1,1) * KV(2,2) ) * (TV(1,2)-TV(1,1))/TV(1,1);
             %g1 = 0;
             % Second Loop Correction
-            g2 = KV(1,2)*KV(2,1) / ( KV(1,1) * KV(2,2) ) * (TV(2,1)-TV(2,2))/TV(2,2)
+            g2 = KV(1,2)*KV(2,1) / ( KV(1,1) * KV(2,2) ) * (TV(2,1)-TV(2,2))/TV(2,2);
             %g2 = 0;
             c1 = 1*abs(k(1,outputs))*(1-g1)*(1-g2) / abs(MProd); % Normal Interaction gamma 
             c1 = c1 / (KV(outputs,input)*(TV(outputs,outputs)+LV(outputs,outputs) - TV(outputs,input)-LV(outputs,input))); % Modified Interaction gamma'
@@ -205,7 +205,7 @@ switch Method
                 % Iteration of the Detuning
                 counter = 0; % counter for break
                 while abs(a1*kI+b1*sqrt(kI)) - abs(c1) > 1e-5
-                    if counter > 1000
+                    if counter > 10000
                         break
                     end
                     TunedControl = AMIGO_Detune(TunedControl,TF(input,input));
@@ -226,7 +226,7 @@ switch Method
                 % Iteration of the Detuning
                 counter = 0; % counter for break
                 while - abs(c1) + abs(kI) > 1e-5
-                    if counter > 1000
+                    if counter > 10000
                         break
                     end
                     

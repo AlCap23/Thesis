@@ -1,0 +1,128 @@
+%%
+
+%% Preprocessing
+
+clear all
+close all
+clc
+%% Preparation
+
+% Input
+% Operating point
+Current = 1;
+% Constrains
+Constrains = [.1,200,sqrt(2),sqrt(2)];
+
+% Add path for functions -> Windows only
+addpath('C:\Users\juliu\Documents\GIT\New folder\Matlab');
+addpath('C:\Users\juliu\Documents\GIT\New folder\Matlab\KTL_5000');
+% Get the information from Simulation study
+load('KTL50000.mat');
+
+% Get the TF Data
+OP = TFData.OperatingPoint(Current);
+KV = [TFData.Fan_Temperature(1,Current),TFData.Valve_Temperature(1,Current);...
+      TFData.Fan_Pressure(1,Current),TFData.Valve_Pressure(1,Current)];
+TV = [TFData.Fan_Temperature(2,Current),TFData.Valve_Temperature(2,Current);...
+      TFData.Fan_Pressure(2,Current),TFData.Valve_Pressure(2,Current)];
+LV = [TFData.Fan_Temperature(3,Current),TFData.Valve_Temperature(3,Current);...
+      TFData.Fan_Pressure(3,Current),TFData.Valve_Pressure(3,Current)];
+
+ %% Make a transfer Function
+G = tf('s');
+for Inputs = 1:2
+    for Outputs = 1:2
+        G(Outputs,Inputs) = tf(KV(Outputs,Inputs),[TV(Outputs,Inputs),1],'IODelay',LV(Outputs,Inputs));
+    end
+end
+
+G.InputName = {'Fan';'Valve'};
+G.OutputName = {'Temperature','Pressure'};
+%% Decouple via RGA
+C1 = Decoupling_RGA(G,Constrains,'DC',0);
+% Preprocess PID2 Object -> Set Point Weight
+C = tf(C1); % Convert to TF
+CA = C(1); % Set Point Controller
+CB = C(2); % Feedback Controller
+for Inputs = 1:2
+    for Outputs = 1:2
+        CR(Outputs,Inputs) = CA(:,:,Outputs,Inputs); % w -> u
+        CY(Outputs,Inputs) = CB(:,:,Outputs,Inputs); % y -> u
+    end
+end
+% Closed Loop 
+CL1 = CR*feedback(G,CY,+1);
+CL1.InputName = {'Fan';'Valve'};
+CL1.OutputName = {'Temperature';'Pressure'};
+%% Decouple via Astr�m
+C2 = Decoupling_A(G,Constrains,'AMIGO',0);
+% Preprocess PID2 Object -> Set Point Weight
+C = tf(C2); % Convert to TF
+CA = C(1); % Set Point Controller
+CB = C(2); % Feedback Controller
+for Inputs = 1:2
+    for Outputs = 1:2
+        CR(Outputs,Inputs) = CA(:,:,Outputs,Inputs); % w -> u
+        CY(Outputs,Inputs) = CB(:,:,Outputs,Inputs); % y -> u
+    end
+end
+% Closed Loop 
+CL2 = CR*feedback(G,CY,+1);
+CL2.InputName = {'Fan';'Valve'};
+CL2.OutputName = {'Temperature';'Pressure'};
+%% Decouple via Modified Astr�m
+C3 = Decoupling_FOTD(G,Constrains,'AMIGO',0);
+% Preprocess PID2 Object -> Set Point Weight
+C = tf(C3); % Convert to TF
+CA = C(1); % Set Point Controller
+CB = C(2); % Feedback Controller
+for Inputs = 1:2
+    for Outputs = 1:2
+        CR(Outputs,Inputs) = CA(:,:,Outputs,Inputs); % w -> u
+        CY(Outputs,Inputs) = CB(:,:,Outputs,Inputs); % y -> u
+    end
+end
+% Closed Loop
+CL3 = CR*feedback(G,CY,+1);
+CL3.InputName = {'Fan';'Valve'};
+CL3.OutputName = {'Temperature';'Pressure'};
+
+%% Get Results for Step Response
+figure(1)
+step(CL1)
+hold on
+grid on
+step(CL2)
+step(CL3)
+legend('RGA','Decoupling with Q Design','Decoupling with G Design')
+
+%% Define a Test Simulation - Constant Temperature
+time = 0:1:10000; % Time
+u = zeros(2,length(time)); % Set Point
+u(1,:) = 0; % Temperature
+u(2,1:200) = 0; % Vary Pressure
+u(2,200:4999) = 10;
+u(2,3000:end) = -10;
+
+figure(2)
+lsim(CL1,u,time)
+hold on
+grid on
+lsim(CL2,u,time)
+lsim(CL3,u,time)
+legend('RGA','Decoupling with Q Design','Decoupling with G Design')
+
+%% Define a Test Simulation - Constant Pressure
+u = zeros(2,length(time)); % Set Point
+u(1,1:200) = 0; % Temperature
+u(1,201:3000) = 10; 
+u(1,3001:end) = -10;
+u(2,:) = 0; % Vary Pressure
+
+figure(3)
+lsim(CL1,u,time)
+hold on
+grid on
+lsim(CL2,u,time)
+lsim(CL3,u,time)
+legend('RGA','Decoupling with Q Design','Decoupling with G Design')
