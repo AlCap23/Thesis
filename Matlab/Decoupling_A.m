@@ -55,7 +55,11 @@ end
 D = inv(dcgain(TF));
 
 % Get the new system Q
-Q = pade(TF,6)*D
+if abs(sum(sum(TF.IODelay))) > 0
+    Q = pade(TF,6)*D;
+else
+    Q = TF*D
+end
 % Check if the main diagonal elements are of order 1
 for output = 1: sys_size(1)
     % Check for TF Order, if one diagonal is of higher Order the process is
@@ -215,11 +219,11 @@ switch Method
                 K_i(outputs,outputs) = kI;
                 
                 % Check for setpoint weight is zero:
-            elseif abs(kI) - abs(k(1,sys_size(2))) / abs(kc(1,sys_size(2)-outputs+1)*MProd) > 1e-4
+            elseif + abs(kI) - abs(k(1,sys_size(2))) / abs(kc(1,sys_size(2)-outputs+1)*MProd) > 1e-5
                 % If the Condition is not met, scale kI down and calculate kP via
                 % Iteration of the Detuning
                 counter = 0; % counter for break
-                while abs(kI) - abs(k(1,sys_size(2))) / abs(kc(1,sys_size(2)-outputs+1)*MProd) > 1e-5
+                while + abs(kI) - abs(k(1,sys_size(2))) / abs(kc(1,sys_size(2)-outputs+1)*MProd) > 1e-5
                     if counter > 1000
                         break
                     end

@@ -79,6 +79,6 @@ figure()
 step(CL1)
 hold on
 grid on
-%step(CL2)
+step(CL2)
 step(CL3)
-legend('RGA','Decoupling with G Design')
+legend('RGA','Decoupling with Q Design','Decoupling with G Design')
