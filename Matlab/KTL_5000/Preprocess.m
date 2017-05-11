@@ -54,8 +54,8 @@ grid on
 
 %% Get the interaction for every operation point
 DK = TFData.Fan_Temperature(1,:).* TFData.Valve_Pressure(1,:) - TFData.Fan_Pressure(1,:).* TFData.Valve_Temperature(1,:);
-kTp = TFData.Fan_Temperature(1,:).*TFData.Valve_Temperature(1,:) .*( TFData.Fan_Temperature(2,:)+TFData.Fan_Temperature(3,:) -  TFData.Valve_Temperature(2,:) - TFData.Valve_Temperature(3,:))  
-kpT = TFData.Valve_Pressure(1,:).*TFData.Fan_Pressure(1,:) .*( -TFData.Fan_Pressure(2,:)-TFData.Fan_Pressure(3,:) +  TFData.Valve_Pressure(2,:) + TFData.Valve_Pressure(3,:))  
+kTp = TFData.Fan_Temperature(1,:).*TFData.Valve_Temperature(1,:) .*( TFData.Fan_Temperature(2,:)+TFData.Fan_Temperature(3,:) -  TFData.Valve_Temperature(2,:) - TFData.Valve_Temperature(3,:));  
+kpT = TFData.Valve_Pressure(1,:).*TFData.Fan_Pressure(1,:) .*( -TFData.Fan_Pressure(2,:)-TFData.Fan_Pressure(3,:) +  TFData.Valve_Pressure(2,:) + TFData.Valve_Pressure(3,:));
 
 figure()
 plot(TFData.OperatingPoint,DK./(TFData.Fan_Temperature(1,:).* TFData.Valve_Pressure(1,:)),'o-')
@@ -71,6 +71,22 @@ ylabel('Coupling Factor from Temperature to Pressure')
 title('Coupling Factors')
 colorbar
 grid on
+
+figure()
+plot(TFData.OperatingPoint,TFData.Fan_Temperature(2,:)+TFData.Fan_Temperature(3,:),'o-',TFData.OperatingPoint,TFData.Valve_Temperature(2,:)+TFData.Valve_Temperature(3,:),'o-')
+grid on
+title('Similarity of the Process Parameter')
+xlabel('Operting Points')
+ylabel('T+L')
+legend('Fan to Temperature','Valve to Temperature')
+
+figure()
+plot(TFData.OperatingPoint,TFData.Fan_Pressure(2,:)+TFData.Fan_Pressure(3,:),'o-',TFData.OperatingPoint,TFData.Valve_Pressure(2,:)+TFData.Valve_Pressure(3,:),'o-')
+grid on
+title('Similarity of the Process Parameter')
+xlabel('Operting Points')
+ylabel('T+L')
+legend('Fan to Pressure','Valve to Pressure')
 
 %% Other Analysis Tools
 % Static Gains

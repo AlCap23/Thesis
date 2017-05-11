@@ -52,14 +52,29 @@ else
 end
 
 % Get the Decoupler D
-D = inv(dcgain(TF));
+D = inv(dcgain(TF))
 
 % Get the new system Q
 if abs(sum(sum(TF.IODelay))) > 0
-    Q = pade(TF,6)*D;
+    Q = pade(TF,6)*D
 else
     Q = TF*D
 end
+
+% figure()
+% step(TF)
+% hold on
+% grid on
+% step(Q)
+% legend('G','Q')
+% 
+% figure()
+% bode(TF)
+% hold on
+% grid on
+% bode(Q)
+% legend('G','Q')
+
 % Check if the main diagonal elements are of order 1
 for output = 1: sys_size(1)
     % Check for TF Order, if one diagonal is of higher Order the process is

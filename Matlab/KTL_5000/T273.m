@@ -9,7 +9,7 @@ clc
 
 % Input
 % Operating point
-Current = 1;
+Current = 9;
 % Constrains
 Constrains = [0.01,.5,sqrt(2),sqrt(2)];
 
