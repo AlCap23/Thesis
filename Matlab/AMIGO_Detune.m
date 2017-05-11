@@ -1,8 +1,8 @@
 function c = AMIGO_Detune(C,TF,k_p,MS)
-%Computes a controller based on the AMIGO Detuning Rules by Aström ,
-%Hägglund, Adavanced PID Control, p.253 ff
+%Computes a controller based on the AMIGO Detuning Rules by Astrï¿½m ,
+%Hï¿½gglund, Adavanced PID Control, p.253 ff
 %The function returns a Controller of PI or PID type. The controller is
-%tuned by using the AMIGO principles described by Aström and Hägglund in
+%tuned by using the AMIGO principles described by Astrï¿½m and Hï¿½gglund in
 %'Advanced PID Control' p. 253 ff. 
 %
 %The Controllers are derived by using rules based on several test
@@ -26,7 +26,7 @@ tau = L / (L+T);
 %% Detune a PI Controller based on MS
 % Compute a new proportional gain if not given
 if ~exist('k_p','var')
-    k_p = 0.8*K_P;
+    k_p = 0.5*K_P;
 end
 
 % Maximum Sensitivity if not given

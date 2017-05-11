@@ -5,7 +5,7 @@ close all
 clc
 
 % Read Excel
-filename = 'KTL_80000.0_10_5.xlsx';
+filename = 'KTL_50000.0_10_5.xlsx';
 % Import FOTD Parameter
 Data11 = xlsread(filename,'Fan_Temperature','B2:U4');
 Data21 = xlsread(filename,'Fan_Pressure','B2:U4');
@@ -58,7 +58,7 @@ kTp = TFData.Fan_Temperature(1,:).*TFData.Valve_Temperature(1,:) .*( TFData.Fan_
 kpT = TFData.Valve_Pressure(1,:).*TFData.Fan_Pressure(1,:) .*( -TFData.Fan_Pressure(2,:)-TFData.Fan_Pressure(3,:) +  TFData.Valve_Pressure(2,:) + TFData.Valve_Pressure(3,:))  
 
 figure()
-plot(TFData.OperatingPoint,DK./(TFData.Fan_Temperature(1,:).* TFData.Valve_Pressure(1,:)))
+plot(TFData.OperatingPoint,DK./(TFData.Fan_Temperature(1,:).* TFData.Valve_Pressure(1,:)),'o-')
 xlabel('Operating Point')
 ylabel('Determinant of the Static Gain')
 title('Coupling Estimation via the Determinant')

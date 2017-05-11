@@ -10,8 +10,10 @@ clc
 % Input
 % Operating point
 Current = 1;
+GainFactor = 1.1^1;
 % Constrains
-Constrains = [0.01,.5,sqrt(2),sqrt(2)];
+%Constrains = [0.01,.5,sqrt(2),sqrt(2)];
+Constrains = [1e5,1e5,1,1];
 
 % Add path for functions -> Windows only
 addpath('C:\Users\juliu\Documents\GIT\New folder\Matlab');
@@ -35,7 +37,9 @@ for Inputs = 1:2
         G(Outputs,Inputs) = tf(KV(Outputs,Inputs),[TV(Outputs,Inputs),1],'IODelay',LV(Outputs,Inputs));
     end
 end
-
+% Apply Gain Factor
+G = GainFactor*G;
+% Apply Input & Output
 G.InputName = {'Fan';'Valve'};
 G.OutputName = {'Temperature','Pressure'};
 
@@ -120,15 +124,15 @@ S3 = inv(eye(2)+(CR-CY)*G);
 % CL4 = CR*feedback(G,CY,+1);
 % CL4.InputName = {'Fan';'Valve'};
 % CL4.OutputName = {'Temperature';'Pressure'};
-%% Get Results for Step Response
-figure(1)
-step(CL1)
-hold on
-grid on
-step(CL2)
-step(CL3)
-%step(CL4)
-legend('RGA','Decoupling with Q Design','Decoupling with G Design')
+% %% Get Results for Step Response
+% figure(1)
+% step(CL1)
+% hold on
+% grid on
+% step(CL2)
+% step(CL3)
+% %step(CL4)
+% legend('RGA','Decoupling with Q Design','Decoupling with G Design')
 
 %% Robustness Analysis
 figure(2)
@@ -166,22 +170,22 @@ loglog(f2,cn2,'o-')
 loglog(f3,cn3,'o-')
 grid on
 legend('RGA','Decoupling with Q Design','Decoupling with G Design')
-% %% Define a Test Simulation - Constant Temperature
-% time = 0:1:10000; % Time
-% u = zeros(2,length(time)); % Set Point
-% u(1,:) = 0; % Constant Temperature
-% u(2,1:200) = 0; % Pressure
-% u(2,200:4999) = 1;
-% u(2,5000:end) = -1;
-% 
-% figure(2)
-% lsim(CL1,u,time)
-% hold on
-% grid on
-% lsim(CL2,u,time)
-% lsim(CL3,u,time)
-% %lsim(CL4,u,time)
-% legend('RGA','Decoupling with Q Design','Decoupling with G Design')
+%% Define a Test Simulation - Constant Temperature
+time = 0:1:10000; % Time
+u = zeros(2,length(time)); % Set Point
+u(1,:) = 0; % Temperature
+u(1,5000:end) = -1;
+u(2,1:200) = 0; % Pressure
+u(2,200:end) = 1;
+
+figure(4)
+lsim(CL1,u,time)
+hold on
+grid on
+lsim(CL2,u,time)
+lsim(CL3,u,time)
+%lsim(CL4,u,time)
+legend('RGA','Decoupling with Q Design','Decoupling with G Design')
 % 
 % %% Define a Test Simulation - Constant Pressure
 % u = zeros(2,length(time)); % Set Point

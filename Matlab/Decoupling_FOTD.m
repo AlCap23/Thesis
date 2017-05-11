@@ -100,7 +100,7 @@ switch Method
         for outputs = 1:sys_size(2)          
             % Check for interaction -> if not met, use different parameter
             
-            %% Difference to Aström for coupling!
+            %% Difference to Astrï¿½m for coupling!
             % Get gamma' which is gamma / (K_Input * (T_Output+L_Output -T_Input-L_Input))
             input = sys_size(2)-outputs+1; % (Number of inputs) - (current output) +1 = complementary input
             % Since we have to detune the complementary controller
@@ -168,7 +168,7 @@ switch Method
         end
         
         for outputs = 1:sys_size(2)
-            %% Difference to Aström for coupling!
+            %% Difference to Astrï¿½m for coupling!
             % Get gamma' which is gamma / (K_Input * (T_Output+L_Output -T_Input-L_Input))
             input = sys_size(2)-outputs+1; % (Number of inputs) - (current output) +1 = complementary input
             % Since we have to detune the complementary controller
@@ -249,13 +249,13 @@ switch Method
         end
 end
 % Coupling Rating -> We do not want the pressure to have full influence on Temp 
-a = 1/sqrt(2);
+a = 1;
 % Create the controller on the minor diagonal
-K_p(1,2) = -a*KV(1,2)/KV(1,1)*K_p(2,2);
-K_p(2,1) = -1/a*KV(2,1)/KV(2,2)*K_p(1,1);
+K_p(1,2) = -0*KV(1,2)/KV(1,1)*K_p(2,2);
+K_p(2,1) = -10*KV(2,1)/KV(2,2)*K_p(1,1);
 
-K_i(1,2) = -a*KV(1,2)/KV(1,1)*K_i(2,2);
-K_i(2,1) = -1/a*KV(2,1)/KV(2,2)*K_i(1,1);
+K_i(1,2) = -0*KV(1,2)/KV(1,1)*K_i(2,2);
+K_i(2,1) = -10*KV(2,1)/KV(2,2)*K_i(1,1);
 
 % Create a PID Controller with Set Point Weight
 C = pid2(K_p,K_i,0,0,b,0);
