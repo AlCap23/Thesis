@@ -9,9 +9,9 @@ clc
 
 % Input
 % Operating point
-Current = 9;
+Current = 14;
 % Constrains
-Constrains = [0.01,.5,sqrt(2),sqrt(2)];
+Constrains = [0.01,100,sqrt(2),sqrt(2)];
 
 % Add path for functions -> Windows only
 addpath('C:\Users\juliu\Documents\GIT\New folder\Matlab');
