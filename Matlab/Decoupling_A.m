@@ -218,7 +218,7 @@ switch Method
                 % Iteration of the Detuning
                 counter = 0; % counter for break
                 while abs(a1*kI+b1*sqrt(kI)) + c1 > 1e-5
-                    if counter > 1000
+                    if counter > 1e4
                         break
                     end
                     TunedControl = AMIGO_Detune(TunedControl,Q(outputs,outputs));
@@ -239,7 +239,7 @@ switch Method
                 % Iteration of the Detuning
                 counter = 0; % counter for break
                 while + abs(kI) - abs(k(1,sys_size(2))) / abs(kc(1,sys_size(2)-outputs+1)*MProd) > 1e-5
-                    if counter > 1000
+                    if counter > 1e4
                         break
                     end
                     

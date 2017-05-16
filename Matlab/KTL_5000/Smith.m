@@ -9,15 +9,15 @@ clc
 
 % Input
 % Operating point
-Current = 18;
+Current = 2;
 % Constrains
-Constrains = [0.01,0.5,sqrt(2),sqrt(2)];
+Constrains = [0.15,0.01,sqrt(2),sqrt(2)];
 
 % Add path for functions -> Windows only
 addpath('C:\Users\juliu\Documents\GIT\New folder\Matlab');
 addpath('C:\Users\juliu\Documents\GIT\New folder\Matlab\KTL_5000');
 % Get the information from Simulation study
-load('KTL50000.mat');
+load('KTL80000.mat');
 
 % Get the TF Data
 OP = TFData.OperatingPoint(Current);
@@ -62,12 +62,18 @@ end
 %CR1 = CR
 %CY1 = CY
 % Closed Loop 
-CL1 = feedback(G,CY,+1)*CR;
+CL1 = CR*feedback(G_M,CY,+1);
 OL1 = (CR-CY)*G;
 CL1.InputName = {'Fan';'Valve'};
 CL1.OutputName = {'Temperature';'Pressure'};
 % Sensitivity
-S1 = inv(eye(2)-CY*G);
+S1 = inv(eye(2)+(CR-CY)*G);
+%% Smith Predictor
+% See Erweiterte Methoden der Regelungstechnik, Bild 1.10
+C = -CY;
+C1 = feedback(eye(2),CY*G_M,+1); % Inner Cycle
+C2 = feedback(C1,CY*G,+1); % Mid Cycle
+CL1 = feedback(G,CY,+1)*CR; % Outer Cyle
 %% Decouple via Astr�m
 C2 = Decoupling_A(G,Constrains,'AMIGO',0);
 % Preprocess PID2 Object -> Set Point Weight
@@ -81,12 +87,18 @@ for Inputs = 1:2
     end
 end
 % Closed Loop 
-CL2 = feedback(G,CY,+1)*CR;
+CL2 = CR*feedback(G,CY,+1);
 OL2 = (CR-CY)*G;
 CL2.InputName = {'Fan';'Valve'};
 CL2.OutputName = {'Temperature';'Pressure'};
 %Sensitivity
-S2 = inv(eye(2)-CY*G);
+S2 = inv(eye(2)+(CR-CY)*G);
+%% Smith Predictor
+% See Erweiterte Methoden der Regelungstechnik, Bild 1.10
+C = -CY;
+C1 = feedback(eye(2),CY*G_M,+1); % Inner Cycle
+C2 = feedback(C1,CY*G,+1); % Mid Cycle
+CL2 = feedback(G,CY,+1)*CR; % Outer Cyle
 %% Decouple via Modified Astr�m
 C3 = Decoupling_FOTD(G,Constrains,'AMIGO',0);
 % Preprocess PID2 Object -> Set Point Weight
@@ -103,23 +115,18 @@ end
 %CR3 = CR;
 %CY3 = CY;
 % Closed Loop
-CL3 = feedback(G,CY,+1)*CR;
+CL3 = CR*feedback(G,CY,+1);
 OL3 = (CR-CY)*G;
 CL3.InputName = {'Fan';'Valve'};
 CL3.OutputName = {'Temperature';'Pressure'};
 %Sensitivity
-S3 = inv(eye(2)-CY*G);
-%% Mixing
-% % Since the temperature control is faster from G -> Use G
-% CR(:,1) = CR3(:,1);
-% CY(:,1) = CY3(:,1);
-% % Use RGA for Pressure control
-% CR(:,2) = CR1(:,2);
-% CY(:,2) = CY1(:,2);
-% % Close the loop
-% CL4 = CR*feedback(G,CY,+1);
-% CL4.InputName = {'Fan';'Valve'};
-% CL4.OutputName = {'Temperature';'Pressure'};
+S3 = inv(eye(2)+(CR-CY)*G);
+%% Smith Predictor
+% See Erweiterte Methoden der Regelungstechnik, Bild 1.10
+C = -CY;
+C1 = feedback(eye(2),CY*G_M,+1); % Inner Cycle
+C2 = feedback(C1,CY*G,+1); % Mid Cycle
+CL3 = feedback(G,CY,+1)*CR; % Outer Cyle
 %% Get Results for Step Response
 figure(1)
 step(CL1)
