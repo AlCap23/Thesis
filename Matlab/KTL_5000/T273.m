@@ -9,15 +9,15 @@ clc
 
 % Input
 % Operating point
-Current = 14;
+Current = 18;
 % Constrains
-Constrains = [0.01,100,sqrt(2),sqrt(2)];
+Constrains = [0.01,0.1,sqrt(2),sqrt(2)];
 
 % Add path for functions -> Windows only
 addpath('C:\Users\juliu\Documents\GIT\New folder\Matlab');
 addpath('C:\Users\juliu\Documents\GIT\New folder\Matlab\KTL_5000');
 % Get the information from Simulation study
-load('KTL80000.mat');
+load('KTL50000.mat');
 
 % Get the TF Data
 OP = TFData.OperatingPoint(Current);
