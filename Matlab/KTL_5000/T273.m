@@ -8,8 +8,10 @@ clc
 %% Preparation
 
 % Input
+% Filename for saving
+filename = 'Data_80kW_T273.mat';
 % Operating point
-Current = 18;
+Current = 1;
 % Constrains
 Constrains = [0.01,0.5,sqrt(2),sqrt(2)];
 
@@ -17,7 +19,7 @@ Constrains = [0.01,0.5,sqrt(2),sqrt(2)];
 addpath('C:\Users\juliu\Documents\GIT\New folder\Matlab');
 addpath('C:\Users\juliu\Documents\GIT\New folder\Matlab\KTL_5000');
 % Get the information from Simulation study
-load('KTL50000.mat');
+load('KTL80000.mat');
 
 % Get the TF Data
 OP = TFData.OperatingPoint(Current);
@@ -63,7 +65,6 @@ end
 %CY1 = CY
 % Closed Loop 
 CL1 = feedback(G,CY,+1)*CR;
-OL1 = (CR-CY)*G;
 CL1.InputName = {'Fan';'Valve'};
 CL1.OutputName = {'Temperature';'Pressure'};
 % Sensitivity
@@ -82,7 +83,6 @@ for Inputs = 1:2
 end
 % Closed Loop 
 CL2 = feedback(G,CY,+1)*CR;
-OL2 = (CR-CY)*G;
 CL2.InputName = {'Fan';'Valve'};
 CL2.OutputName = {'Temperature';'Pressure'};
 %Sensitivity
@@ -99,12 +99,9 @@ for Inputs = 1:2
         CY(Outputs,Inputs) = CB(:,:,Outputs,Inputs); % y -> u
     end
 end
-% Store the controller
-%CR3 = CR;
-%CY3 = CY;
+
 % Closed Loop
 CL3 = feedback(G,CY,+1)*CR;
-OL3 = (CR-CY)*G;
 CL3.InputName = {'Fan';'Valve'};
 CL3.OutputName = {'Temperature';'Pressure'};
 %Sensitivity
@@ -127,9 +124,20 @@ hold on
 grid on
 step(CL2)
 step(CL3)
-%step(CL4)
 legend('RGA','Decoupling with Q Design','Decoupling with G Design')
 
+% Simulate
+time = 0:1:6000 ; % Define a time array
+u = zeros(2,length(time)); % Define input array
+u(1,:) = 1; % temperature step at t= 0
+u(2,3001:end) = -1; % pressure step at t = 3001
+
+y1 = lsim(CL1,u,time); % RGA System
+y2 = lsim(CL2,u,time); % Q Decoupling
+y3 = lsim(CL3,u,time); % G Decoupling
+
+% Export
+save(filename,'y1','y2','y3','u','time');
 %% Robustness Analysis
 figure(2)
 title('Singular Values of the Sensitivity Functions')

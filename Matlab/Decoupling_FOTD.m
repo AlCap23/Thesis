@@ -249,7 +249,7 @@ switch Method
         end
 end
 % Coupling Rating -> We do not want the pressure to have full influence on Temp 
-a = 0.7;
+a = 1;
 % Create the controller on the minor diagonal
 K_p(1,2) = -a*KV(1,2)/KV(1,1)*K_p(2,2);
 K_p(2,1) = -a*KV(2,1)/KV(2,2)*K_p(1,1);
