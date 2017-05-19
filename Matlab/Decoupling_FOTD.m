@@ -205,7 +205,7 @@ switch Method
                 % Iteration of the Detuning
                 counter = 0; % counter for break
                 while abs(a1*kI+b1*sqrt(kI)) - abs(c1) > 1e-5
-                    if counter > 1e5
+                    if counter > 1e4
                         break
                     end
                     TunedControl = AMIGO_Detune(TunedControl,TF(input,input));
@@ -226,7 +226,7 @@ switch Method
                 % Iteration of the Detuning
                 counter = 0; % counter for break
                 while - abs(c1) + abs(kI) > 1e-5
-                    if counter > 1e5
+                    if counter > 1e4
                         break
                     end
                     
@@ -249,12 +249,12 @@ switch Method
         end
 end
 % Coupling Rating -> We do not want the pressure to have full influence on Temp 
-a = 1/2;
+a = 1;
 % Create the controller on the minor diagonal
-K_p(1,2) = -1/a*KV(1,2)/KV(1,1)*K_p(2,2);
+K_p(1,2) = -a*KV(1,2)/KV(1,1)*K_p(2,2);
 K_p(2,1) = -a*KV(2,1)/KV(2,2)*K_p(1,1);
 
-K_i(1,2) = -1/a*KV(1,2)/KV(1,1)*K_i(2,2);
+K_i(1,2) = -a*KV(1,2)/KV(1,1)*K_i(2,2);
 K_i(2,1) = -a*KV(2,1)/KV(2,2)*K_i(1,1);
 
 % Create a PID Controller with Set Point Weight
