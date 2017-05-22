@@ -6,8 +6,8 @@ clear all
 close all
 clc
 
-% Add path for functions
-addpath('C:\Users\juliu\Documents\GIT\New folder\Matlab')
+% Add path for functions Windows
+%addpath('C:\Users\juliu\Documents\GIT\New folder\Matlab')
 
 
 %% Define TF
@@ -198,3 +198,7 @@ grid on
 step(CL2)
 step(CL3)
 legend('RGA','Decoupling with Q Design','Decoupling with G Design')
+%% Get the stepinfo
+inf1 = stepinfo(CL1)
+inf2 = stepinfo(CL2)
+inf3 = stepinfo(CL3)

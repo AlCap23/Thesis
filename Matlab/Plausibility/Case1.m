@@ -7,7 +7,7 @@ close all
 clc
 
 % Add path for functions -> Windows only
-addpath('C:\Users\juliu\Documents\GIT\New folder\Matlab')
+%addpath('C:\Users\juliu\Documents\GIT\New folder\Matlab')
 
 
 %% Define TF
@@ -30,8 +30,9 @@ for Inputs = 1:2
     end
 end
 % Closed Loop 
-S1 = inv(eye(2)+G*(CY+CR));
-CL1 = CR*feedback(G,CY,+1);
+S1 = inv(eye(2)+G*CY);
+T1 = inv(eye(2)+G*CY)*G*CR;
+CL1 = feedback(G,CY,+1)*CR;
 %% Decouple via Astr�m
 C2 = Decoupling_A(G,[0.1, 0.1, 2, 2],'AMIGO',0);
 % Preprocess PID2 Object -> Set Point Weight
@@ -44,9 +45,10 @@ for Inputs = 1:2
         CY(Outputs,Inputs) = CB(:,:,Outputs,Inputs); % y -> u
     end
 end
-% Closed Loop 
-S2 = inv(eye(2)+G*(CY+CR));
-CL2 = CR*feedback(G,CY,+1);
+% Closed Loop
+S2 = inv(eye(2)+G*CY);
+T2 = inv(eye(2)+G*CY)*G*CR;
+CL2 = feedback(G,CY,+1)*CR;
 %% Decouple via Modified Astr�m
 C3 = Decoupling_FOTD(G,[0.1, 0.1, 2, 2],'AMIGO',0);
 % Preprocess PID2 Object -> Set Point Weight
@@ -59,9 +61,11 @@ for Inputs = 1:2
         CY(Outputs,Inputs) = CB(:,:,Outputs,Inputs); % y -> u
     end
 end
-% Closed Loop
-S3 = inv(eye(2)+G*(CY+CR));
-CL3 = CR*feedback(G,CY,+1);
+% Closed Loop 
+S3 = inv(eye(2)+G*CY);
+T3 = inv(eye(2)+G*CY)*G*CR;
+CL3 = feedback(G,CY,+1)*CR;
+
 %% Get Results
 figure(1)
 step(CL1)
