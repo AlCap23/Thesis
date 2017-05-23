@@ -1,4 +1,4 @@
-%% Testcase 1 - Static Gain
+%% Testcase 2 - Normalized Time
 %  Incrementally add static gain on the minor diagonal
 
 %% Preprocessing
@@ -8,7 +8,7 @@ clc
 
 %% For Loop for Samples
 % Sample size
-samples = 10;
+samples = 1;
 % Store the Coupling Factor for static system -> See Lunze II, p.194, Eq. 4.82
 % Store the step Information
 Info(samples) = struct('Kappa',1,'RGA',1,'Q',1,'G',1);
@@ -17,12 +17,12 @@ Info(samples) = struct('Kappa',1,'RGA',1,'Q',1,'G',1);
 for sample = 1:1:samples+1
     %% Initialize the TF
     % Get the gainfactor
-    gainfactor = rand(1,1)*2; %Random gainfactor from 0 to 2
+    gainfactor = rand(1,1); %Random gainfactor from 0 to 2
     % Make a random main diagonal gain with 20 and +-10
     k =  rand(2,1)*20 + 10*ones(2,1);
     T = rand(2,2)*50 + 150*ones(2,2);
-    G = tf({k(1),gainfactor*k(1);0,k(2)},...
-        {[T(1,1),1],[0*T(1,2),1];[T(2,1),1],[T(2,2),1]},...
+    G = tf({k(1),gainfactor*k(1);1,k(2)},...
+        {[T(1,1),1],[0*T(1,2),1];[0*T(2,1),1],[T(2,2),1]},...
         'IODelay',[0,0;0,0],...
         'InputName',{'Fan';'Valve'},...
         'OutputName',{'Temperature','Pressure'});
