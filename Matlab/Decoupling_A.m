@@ -52,13 +52,13 @@ else
 end
 
 % Get the Decoupler D
-D = inv(dcgain(TF))
+D = inv(dcgain(TF));
 
 % Get the new system Q
 if abs(sum(sum(TF.IODelay))) > 0
-    Q = pade(TF,6)*D
+    Q = pade(TF,6)*D;
 else
-    Q = TF*D
+    Q = TF*D;
 end
 
 % figure()
