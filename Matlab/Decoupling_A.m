@@ -87,20 +87,20 @@ for output = 1: sys_size(1)
         G2 = D(2,output)*TF(output,2);
         % Get the Coefficients
         K1 = dcgain(G1);
-        T1 = G1.Denominator{:,:}(end-1)/G1.Denominator{:,:}(end);
-        L1 = G1.IODelay;
+        T1 = abs(G1.Denominator{:,:}(end-1)/G1.Denominator{:,:}(end));
+        L1 = abs(G1.IODelay);
         
         K2 = dcgain(G2);
-        T2 = G2.Denominator{:,:}(end-1)/G2.Denominator{:,:}(end);
-        L2 = G2.IODelay;
+        T2 = abs(G2.Denominator{:,:}(end-1)/G2.Denominator{:,:}(end));
+        L2 = abs(G2.IODelay);
         
         % Set new parameter
         L = max(L1,L2);
         K = K1+K2;
-        T = (K1*(T1+L1)+K2*(T2+L2))/K-L;
+        T = abs((K1*(T1+L1)+K2*(T2+L2))/K-L);
         
         % Form new transfer function of the main Diagonal
-        Q(output,output) = tf(K,[T,1],'IODelay',L);
+        Q(output,output) = tf(K,[T,1],'IODelay',L)
     end
 end
 

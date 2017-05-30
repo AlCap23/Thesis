@@ -1,0 +1,158 @@
+%
+%		Header-Datei
+%
+
+% Nummerierungstiefe von section/subsection/subsubsection
+\setcounter{secnumdepth}{3} 
+
+%Absatzeinzug einstellen
+\setlength{\parindent}{1em}
+\setlength{\parskip}{0pt}
+
+% Deutsche Rechtschreibung und deutscher Zeichensatz
+\usepackage{german,ngerman}
+\usepackage[ansinew]{inputenc}  
+
+% Aktuelles Datum ermitteln
+\usepackage[ngerman]{datenumber}
+
+% Erweiterung für ein deutsches Literaturverzeichnis
+\bibliographystyle{abbrvdin}
+
+% Erweiterte Mathematikbibliotheken
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% Maßeinhaeiten-Darstellung verbessern
+\usepackage{units}
+
+% Extra Symbole für die Verwendung im Text (z.B. \textcelsius)
+%(werden nicht aus der Nexus-Schriftart einbunden)
+\usepackage{textcomp}
+
+% Einbinden von externen PDF Dateien
+\usepackage[final]{pdfpages}
+
+% Zum einbinden von Grafiken  
+\usepackage{graphicx}
+\usepackage{subcaption}  %erlaubt das erstellen von subfigures
+\usepackage{float} %ermöglicht das erstellen von "non-floating figures"
+
+%Hyperref für Verlinkungen im Dokument und URL's
+%hyphens für verbesserten Zeilenumbruch in url's
+\PassOptionsToPackage{hyphens}{url}
+\usepackage[	breaklinks={true},
+ 						colorlinks	={true},
+ 					  	linkcolor	={tubsBlack},
+  						citecolor	={tubsBlack},
+  						filecolor	={tubsBlack},
+  						urlcolor	={tuSecondaryMedium100},						
+ 					]{hyperref} %Interne Links in Schwarz und externe URL's in bg Farbe
+ 					
+%Zusätzliche Buchstaben und Zahlen erlauben für Zeilenumbruch bei url's (verbessert den Blocksatz)				
+\expandafter\def\expandafter\UrlBreaks\expandafter{\UrlBreaks%  save the current one
+  \do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\i\do\j%
+  \do\k\do\l\do\m\do\n\do\o\do\q\do\r\do\s%
+  \do\u\do\v\do\w\do\x\do\y\do\z\do\A\do\B\do\C\do\D%
+  \do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N%
+  \do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X%
+  \do\Y\do\Z\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9} 	
+  
+% Rückseiten-Elemente
+\address{% Addresse
+  Technische Universität Braunschweig\\
+  Institut für Thermodynamik\\
+  Hans-Sommer-Strasse 5\\
+  38106 Braunschweig}
+\backpageinfo{}				
+
+%Makro zur Formatierung des Anhangs
+\newcommand{\Anhang}{
+\appendix
+\chapter*{Anhang}
+\addcontentsline{toc}{chapter}{Anhang}
+\setcounter{chapter}{1}
+\markboth{Anhang}{Anhang}
+\label{Anhang}}
+
+%Makro zur Formatierung von der Titelseite bis zum Inhaltsverzeichniss
+\newcommand{\Anfang}{
+\pagenumbering{Roman}
+\input{chapters/Titelseite}
+\includepdf[pages=-]{\AUFGABENSTELLUNG}
+\input{chapters/Eidesstattliche_Erklaerung}
+\tableofcontents
+\pagenumbering{arabic}
+\setcounter{page}{1}}
+
+
+
+%Makro zum einpassen des Titels in die Titelbox
+\usepackage{environ}
+\newdimen\fontdim
+\newdimen\upperfontdim
+\newdimen\lowerfontdim
+\newif\ifmoreiterations
+\fontdim12pt
+\makeatletter
+\NewEnviron{fitbox}[2]{% \begin{fitbox}{<width>}{<height>} stuff \end{fitbox}
+  \def\buildbox{%
+    \setbox0\vbox{\hbox{\minipage{#1}%
+      \fontsize{\fontdim}{1.2\fontdim}%
+      \selectfont%
+      \stuff%
+    \endminipage}}%
+    \dimen@\ht0
+    \advance\dimen@\dp0
+  }
+  \def\stuff{\BODY}% Store environment body
+  \buildbox
+  % Compute upper and lower bounds
+  \ifdim\dimen@>#2
+    \loop
+      \fontdim.5\fontdim % Reduce font size by half
+      \buildbox
+    \ifdim\dimen@>#2 \repeat
+    \lowerfontdim\fontdim
+    \upperfontdim2\fontdim
+    \fontdim1.5\fontdim
+  \else
+    \loop
+      \fontdim2\fontdim % Double font size
+      \buildbox
+    \ifdim\dimen@<#2 \repeat
+    \upperfontdim\fontdim
+    \lowerfontdim.5\fontdim
+    \fontdim.75\fontdim
+  \fi
+  % Now try to find the optimum size
+  \loop
+    %\message{Bounds: \the\lowerfontdim\space
+    %         \the\fontdim\space \the\upperfontdim^^J}
+    \buildbox
+    \ifdim\dimen@>#2
+      \moreiterationstrue
+      \upperfontdim\fontdim
+      \advance\fontdim\lowerfontdim
+      \fontdim.5\fontdim
+    \else
+      \advance\dimen@-#2
+      \ifdim\dimen@<10pt
+        \lowerfontdim\fontdim
+        \advance\fontdim\upperfontdim
+        \fontdim.5\fontdim
+        \dimen@\upperfontdim
+        \advance\dimen@-\lowerfontdim
+        \ifdim\dimen@<.2pt
+          \moreiterationsfalse
+        \else
+          \moreiterationstrue
+        \fi
+      \else
+        \moreiterationsfalse
+      \fi
+    \fi
+  \ifmoreiterations \repeat
+  \box0% Typeset content
+}
+\makeatother

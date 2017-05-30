@@ -1,0 +1,62 @@
+% ------------------------------Info--------------------------------
+% Dieses Dokument ist als Vorlage f�r die studentischen Arbeiten
+% am Institut f�r Thermodynamik gedacht. Es stellt eine einfache 
+% M�glichkeit dar, die studentischen Arbeiten im Corporate Design
+% der TU Braunschweig zu gestalten.
+% Dazu wurden viele der notwendigen Einstellungen bereits in dieses
+% Dokument eingearbeitet. Es steht dem Autor nat�rlich frei weitere
+% Anpassungen, an seine individuellen kreativen Vorstellungen und 
+% zum erfolgreichen Erstellen notwendigen Bed�rfnisse, vorzunehmen.
+% Hierf�r sei an dieser Stelle auf die Website der Corporate Design
+% (https://www.tu-braunschweig.de/presse/cd/toolbox) und die 
+% Dokumentation zum Corporate Design in LaTeX hingewiesen.
+%
+% In diesem Sinne: Frohes Schreiben!
+%-------------------------------------------------------------------
+
+\documentclass[fontsize=11pt,
+               paper=a4,	%Papierformat ist A4
+               style=print, %[<print/printdev/screen>] Dokument ist f�r den Druck gedacht
+               nexus, %Hausschrift der TU Braunschweig verwenden
+               cmyk, % [<cmyk/rgb>]  Farben in CMYK Schema
+               twoside=false, %Kein zweiseitiger Druck
+               toc=bibliography ,%Literaturverzeichnis ohne Nummer im Inhaltsverzeichnis anzeigen
+               blue % [<orange/blue/green/violet>] Farbschema f�r die Arbeit
+              ]
+              {tubsbook}
+                       
+%---------------------------------------------------
+%---------------Allgemeine Angaben------------------
+%---------------------------------------------------
+\def \TITLE					{EinhornFechten}
+\def \TYPE					{Masterarbeit} %[<Projektarbeit/Bachelorarbeit/Studienarbeit/Masterarbeit>]
+\def \AUTHOR				{Name des Studenten}
+\def \BETREUER				{Name des Betreuers}
+\def \TITELBILD				{pictures/Titelbild.png}
+\def \AUFGABENSTELLUNG		{Aufgabenstellung.pdf}
+\def \TOPLINE				{} %[<\showtopline>] % Aktiviert die rote Trennlinie �ber dem Bild. 
+										%Sollte nur verwendet werden, wenn das Bild keine farbliche Trennung bietet.
+%---------------------------------------------------
+%----------Ende der Allgemeinen Angaben-------------
+\input{chapters/header} %Header zum Einbinden der Packages und zur Layout formatierung/konfiguration
+\begin{document}
+\Anfang
+
+%---------------------------------------------------
+%--------------Beginn eigener Kapitel---------------
+%---------------------------------------------------
+\input{chapters/ControlTheory}
+%\input{chapters/Grundlagen}
+%\input{chapters/Symbolverzeichnis}
+
+\bibliography{chapters/bibliography} 
+
+\Anhang
+\input{chapters/Anhang}
+
+%--------------------------------------------------
+%--------------Ende eigener Kapitel----------------
+%--------------------------------------------------
+
+\makebackpage[trisec]%[<plain/info/addressinfo>]
+\end{document}

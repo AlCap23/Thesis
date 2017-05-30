@@ -1,8 +1,8 @@
 function C = AMIGO_Tune(FOTD, TYPE)
-%Computes a controller based on the AMIGO Rules by Aström ,
-%Hägglund, Adavanced PID Control, p.227 ff
+%Computes a controller based on the AMIGO Rules by Astrï¿½m ,
+%Hï¿½gglund, Adavanced PID Control, p.227 ff
 %The function returns a Controller of PI or PID type. The controller is
-%tuned by using the AMIGO principles described by Aström and Hägglund in
+%tuned by using the AMIGO principles described by Astrï¿½m and Hï¿½gglund in
 %'Advanced PID Control' p. 227 ff. 
 %
 %The Controllers are derived by using rules based on several test
@@ -63,7 +63,7 @@ switch TYPE
     % PI Tuning Rules
     case 'PI'
         % Proportional gain of the controller
-        K = 0.15/ K_P + (0.35- (L*T)/(L+T)^2)*T/K_P/L ; % Eq. 7.5 or Eq. 7.32, checked
+        K = 0.15/ K_P + (0.35 - (L*T)/(L+T)^2)*T/K_P/L ; % Eq. 7.5 or Eq. 7.32, checked
         % Integral gain of the controller
         T_i = 0.35*L + 13*L*T^2 /(T^2+12*L*T+7*L^2); % Eq. 7.5 or Eq. 7.32, checked
         % Make a PI controller
