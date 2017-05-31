@@ -1,144 +1,153 @@
 package Thesis "Package for the Master Thesis"
-  partial model MiMoSystem " Multiple Input, Multiple Output Model"
-    parameter Real num11 "numerator of G11";
-    parameter Real den11 "denominator of G11";
-    parameter Real y_start11 "start output of G11";
-    parameter Real num22;
-    parameter Real den22;
-    parameter Real y_start22;
-    parameter Real num21;
-    parameter Real den21;
-    parameter Real y_start21;
-    parameter Real num12;
-    parameter Real den12;
-    parameter Real y_start12;
-    Modelica.Blocks.Continuous.TransferFunction G11(a = den11, b = num11, initType = Modelica.Blocks.Types.Init.SteadyState, y_start = y_start11) annotation(
-      Placement(visible = true, transformation(origin = {-52, 66}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    Modelica.Blocks.Continuous.TransferFunction G12(a = den12, b = num12, initType = Modelica.Blocks.Types.Init.SteadyState, y_start = y_start12) annotation(
-      Placement(visible = true, transformation(origin = {-52, 38}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    Modelica.Blocks.Continuous.TransferFunction G21(a = den21, b = num21, initType = Modelica.Blocks.Types.Init.SteadyState, y_start = y_start21) annotation(
-      Placement(visible = true, transformation(origin = {-52, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    Modelica.Blocks.Continuous.TransferFunction G22(a = den22, b = num22, initType = Modelica.Blocks.Types.Init.SteadyState, y_start = y_start22) annotation(
-      Placement(visible = true, transformation(origin = {-52, -32}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    Modelica.Blocks.Math.Add add_1 annotation(
-      Placement(visible = true, transformation(origin = {12, 60}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    Modelica.Blocks.Math.Add add1 annotation(
-      Placement(visible = true, transformation(origin = {6, -26}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    Modelica.Blocks.Interfaces.RealInput u_1 annotation(
-      Placement(visible = true, transformation(origin = {-114, 66}, extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {-80, 72}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
-    Modelica.Blocks.Interfaces.RealInput u_2 annotation(
-      Placement(visible = true, transformation(origin = {-124, -22}, extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {-80, -72}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
-    Modelica.Blocks.Interfaces.RealOutput y_1 annotation(
-      Placement(visible = true, transformation(origin = {58, 60}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {90, 70}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    Modelica.Blocks.Interfaces.RealOutput y_2 annotation(
-      Placement(visible = true, transformation(origin = {108, -26}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {90, -72}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  equation
-    connect(u_2, G22.u) annotation(
-      Line(points = {{-126, -22}, {-64, -22}, {-64, -32}}, color = {0, 0, 127}));
-    connect(u_2, G21.u) annotation(
-      Line(points = {{-126, -22}, {-66, -22}, {-66, 0}, {-64, 0}}, color = {0, 0, 127}));
-    connect(add1.y, y_2) annotation(
-      Line(points = {{18, -26}, {106, -26}}, color = {0, 0, 127}));
-    connect(add_1.y, y_1) annotation(
-      Line(points = {{24, 60}, {50, 60}, {50, 60}, {58, 60}}, color = {0, 0, 127}));
-    connect(G12.y, add1.u1) annotation(
-      Line(points = {{-40, 38}, {-8, 38}, {-8, -20}, {-6, -20}}, color = {0, 0, 127}));
-    connect(G21.y, add_1.u2) annotation(
-      Line(points = {{-40, 0}, {-2, 0}, {-2, 54}, {0, 54}}, color = {0, 0, 127}));
-    connect(G12.u, u_1) annotation(
-      Line(points = {{-64, 38}, {-106, 38}, {-106, 66}, {-114, 66}}, color = {0, 0, 127}));
-    connect(u_1, G11.u) annotation(
-      Line(points = {{-114, 66}, {-64, 66}, {-64, 66}, {-64, 66}}, color = {0, 0, 127}));
-    connect(add1.u2, G22.y) annotation(
-      Line(points = {{-6, -32}, {-40, -32}}, color = {0, 0, 127}));
-    connect(G11.y, add_1.u1) annotation(
-      Line(points = {{-40, 66}, {0, 66}}, color = {0, 0, 127}));
-    annotation(
-      Icon(coordinateSystem(initialScale = 0.7), graphics = {Text(origin = {-7, 5}, extent = {{-61, 67}, {61, -67}}, textString = "G", textStyle = {TextStyle.Bold, TextStyle.UnderLine}), Rectangle(origin = {-2, 1}, extent = {{-90, 93}, {90, -93}})}),
-      Documentation(info = "<html><head></head><body><div>Realizes</div><div><br></div>Y = G(s) U<div><br></div><div>in the Time Domain<br><div><br></div><div>Whereas dim(Y) = dim(U) = 2 and dim(G(s)) = dim(Y) x dim(U).</div><div><br></div><div>Takes as modifiers numXY, denXY and y_startXY, X=Y from 1 to 2.</div><div>Sets the Parameters of the single Transfer Function GXY from Input X to Output Y.</div><div><br></div></div></body></html>"));
-  end MiMoSystem;
 
-  model Test
-    extends MiMo;
-  end Test;
-
-  partial model MiMoControl
-    parameter Real K11 "Gain of F11";
-    parameter Real T11 "Time Constant of F11";
-    parameter Real y_start11 "Initial Output of F11";
-    parameter Real K12;
-    parameter Real T12;
-    parameter Real y_start12;
-    parameter Real K21;
-    parameter Real T21;
-    parameter Real y_start21;
-    parameter Real K22;
-    parameter Real T22;
-    parameter Real y_start22;
-    Modelica.Blocks.Continuous.PI C11(T = T11, k = K11, y_start = y_start11) annotation(
-      Placement(visible = true, transformation(origin = {-50, 64}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    Modelica.Blocks.Continuous.PI C12(T = T12, k = K12, y_start = y_start12) annotation(
-      Placement(visible = true, transformation(origin = {-52, 32}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    Modelica.Blocks.Continuous.PI C21(T = T21, k = K21, y_start = y_start21) annotation(
-      Placement(visible = true, transformation(origin = {-52, -6}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    Modelica.Blocks.Continuous.PI C22(T = T22, k = K22, y_start = y_start22) annotation(
-      Placement(visible = true, transformation(origin = {-52, -46}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    Modelica.Blocks.Math.Add add1 annotation(
-      Placement(visible = true, transformation(origin = {40, 58}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    Modelica.Blocks.Math.Add add2 annotation(
-      Placement(visible = true, transformation(origin = {32, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    Modelica.Blocks.Interfaces.RealInput u_1 annotation(
-      Placement(visible = true, transformation(origin = {-114, 56}, extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {-80, 68}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
-    Modelica.Blocks.Interfaces.RealInput u_2 annotation(
-      Placement(visible = true, transformation(origin = {-116, -44}, extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {-80, -70}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
-    Modelica.Blocks.Interfaces.RealOutput y_1 annotation(
-      Placement(visible = true, transformation(origin = {100, 58}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {90, 70}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    Modelica.Blocks.Interfaces.RealOutput y_2 annotation(
-      Placement(visible = true, transformation(origin = {108, -26}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {90, -72}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  equation
-    connect(C11.u, u_1) annotation(
-      Line(points = {{-62, 64}, {-104, 64}, {-104, 56}, {-114, 56}}, color = {0, 0, 127}));
-    connect(C12.u, u_1) annotation(
-      Line(points = {{-64, 32}, {-86, 32}, {-86, 56}, {-114, 56}, {-114, 56}}, color = {0, 0, 127}));
-    connect(C21.u, u_2) annotation(
-      Line(points = {{-64, -6}, {-106, -6}, {-106, -44}, {-116, -44}}, color = {0, 0, 127}));
-    connect(C22.u, u_2) annotation(
-      Line(points = {{-64, -46}, {-104, -46}, {-104, -44}, {-116, -44}}, color = {0, 0, 127}));
-    connect(add2.y, y_2) annotation(
-      Line(points = {{44, -40}, {70, -40}, {70, -26}, {108, -26}, {108, -26}}, color = {0, 0, 127}));
-    connect(add1.y, y_1) annotation(
-      Line(points = {{52, 58}, {86, 58}, {86, 58}, {100, 58}, {100, 58}}, color = {0, 0, 127}));
-    connect(C21.y, add1.u2) annotation(
-      Line(points = {{-40, -6}, {28, -6}, {28, 52}}, color = {0, 0, 127}));
-    connect(C11.y, add1.u1) annotation(
-      Line(points = {{-38, 64}, {28, 64}}, color = {0, 0, 127}));
-    connect(C22.y, add2.u2) annotation(
-      Line(points = {{-40, -46}, {20, -46}}, color = {0, 0, 127}));
-    connect(C12.y, add2.u1) annotation(
-      Line(points = {{-40, 32}, {20, 32}, {20, -34}}, color = {0, 0, 127}));
-    annotation(
-      Icon(coordinateSystem(initialScale = 0.7), graphics = {Text(origin = {4, -1}, extent = {{-92, 43}, {92, -43}}, textString = "P", textStyle = {TextStyle.Bold, TextStyle.UnderLine}), Rectangle(origin = {0, 1}, extent = {{-88, 93}, {88, -93}})}));
-  end MiMoControl;
-
-  model Test_SmallCoupling
-    replaceable Thesis.MiMoSystem Plant(den11 = {5, 1}, den12 = {30, 1}, den21 = {50, 1}, den22 = {10, 1}, num11 = {2}, num12 = {10}, num21 = {1}, num22 = {5}, y_start11 = 1, y_start12 = 1, y_start21 = 1, y_start22 = 2) annotation(
-      Placement(visible = true, transformation(origin = {9, 37}, extent = {{-27, -27}, {27, 27}}, rotation = 0)));
-    Modelica.Blocks.Sources.Step step1(height = 5, offset = 1, startTime = 2) annotation(
-      Placement(visible = true, transformation(origin = {-78, 38}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  equation
-    connect(Plant.u_2, step1.y) annotation(
-      Line(points = {{-12, 18}, {-66, 18}, {-66, 38}, {-66, 38}}, color = {0, 0, 127}));
-    connect(Plant.u_1, step1.y) annotation(
-      Line(points = {{-12, 56}, {-66, 56}, {-66, 38}, {-66, 38}}, color = {0, 0, 127}));
-    annotation(
-      Icon(coordinateSystem(initialScale = 0.7)));
-  end Test_SmallCoupling;
-
-  model WeakCoupling
-    extends Thesis.MiMoSystem;
-    annotation(
-      Icon(coordinateSystem(initialScale = 0.7)));
-  end WeakCoupling;
-  annotation(
-    uses(Modelica(version = "3.2.2")));
+  package InteractionStudy
+    "Studies the influence of the interaction from valve to temperature and fan to pressure in different configurations"
+    model OpenSystem "System - Valve and Gascooler"
+      TIL.VLEFluidComponents.Boundaries.BoundaryOverdetermined
+        CompressorOutlet_Boundary(
+        vleFluidType=sim.vleFluidType1,
+        use_massFlowRateInput=true,
+        hFixed=500e3,
+        pFixed=8000000)
+        annotation (Placement(transformation(extent={{54,22},{46,42}})));
+      TIL.VLEFluidComponents.Boundaries.Boundary ValveOutllet_Boundary(
+        streamVariablesInputType="h",
+        hFixed=200e3,
+        boundaryType="p",
+        pFixed=2000000) annotation (Placement(transformation(
+            extent={{-4,-10},{4,10}},
+            rotation=90,
+            origin={-56,-32})));
+      TIL.VLEFluidComponents.Valves.OrificeValve valve(effectiveFlowAreaFixed=
+            0.3e-6) annotation (Placement(transformation(
+            extent={{-8,-4},{8,4}},
+            rotation=90,
+            origin={-56,-4})));
+      TIL.GasComponents.Boundaries.BoundaryUnderdetermined
+        Airflow_Outlet_Boundary annotation (Placement(transformation(
+            extent={{-4,-10},{4,10}},
+            rotation=90,
+            origin={0,2})));
+      TIL.GasComponents.Boundaries.Boundary Airflow_Inlet_Boundary(
+        boundaryType="V_flow",
+        gasType=sim.gasType1,
+        hFixed=300,
+        streamVariablesInputType="T",
+        use_temperatureInput=true,
+        V_flowFixed=-10) annotation (Placement(transformation(
+            extent={{4,-10},{-4,10}},
+            rotation=90,
+            origin={0,70})));
+      TIL.VLEFluidComponents.Sensors.StatePoint ValveOutlet
+        annotation (Placement(transformation(extent={{-42,-22},{-34,-14}})));
+      TIL.VLEFluidComponents.Sensors.StatePoint GascoolerOutlet
+        annotation (Placement(transformation(extent={{-44,40},{-36,48}})));
+      TIL.VLEFluidComponents.Sensors.StatePoint GascoolerEntry
+        annotation (Placement(transformation(extent={{36,40},{44,48}})));
+      TIL.GasComponents.Sensors.StatePoint FanOutlet
+        annotation (Placement(transformation(extent={{18,54},{26,62}})));
+      inner TIL.SystemInformationManager
+                                     sim(redeclare
+          TILMedia.VLEFluidTypes.TILMedia_CO2 vleFluidType1, redeclare
+          TILMedia.GasTypes.TILMedia_MoistAir gasType1)
+        annotation (Placement(transformation(extent={{64,62},{84,82}})));
+      TIL.HeatExchangers.MPET.GasVLEFluid.CrossFlowHX
+                  crossFlowHX(
+        hInitialVLEFluid=350e3,
+        pressureStateID=1,
+        m_flowVLEFluidStart=0.05,
+        initVLEFluid="linearEnthalpyDistribution",
+        redeclare model WallHeatConductionModel =
+            TIL.HeatExchangers.MPET.TransportPhenomena.WallHeatTransfer.ConstantR
+            (constantR=1e-4),
+        redeclare model FinSideHeatTransferModel =
+            TIL.HeatExchangers.MPET.TransportPhenomena.FinSideHeatTransfer.Chang,
+        redeclare TIL.HeatExchangers.MPET.Geometry.Example hxGeometry,
+        nCellsPerPass=5,
+        redeclare model TubeSidePressureDropModel =
+            TIL.HeatExchangers.MPET.TransportPhenomena.TubeSidePressureDrop.QuadraticMassFlowDependent
+            (mdot_nominal=0.2, pressureDrop_nominal=5000),
+        redeclare model FinEfficiencyModel =
+            TIL.HeatExchangers.MPET.TransportPhenomena.FinEfficiency.ConstFinEfficiency,
+        redeclare model WallMaterial =
+            TILMedia.SolidTypes.TILMedia_Aluminum,
+        redeclare model FinMaterial =
+            TILMedia.SolidTypes.TILMedia_Aluminum,
+        redeclare model FinSidePressureDropModel =
+            TIL.HeatExchangers.MPET.TransportPhenomena.FinSidePressureDrop.KimBullard,
+        hInitialVLEFluid_CellN=250e3,
+        pressureDropInitialVLEFluid(displayUnit="Pa") = 5000,
+        hInitialVLEFluid_Cell1=430e3,
+        redeclare model TubeSideHeatTransferModel =
+            TIL.HeatExchangers.MPET.TransportPhenomena.TubeSideHeatTransfer.ConstTwoPhaseGnielinskieDittusBoelter
+            (alpha_initial=1000, alpha_twoPhase=4500),
+        pVLEFluidStart=300000,
+        TInitialWall=318.15)            annotation (Placement(transformation(extent={{-14,18},
+                {14,46}},          rotation=0)));
+      TIL.VLEFluidComponents.PressureStateElements.PressureState pressureState(
+                                                             pressureStateID=1, pInitial(
+            displayUnit="Pa") = 80e5)
+        annotation (Placement(transformation(extent={{-34,26},{-22,38}},rotation=0)));
+      Modelica.Blocks.Sources.Step step(height=0, offset=-5)
+        annotation (Placement(transformation(extent={{-42,74},{-22,94}})));
+      Modelica.Blocks.Sources.RealExpression realExpression(y=-0.5)
+        annotation (Placement(transformation(extent={{92,24},{72,44}})));
+    equation
+      connect(valve.portA, ValveOutllet_Boundary.port) annotation (Line(
+          points={{-56,-12},{-56,-22},{-56,-32}},
+          color={153,204,0},
+          thickness=0.5));
+      connect(ValveOutlet.sensorPort, ValveOutllet_Boundary.port) annotation (
+          Line(
+          points={{-38,-22},{-48,-22},{-56,-22},{-56,-32}},
+          color={153,204,0},
+          thickness=0.5));
+      connect(GascoolerEntry.sensorPort, CompressorOutlet_Boundary.port)
+        annotation (Line(
+          points={{40,40},{40,32},{50,32}},
+          color={153,204,0},
+          thickness=0.5));
+      connect(Airflow_Inlet_Boundary.port, crossFlowHX.portA_gas) annotation (
+          Line(
+          points={{0,70},{0,46}},
+          color={255,153,0},
+          thickness=0.5));
+      connect(FanOutlet.port, crossFlowHX.portA_gas) annotation (Line(
+          points={{22,54},{0,54},{0,46}},
+          color={255,153,0},
+          thickness=0.5));
+      connect(crossFlowHX.portB_vle, CompressorOutlet_Boundary.port)
+        annotation (Line(
+          points={{14,32},{50,32}},
+          color={153,204,0},
+          thickness=0.5));
+      connect(Airflow_Outlet_Boundary.port, crossFlowHX.portB_gas) annotation (
+          Line(
+          points={{0,2},{0,12},{0,16},{0,18}},
+          color={255,153,0},
+          thickness=0.5));
+      connect(GascoolerOutlet.sensorPort, valve.portB) annotation (Line(
+          points={{-40,40},{-40,32},{-56,32},{-56,4}},
+          color={153,204,0},
+          thickness=0.5));
+      connect(crossFlowHX.portA_vle, pressureState.portA) annotation (Line(
+          points={{-14,32},{-22,32}},
+          color={153,204,0},
+          thickness=0.5));
+      connect(pressureState.portB, valve.portB) annotation (Line(
+          points={{-34,32},{-34,32},{-56,32},{-56,4}},
+          color={153,204,0},
+          thickness=0.5));
+      connect(step.y, Airflow_Inlet_Boundary.T_in) annotation (Line(points={{
+              -21,84},{-8,84},{6,84},{6,74}}, color={0,0,127}));
+      connect(CompressorOutlet_Boundary.m_flow_in, realExpression.y)
+        annotation (Line(points={{54,34},{64,34},{71,34}}, color={0,0,127}));
+      annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
+            coordinateSystem(preserveAspectRatio=false)));
+    end OpenSystem;
+  end InteractionStudy;
+  annotation (
+    uses(Modelica(version = "3.2.2"),
+      TIL(version="3.4.1"),
+      TILMedia(version="3.4.1")));
 end Thesis;
