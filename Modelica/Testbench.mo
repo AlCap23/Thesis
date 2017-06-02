@@ -1251,7 +1251,7 @@ package Testbench
     "Generates the physical States of the complete System"
     import Testbench;
     Testbench.Steady_State_Generator Steady_State_Generator(TUmgebung=273.15 +
-          15)
+          10)
       annotation (Placement(transformation(extent={{-106,16},{-86,36}})));
     Testbench.Complete_System gascooler_Valve_System
       annotation (Placement(transformation(extent={{-8,-2},{42,34}})));
@@ -1339,7 +1339,7 @@ package Testbench
                                          annotation (Placement(transformation(
           extent={{-6.0,-6.0},{6.0,6.0}},
           rotation=0,
-          origin={48,202})));
+          origin={48,78})));
     TIL.VLEFluidComponents.Valves.OrificeValve HPValve(
       vleFluidType=sim.vleFluidType1,
       x(start=0.5),
@@ -1351,7 +1351,7 @@ package Testbench
       vleFluidA(h(start=EnthalpyGasCoolerOutletStart)))   annotation (Placement(transformation(
           extent={{-8,4},{8,-4}},
           rotation=270,
-          origin={-258,148})));
+          origin={-258,24})));
     TIL.VLEFluidComponents.Sensors.Sensor_p sensor_HP(
       useTimeConstant=true,
       tau=5,
@@ -1359,14 +1359,14 @@ package Testbench
                                   annotation (Placement(transformation(
           extent={{-4.0,-4.0},{4.0,4.0}},
           rotation=270,
-          origin={-238,178})));
+          origin={-238,54})));
     TIL.VLEFluidComponents.Sensors.StatePoint Gascooler_Entry(stateViewerIndex=1)
-      annotation (Placement(transformation(extent={{26,206},{34,214}})));
+      annotation (Placement(transformation(extent={{26,82},{34,90}})));
     TIL.VLEFluidComponents.Sensors.StatePoint Gascooler_Outlet(stateViewerIndex=2)
-      annotation (Placement(transformation(extent={{-262,206},{-254,214}})));
+      annotation (Placement(transformation(extent={{-262,82},{-254,90}})));
     TIL.VLEFluidComponents.Sensors.Sensor_T sensor_T(useTimeConstant=false,
         initialSensorValue=283.15)
-      annotation (Placement(transformation(extent={{-196,210},{-188,218}})));
+      annotation (Placement(transformation(extent={{-196,86},{-188,94}})));
     TIL3_AddOn_Supermarkt_Wurm_Februar17.Extremum_Seeking_Control.AlgebraischAnsatz2.FanConstantEta
       Fan1(
       use_mechanicalPort=true,
@@ -1379,28 +1379,28 @@ package Testbench
       eta=0.35) annotation (Placement(transformation(
           extent={{-6,-6},{6,6}},
           rotation=270,
-          origin={-76,248})));
+          origin={-76,124})));
     TIL.GasComponents.Boundaries.Boundary boundary(boundaryType="p",
       use_temperatureInput=true,
       TFixed=303.15)
-      annotation (Placement(transformation(extent={{-102,238},{-94,258}})));
+      annotation (Placement(transformation(extent={{-102,114},{-94,134}})));
     TIL.GasComponents.HydraulicResistors.HydraulicResistor hydraulicResistor(
         zeta_fixed=0.7, hydraulicDiameter=0.8)
-      annotation (Placement(transformation(extent={{-60,246},{-48,250}})));
+      annotation (Placement(transformation(extent={{-60,122},{-48,126}})));
     TIL.GasComponents.Boundaries.Boundary boundary1(boundaryType="p")
       annotation (Placement(transformation(extent={{-4,-10},{4,10}},
           rotation=90,
-          origin={-22,222})));
+          origin={-22,98})));
     TIL.OtherComponents.Mechanical.RotatoryBoundary rotatoryBoundary3(
                                                                      use_nInput=
          true)
-      annotation (Placement(transformation(extent={{-94,250},{-86,270}})));
-    Modelica.Blocks.Continuous.FirstOrder firstOrder(y_start=10, T=1e-3)
+      annotation (Placement(transformation(extent={{-94,126},{-86,146}})));
+    Modelica.Blocks.Continuous.FirstOrder firstOrder(y_start=10, T=20)
       annotation (Placement(transformation(extent={{-156,278},{-148,286}})));
     TIL.HeatExchangers.FinAndTube.GasVLEFluid.CrossFlowHX Gascooler(
       gasCellFlowType="flow B-A",
       redeclare model FinMaterial = TILMedia.SolidTypes.TILMedia_Aluminum,
-      m_flowVLEFluidStart=0.78,
+      m_flowVLEFluidStart=-MassflowGasCoolerInlet,
       redeclare model WallMaterial = TILMedia.SolidTypes.TILMedia_Copper,
       redeclare model FinSideHeatTransferModel =
           TIL.HeatExchangers.FinAndTube.TransportPhenomena.FinSideHeatTransfer.Haaf,
@@ -1423,26 +1423,26 @@ package Testbench
           TIL.HeatExchangers.FinAndTube.TransportPhenomena.TubeSideHeatTransfer.ShahChenGnielinskiDittusBoelter
           (alpha_initial=5e3),
       TInitialWall(displayUnit="K") = 340,
-      nCells=10)
-      annotation (Placement(transformation(extent={{-36,188},{-8,216}})));
+      nCells=30)
+      annotation (Placement(transformation(extent={{-36,64},{-8,92}})));
 
     TIL.OtherComponents.Mechanical.RotatoryBoundary rotatoryBoundary1(
                                                                      use_nInput=
          true)
-      annotation (Placement(transformation(extent={{-94,220},{-86,240}})));
+      annotation (Placement(transformation(extent={{-94,96},{-86,116}})));
     TIL.GasComponents.HydraulicResistors.HydraulicResistor hydraulicResistor1(
         zeta_fixed=0.7, hydraulicDiameter=0.8)
-      annotation (Placement(transformation(extent={{-62,214},{-50,218}})));
+      annotation (Placement(transformation(extent={{-62,90},{-50,94}})));
     TIL.GasComponents.Boundaries.Boundary boundary2(
                                                    boundaryType="p",
       use_temperatureInput=true,
       TFixed=303.15)
-      annotation (Placement(transformation(extent={{-102,206},{-94,226}})));
+      annotation (Placement(transformation(extent={{-102,82},{-94,102}})));
     TIL.GasComponents.JunctionElements.VolumeJunction junction2(volume=1e-3,
         fixedInitialPressure=false)
       annotation (Placement(transformation(extent={{-4,-4},{4,4}},
           rotation=90,
-          origin={-40,216})));
+          origin={-40,92})));
     TIL3_AddOn_Supermarkt_Wurm_Februar17.Extremum_Seeking_Control.AlgebraischAnsatz2.FanConstantEta
       Fan2(
       use_mechanicalPort=true,
@@ -1455,7 +1455,7 @@ package Testbench
       eta=0.35) annotation (Placement(transformation(
           extent={{-6,-6},{6,6}},
           rotation=270,
-          origin={-76,216})));
+          origin={-76,92})));
     Modelica.Blocks.Interfaces.RealInput unFan
       annotation (Placement(transformation(extent={{-340,240},{-300,280}}),
           iconTransformation(extent={{-340,240},{-300,280}})));
@@ -1468,21 +1468,21 @@ package Testbench
     Modelica.Blocks.Continuous.FirstOrder firstOrder3(
       initType=Modelica.Blocks.Types.Init.InitialState,
       y_start=300,
-      T=0.1)
-      annotation (Placement(transformation(extent={{-162,246},{-154,254}})));
+      T=10)
+      annotation (Placement(transformation(extent={{-162,122},{-154,130}})));
     TIL.VLEFluidComponents.Boundaries.BoundaryOverdetermined
       boundaryOverdetermined(
       hFixed=EnthalpyGasCoolerInlet,
       m_flowFixed = MassflowGasCoolerInlet,
       pFixed(displayUnit="Pa") = pHochdruckStart)
-      annotation (Placement(transformation(extent={{92,192},{100,212}})));
+      annotation (Placement(transformation(extent={{92,68},{100,88}})));
     TIL.VLEFluidComponents.Boundaries.BoundaryUnderdetermined
       boundaryUnderdetermined annotation (Placement(transformation(
           extent={{-4,-10},{4,10}},
           rotation=90,
-          origin={-258,94})));
+          origin={-258,-30})));
     TIL.VLEFluidComponents.Sensors.StatePoint Valve_Outlet(stateViewerIndex=3)
-      annotation (Placement(transformation(extent={{-234,120},{-226,128}})));
+      annotation (Placement(transformation(extent={{-234,-4},{-226,4}})));
     Modelica.Blocks.Interfaces.RealOutput Tgc_Measurement annotation (Placement(
           transformation(extent={{140,250},{160,270}}), iconTransformation(extent=
              {{140,250},{160,270}})));
@@ -1490,95 +1490,95 @@ package Testbench
           transformation(extent={{140,-10},{160,10}}), iconTransformation(extent={
               {140,-10},{160,10}})));
     Modelica.Blocks.Continuous.FirstOrder firstOrder1(
-                                                     y_start=10,
       k=1,
-      T=1e-3)
+      T=5,
+      y_start=1)
       annotation (Placement(transformation(extent={{-294,84},{-286,92}})));
   equation
 
     connect(sensor_HP.port,HPValve. portA) annotation (Line(
-        points={{-242,178},{-258,178},{-258,156}},
+        points={{-242,54},{-258,54},{-258,32}},
         color={153,204,0},
         thickness=0.5,
         smooth=Smooth.None));
     connect(Gascooler_Outlet.sensorPort, HPValve.portA) annotation (Line(
-        points={{-258,206},{-258,156}},
+        points={{-258,82},{-258,32}},
         color={153,204,0},
         thickness=0.5,
         smooth=Smooth.None));
     connect(boundary.port, Fan1.portA) annotation (Line(
-        points={{-98,248},{-82,248}},
+        points={{-98,124},{-82,124}},
         color={255,153,0},
         thickness=0.5,
         smooth=Smooth.None));
     connect(Fan1.portB, hydraulicResistor.portA) annotation (Line(
-        points={{-70,248},{-60,248}},
+        points={{-70,124},{-60,124}},
         color={255,153,0},
         thickness=0.5,
         smooth=Smooth.None));
     connect(Gascooler_Entry.sensorPort, pressureState_2.portB) annotation (Line(
-        points={{30,206},{30,202},{42,202}},
+        points={{30,82},{30,78},{42,78}},
         color={153,204,0},
         thickness=0.5,
         smooth=Smooth.None));
     connect(sensor_T.port,HPValve. portA) annotation (Line(
-        points={{-192,210},{-192,202},{-258,202},{-258,156}},
+        points={{-192,86},{-192,78},{-258,78},{-258,32}},
         color={153,204,0},
         thickness=0.5,
         smooth=Smooth.None));
     connect(pressureState_2.portB, Gascooler.portB_vle) annotation (Line(
-        points={{42,202},{-8,202}},
+        points={{42,78},{-8,78}},
         color={153,204,0},
         thickness=0.5,
         smooth=Smooth.None));
     connect(Gascooler.portA_gas, boundary1.port) annotation (Line(
-        points={{-22,216},{-22,222}},
+        points={{-22,92},{-22,98}},
         color={255,153,0},
         thickness=0.5,
         smooth=Smooth.None));
     connect(Fan1.rotatoryFlange, rotatoryBoundary3.rotatoryFlange) annotation (
         Line(
-        points={{-76,254},{-76,260},{-90,260}},
+        points={{-76,130},{-76,136},{-90,136}},
         color={135,135,135},
         thickness=0.5,
         smooth=Smooth.None));
     connect(Fan2.portB, hydraulicResistor1.portA) annotation (Line(
-        points={{-70,216},{-62,216}},
+        points={{-70,92},{-62,92}},
         color={255,153,0},
         thickness=0.5,
         smooth=Smooth.None));
     connect(Fan2.portA, boundary2.port) annotation (Line(
-        points={{-82,216},{-98,216}},
+        points={{-82,92},{-98,92}},
         color={255,153,0},
         thickness=0.5,
         smooth=Smooth.None));
     connect(Fan2.rotatoryFlange, rotatoryBoundary1.rotatoryFlange) annotation (
         Line(
-        points={{-76,222},{-76,230},{-90,230}},
+        points={{-76,98},{-76,106},{-90,106}},
         color={135,135,135},
         thickness=0.5,
         smooth=Smooth.None));
     connect(junction2.portC, hydraulicResistor.portB) annotation (Line(
-        points={{-40,220},{-40,248},{-48,248}},
+        points={{-40,96},{-40,124},{-48,124}},
         color={255,153,0},
         thickness=0.5,
         smooth=Smooth.None));
     connect(hydraulicResistor1.portB, junction2.portB) annotation (Line(
-        points={{-50,216},{-44,216}},
+        points={{-50,92},{-44,92}},
         color={255,153,0},
         thickness=0.5,
         smooth=Smooth.None));
     connect(junction2.portA, Gascooler.portB_gas) annotation (Line(
-        points={{-40,212},{-40,180},{-22,180},{-22,188}},
+        points={{-40,88},{-40,56},{-22,56},{-22,64}},
         color={255,153,0},
         thickness=0.5,
         smooth=Smooth.None));
     connect(rotatoryBoundary3.n_in, firstOrder.y) annotation (Line(
-        points={{-94,260},{-102,260},{-102,282},{-147.6,282}},
+        points={{-94,136},{-102,136},{-102,282},{-147.6,282}},
         color={0,0,127},
         smooth=Smooth.None));
     connect(rotatoryBoundary1.n_in, firstOrder.y) annotation (Line(
-        points={{-94,230},{-104,230},{-104,282},{-147.6,282}},
+        points={{-94,106},{-104,106},{-104,282},{-147.6,282}},
         color={0,0,127},
         smooth=Smooth.None));
     connect(firstOrder.u, unFan) annotation (Line(
@@ -1586,40 +1586,39 @@ package Testbench
         color={0,0,127},
         smooth=Smooth.None));
 
-    connect(uTUmgebung, firstOrder3.u) annotation (Line(points={{-320,140},{-320,250},
-            {-162.8,250}},            color={0,0,127}));
-    connect(firstOrder3.y, boundary.T_in) annotation (Line(points={{-153.6,250},
-            {-118,250},{-118,242},{-102,242}},
-                                         color={0,0,127}));
-    connect(firstOrder3.y, boundary2.T_in) annotation (Line(points={{-153.6,250},
-            {-118,250},{-118,210},{-102,210}},color={0,0,127}));
+    connect(uTUmgebung, firstOrder3.u) annotation (Line(points={{-320,140},{-320,126},
+            {-162.8,126}},            color={0,0,127}));
+    connect(firstOrder3.y, boundary.T_in) annotation (Line(points={{-153.6,126},{-118,
+            126},{-118,118},{-102,118}}, color={0,0,127}));
+    connect(firstOrder3.y, boundary2.T_in) annotation (Line(points={{-153.6,126},{
+            -118,126},{-118,86},{-102,86}},   color={0,0,127}));
     connect(pressureState_2.portA, boundaryOverdetermined.port) annotation (
         Line(
-        points={{54,202},{76,202},{96,202}},
+        points={{54,78},{76,78},{96,78}},
         color={153,204,0},
         thickness=0.5));
     connect(Gascooler.portA_vle, HPValve.portA) annotation (Line(
-        points={{-36,202},{-258,202},{-258,156}},
+        points={{-36,78},{-258,78},{-258,32}},
         color={153,204,0},
         thickness=0.5));
     connect(boundaryUnderdetermined.port, HPValve.portB) annotation (Line(
-        points={{-258,94},{-258,140}},
+        points={{-258,-30},{-258,16}},
         color={153,204,0},
         thickness=0.5));
     connect(Valve_Outlet.sensorPort, HPValve.portB) annotation (Line(
-        points={{-230,120},{-248,120},{-258,120},{-258,140}},
+        points={{-230,-4},{-248,-4},{-258,-4},{-258,16}},
         color={153,204,0},
         thickness=0.5));
     connect(sensor_T.sensorValue, Tgc_Measurement) annotation (Line(points={{-192,
-            216.2},{-190,216.2},{-190,260},{150,260}}, color={0,0,127}));
+            92.2},{-190,92.2},{-190,260},{150,260}},   color={0,0,127}));
     connect(sensor_HP.sensorValue, hp_Measurement) annotation (Line(points={{-235.8,
-            178},{150,178},{150,0}}, color={0,0,127}));
+            54},{150,54},{150,0}},   color={0,0,127}));
     connect(Tgc_Measurement, Tgc_Measurement) annotation (Line(points={{150,260},{
             156,260},{156,260},{150,260}}, color={0,0,127}));
     connect(hp_Measurement, hp_Measurement) annotation (Line(points={{150,0},{154,
             0},{154,-12},{154,0},{150,0}}, color={0,0,127}));
     connect(HPValve.effectiveFlowArea_in, firstOrder1.y) annotation (Line(
-          points={{-263,148},{-268,148},{-268,88},{-285.6,88}}, color={0,0,127}));
+          points={{-263,24},{-285.6,24},{-285.6,88}},           color={0,0,127}));
     connect(uVentil, firstOrder1.u) annotation (Line(points={{-320,0},{-300,0},
             {-300,88},{-294.8,88}}, color={0,0,127}));
     annotation (
@@ -1839,6 +1838,110 @@ Bernoulli-Gleichung im Ventil --> da geht die Dichte ein",
             horizontalAlignment=TextAlignment.Left)}),
       experiment(StopTime=200, __Dymola_NumberOfIntervals=10000));
   end Gascooler_Valve_System_Tester_Constant_Fan_2;
+
+  model Gascooler_Valve_System_Tester_Constant_Valve_3 "Alternate Steady State"
+    Testbench.Gascooler_Valve_System Gascooler_Valve_System(
+      FanRevolution=7.4,
+      pHochdruckStart=58.98e5,
+      EnthalpyGasCoolerInlet=492.91e3,
+      EnthalpyGasCoolerOutletStart=235e3,
+      pMitteldruckStart=29.37e5,
+      MassflowGasCoolerInlet=-0.23,
+      HPValve(effectiveFlowAreaTypical=1),
+      boundaryUnderdetermined(port(m_flow(start=0.23))))
+      annotation (Placement(transformation(extent={{-14,4},{36,40}})));
+    Modelica.Blocks.Sources.RealExpression Ambient_Temperature(y=273.15 + 10)
+      annotation (Placement(transformation(extent={{-72,14},{-52,34}})));
+    Modelica.Blocks.Sources.Ramp Area_Valve(
+      duration=8,
+      startTime=50,
+      height=-1e-2 + 3.35e-6,
+      offset=1e-2)
+      annotation (Placement(transformation(extent={{-42,4},{-30,16}})));
+    Modelica.Blocks.Sources.Step Revolution_Fan(
+      startTime=100,
+      offset=7.5,
+      height=5)
+      annotation (Placement(transformation(extent={{-42,30},{-30,42}})));
+  equation
+    connect(Gascooler_Valve_System.uTUmgebung, Ambient_Temperature.y)
+      annotation (Line(points={{-12,24},{-37,24},{-51,24}}, color={0,0,127}));
+    connect(Area_Valve.y, Gascooler_Valve_System.uVentil) annotation (Line(
+          points={{-29.4,10},{-29.4,10},{-12,10}}, color={0,0,127}));
+    connect(Revolution_Fan.y, Gascooler_Valve_System.unFan) annotation (Line(
+          points={{-29.4,36},{-29.4,36},{-12,36}}, color={0,0,127}));
+    annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-80,
+              -20},{60,60}})), Diagram(coordinateSystem(preserveAspectRatio=
+              false, extent={{-80,-20},{60,60}}), graphics={Text(
+            extent={{-14,62},{40,40}},
+            lineColor={28,108,200},
+            textString="Objective:
+Constant Area in Valve -> Jump on revolution
+
+Bernoulli-Gleichung im Ventil --> da geht die Dichte ein",
+            horizontalAlignment=TextAlignment.Left)}),
+      experiment(
+        StopTime=200,
+        __Dymola_NumberOfIntervals=10000,
+        Tolerance=1e-005));
+  end Gascooler_Valve_System_Tester_Constant_Valve_3;
+
+  model Gascooler_Valve_System_Tester_Constant_Fan_3
+    "Alternate Steady State"
+
+    Testbench.Gascooler_Valve_System Gascooler_Valve_System(
+      FanRevolution=7.4,
+      pHochdruckStart=58.98e5,
+      EnthalpyGasCoolerInlet=492.91e3,
+      EnthalpyGasCoolerOutletStart=235e3,
+      pMitteldruckStart=29.37e5,
+      MassflowGasCoolerInlet=-0.23,
+      HPValve(effectiveFlowAreaTypical=1),
+      boundaryUnderdetermined(port(m_flow(start=0.23))))
+      annotation (Placement(transformation(extent={{-14,4},{36,40}})));
+    Modelica.Blocks.Sources.RealExpression Ambient_Temperature(y=273.15 + 10)
+      annotation (Placement(transformation(extent={{-46,16},{-34,32}})));
+    Modelica.Blocks.Sources.Ramp Area_Valve(
+      duration=8,
+      height=-1e-2 + 3.35e-6,
+      offset=1e-2,
+      startTime=50)
+      annotation (Placement(transformation(extent={{-68,4},{-56,16}})));
+    Modelica.Blocks.Sources.Step Revolution_Fan(
+      startTime=100,
+      height=0,
+      offset=7.5)
+      annotation (Placement(transformation(extent={{-68,30},{-56,42}})));
+    Modelica.Blocks.Sources.Step Revolution_Fan1(
+      startTime=100,
+      height=1,
+      offset=1)
+      annotation (Placement(transformation(extent={{-68,-16},{-56,-4}})));
+    Modelica.Blocks.Math.Product product
+      annotation (Placement(transformation(extent={{-40,4},{-34,10}})));
+  equation
+    connect(Gascooler_Valve_System.uTUmgebung, Ambient_Temperature.y)
+      annotation (Line(points={{-12,24},{-33.4,24}},        color={0,0,127}));
+    connect(Revolution_Fan.y, Gascooler_Valve_System.unFan) annotation (Line(
+          points={{-55.4,36},{-55.4,36},{-12,36}}, color={0,0,127}));
+    connect(Gascooler_Valve_System.uVentil, product.y) annotation (Line(points=
+            {{-12,10},{-22,10},{-22,7},{-33.7,7}}, color={0,0,127}));
+    connect(Area_Valve.y, product.u1) annotation (Line(points={{-55.4,10},{-48,
+            10},{-48,8.8},{-40.6,8.8}}, color={0,0,127}));
+    connect(Revolution_Fan1.y, product.u2) annotation (Line(points={{-55.4,-10},
+            {-48,-10},{-48,5.2},{-40.6,5.2}}, color={0,0,127}));
+    annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-80,
+              -20},{60,60}})), Diagram(coordinateSystem(preserveAspectRatio=
+              false, extent={{-80,-20},{60,60}}), graphics={Text(
+            extent={{-14,62},{40,40}},
+            lineColor={28,108,200},
+            textString="Objective:
+Constant Area in Valve -> Jump on revolution
+
+Bernoulli-Gleichung im Ventil --> da geht die Dichte ein",
+            horizontalAlignment=TextAlignment.Left)}),
+      experiment(StopTime=200, __Dymola_NumberOfIntervals=10000));
+  end Gascooler_Valve_System_Tester_Constant_Fan_3;
   annotation (uses(
       TIL(version="3.4.1"),
       Modelica(version="3.2.1"),
