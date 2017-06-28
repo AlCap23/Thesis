@@ -1,8 +1,24 @@
 function C = Decoupling_F(G,Constrains,Method,SetPointWeight)
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
+%Decoupling_F Design of a decoupling PI(D) controller for MIMO systems.
+%   The Algorithm is based on the paper by Aström, Johansson and Wang
+%   http://ieeexplore.ieee.org/abstract/document/946038/ but uses the
+%   originally identified system instead of a linear combination.
 
-
+%% TODO
+%
+%   Implement Set Point Weight
+%   Add the correction for the Maximal Sensitivity
+%% Inputs
+%  TF - a Transfer Function (MIMO) with 2 inputs and 2 outputs
+%  Contrains - an array with constrains for the development of the
+%  controller
+%  Method - Tuning and Detuning Rules: 
+%       'Standard' uses a straight approach for the tuning / detuning of the
+%       controller
+%       'AMIGO' uses the Amigo tuning / detuning rules in an iterative fashion
+%  SetPointWeight - a scalar Set Point Weight of the Controller
+%% Output
+%  C - A 2-Dof Controller with Set Point Weight as a Matrix of System Size
 % System Size
 sys_size = size(G);
 
@@ -61,6 +77,14 @@ for inputs= 1: sys_size(1)
    end
 end
 
+% Correct the Sensitivity
+DT = zeros(1,sys_size(2));
+for outputs = 1:sys_size(2)
+    DT(1,outputs) = abs(sum(T(outputs,:)-T(outputs,outputs))/T(outputs,outputs));
+end
+MC = abs(det(K-diag(diag(K)))/det(diag(diag(K))))*diag(DT)
+MS = (eye(sys_size)-MC)*MS
+
 % Get the Static Decoupler D = I + S
 S = zeros(sys_size);
 
@@ -109,7 +133,7 @@ for inputs = 1:sys_size(1)
             counter = 0;
             while abs(K_I(inputs,outputs)) > abs(K_IMax(inputs,outputs))
                 % Leave at certain iteration Counter
-                if counter > 1e2
+                if counter > 1e3
                     break
                 end
                 C = pid(K_P(inputs,outputs), K_I(inputs,outputs));

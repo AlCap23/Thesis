@@ -11,9 +11,9 @@ clc
 % Filename for saving
 filename = 'Data_80kW_T273.mat';
 % Operating point
-Current = 10;
+Current = 15;
 % Constrains
-Constrains = [0.01,0.025,sqrt(2),sqrt(2)];
+Constrains = [0.01,0.05,sqrt(2),sqrt(2)];
 
 % Add path for functions -> Windows only
 %addpath('C:\Users\juliu\Documents\GIT\New folder\Matlab');
@@ -136,8 +136,8 @@ y1 = lsim(CL1,u,time); % RGA System
 y2 = lsim(CL2,u,time); % Q Decoupling
 y3 = lsim(CL3,u,time); % G Decoupling
 
-% Export
-save(filename,'y1','y2','y3','u','time');
+%% Export
+%save(filename,'y1','y2','y3','u','time');
 %% Robustness Analysis
 figure(2)
 title('Singular Values of the Sensitivity Functions')
