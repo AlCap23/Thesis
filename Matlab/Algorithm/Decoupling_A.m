@@ -100,7 +100,7 @@ for output = 1: sys_size(1)
         T = abs((K1*(T1+L1)+K2*(T2+L2))/K-L);
         
         % Form new transfer function of the main Diagonal
-        Q(output,output) = tf(K,[T,1],'IODelay',L)
+        Q(output,output) = tf(K,[T,1],'IODelay',L);
     end
 end
 

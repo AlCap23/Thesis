@@ -44,7 +44,7 @@ end
 % Closed Loop 
 CL2 = feedback(G,CY,+1)*CR;
 %% Decouple via Modified Aström
-C3 = Decoupling_FOTD(G,[0.05, 0.3, sqrt(2), sqrt(2)],'AMIGO');
+C3 = Decoupling_F(G,[0.05, 0.3, sqrt(2), sqrt(2)],'AMIGO');
 % Preprocess PID2 Object -> Set Point Weight
 C = tf(C3); % Convert to TF
 CA = C(1); % Set Point Controller

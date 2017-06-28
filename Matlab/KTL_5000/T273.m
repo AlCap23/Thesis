@@ -11,13 +11,13 @@ clc
 % Filename for saving
 filename = 'Data_80kW_T273.mat';
 % Operating point
-Current = 1;
+Current = 10;
 % Constrains
-Constrains = [0.01,0.5,sqrt(2),sqrt(2)];
+Constrains = [0.01,0.025,sqrt(2),sqrt(2)];
 
 % Add path for functions -> Windows only
-addpath('C:\Users\juliu\Documents\GIT\New folder\Matlab');
-addpath('C:\Users\juliu\Documents\GIT\New folder\Matlab\KTL_5000');
+%addpath('C:\Users\juliu\Documents\GIT\New folder\Matlab');
+%addpath('C:\Users\juliu\Documents\GIT\New folder\Matlab\KTL_5000');
 % Get the information from Simulation study
 load('KTL80000.mat');
 
@@ -88,7 +88,7 @@ CL2.OutputName = {'Temperature';'Pressure'};
 %Sensitivity
 S2 = inv(eye(2)-CY*G);
 %% Decouple via Modified Astr�m
-C3 = Decoupling_FOTD(G,Constrains,'AMIGO',0);
+C3 = Decoupling_F(G,Constrains,'AMIGO',0);
 % Preprocess PID2 Object -> Set Point Weight
 C = tf(C3); % Convert to TF
 CA = C(1); % Set Point Controller
