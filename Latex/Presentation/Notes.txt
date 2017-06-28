@@ -1,0 +1,169 @@
+Vortrag:
+
+Seite 1 - Titel
+
+Vielen Dank für die Einleitung und auch von meiner Seite aus nocheinmal herzlich
+willkommen. 
+
+Ich möchte Ihnen mit dem folgenden Vortrag "Dynamik und Regelung Thermischer Systeme"
+nicht nur einen kurzen überblick über den derzeitigen Stand meiner Masterarbeit geben
+sondern auch einige Interessante Anwendungsgebiete aufzeigen.
+
+Seite 2- Inhalt
+
+Dazu werde zunächst einige kurze Worte zur Motivation geben, bevor ich auf die
+heutige Anwendungsgebiete der Regelungstechnik zu sprechen komme.
+
+Dann folgt ein Einblick in die derzeitige Arbeit und als Abschluß ziehe ich ein kurzes
+Fazit über die Erkenntnisse und die Chancen die eine Sichtweise aus Regelungstechnischer
+Perspektive bietet.
+
+Seite 3 - Motivation
+
+Jeder hier im Raum ist mit der derzeitigen Herausforderung vertraut, die derzeit
+Forschung und Anwendung sowohl aus gesellschaftlicher und politischer Perspektive prägt.
+
+Thermische und energetische Prozesse ohne Einbußen im Sinne der Nachhaltigkeit zu 
+Gestalten und gegebenenfalls zu verbessern stellt Natur- und Ingenieurswissenschaftler vor 
+nicht zu unterschätzende Herausforderungen.
+
+Seite 3.5 - Maxwell!?
+
+Hier kann auch die Regelungstechnik unterstützen. 
+
+Seite 4 - Aufgabenbereiche 1
+
+# Nur Kasten Informationsgewinn
+
+Klassischer Weise besteht die Aufgabe der Regelungstechnik aus der Beeinflussung
+dynamischer Prozesse durch die gezielte Veränderung von sogenannten Stellgrößen. 
+Hierbei handelt es sich um technische Komponenten, die verändliche Parameter wie
+beispielsweise Drehzahl, Stellweg oder Hubfrequenz besitzen. 
+Allerdings bieten sich weitaus mehr Möglichkeiten. Regelungstechnik kann selbst als ein
+Teilgebiet der Systemdynamik aufgefasst werden. Viele Konzepte immenser Bedeutung 
+lassen sich mittels geeigneter physikalischer Modelle nutzen und auf einer weitaus
+praktischeren Ebene interpretieren. Hierbei können Konzepte wie Stabilität oder Chaotisches
+Verhalten genannt werden.
+
+Ich möchte Ihnen jedoch zunächst Einmal den Prozess der Informationsgewinnung 
+vor einem Regelungstechnischen Hintergrund nahebringen. Als Grundkonzept dienen
+hier Messungen eines Prozesses. Diese erlauben durch ein Modell Rückschlüße über
+die Systemdynamik und damit auch eine Abschätzung über die Entwicklung eines Prozesses.
+
+Seite 5 - Informationsgewinn
+
+# Ändern der Reihenfolge
+# Messbarkeit, Messdaten, Parameterdaten, Modell
+
+Der Informationsgewinn basiert wie eben erwähnt auf einer Vielzahl von Voraussetzungen.
+Die wichtigste ist natürlich die Messbarkeit von Daten. Dies ist Notwendig um 
+weitergehend Aussagen treffen zu können und dient sowohl als Ausgangspunkt als auch 
+als Abgleich der Prognose.
+
+Ein weiterer wichtiger Punkt ist damit auch implizit angesprochen. Die Verfügbarkeit
+von Messdaten. Zwar kann beispielsweise sowohl die Lüfterdrehzahl als auch die Temperatur
+eines Raumes gemessen werden, aber die Aussage über die Luftqualität kann erheblich 
+durch die Anzahl an Temperaturmessstellen oder durch hinzufügen eines Hygrometers 
+präzisiert werden.
+
+Weiterhin sind Parameterdaten notwendig, welche prozeßrelevante Vorgänge beschreiben.
+Aus thermodynamischer Sicht können hier zum Beispiel die spezifischen Wärmekapazitäten,
+die Dichte oder der Isentropenexponent genannt werden. 
+
+Schlußendlich möchte ich auf den wichtigsten Punkt eingehen: Das Modell.
+Alle vorhergenannten Punkte führen nur zu sinnvoll Interpretierbaren Ergebnissen, 
+sofern das Modell eine ausreichend hohe Abbildungsgüte der Realität besitzt.
+Damit die Bedeutung der Informationen nicht verloren geht, wird das Modell
+meist durch ein System von DGLn beschrieben. Diese Darstellungsform wird Zustandsraumdarstellung
+genannt. 
+
+# Bei Vorteilen Fehleranalyse und Prozessbewertung hinzufügen
+
+Die Vorteile die sich aus diesem nicht zu unterschätzendem Aufwand ergeben sind immens.
+
+Für Prozesse deren Dynamik genaustmöglich bekannt sind können weitaus bessere Regler
+ausgelegt werden. Dies ist beispielsweise bei der Regelung von Prüfständen von höchster
+Wichtigkeit.
+
+Unter dem Begriff der Daten-Fusion versteht man Grundsätzlich ein schärfen der Kenntnisse.
+Zwar wird dieses Vorgehen hauptsächlich in der Navigation benutzt, kann aber durchaus
+auch andere Anwendungsgebiete haben.
+Gesammelte Daten über Druck und Temperatur und deren Ableitung können beispielsweise
+genutzt werden um die Messgenauigkeit zu erhöhen.
+
+Letztendlich kann dieses Vorgehen dann dazu benutzt werden um prädiktiv Fehler zu erkennen.
+Hierzu wird eine deterministische oder statistische Aussage gebildet die auf den gesammelten 
+Daten fußt. Ein ähnliches Vorgehen wurde hier im Hause bereits durch Julian Kalmus durchgeführt.
+
+Aber auch andere Anwendungsbereiche wie zum Beispiel die Bewertung von Arbeitspunkten und 
+Prozessen ist hierdurch möglich.
+
+
+Seite 5.5 - Veränderung des Isenthalpen Wirkungsgrades
+
+# Einfach zwei Kreisprozesse in Dave Darstellen, die sich Verändern
+
+Der Vorliegende Kälteprozeß kann nur beschrieben werden, wenn der Zustand 
+genaustmöglich bekannt ist. Wenn sich nun aber Hochdruck oder Temperatur ändert kann 
+dies sowohl auf eine Änderung von Kompressor, Gaskühler als auch Hochdruckventil 
+zurückgeführt werden. Eine präzise Aussage hinsichtlich der Kausalität ist nur durch ein genaues Wissen der
+Prozessdynamik möglich. 
+
+Gleichzeitig kann auch der COP durch eine genauere Datenlage beurteilt werden und mit 
+theoretischen Aussagen vergliechen werden.
+
+Seite 6 - Reglerauslegung
+
+Kommen wir nun zur Reglerauslegung. Die oberste Priorität jedes Reglers ist die
+Stabilisierung des Prozesses. Dies gewährleiste das Erreichen einer statischen Ruhelage.
+Dazu kommen unter anderem Anforderungen wie statische und dynamische Sollwertfolge, also
+das erreichen vorgegebener Werte.
+
+Dies sind nur zwei von vielen Performance Kriterien. Hierzu zählen beispielsweise 
+Überschwinger oder Zeitliche Kriterien. 
+
+Der wohl wichtigste Aspekt der modernen Regelungstechnik ist die Robustheit.
+Im Blockschaltbild sehen sie verschiedene Signale und Signalflüße, welche
+den Einfluß von Sollwert auf Ausgang darstellen. Die Signale d für Störung und
+n für Messrauschen kennzeichnen hier zumeist unbekannte Einflüße die sich aber auf
+den Ausgang auswirken. Ihren Ursprung finden sie in diversen Quellen, aber hauptsächlich
+werden konzentrierte Fehlerquellen in Form von Modellabweichungen angenommen.
+
+Grundsätzliche Probleme resultieren in der begrenztheit der verfügbaren Information.
+Zwar Folgen alle Kälteprozeße gleichen Thermodynamischen Überlegungen, wie aber genau
+die technische Umsetzung - also Komponentenwahl, Verrohrungsmaße etc. - realisiert wird
+ist unbekannt. Demnach kann im Allgemeinen kein optimaler Regler a priori ausgelegt werden.
+
+# Annekdote über Ventilknoten ? 
+
+Seite 7 - Masterarbeit
+
+Die Aufgabe der Masterarbeit, nämlich die Auslegung eines Algorithmus der adaptive, 
+dezentrale Regelstrukturen produziert ist demnach an diese Randbedingungen geknüpft.
+
+Die starre Regelstruktur ist der Tatsache geschuldet, dass in der Industrie zumeist PI(D)
+Regler benutzt werden. Diese sind jedoch größtenteils in Werkseinstellung und ermöglichen daher
+nicht die bestmöglich Prozessführung. 
+
+Durch die genannten Punkte ist es sinnvoll, ein simples Prozessmodel zu wählen. Hier sehen Sie
+eine Dynamik der Ordnung 3 die durch das ein Modell Erster Ordnung mit Totzeit angenährt wird.
+Dies resultiert in einer Sehr konservativen Schätzung und somit in einer hohen Robustheit des Reglers.
+Der resultierende Verlust an physikalischer Information ist nicht relevant, da die verfügbaren
+Parameter ausreichen um einen Regler anhand von etablierten Auslegungsparadigmen zu
+erstellen.
+
+Seite 8 - Systembeschreibung
+
+Seite 9 - Masterarbeit
+
+Eine Verbesserung der Performance erfolgt durch die Berücksichtigung der Nebenkopplungen
+des Systems. Physikalisch gesprochen regelt das Gebläse jederzeit den Druckverlust mit,
+da sich durch die eingestellte Temperatur die Dichte verändert.
+
+Um die Regler zu verbessern wird nun ein Informationsfluss ermöglicht, also die Absprache der Regler ermöglicht.
+Dies führt zu einem Verlust an nomineller Performance, der aber die insgesamte Güte
+und auch Robustheit der Regelung erhöht.
+
+Seite 10 - Step Response
+
+Hier sehen wir die Sprunganwort eines Modells. In Blau zeigt

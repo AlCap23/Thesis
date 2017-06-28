@@ -68,7 +68,7 @@ CL1 = feedback(G,CY,+1)*CR;
 CL1.InputName = {'Fan';'Valve'};
 CL1.OutputName = {'Temperature';'Pressure'};
 % Sensitivity
-S1 = inv(eye(2)-CY*G);
+S1 = inv(eye(2)-G*CY);
 %% Decouple via Astr�m
 C2 = Decoupling_A(G,Constrains,'AMIGO',0);
 % Preprocess PID2 Object -> Set Point Weight
@@ -86,7 +86,7 @@ CL2 = feedback(G,CY,+1)*CR;
 CL2.InputName = {'Fan';'Valve'};
 CL2.OutputName = {'Temperature';'Pressure'};
 %Sensitivity
-S2 = inv(eye(2)-CY*G);
+S2 = inv(eye(2)-G*CY);
 %% Decouple via Modified Astr�m
 C3 = Decoupling_F(G,Constrains,'AMIGO',0);
 % Preprocess PID2 Object -> Set Point Weight
@@ -105,7 +105,7 @@ CL3 = feedback(G,CY,+1)*CR;
 CL3.InputName = {'Fan';'Valve'};
 CL3.OutputName = {'Temperature';'Pressure'};
 %Sensitivity
-S3 = inv(eye(2)-CY*G);
+S3 = inv(eye(2)-G*CY);
 %% Mixing
 % % Since the temperature control is faster from G -> Use G
 % CR(:,1) = CR3(:,1);
