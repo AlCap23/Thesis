@@ -11,9 +11,9 @@ clc
 % Filename for saving
 filename = 'Data_80kW_T273.mat';
 % Operating point
-Current = 15;
+Current = 10;
 % Constrains
-Constrains = [0.01,0.05,sqrt(2),sqrt(2)];
+Constrains = [0.01,0.02,sqrt(2),sqrt(2)];
 
 % Add path for functions -> Windows only
 %addpath('C:\Users\juliu\Documents\GIT\New folder\Matlab');
@@ -50,6 +50,7 @@ G_D = tf([1,1;1,1]);
 G_D.IODelay = G.IODelay;
 %% Decouple via RGA
 C1 = Decoupling_RGA(G,Constrains,'DC',0);
+%C1 = Decoupling_FOTD(G,Constrains,'AMIGO',0);
 % Preprocess PID2 Object -> Set Point Weight
 C = tf(C1); % Convert to TF
 CA = C(1); % Set Point Controller
@@ -69,6 +70,7 @@ CL1.InputName = {'Fan';'Valve'};
 CL1.OutputName = {'Temperature';'Pressure'};
 % Sensitivity
 S1 = inv(eye(2)-G*CY);
+OL1 = -G*CY;
 %% Decouple via Astr�m
 C2 = Decoupling_A(G,Constrains,'AMIGO',0);
 % Preprocess PID2 Object -> Set Point Weight
@@ -87,6 +89,7 @@ CL2.InputName = {'Fan';'Valve'};
 CL2.OutputName = {'Temperature';'Pressure'};
 %Sensitivity
 S2 = inv(eye(2)-G*CY);
+OL2 = -G*CY;
 %% Decouple via Modified Astr�m
 C3 = Decoupling_F(G,Constrains,'AMIGO',0);
 % Preprocess PID2 Object -> Set Point Weight
@@ -106,6 +109,7 @@ CL3.InputName = {'Fan';'Valve'};
 CL3.OutputName = {'Temperature';'Pressure'};
 %Sensitivity
 S3 = inv(eye(2)-G*CY);
+OL3 = -G*CY;
 %% Mixing
 % % Since the temperature control is faster from G -> Use G
 % CR(:,1) = CR3(:,1);

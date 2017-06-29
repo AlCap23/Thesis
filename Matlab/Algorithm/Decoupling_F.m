@@ -77,13 +77,13 @@ for inputs= 1: sys_size(1)
    end
 end
 
-% Correct the Sensitivity
-DT = zeros(1,sys_size(2));
-for outputs = 1:sys_size(2)
-    DT(1,outputs) = abs(sum(T(outputs,:)-T(outputs,outputs))/T(outputs,outputs));
-end
-MC = abs(det(K-diag(diag(K)))/det(diag(diag(K))))*diag(DT)
-MS = (eye(sys_size)-MC)*MS
+% % Correct the Sensitivity
+% DT = zeros(1,sys_size(2));
+% for outputs = 1:sys_size(2)
+%     DT(1,outputs) = abs(sum(T(outputs,:)-T(outputs,outputs))/T(outputs,outputs));
+% end
+% MC = abs(det(K-diag(diag(K)))/det(diag(diag(K))))*diag(DT)
+% MS = (eye(sys_size)-MC)*MS
 
 % Get the Static Decoupler D = I + S
 S = zeros(sys_size);
