@@ -9,21 +9,23 @@ function [ G_M, gamma] = Relay_Identification(G)
 %% Initialize Variables for Experiment
 % Simulation
 t_start = 0; % Start Time in s
-t_end = 6000; % Stop Time in s, High Order require more Time
+t_end = 100; % Stop Time in s, High Order require more Time
 dt = 0.01; % Time Step in s
 
-% Relay Parameters
-u0 = 10 ; % Constant Input on the Plant
-y0 = dcgain(G)*u0; % Set Point / Working Point
+% Relay Parameters 
+u0 = 0 ; % Constant Input on the Plant
 mu = 10; % Parameter for estimating hysteresis -> High Value is better for Benchmark
-d1 = 10; % Upper Limit of the Output
-d2 = 2; % Lower Limit of the Output
-h = min(d1,d2)*abs(dcgain(G))/mu; % Hysterisis for Relay, from Eq. 19
-L = G.OutputDelay; % Time Delay
+d1 = 1.4*abs(dcgain(G)); % Upper Limit of the Output
+d2 = 1.2*abs(dcgain(G)); % Lower Limit of the Output
+uon = d1*sign(dcgain(G));
+uoff = -d2*sign(dcgain(G));
+h = abs(min(d1,d2))*abs(dcgain(G))/mu; % Hysterisis for Relay, from Eq. 19
+y0 = 0.5*max(d1,d2); % Set Point / Working Point
+L = G.IODelay; % Time Delay
 
 % Set a small delay if none is given ( for stability of the simulation )
-if L < 0.5*G.Denominator{:,:}(end-1)
-    L = 0.5*G.Denominator{:,:}(end-1);
+if L < 0.5*G.Denominator{:,:}(end-1)/G.Denominator{:,:}(end)
+    L = 0.5*G.Denominator{:,:}(end-1)/G.Denominator{:,:}(end);
 end
 [Num, Den] = tfdata(G,'v'); % Get the Transfer Function Data
 %% Simulink
@@ -47,8 +49,8 @@ sample_rate = time_Data(2)-time_Data(1); % Assume constant sample rate
 
 
 % Find the Peaks in the Data
-[ypeaks, ypeakloc] = findpeaks(y_Data); % Get the location and the value of the peaks
-[upeaks, upeakloc] = findpeaks(u_Data);
+[ypeaks, ypeakloc] = findpeaks(y_Data) % Get the location and the value of the peaks
+[upeaks, upeakloc] = findpeaks(u_Data)
 
 % Since we know that we got a oscillation, use that knowledge to find first
 % minimum
@@ -61,9 +63,9 @@ t_on = time_Data(loc_u_Min) - time_Data(upeakloc(1));
 t_off = time_Data(upeakloc(2)) - time_Data(loc_u_Min);
 
 % Get the numerical integral of the plant process output
-I_y = sum(y_Data(ypeakloc(1):ypeakloc(2))-y0)*sample_rate; % Riemann Sum as Integration
+I_y = trapz(time_Data(upeakloc(1):upeakloc(2)),y_Data(upeakloc(1):upeakloc(2))-y0); % Riemann Sum as Integration
 % Get the integral action of the input
-I_u = (upeaks(1)-u0)*t_on + (u_Min-u0)*t_off; % Eq. 12, checked
+I_u = trapz(time_Data(upeakloc(1):upeakloc(2)),u_Data(upeakloc(1):upeakloc(2))-u0); % Eq. 12, checked
 % Static Gain
 K_P = I_y/I_u; % Eq. 13, checked
 % Calculate the normalized time , Time Constant and Delay
@@ -73,8 +75,8 @@ tau = (gamma-rho) / (gamma-1) / (0.35*rho + 0.65); % Normalized Time, Eq.9, chec
 
 % Time Constant
 T_on = t_on / log( ((h/abs(K_P))-d2+exp(tau/(1-tau))*(d1+d2)) / (d1- (h/abs(K_P)) ) ); % Eq. 14, checked
-T_off = t_off / log( ((h/abs(K_P))-d1+exp(tau/(1-tau))*(d1+d2)) / (d2- (h/abs(K_P)) ) ); % Eq. 15, checked
-T = 1/2*(T_on+T_off); % Get mean of the Time Constants to make error from t_on / t_off smaller
+%T_off = t_off / log( ((h/abs(K_P))-d1+exp(tau/(1-tau))*(d1+d2)) / (d2- (h/abs(K_P)) ) ); % Eq. 15, checked
+T = T_on % Get mean of the Time Constants to make error from t_on / t_off smaller
 L = T* (tau/(1-tau)); % Eq.16, checked
 
 
