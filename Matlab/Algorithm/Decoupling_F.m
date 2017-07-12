@@ -41,7 +41,7 @@ if ~exist('Method','var')
 end
 
 % Preprocess Constrains for Gamma_Max Matrix
-HMax = ones(sys_size);
+HMax = zeros(sys_size);
 % Fill the Antidiagonal with entries corresponding to the max interaction
 % Outer Loop / Inputs
 for inputs = 1:sys_size(1)
@@ -133,7 +133,7 @@ for inputs = 1:sys_size(1)
             counter = 0;
             while abs(K_I(inputs,outputs)) > abs(K_IMax(inputs,outputs))
                 % Leave at certain iteration Counter
-                if counter > 1e3
+                if counter > 1e4
                     break
                 end
                 C = pid(K_P(inputs,outputs), K_I(inputs,outputs));
