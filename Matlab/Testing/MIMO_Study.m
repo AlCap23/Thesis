@@ -13,11 +13,11 @@ maxSamples = 20;
 input = 2;
 output = 2;
 % Constrains for Controller
-Constrains = [0.01,0.2,sqrt(2),sqrt(2)];
+Constrains = [0.1,0.5,sqrt(2),sqrt(2)];
 % Preallocate Data
 SV = zeros(maxOrder,maxSamples,3);
 
-for order = 1:1:maxOrder
+for order = 3:1:maxOrder
     for samples = 1:1:maxSamples
         order,samples
         %% Make a Random System and Identify

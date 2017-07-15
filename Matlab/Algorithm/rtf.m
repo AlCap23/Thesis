@@ -14,8 +14,8 @@ for inputs = 1:input
             if sorder > 1
                 Num = [rand+1,1];
             else
-                % Gain between 5 and -14
-                Num = 20^(1/order)*rand-4;
+                % Gain between 1 and 20
+                Num = 19^(1/order)*rand+1;
                 if abs(Num) < 1
                     Num = 1.2;
                 end

@@ -26,7 +26,7 @@ tau = L / (L+T);
 %% Detune a PI Controller based on MS
 % Compute a new proportional gain if not given
 if ~exist('k_p','var')
-    k_p = 0.8*K_P;
+    k_p = 0.5*K_P;
 end
 
 % Maximum Sensitivity if not given
