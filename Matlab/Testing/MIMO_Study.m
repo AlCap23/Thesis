@@ -8,16 +8,16 @@ clc
 %% Outer Loop
 % Set maximum Order and maximum Sample Size
 maxOrder = 10;
-maxSamples = 20;
+maxSamples = 40;
 % Make a Loop for System Order 1-10
 input = 2;
 output = 2;
 % Constrains for Controller
 Constrains = [0.1,0.5,sqrt(2),sqrt(2)];
 % Preallocate Data
-SV = zeros(maxOrder,maxSamples,3);
+SV = zeros(maxOrder,maxSamples,3,2);
 
-for order = 3:1:maxOrder
+for order = 1:1:maxOrder
     for samples = 1:1:maxSamples
         order,samples
         %% Make a Random System and Identify
@@ -66,7 +66,13 @@ for order = 3:1:maxOrder
         [svmax, locmax] = max(sv(1,:));
         wmax = wv(locmax);
         % Store the Data
-        SV(order,samples,1) = svmax;
+        SV(order,samples,1,1) = svmax;
+        % Get the minimum singular value
+        [sv,wv] = sigma(S1,[],1);
+        [svmax, locmax] = min(sv(1,:));
+        wmax = wv(locmax);
+        % Store the Data
+        SV(order,samples,1,2) = svmax;
         %% Make Controller via Astroem Algorithm
         C2 = Decoupling_A(G_M,Constrains,'AMIGO',0);
         % Preprocess PID2 Object -> Set Point Weight
@@ -88,11 +94,18 @@ for order = 3:1:maxOrder
         OL2 = -G*CY;
         %% Store the Data
         % Get the Maximum Singular Value
+        % Get the Maximum Singular Value
         [sv,wv] = sigma(S2,[],1);
         [svmax, locmax] = max(sv(1,:));
         wmax = wv(locmax);
         % Store the Data
-        SV(order,samples,2) = svmax;
+        SV(order,samples,2,1) = svmax;
+        % Get the minimum singular value
+        [sv,wv] = sigma(S2,[],1);
+        [svmax, locmax] = min(sv(1,:));
+        wmax = wv(locmax);
+        % Store the Data
+        SV(order,samples,2,2) = svmax;
         %% Make Controller via Modified Astroem
         C3 = Decoupling_F(G_M,Constrains,'AMIGO',0);
         % Preprocess PID2 Object -> Set Point Weight
@@ -119,7 +132,13 @@ for order = 3:1:maxOrder
         [svmax, locmax] = max(sv(1,:));
         wmax = wv(locmax);
         % Store the Data
-        SV(order,samples,3) = svmax;
+        SV(order,samples,3,1) = svmax;
+        % Get the minimum singular value
+        [sv,wv] = sigma(S3,[],1);
+        [svmax, locmax] = min(sv(1,:));
+        wmax = wv(locmax);
+        % Store the Data
+        SV(order,samples,3,2) = svmax;
 %         %% Check via Plotting
 %         figure(1)
 %         step(CL1)
