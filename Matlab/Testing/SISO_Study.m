@@ -24,7 +24,8 @@ for order = 1:1:maxOrder
         % Approximate with FOTD AREA
         %G_A = FOTD_AREA(y,u,t);
         % Approximate with Relay Autotuning
-        G_A = Relay_Identification(G);
+        %G_A = Relay_Identification(G);
+        G_A = FOTD_AREA(y,u,t);
         % Create Controller
         C_A = AMIGO_Tune(G_A,'PI');
         % Create Sensitivity of the Real System

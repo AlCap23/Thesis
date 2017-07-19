@@ -31,4 +31,4 @@ for inputs = 1:input
     
 end
 % Random Delay
-G.IODelay = Den(1)*rand(2,2)+0.2*Den(1)*eye(2,2);
+G.IODelay = Den(1)*rand(input,output)+0.2*Den(1)*eye(input,output);
