@@ -7,8 +7,8 @@ clc
 
 %% Outer Loop
 % Set maximum Order and maximum Sample Size
-maxOrder = 10;
-maxSamples = 40;
+maxOrder = 8;
+maxSamples = 1;
 % Make a Loop for System Order 1-10
 input = 2;
 output = 2;
@@ -17,7 +17,7 @@ Constrains = [0.1,0.5,sqrt(2),sqrt(2)];
 % Preallocate Data
 SV = zeros(maxOrder,maxSamples,3,2);
 
-for order = 1:1:maxOrder
+for order = maxOrder:1:maxOrder
     for samples = 1:1:maxSamples
         order,samples
         %% Make a Random System and Identify
