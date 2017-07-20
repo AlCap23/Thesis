@@ -1,0 +1,211 @@
+\chapter{Application to a Two Input Two Output First Order Time Delay System}
+
+\section{General Example for First Order Time Delay Process Models}
+\label{c:control:s:example}
+
+As an example a system with two inputs and two outputs is investigated. Every transfer function is modelled as an FOTD.
+
+\begin{align}
+\begin{split}
+\ma{G} = \begin{bmatrix}
+g_{11} & g_{12} \\
+g_{21} & g_{22}
+\end{bmatrix} & ~,g_{ij} = \frac{K_{ij}}{T_{ij} s +1 } e^{-L_{ij}s}
+\end{split}
+\label{c:control:e:examplesys}
+\end{align}
+
+For the system described in Eq. \ref{c:control:e:examplesys} a controller is now designed via the Algorithm proposed by Aström et.al..\\
+
+At first the decoupler is designed via the inverse static gain of the system:
+
+
+\begin{align}
+\begin{split}
+\ma{D} &= \ma{G}|_{s=0}^{-1}\\
+&= \frac{1}{K_{11}K_{22}-K_{12}K_{21}} 
+\begin{bmatrix}
+K_{22} & -K_{21} \\
+-K_{12} & K_{11}
+\end{bmatrix}
+\end{split}
+\label{c:control:e:exampleDecoupler}
+\end{align}
+
+The transformed system $\ma{G}^*$ is given by:
+
+\begin{align}
+\begin{split}
+\ma{G}^* &= \ma{G}\ma{D}\\
+&= \frac{1}{K_{11}K_{22}-K_{12}K_{21}} 
+\begin{bmatrix}
+g_{11} & g_{12} \\
+g_{21} & g_{22}
+\end{bmatrix}
+\begin{bmatrix}
+K_{22} & -K_{21} \\
+-K_{12} & K_{11}
+\end{bmatrix} \\
+&= \frac{1}{K_{11}K_{22}-K_{12}K_{21}}
+\begin{bmatrix}
+K_{22}g_{11}-K_{12}g_{12} & -K_{21}g_{11}+K_{22}g_{12} \\
+K_{22}g_{21}-K_{12}g_{22} &
+-K_{21}g_{21}+K_{11}g_{22}
+\end{bmatrix}
+\end{split}
+\label{c:control:e:exampletransformed}
+\end{align}
+
+From Eq. \ref{c:control:e:exampletransformed} it is clear that the entries $g_{ij}^*$ are linear combinations of FOTD transfer functions. Due to the properties of the exponential function the superposition principle does not hold. Hence a controller via the AMIGO algorithm can only be designed if a sufficient approximation of the linear combination as a FOTD can be formulated:
+
+\begin{align}
+\begin{split}
+g_{ij}^* &\approx \frac{K_{ij}^*}{T_{ij}^*s+1}e^{-L_{ij}^* s} 
+\end{split}
+\label{c:control:e:exampleFOTDapprox}
+\end{align}
+
+Assuming a sufficient approximation can be found and the resulting error is minimal the diagonal controller can be designed. A choice for a PI-Structure with set point weighting $b=0$ holds:
+
+\begin{align}
+\begin{split}
+\ma{K}_y^* &= \begin{bmatrix}
+-K_{P1}^* - K_{I1}^*\frac{1}{s} & 0 \\
+0 & -K_{P2}^* - K_{I2}^*\frac{1}{s}
+\end{bmatrix} \\
+\ma{K}_r^* &= \begin{bmatrix}
+K_{I1}^*\frac{1}{s} & 0 \\
+0 & K_{I2}^*\frac{1}{s}
+\end{bmatrix} 
+\end{split}
+\label{c:control:e:exampleTransformedControler}
+\end{align}
+
+With parameters $K_{P,i},K_{I,i} \in \mathbb{R}$ are calculated via the AMIGO Tuning Rules as given earlier. Since the approximation given in Eq.\ref{c:control:e:exampleFOTDapprox} holds an inevitable error so do the parameter. \\
+
+The coupling matrix of the antidiagonal parts is given by:
+
+\begin{align}
+\begin{split}
+\ma{\Gamma}_A &= \left[\frac{d}{ds}\ma{G}|^*_{s=0}\right]_A s \\
+&= \begin{bmatrix}
+0 & \frac{-K_{21}K_{11}(T_{11}-L_{11}) + K_{22}K_{12}(T_{12}-L{12})}{K_{11}K_{22}-K_{12}K_{21}} \\
+\frac{-K_{12}K_{22}(T_{22}-L_{22}) + K_{22}K_{21}(T_{21}-L_{21})}{K_{11}K_{22}-K_{12}K_{21}} & 0
+\end{bmatrix} s\\
+&\approx \begin{bmatrix}
+0 & K_{12}^* (T_{12}^* - L_{12}^*) \\
+K_{21}^* (T_{21}^* - L_{21}^*) & 0 
+\end{bmatrix} s
+\end{split}
+\label{c:control:e:exampleTransformedCoupling}
+\end{align}
+
+From Eq. \ref{c:control:e:exampleTransformedCoupling} the dependency of the coupling on the both the static gain of the system and the dynamical behaviour can be observed. This coincides with the statements of LUNZE ZITIEREN.\\
+
+Detuning the controller requires to define both  maximum allowed interactions $h_{ij,Max}$ and maximum sensitivity $M_{S,i}$ of the closed loop:
+
+\begin{align*}
+\begin{split}
+\ma{H}_{A,Max} &= \begin{bmatrix}
+0 & h_{12,Max} \\
+h_{21,Max} & 0 
+\end{bmatrix}\\
+\ma{M}_{S} &= \begin{bmatrix}
+M_{S,1} & 0 \\
+0 & M_{S,2}
+\end{bmatrix}
+\end{split}
+\end{align*}
+
+Solving Eq. \ref{c:control:e:Hmax*} for the set point weighting controller holds:
+
+\begin{align}
+\begin{split}
+\ma{K}^*_r &\leq \ma{\Gamma}^{-*}_{A,Max}\ma{M}_S^{-1}\ma{H}^*_{A,Max} \\ 
+&\leq \frac{1}{\det(\ma{M}_S)}\ma{\Gamma}^{-*}_{A,Max}\ma{H}^*_{A,Max}\\
+&\leq \frac{1}{M_{S,1}M_{S,2}}
+\begin{bmatrix}
+\frac{h_{21,Max}}{K_{12}^* (T_{12}^* - L_{12}^*)} & 0\\
+0 & \frac{h_{12,Max}}{K_{21}^* (T_{21}^* - L_{21}^*)} 
+\end{bmatrix}
+\end{split}
+\end{align}
+
+Now the modified Algorithm proposed in this thesis is applied to the same System. First, we design the controller as a function of the main diagonal entries $g_{ii}$ once again using the AMIGO Tuning rules:
+
+\begin{align}
+\begin{split}
+\ma{K}_y &= \begin{bmatrix}
+-K_{P1} - K_{I1}\frac{1}{s} & 0 \\
+0 & -K_{P2} - K_{I2}\frac{1}{s}
+\end{bmatrix} \\
+\ma{K}_r &= \begin{bmatrix}
+K_{I1}\frac{1}{s} & 0 \\
+0 & K_{I2}\frac{1}{s}
+\end{bmatrix} 
+\end{split}
+\label{c:control:e:exampleControler}
+\end{align}
+
+The splitter $\ma{\Sigma}$ is likewise designed by the steady state of the system as:
+
+\begin{align}
+\begin{split}
+\ma{\Sigma} &= \ma{D}_A\ma{D}_D^{-1} \\
+& = \begin{bmatrix}
+0 & -\frac{K_{12}}{K_{11}} \\
+-\frac{K_{21}}{K_{22}} & 0
+\end{bmatrix}
+\end{split}
+\end{align}
+
+To test for interaction define the maximum interaction and the sensitivity like in Eq. FEHLT. The anti diagonal parts of the Taylor series can be identified as:
+
+\begin{align}
+\begin{split}
+\ma{\Gamma}_A &= \frac{d}{ds}\left[\ma{G}_A + \ma{G}_D\ma{\Sigma}\right]|_{s=0} \\
+&= \begin{bmatrix}
+0 & K_{12}(T_{12}-L_{12}) - K_{11}\frac{K_{12}}{K_{11}}(T_{11}-L_{11}) \\
+K_{21}(T_{21}-L_{21}) - K_{22}\frac{K_{21}}{K_{22}}(T_{22}-L_{22}) & 0 
+\end{bmatrix} \\
+&= \begin{bmatrix}
+0 & K_{12}(T_{12}-L_{12} - T_{11}+L_{11}) \\
+K_{21}(T_{21}-L_{21} - T_{22}+L_{22}) & 0 
+\end{bmatrix} 
+\end{split}
+\end{align}
+
+To detune the controller solving Eq. \ref{c:control:e:Hmax*} for the integral controller as before holds:
+
+\begin{align}
+\begin{split}
+\ma{K}_I &\leq \ma{\Gamma}_A^{-1} \ma{M}_S^{-1} \ma{H}_{A,Max} \\
+&\leq \frac{1}{\det(\ma{M}_S)} \ma{\Gamma}_A^{-1} \ma{H}_{A,Max} \\
+&\leq \frac{1}{M_{S,1}M_{S,2}}\begin{bmatrix}
+\frac{h_{12,Max}}{K_{12}(T_{12}-L_{12}-T_{11}+L_{11})} & 0 \\
+0 &\frac{h_{21,Max}}{K_{21}(T_{21}-L_{21}-T_{22}+L_{22})}
+\end{bmatrix}
+\end{split}
+\end{align}
+\subsection*{Overview}
+
+Three Methods are presented above. 
+
+\begin{figure}[H]
+\begin{minipage}[b]{\textwidth}
+\centering
+\includegraphics[width = \textwidth]{newplot__5_.png}
+\caption{Different Methods for MIMO Controller Design}
+\label{c:control:f:MIMODesign}
+\end{minipage}
+\end{figure}
+\begin{figure}[H]
+\begin{minipage}[b]{\textwidth}
+\centering
+\includegraphics[width = \textwidth]{newplot__6_.png}
+\caption{Different Methods for MIMO Controller Design}
+\label{c:control:f:MIMODesign2}
+\end{minipage}
+\end{figure}
+
+

@@ -1,48 +1,9 @@
 This is BibTeX, Version 0.99dThe top-level auxiliary file: studentischeArbeiten.aux
 The style file: abbrvdin.bst
-Database file #1: chapters/bibliography.bib
-Repeated entry---line 93 of file chapters/bibliography.bib
- : @book{Lunze2014
- :                ,
-I'm skipping whatever remains of this entry
-Repeated entry---line 105 of file chapters/bibliography.bib
- : @book{Lunze2014
- :                ,
-I'm skipping whatever remains of this entry
-Repeated entry---line 128 of file chapters/bibliography.bib
- : @book{Lunze2014
- :                ,
-I'm skipping whatever remains of this entry
-Repeated entry---line 153 of file chapters/bibliography.bib
- : @book{Lunze2014
- :                ,
-I'm skipping whatever remains of this entry
-Repeated entry---line 178 of file chapters/bibliography.bib
- : @book{Lunze2014
- :                ,
-I'm skipping whatever remains of this entry
-Repeated entry---line 290 of file chapters/bibliography.bib
- : @book{Lunze2014
- :                ,
-I'm skipping whatever remains of this entry
-Repeated entry---line 567 of file chapters/bibliography.bib
- : @book{Lunze2014
- :                ,
-I'm skipping whatever remains of this entry
-Repeated entry---line 596 of file chapters/bibliography.bib
- : @book{Lunze2014
- :                ,
-I'm skipping whatever remains of this entry
-Repeated entry---line 621 of file chapters/bibliography.bib
- : @book{Lunze2014
- :                ,
-I'm skipping whatever remains of this entry
-Repeated entry---line 661 of file chapters/bibliography.bib
- : @book{Lunze2014
- :                ,
-I'm skipping whatever remains of this entry
-Repeated entry---line 706 of file chapters/bibliography.bib
- : @book{Lunze2014
- :                ,
-I'm skipping whatever remains of this entry
-(There were 11 error messages)
+Database file #1: chapters/mendeley_masterarbeit.bib
+Warning--I didn't find a database entry for "Weigand2013ThermodynamikKompakt"
+Warning--I didn't find a database entry for "Astrom2009FeedbackEngineers"
+Warning--I didn't find a database entry for "Zhou1998EssentialsControl"
+Warning--I didn't find a database entry for "Astrom2006AdvancedControl"
+Warning--there's no year in DoyleFeedbackTheory
+(There were 5 warnings)

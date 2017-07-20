@@ -1,0 +1,132 @@
+\chapter{Thermodynamic Model and\\ Problem Statement}\label{c:thermo}
+
+The following chapter gives a brief introduction to the needed basics from a thermodynamic point of view.\\
+
+In the first section the system is described from a technical perspective followed by  a general thermodynamic process model. \\
+
+Afterwards the model used for simulating the system in Dymola is explained. \\
+
+At last the problem motivating this thesis is formulated in the context of thermodynamics.
+
+
+\section{Process Description} \label{c:thermo:s:process}
+
+\section{Simulation Model Description} \label{c:thermo:s:sim}
+
+\section{Problem Statement} \label{c:thermo:problem}
+The aim of enginnering thermodynamics is - as stated earlier in Chap. \ref{c:intro} - to understand and optimize the  behaviour of technical systems used for energy transformation and transportation. Hence, a connection to the field of optimal control is a logical extension to maximize the efficiency. As described in sec. \ref{c:thermo:s:process} the systems states are general interconnected by both physical components and physical phenomena. In the following section the coupling due to physical phenomena will be investigated.\\
+
+The process can be divided in three basic processes:
+\begin{itemize}
+\item Isobaric process with heat supply
+\item Adiabatic isenthalpic process 
+\item Isentropic process with exchange of (mechanical) work
+\end{itemize}
+We can characterize these processes using the First Law of Thermodynamics in differential form, see e.g. \cite[p.25]{Weigand2013ThermodynamikKompakt}:
+
+\begin{align}
+\begin{split}
+du &= d \left( h - pv \right ) \\ &= dh - v dp - p dv \\
+&= \delta q + \delta w_{diss} - p dv
+\end{split}
+\label{c:thermo:e:firstlaw}
+\end{align}
+\nomenclature{$u$}{Specific Inner Energy}
+\nomenclature{$h$}{Specific Enthalpy}
+\nomenclature{$p$}{Pressure}
+\nomenclature{$v$}{Specific Volume}
+\nomenclature{$q$}{Specific Heat}
+\nomenclature{$w$}{Specific Work}
+
+Which states that the change in inner energy $u \in \mathbb{R}$ is equal to the sum of heat $\delta Q \in \mathbb{R}$ and dissipated work $\delta w_{diss} \in \mathbb{R}$ minus the pressure-volume work, depending on the pressure $p \in \mathbb{R}^+$ times the change in specific volume $v \in \mathbb{R}^+$. The internal energy can be related to the specific enthalpy $h = u +pv \in \mathbb{R}$.\\
+
+The Second Law of Thermodynamics as formulated by Gibbs \cite[p.59]{Struchtrup2014ThermodynamicsConversion} is given by:
+
+\begin{align}
+\begin{split}
+T ds &= du + p dv \\
+ &= d( h - pv ) + p dv \\
+ &= dh - vdp
+\end{split}
+\label{c:thermo:e:secondlaw}
+\end{align}
+\nomenclature{$T$}{Temperature}
+\nomenclature{$s$}{Specific Enthropy}
+
+Defining two independent to be state variables the specific volume $v$ and temperature $T$ and substitute Eq.\ref{c:thermo:e:firstlaw} in Eq.\ref{c:thermo:e:secondlaw}:
+
+\begin{align}
+\begin{split}
+T ds &= du + p dv \\
+&= \delta q  + \delta w_{diss}
+\end{split}
+\label{c:thermo:e:firstandsecondlaw}
+\end{align}
+
+Since the total differential of the inner energy is given by
+
+
+\begin{align}
+\begin{split}
+du &= \left( \frac{du}{dT} \right)_v dT  + \left( \frac{du}{dv} \right)_T dv
+\end{split}
+\label{c:thermo:e:innerenergydiff}
+\end{align}
+
+Substitute Eq. \ref{c:thermo:e:innerenergydiff} in \ref{c:thermo:e:firstandsecondlaw} while using the definition for the specific heat capacity at constant volume $c_V = \left(\frac{\partial u}{\partial T}\right)_v \in \mathbb{R}^+$ holds:
+
+\begin{align*}
+\begin{split}
+T ds &= \left( \frac{\partial u}{\partial T} \right)_v dT  + \left( \frac{\partial u}{ \partial v} \right)_T dv + p dv \\
+&= c_v dT + \left[ p + \left( \frac{\partial u}{\partial v}\right)_T\right] dv
+\end{split}
+\end{align*}
+
+Using the relation \cite[p.375]{Struchtrup2014ThermodynamicsConversion} $T\left( \frac{\partial s}{\partial v}\right)_T = \left( \frac{\partial u}{\partial v}\right)_T + p $ and the Maxwell Relation $\left( \frac{\partial s}{\partial v}\right)_T = \left( \frac{\partial p}{\partial T}\right)_v = \frac{\beta}{\kappa} $ the equation becomes:
+
+\begin{align}
+\begin{split}
+T ds &= \left( \frac{\partial u}{\partial T} \right)_v dT  + \left( \frac{\partial u}{ \partial v} \right)_T dv + p dv \\
+\delta q &= c_v dT + T \frac{\beta}{\kappa} dv
+\end{split}
+\label{c:thermo:e:isobaricHeat}
+\end{align}
+\nomenclature{$c_v$}{Specific Heat Capacity at Constant Volume}
+\nomenclature{$\beta$}{Coefficient of Thermal Expansion at Constant Pressure}
+\nomenclature{$\kappa$}{Coefficient of Compressibility}
+
+The coefficient of thermal expansion at constant pressure $\beta \in \mathbb{R}$ is defined by $\frac{1}{v}\left( \frac{dv}{dT} \right)_p = \beta$ and the compressibility $\kappa = \left( \frac{\partial v}{\partial p} \right)_T \in \mathbb{R}^+$ substitute the differential change of pressure due to temperature at constant volume via the chain rule.\newline
+
+Eq. \ref{c:thermo:e:isobaricHeat} states that the exchange of heat in the isobaric process results in a change of specific volume and temperature. \\
+
+The massflow $\frac{dm}{dt} = \dot{m} \in \mathbb{R}$ from A to B through a throttle can be described by a function of the density $\rho = \frac{1}{v} \in \mathbb{R}^+$, the effective area $A_{eff} \in \mathbb{R}^+$ and the difference in pressure 
+
+\begin{align}
+\begin{split}
+\dot{m} & = A_{eff} \sqrt{2 \rho_A  \left( p_A -p_B \right) }
+\end{split}
+\label{c:thermo:e:throttle}
+\end{align}
+\nomenclature{$A_{eff}$}{Effective Area}
+\nomenclature{$\rho$}{Density , Specific Mass}
+\nomenclature{$\dot{m}$}{Massflow}
+
+we can directly relate the difference pressure $p_A - p_B = \Delta p > 0$ to the exchange of heat. Assume a constant mass flow, a constant effective Area and a constant pressure niveau $p_B$ due to perfect controller of the system, the energetic coupling between fan and pressure can be seen. If heat is added before A as described by Eq. \ref{c:thermo:e:isobaricHeat} the Temperature in A will be influenced as well the pressure due to the change in the specific volume and therefore the density via Eq.\ref{c:thermo:e:throttle}.\\
+
+The isenthalpic, adiabat throttling process can be described by the Joule-Thomson Coefficient \cite[p.387]{Struchtrup2014ThermodynamicsConversion}. The equation relates the change in temperature and pressure to each other via
+
+\begin{align}
+\begin{split}
+\left( \frac{\partial T}{\partial p}\right)_h &= -\frac{1}{c_p} \left(\frac{\partial h}{ \partial p} \right)_T \\
+&= \frac{v}{c_p}\left( T\beta - 1 \right) 
+\end{split}
+\label{c:thermo:e:joulethomson}
+\end{align}
+
+Where $c_p = \left(\frac{\partial h}{\partial T} \right)_p \in \mathbb{R}^+$ is the specific heat at constant pressure which relates the change in entropy due to a change in temperature.
+Eq. \ref{c:thermo:e:joulethomson} and Eq. \ref{c:thermo:e:throttle} relate the change in pressure via variation of the effective Area to the change in temperature. \\
+
+Eq. \ref{c:thermo:e:isobaricHeat}, \ref{c:thermo:e:throttle} and \ref{c:thermo:e:joulethomson} show the thermodynamic coupling of the system. They are highly nonlinear and give an ideal coupling for the quasi stationary processes and the choosen states pressure and temperature. Since both couplings take effect at the same time, a reasonable estimation of the process trajectory is difficult.\newline
+An important fact is that none of the equations above depend explicitly on the time. All coefficients above are functions of the thermodynamic states $p,v,T,s$. Assuming quasi stationary behaviour of the system for every coefficent $c \in \left\lbrace \beta, \kappa, c_v, c_p \right\rbrace$ they can be related to the static gain of the couplings.\\
+
+Further physical phenomena interconnecting the system can be related to hydraulic capacity, hydraulic inductivity 

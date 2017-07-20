@@ -1,0 +1,515 @@
+\chapter{Control Theoretic Model and Problem Statement}\label{c:control}
+
+The following chapter explains the 
+
+\section{Basics of Control Theory}\label{c:control:s:basics}
+
+A general nonlinear, dynamical system $\Sigma$ can be described \cite{Adamy2014}
+
+\begin{align}
+\begin{split}
+\ve{\dot{x}} &= \ve{f}\left(\ve{x},\ve{u}, t\right) \\
+\ve{y} &= \ve{h}\left(\ve{x},\ve{u},t \right)
+\end{split}
+\label{c:control:e:nonlinearsystem}
+\end{align}
+\nomenclature{$\ve{x}$}{State Vector of a Dynamical System}
+\nomenclature{$\ve{u}$}{Input Vector of a Dynamical System}
+\nomenclature{$\ve{y}$}{Output Vector of a Dynamical System}
+\nomenclature{$\ve{f}$}{Vector Function of a Nonlinear Dynamical System}
+\nomenclature{$\ve{h}$}{Output Vector Function of a Nonlinear Dynamical System}
+
+
+Where $t \in \mathbb{R}^+$ is the time, $\ve{x} \in \mathbb{R}^{n_x}$ is called the state vector, or states, and $\ve{u} \in \mathbb{R}^{n_u}$ the input vector, or inputs, of the system. The output $\ve{y} \in \mathbb{R}^{n_y}$ of the system is described by the functions$\ve{h}~:\mathbb{R}^{n_x},\mathbb{R}^{n_u},\mathbb{R}^+ \mapsto \mathbb{R}^{n_y}$ and the evolution of the system over time is given by $\ve{f}:~\mathbb{R}^{n_x},\mathbb{R}^{n_u},\mathbb{R}^+ \mapsto \mathbb{R}^{n_x} $.\\
+
+The System given by Eq. \ref{c:control:e:nonlinearsystem} can be used to describe almost every natural or technical system.\newline
+Due to several reasons, e.g. controller design, measurements, modelling issues and errors, most technical applications simplify the model by assuming linear, time invariant (LTI) behaviour. The LTI system is represented by a set of first-order differential equations \cite{Lunze2014} called state space representation:
+
+\begin{align}
+\begin{split}
+\ve{\dot{x}} &= \ma{A}~\ve{x} + \ma{B}~\ve{u} \\
+\ve{y} &= \ma{C}~\ve{x} + \ma{D}~\ve{u}
+\end{split}
+\label{c:control:e:ltisystem}
+\end{align}
+\nomenclature{$\ma{A}$}{State Matrix of a Dynamical System}
+\nomenclature{$\ma{B}$}{Input Matrix of a Dynamical System}
+\nomenclature{$\ma{C}$}{Output Matrix of a Dynamical System}
+\nomenclature{$\ma{D}$}{Feedthrough Matrix of a Dynamical System}
+The state matrix $\ma{A} \in \mathbb{R}^{n_x\times n_x}$ describes the influence of the current states, the input matrix $\ma{B} \in \mathbb{R}^{n_x\times n_u}$ the influence of the current input on the future states and output. The output is given by the output matrix $\ma{C} \in \mathbb{R}^{n_y\times n_x}$ and the feedthrough matrix $\ma{D} \in \mathbb{R}^{n_y\times n_u}$.\\
+
+Both Eq. \ref{c:control:e:nonlinearsystem} and Eq. \ref{c:control:e:ltisystem} are able to generate a variety of different controllers, see e.g. \cite{Adamy2014},\cite{Lunze2014}, \cite{Lunze2016}. The ability to design controller via state space methods is connected to a high information content about (physical) parameters and equations or in form of measurement data.\\
+
+Hence a more compressed form is commonly used to design controller for most technical and industrial applications. The transfer function matrix \cite[p.20]{Lunze2014} $\ma{G} \in \mathbb{C}^{n_y\times n_u}$ can be derived via the Laplacetransform of Eq.\ref{c:control:e:ltisystem}:
+
+\begin{align}
+\begin{split}
+\ma{G} &= \ma{C} \left(s \ma{I} - \ma{A} \right)^{-1} \ma{B} + \ma{D} \\
+\end{split}
+\label{c:control:e:TransferFunctionMatrix}
+\end{align}
+\nomenclature{$\ma{G}$}{Transfer Function Matrix}
+
+The transfer function matrix consist of single transfer functions $g_{ij}(s)~, i \leq n_y, j \leq n_u$ and maps the transformed input of a system directly to its  transformed output. It describes the relationship between input and output directly and is hence a compact form of describing the behaviour of LTI systems. To control a system with two outputs in every wanted direction a necessary condition is given by $n_y \leq n_u$. It is assumed that all following systems suffice $\dim{\ma{G}} = n_y \times n_y$.  \\
+
+\section{Feedback Control in Presence of Uncertain Signals}
+
+The aim of control theory is to manipulate a systems trajectory via its inputs in such a way, that a desired output is reached and maintained. To do this, several techniques can be used. Most commonly the systems desired output, the setpoint $\ve{y}_r$, is compared to the actual output of the system $\ve{y}$ via a feedback loop. The result of this comparison is called the error $\ve{e} \in \mathbb{R}^{n_y}$ \nomenclature{$\ve{e}$}{Error Signal of a Feedback Loop}. This signal is fed into the controller $\ma{K} \in \mathbb{C}^{n_y \times n_y}$ \nomenclature{$\ma{K}$}{Controller of a Dynamical System} and the result is used as an input for the system. This approach is called feedback control, see e.g. \cite{Astrom2009FeedbackEngineers}, with a single degree of freedom controller.\\
+
+A variation of this approach is to use a weighted set point and output signal to generate the input. The pair of weighting matrices $\ma{K}_r$  for the setpoint and $\ma{K}_y$ for the output is called a two degree of freedom controller. The structure of such a controller design is shown in Fig. \ref{c:control:f:2dofclosedloop}.
+
+\begin{figure}[H]
+\begin{minipage}[b]{\textwidth}
+\centering
+\includegraphics[width=0.9\textwidth]{./Graphics/2DOFCLOSEDLOOP.png}
+\caption{Two Degree of Freedom Feedback Control}
+\label{c:control:f:2dofclosedloop}
+\end{minipage}
+\end{figure}
+
+In Fig. \ref{c:control:f:2dofclosedloop} other signals are added as well.The disturbances $\ve{d} \in \mathbb{R}^{n_y}$ are acting on the weighted error. The signal $\ve{v} \in \mathbb{R}^{n_y}$ is the disturbed input of the plant. $\ve{\eta} \in \mathbb{R}^{n_y}$ is the plants output without measurement noise which will be referred to as real output. The measurement noise is given by $\ve{n} \in \mathbb{R}^{n_y}$. The superposition of noise and real output is $\ve{y}$ which will be referred to simply as output. The closed loop transfer function is given by:
+
+\begin{align}
+\begin{split}
+\ve{y} &= \left[\ma{I} - \ma{G} \ma{K}_y\right]^{-1} \left[ \ma{G}\ma{K}_r \ve{y}_r + \ve{n} + \ma{G} \ve{d} \right]
+\end{split}
+\label{c:control:e:2dofclosedloop}
+\end{align}
+\nomenclature{$\ve{d}$}{Disturbance Vector of a Dynamical System}
+\nomenclature{$\ve{n}$}{Measurement Noise Vector of a Dynamical System}
+
+Eq. \ref{c:control:e:2dofclosedloop} relates the output of a system to the influences of set point, disturbances and measurement noise. 
+Rewriting the equation as:
+
+\begin{align}
+\begin{split}
+\ve{y} &= \ma{T}\ve{y}_r + \ma{S} \left[ \ve{n} + \ma{G} \ve{d} \right]
+\end{split}
+\label{c:control:e:sensitivityclosedloop}
+\end{align}
+defines the Sensitivity Function $\ma{S} = \left[ \ma{I} - \ma{G} \ma{K}_y\right]^{-1} \in \mathbb{C}^{n_y \times n_y}$ which relates the influences of measurement noise and load disturbance to the systems outputs. The Complementary Sensitivity Function $\ma{T} = \left[\ma{I} - \ma{G} \ma{K}_y\right]^{-1} \ma{G} \ma{K_r} \in \mathbb{C}^{n_y \times n_y}$ describes the response to the reference signal.Both Functions play an important role in the investigation of the systems Robustness and are connected to each other via $\ma{T} = \ma{S} \ma{G} \ma{K}_r$.\\
+
+\section{Robustness and Stability of Feedback Control Systems}
+
+Robustness refers in general to the stability of the system in presence of uncertainties and has been studied extensively, see e.g. \cite{Zhou1998EssentialsControl},\cite{Zhou1996RobustControl}, \cite{DoyleFeedbackTheory}.
+To give a better understanding of the relevant points of the subject both SISO and MIMO cases are presented. \\
+
+For any given SISO system with a transfer function $g : \mathbb{R} \mapsto \mathbb{C}$ we see from Eq. \ref{c:control:e:2dofclosedloop} that the behaviour of the output with respect to measurement noise and disturbances is strongly dependent on the sensitivity function. A necessary condition for the system to reach the reference is that disturbance and noise are attenuated  near the steady state. Furthermore the destabilizing effect due to uncertain signals can be quantified via the maximum of the sensitivity function. Therefore the Maximum Sensitivity is defined as:
+
+\begin{align}
+\begin{split}
+M_S & = \max_\omega \left| S \right| \\
+& \geq \left| \frac{1}{1 - g~k_y}\right|
+\end{split}
+\label{c:control:e:maxsensitivity}
+\end{align}
+
+With Eq. \ref{c:control:e:maxsensitivity} an upper boundary on the gain can be found and be used as a measure of robustness of the closed loop \cite[p.323 ff.]{Astrom2009FeedbackEngineers}. The maximum sensitivity is also connected to the nyquist stability and the stability margin of a system via:
+
+\begin{align}
+\begin{split}
+M_S &= \frac{1}{s_M} \\
+&= \frac{1}{1 - \max_\omega \left| g ~k_y \right|}
+\end{split}
+\label{c:control:e:maxsensitivitynyquist}
+\end{align}
+
+Or rearranged to be:
+
+\begin{align}
+\begin{split}
+\max_\omega \left| g~k_y\right| &= 1 - \frac{1}{M_S}
+\end{split}
+\end{align}
+
+Due to Eq. \ref{c:control:e:maxsensitivitynyquist} the maximum gain of the open loop is limited by the maximum sensitivity. Hence, the critical point is only encircled iff the maximum sensitivity is zero. Hence the system is only stable in the sense of the Nyquist Criterion if the maximum sensitivity is sufficiently small.\\
+
+\begin{figure}[H]
+\begin{minipage}[b]{\textwidth}
+\centering
+\includegraphics[scale=1]{./Graphics/MaximumSensitivity.png}
+\caption{Maximum Sensitivity}
+\label{c:control:f:MaximumSensitivity}
+\end{minipage}
+\end{figure}
+
+While the maximum sensitivity is well definied for SISO systems, a MIMO system requires a more general approach due to the interconnection of the systems out- and inputs. A general condition is given by the Small Gain Theorem \cite[p.150 ff.]{Skogestad2005MultivariableDesign}. The theorem states, that a given feedback system is stable iff the open loop transfer function matrix is stable and its sufficient conditioned matrix norm is less than 1 over all frequencies.
+
+\begin{align}
+\lVert \ma{G} \ma{K}_y \rVert < 1 ~\forall \omega
+\label{c:control:e:SmallGainTheorem}
+\end{align}
+
+Eq. \ref{c:control:e:SmallGainTheorem} can be used with several matrix norms and can be viewed as an MIMO Interpretation of the Nyquist Criterion. \\
+
+For further robustness analysis, the concept of singular values has to be investigated. The singular value decomposition, see e.g. \cite[p.144 f.]{2013Springer-HandbuchIII},states that any matrix $\ma{G} \in \mathbb{C}^{n_a\times n_b}$ can be factorized such that
+
+\begin{align}
+\ma{G} &= \ma{U}\ma{\sigma}\ma{V}^*
+\label{c:control:e:SVD}
+\end{align}
+
+Where as $\ma{U} \in \mathbb{C}^{n_a \times n_a}$ and $\ma{V} \in \mathbb{C}^{n_b \times n_b} $ are unitary matrices representing the left and right eigenvectors of matrix. The matrix $\ma{\sigma} \in \mathbb{C}^{n_a \times n_b}$ is a rectangular, diagonal matrix consisting of the singular values $\sigma \in \mathbb{C}$ of $\ma{G}$. A practical point of view suggest a rotation of any given input vector via $\ma{V}^*$, distributing the magnitude of the input over the columns of $\ma{\sigma}$, where they are scaled according to the magnitude of the corresponding singular value. Then the scaled and rotated vector is once again rotated by $\ma{U}$ and distributed over the output vector. \\
+
+\begin{figure}[H]
+\begin{minipage}[b]{\textwidth}
+\centering
+\includegraphics[scale=1]{./Graphics/SVD.png}
+\caption{Graphical Interpretation of the Singular Value Decomposition}
+\label{c:control:f:SVD}
+\end{minipage}
+\end{figure}
+
+
+
+An example of this process is illustrated in Fig. \ref{c:control:f:SVD} for a system with two inputs $u_1,u_2$ and two outputs $y_1,y_2$. The output is bounded by the ellipsoid described by the maximum singular value $\overline{\sigma}$ and the minimum singular value $\underline{\sigma}$. The orientation and the magnitude of the outputs change depending on the frequency but will never exceed these limits. The singular values of a matrix are hence representing the highest possible gain for any given input if $\ma{U} = \ma{V}^* = \ma{I}$. With that, the induced 2-Norm for a matrix can be defined as:
+
+\begin{align}
+\begin{split}
+\lVert \ma{G} \rVert_2 &= \frac{\lVert \ma{G}\ma{u}\rVert_2}{\lVert \ma{u} \rVert_2} \\
+&= \max \sqrt{\lambda\left( \ma{G}^* \ma{G}\right)} \\
+&= \overline{\sigma}
+\end{split}
+\label{c:control:e:MaxSingularValue}
+\end{align}
+
+\section{System Identification of Dynamical Processes}\label{c:control:s:identification}
+
+For controlling a system as given earlier, knowledge about the dynamics of the system is used. While physical models can be used to derive a controller, not every effect and not every physical parameter is known perfectly. Hence a physical model is not always an appropriate basis for designing a controller fit for the task.\\
+
+With respect to the specific problem at hand, one can easily imagine the difference in the dynamics of the system due to a change of parameters like length, diameter, surface roughness of the piping or simply the different behaviour of valves and gascoolers. A nearly infinite set of configurations leads to unpredictable changes in the system behaviour. \\
+
+At last, to derive a simple but conventional PI or PID controller, most analytical or near heuristic design rules are work well with or are based on simple, well known models of low order. Therefore a high order model is not needed in the given context of this work.\\ 
+
+To apply this 
+
+
+\begin{figure}[H]
+\begin{minipage}[b]{\textwidth}
+\centering
+\includegraphics[width=0.9\textwidth]{./Graphics/AREA_IDENTIFICATION1.png}
+\caption{Graphical Reprensentation of Identification via Jump Response}
+\label{c:control:f:2area}
+\end{minipage}
+\end{figure}
+
+\section{Controller Design}\label{c:control:s:identification}
+
+The controller design can be divided into the SISO design process for a single controller and the MIMO design process for the interconnected system. Both tasks are equally important and are studied extensively throughout literature, see e.g. \cite{Astrom2000a}.\\
+
+HERE SISO DESIGN PROCESS - MIGO, AMIGO, ROBUSTNESS ETC \\
+
+\begin{figure}[H]
+\begin{minipage}[b]{\textwidth}
+\centering
+\includegraphics[width=0.9\textwidth]{./Graphics/PT9-Study.png}
+\caption{Results of the Robustness Study, Maximum Sensitivity of the Real System and the Identified System}
+\label{c:control:f:robustness_study}
+\end{minipage}
+\end{figure}
+
+\section{Controller Design for Simple Process Models}
+
+\subsection*{Relative Gain Array}
+To design a set of controllers for the overall system several methods exist HAGGALUND, \cite{Skogestad2005MultivariableDesign}. A standard in industry is based on the Relative Gain Array (RGA) Analysis \cite[p.88 ff.]{Skogestad2005MultivariableDesign}.
+The RGA is defined as
+
+\begin{align}
+\begin{split}
+RGA\left(\ma{G}\right) &= \ma{G} \ma{G}^{-T} \\
+&= \Lambda \left(\ma{G}\right) 
+\end{split}
+\label{c:control:e:RGA}
+\end{align}
+
+Eq. \ref{c:control:e:RGA} $\Lambda \in \mathbb{R}^{m \times l}$ provides a measure for the interaction of a control system at a specified frequency, most often the steady state of the system $s=0$ or the crossover frequency $s=\omega_0$.\newline
+The controller synthesis based on the RGA is used extensively throughout industry, since it is an established, well known tool easy to understand.\newline
+To give a better understanding, a TITO system is given explicitly by:
+
+\begin{align}
+\begin{split}
+\Lambda \left( \ma{G} \right) &= \ma{G} \ma{G}^{-T} \\
+&= \ma{G} \frac{1}{\det{\ma{G}}} \left[ tr\left( \ma{G} \right)\ma{I} - \ma{G} \right]^T  \\
+&= \frac{tr \ma{G} }{\det \ma{G}} \ma{G} - \ma{G}\ma{G}^T \\  
+\end{split}
+\end{align}
+
+The influence of each main input output pairing is reduced by the influence of other inputs acting on the desired output and the influence of this output on other inputs. A good way to visualize this is to multiply each element with the inverse product of the main diagonal Transfer Function $\frac{U_1}{Y_1} \frac{U_2}{Y_2}$, e.g. $\left( \frac{Y_1}{U_1}^2 - \frac{Y_1}{U_2}\frac{Y_2}{U_1} \right) \frac{U_1}{Y_1} \frac{U_2}{Y_2} = \frac{Y_1}{Y_2} \frac{U_2}{U_1} -1 = \frac{g_{11}}{g_{22}} -1$. If the resulting value is nearly 1, it follows that $g_{22} > g{11}$. This statement can be interpreted as recommendation to use the main couplings as pairings. \\
+
+\section{Decoupling of Transfer Function Matrices}
+
+\subsection*{Decoupling Control proposed by Astrom et.al.}
+A method for the design of decoupling controllers is proposed in \cite{Astrom2001a} and \cite{Astrom2006AdvancedControl}. It designs a controller which limits the interaction near the steady state of the plant. To achieve this behaviour a decoupler $\ma{D} \in  \mathbb{R}^{n_y \times n_y}$ is introduced. A static decoupling is proposed such that $\ma{D} = \ma{G}^{-1}|_{s=0}$ that transforms the system with the mapping $\ma{G} \ma{D} = \ma{G}^* \in \mathbb{R}^{n_y \times n_y}$. The resulting closed loop is then given by: 
+
+\begin{align}
+\begin{split}
+\ma{H} &= \left[ \ma{I}  - \ma{G} \ma{D} \ma{K}_y^* \right]^{-1} \ma{G} \ma{D} \ma{K}_r^* \\
+	 &= \left[ \ma{I}  - \ma{G}^* \ma{K}_y^* \right]^{-1} \ma{G}^* \ma{K}_r^* \\
+     &= \left[ \ma{I}  - \ma{G} \ma{K}_y \right]^{-1} \ma{G} \ma{K}_r \\
+\end{split}
+\label{c:control:e:closedloopastrom}
+\end{align}
+\nomenclature{$\ma{H}$}{Closed Loop Transfer Function}
+
+Eq. \ref{c:control:e:closedloopastrom} gives various important transformations between the controller and system of the original identified system and the new transformed system. \\ 
+
+A Taylor series around the steady state of the  transformed system is given by:
+
+\begin{align}
+\begin{split}
+\ma{G}^* &= \sum_{i=0}^\infty \frac{d^i}{ds^i} \ma{G}^* |_{s=0} \frac{s}{i!} \\
+&= \ma{I} + s \ma{\Gamma}^* + \ma{\mathcal{O}}\left(s^2\right) \\
+&\approx \ma{I} +  \ma{\Gamma}^* s \\
+&\approx \ma{I} + \left( \ma{\Gamma}^*_D + \ma{\Gamma}^*_A \right) s
+\end{split}
+\label{c:control:e:taylor}
+\end{align}
+
+In Eq.\ref{c:control:e:taylor} the coupling for small frequencies can be described via the coupling matrix $\ma{\Gamma}^* = \left( \gamma_{ij}^* \right)\in \mathbb{R}^{n_y \times n_y}$. The matrix consists both of diagonal and anti diagonal entries $\ma{\Gamma}^* = \ma{\Gamma}^*_D + \ma{\Gamma}^*_A$ which describe the small signal behaviour in an adequate way. \newline
+
+Substitute Eq.\ref{c:control:e:taylor} in the numertator of Eq. \ref{c:control:e:closedloopastrom} holds:
+
+\begin{align}
+\begin{split}
+\ma{H} &\approx \left[ \ma{I}  - \ma{G}^* \ma{K}_y^* \right]^{-1} \left[ \ma{I} +  \ma{\Gamma}^* s \right] \ma{K}_r^* \\
+  &\approx \left[ \ma{I}  - \ma{G}^* \ma{K}_y^* \right]^{-1} \left[ \ma{I} + \left( \ma{\Gamma}^*_D + \ma{\Gamma}^*_A \right) s\right] \ma{K}_r^* \\
+\end{split}
+\end{align}
+
+The anti diagonal entries are given by
+
+\begin{align}
+\begin{split}
+\ma{H}_A &\approx \left[ \ma{I}  - \ma{G}^* \ma{K}_y^* \right]^{-1} \left[\ma{\Gamma}_A^* s \right] \ma{K}_r^*
+\end{split}
+\end{align}
+
+Which is simplified according to Aström Paper to:
+
+\begin{align}
+\begin{split}
+|h_{ij}| &= \left|\left(\prod_{k = 1}^{i} S_{k}^*\right)\gamma_{ij}^*s ~k^*_{r,jj} \right| \\
+\end{split}
+\label{c:control:e:interaction}
+\end{align}
+
+Where $k^*_{r,jj}$ is the j-th entry of the diagonal controller used for the reference signal $\ma{K}_r^*$. Eq. \ref{c:control:e:interaction} can be used to describe a decoupling of the controller by using an upper limit $h_{ij,max}^* \geq |h_{ij}^*| \in \mathbb{R}^+$ which describes the maximal allowed or desired interaction between the j-th input and the i-th output. For the special case where $k^*_{r,jj}$ is a pure integrator $k_{r,jj}^* = \frac{k_{I,jj}^*}{s}$ Eq. \ref{c:control:e:interaction} becomes:
+
+\begin{align}
+\begin{split}
+\left| h_{ij} \right| &= \left|\left(\prod_k S_k^*\right) \gamma^*_{ij}~ k^*_{I,jj} \right| \\
+& \leq \left|\left(\prod_k M_{S,k}^*\right) \gamma^*_{ij}~ k^*_{I,jj} \right| \\
+& \leq \left|h_{ij,max}\right|
+\end{split}
+\label{c:control:e:setpointinteraction}
+\end{align}
+
+The relation given by Eq. \ref{c:control:e:setpointinteraction} gives a condition for detuning a purely integral controller. Since not every controller is given in this form, the structure is extended to PI control by:
+
+\begin{align}
+\begin{split}
+\left|h_{ij}\right| &\leq \left| \left(\prod_k M_{S,k} \right) \gamma_{ij}^* s \left(k_{P,jj}^* + k_{I,jj}^* \frac{1}{s} \right) \right| \\
+&\leq \left| \left(\prod_k M_{S,k} \right) \gamma_{ij}^*\right| \left|\left(k_{P,jj}^* s+ k_{I,jj}^* \right) \right| \\
+&\leq \left| \left(\prod_k M_{S,k} \right) \gamma_{ij}^*\right| \left|\left(k_{P,jj}^* j\omega+ k_{I,jj}^* \right) \right| \\
+&\leq \left| \left(\prod_k M_{S,k} \right) \gamma_{ij}^*\right| \sqrt{\left(k_{P,jj}^*\omega\right)^2+ \left(k_{I,jj}^*\right)^2} \\
+\end{split}
+\label{c:control:e:TransformedPIDetuning}
+\end{align}
+
+In Eq.\ref{c:control:e:TransformedPIDetuning} the influence of the proportional controller is increasing with the frequency. To detune the controller sufficiently, an adequate frequency must be chosen. For a small signal interpretation $\omega \ll 1$ a detuning for just the integral gain is acceptable.\\
+
+In \cite[p.172 f.]{Skogestad2005MultivariableDesign} the crossover frequency of a transfer function is limited by an upper bound
+
+\begin{align}
+\omega_C &\leq \frac{1}{L}
+\end{align}
+
+Hence, an appropriate conservative boundary can be established with the minimum time delay of the system $L_{Min} | L\geq L_{Min} \forall L \in \Sigma $ to be:
+
+\begin{align}
+\begin{split}
+\left| h_{ij} \right| &\leq \left| \left(\prod_k M_{S,k} \right) \gamma_{ij}^*\right| \sqrt{\left(\frac{k_{P,jj}^*}{L_{Min}}\right)^2+ \left(k_{I,jj}^*\right)^2}
+\end{split}
+\label{c:control:e:conservativePITuning}
+\end{align}
+
+Both Eq. \ref{c:control:e:setpointinteraction} and \ref{c:control:e:conservativePITuning} can be rewritten with a matrix $\ma{H}_{Max} = \left(h_{ij,Max}\right) \in \mathbb{R}^{n \times n}$ and the matrix of the maximum sensitivities of the diagonal transfer functions $\ma{M}_S^* = \left(M_{S,i}^*\right) \in \mathbb{R}^{n \times n}$. Using the definition of the maximum sensitivity matrix as diagonal, one can rewrite $\prod_k M_{S,k}^* = \det(\ma{M}_S) $. Once again dividing into a diagonal and anti diagonal matrix holds:
+
+\begin{align}
+\begin{split}
+\ma{H}_{A,max} &\geq \det(\ma{M}_S^*) \ma{\Gamma}_A^* \ma{K}_r^* 
+\end{split}
+\label{c:control:e:Hmax*}
+\end{align}
+
+
+
+The method proposed above gives many advantages over a controller design based on RGA while holding the number of controllers minimal. The enhancement of performance comes through the interconnection of the controller outputs via the decoupler, which can be viewed as a simple form of model based control. Whilst giving major performance improvements, the presented method has a significant disadvantages.\\ 
+
+Depending on the model chosen for identification and the values of the coefficients, the resulting transfer function will in general be of other form than the initial identified model. Hence, algorithms depending on these models to design controllers can not be used naturally, but have to use a simplified or approximated model. This process results in a higher model error and thus in poor performance and robustness of the derived controller.
+
+\subsection*{Modified Controller Design Based on Astrom et.al.}
+
+Because of these major penalties, a modified decoupling scheme is proposed. Essentially another interpretation of the equations given above leds to a more physical meaningful design process. At first, diagonal and anti-diagonal entries of a matrix multiplication are reviewed:
+
+\begin{align}
+\begin{split}
+\ma{G}^{A} \ma{G}^{B} &= 
+\begin{bmatrix}
+\ma{G}_{11}^{A} & \ma{G}_{12}^{A} \\
+\ma{G}_{21}^{A} & \ma{G}_{22}^{A} 
+\end{bmatrix}
+\begin{bmatrix}
+\ma{G}_{11}^{B} & \ma{G}_{12}^{B} \\
+\ma{G}_{21}^{B} & \ma{G}_{22}^{B} 
+\end{bmatrix}\\
+&= \begin{bmatrix}
+\ma{G}_{11}^{A}\ma{G}_{11}^{B} + \ma{G}_{12}^{A}\ma{G}_{21}^{B} & \ma{G}_{11}^{A}\ma{G}_{12}^{B} + \ma{G}_{12}^{A}\ma{G}_{22}^{B} \\
+\ma{G}_{21}^{A}\ma{G}_{11}^{B} + \ma{G}_{22}^{A}\ma{G}_{21}^{B} &
+\ma{G}_{21}^{A}\ma{G}_{12}^{B} + \ma{G}_{22}^{A}\ma{G}_{22}^{B}
+\end{bmatrix}
+\end{split}
+\label{c:control:e:matrixmult}
+\end{align}
+
+Eq. \ref{c:control:e:matrixmult} states that the diagonal entries relate to either pure diagonal or pure anti-diagonal entries of the factors. Anti-diagonal entries are always the mixed product of diagonal and anti-diagonal terms.\\
+
+Starting with Eq. \ref{c:control:e:closedloopastrom} diagonal and antidiagonal entries of the numerator can be identified:
+
+\begin{align}
+\begin{split}
+\ma{D}\ma{K}^* &= \ma{K} \\
+\left(\ma{D}_D + \ma{D}_A \right) \ma{K}^* &= \left(\ma{K}_D + \ma{K}_A \right)\\
+\left(\ma{D}_D + \ma{D}_A \right) \ma{D}^{-1} \ma{K} &= \left(\ma{K}_D + \ma{K}_A \right)
+\end{split}
+\label{c:control:e:eqscontroller}
+\end{align}
+
+Eq. \ref{c:control:e:eqscontroller} relates the diagonal controller $\ma{K}_D \in \mathbb{C}^{n \times n}$ designed via the diagonal transfer functions $g_{ii}$  to the decoupling controller proposed by Astr\"om et.al.. Since $\ma{K}^{*}$ is diagonal a direct relationship between the antidiagonal elements of the controller can be established:
+
+\begin{align*}
+\begin{split}
+\ma{K}_A &= \ma{D}_A \ma{K}^* \\
+&= \ma{D}_A D^{-1} \left( \ma{K}_D + \ma{K}_A \right) \\
+\end{split}
+\end{align*}
+
+Which is able to relate the diagonal and antidiagonal controller to each other:
+
+\begin{align}
+\begin{split}
+\ma{K}_A &= \left[ \ma{I} - \ma{D}_A \ma{D}^{-1} \right]^{-1} \ma{D}_A \ma{D}^{-1} \ma{K}_D \\
+&= \left[\ma{D} \ma{D}_D^{-1} - \ma{I} \right] \ma{K}_D \\
+&= \ma{D}_A \ma{D}_D^{-1} \ma{K}_D \\
+&= \ma{\Sigma} \ma{K}_D
+\end{split}
+\label{c:control:e:splitter}
+\end{align}
+
+Eq. \ref{c:control:e:splitter} defines the splitter $\ma{\Sigma} \in \mathbb{R}^{n \times n}$ which can substitute the antidiagonal controller in Eq.\ref{c:control:e:eqscontroller}:
+
+\begin{align}
+\begin{split}
+\ma{D} \ma{K}^* &= \left[ \ma{I} + \ma{\Sigma} \right] \ma{K}_D
+\end{split}
+\label{c:control:e:controleqs}
+\end{align}
+
+An interesting property of the splitter is the intuitive relation between the main diagonal entries of the system and the anti diagonal entries. Since we can invert a block sufficient conditioned block matrix via:
+
+\begin{align}
+\begin{split}
+\begin{bmatrix}
+\ma{G}_{11} & \ma{G}_{12} \\
+\ma{G}_{21} & \ma{G}_{22} 
+\end{bmatrix}^{-1} &= \begin{bmatrix}
+\left[\ma{G}_{11} - \ma{G}_{12}\ma{G}_{22}^{-1}\ma{G}_{22}\right]^{-1} & -\ma{G}_{11}^{-1}\ma{G}_{12}\left[\ma{G}_{22} - \ma{G}_{21}\ma{G}_{11}^{-1}\ma{G}_{12}\right]^{-1}  \\
+-\ma{G}_{22}^{-1}\ma{G}_{21}\left[\ma{G}_{11} - \ma{G}_{12}\ma{G}_{22}^{-1}\ma{G}_{21}\right]^{-1}  & \left[\ma{G}_{22} - \ma{G}_{12}\ma{G}_{11}^{-1}\ma{G}_{12}\right]^{-1} 
+\end{bmatrix} \\
+\end{split}
+\end{align}
+
+The splitter given by $\ma{D}_A\ma{D}_D^{-1}$ becomes in the notation above
+\begin{align}
+\begin{split}
+\ma{\Sigma} &= \begin{bmatrix}
+0 & -\ma{G}_{11}^{-1}\ma{G}_{12}\\
+-\ma{G}_{22}^{-1}\ma{G}_{21}  & 0
+\end{bmatrix}
+\end{split}
+\end{align}
+
+It is clearly visible that the splitter weights the minor with the main diagonals. It can be connected both to feedforward control and disturbance rejection by dividing the system as shown in FIGURE.\\
+
+Investigating the relationship between the diagonal Sensitivity of the transformed System and the ideal Sensitivities of the Diagonal system holds:
+
+\begin{align}
+\begin{split}
+S^* &= \left[\ma{I}+\ma{G} \left[ \ma{I} + \ma{\Sigma} \right] \ma{K}_D \right]_D^{-1} \\
+&= \left[\ma{I}+\ma{G}_D \ma{K}_D + \ma{G}_A \ma{\Sigma} \ma{K}_D  \right]^{-1} \\
+&= \left[ \ma{S}^{-1} + \ma{\Delta}_{S}\right]^{-1}
+\end{split}
+\label{c:control:e:sensitivityerror}
+\end{align}
+
+Eq. \ref{c:control:e:sensitivityerror} states that the transformed sensitivity is not equal to the sensitivity of the main diagonal system. Instead an error $\ma{\Delta}_{S} \in \mathbb{C}^{n \times n}$ relating to the influence of the anti diagonal entries via feedback is formed. From Eq. \ref{c:control:e:sensitivityerror} follows directly
+
+\begin{align}
+\begin{split}
+\ma{S} &= \left[ \ma{S}^{-*}- \ma{\Delta}_{S}\right]^{-1} \\
+&= \left[ \ma{S}^{-*}\left[ \ma{I} - \ma{S}^{-*}\ma{\Delta}_S\right] \right]^{-1} \\
+&= \left[ \ma{I} - \ma{S}^{-*}\ma{\Delta}_S\right]^{-1} \ma{S}^{*}
+\end{split}
+\label{c:control:e:sensitivitysolve}
+\end{align}
+
+Eq. \ref{c:control:e:sensitivitysolve} states equivalently
+
+\begin{align}
+\begin{split}
+\ma{M}_S &\geq \ma{S} \\
+&\geq \left[ \ma{I} - \ma{S}^{-*}\ma{\Delta}_S\right]^{-1} \ma{S}^{*}
+\end{split}
+\label{c:control:e:sensitivitytransform}
+\end{align}
+
+Eq. \ref{c:control:e:sensitivitytransform} describes the transformation between the Maximum Sensitivities. 
+Using the Triangle inequality holds:
+
+\begin{align}
+\begin{split}
+\left[\left| \ma{I} - \ma{S}^{-*} \ma{\Delta}_S  \right| \right]^{-1} &\geq \left[\ma{I} + \left|\ma{S}^{-*} \right| \left| \ma{\Delta}_S  \right| \right]^{-1} \\
+&\geq \left[\ma{I} + \ma{M}_S^{-*} \left| \ma{\Delta}_S  \right| \right]^{-1} 
+\end{split}
+\end{align}
+
+Hence, a conservative lower and upper bound can be defined:
+
+\begin{align}
+\begin{split}
+\left[\ma{I} + \ma{M}_S^{-*} \min_\omega \left|\ma{\Delta}_{S}\right| \right]^{-1} \ma{M}_S^{*}\leq \ma{M}_S \leq 
+\left[\ma{I} + \ma{M}_S^{-*} \max_\omega \left|\ma{\Delta}_{S}\right| \right]^{-1} \ma{M}_S^{*}
+\end{split}
+\label{c:control:e:sensitivitytransformBounds}
+\end{align}
+
+The lower boundary represents a conservative transformation. The most conservative transform is given by $\ma{\Delta}_S = \ma{0}$. This resembles the fact that the magnitude of superpositioned transfer functions is less or equal to the sum of its magnitudes. Hence, the most conservative approximation is given by assuming the system is equal to its transformed system. \\
+
+To detune the controller the anti diagonal parts of the transfer function are used. Explicitly the term is given by
+
+\begin{align}
+\begin{split}
+\ma{\Gamma}_A &= \left[\frac{d}{ds}\left[ \ma{G} \left[ \ma{I} + \ma{\Sigma} \right] \right]|_{s=0}\right]_A\\
+&= \frac{d}{ds}\left[ \ma{G}_A + \ma{G}_D \ma{\Sigma} \right]|_{s=0}
+\end{split}
+\end{align}
+
+With the maximum allowed interaction and sensitivities the detuning formula is given by:
+
+\begin{align}
+\begin{split}
+\ma{H}_{A,Max} &\geq \ma{M}_S \ma{\Gamma}_A \ma{K}_r \\ 
+&\geq \det(\ma{M}_S) \ma{\Gamma}_A \ma{K}_r 
+\end{split}
+\end{align}
+

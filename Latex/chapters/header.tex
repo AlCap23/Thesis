@@ -5,28 +5,51 @@
 % Nummerierungstiefe von section/subsection/subsubsection
 \setcounter{secnumdepth}{3} 
 
+
 %Absatzeinzug einstellen
 \setlength{\parindent}{1em}
 \setlength{\parskip}{0pt}
 
 % Deutsche Rechtschreibung und deutscher Zeichensatz
-\usepackage{german,ngerman}
-\usepackage[ansinew]{inputenc}  
+%\usepackage{german,ngerman}
+%\usepackage[ansinew]{inputenc}  
 
 % Aktuelles Datum ermitteln
 \usepackage[ngerman]{datenumber}
 
-% Erweiterung für ein deutsches Literaturverzeichnis
+% Erweiterung fï¿½r ein deutsches Literaturverzeichnis
 \bibliographystyle{abbrvdin}
 
 % Erweiterte Mathematikbibliotheken
 \usepackage{amsmath}
 \usepackage{amssymb}
 
-% Maßeinhaeiten-Darstellung verbessern
+% Automatisches Formelzeichenverzeichnis
+\usepackage{nomencl}
+\makenomenclature
+\renewcommand{\nomname}{Nomenclature}
+\renewcommand{\nompreamble}{The list of symbols used}
+\usepackage{etoolbox}
+\renewcommand\nomgroup[1]{%
+  \item[\bfseries
+  \ifstrequal{#1}{G}{Greek Letters}{%
+  \ifstrequal{#1}{R}{Roman Letters}{%
+  \ifstrequal{#1}{O}{Other Symbols}{}}}%
+]}
+
+%Vectoren und Matrizen
+\usepackage[normalem]{ulem}
+\newcommand{\ve}[1]{\mbox{\boldmath$#1$}}
+\newcommand{\ma}[1]{\mbox{\boldmath$#1$}}
+\newcommand{\eR}{\mbox{$\varepsilon I\;R$}}
+
+% Lange Tabellen
+\usepackage{longtable}
+
+% Maï¿½einhaeiten-Darstellung verbessern
 \usepackage{units}
 
-% Extra Symbole für die Verwendung im Text (z.B. \textcelsius)
+% Extra Symbole fï¿½r die Verwendung im Text (z.B. \textcelsius)
 %(werden nicht aus der Nexus-Schriftart einbunden)
 \usepackage{textcomp}
 
@@ -36,10 +59,10 @@
 % Zum einbinden von Grafiken  
 \usepackage{graphicx}
 \usepackage{subcaption}  %erlaubt das erstellen von subfigures
-\usepackage{float} %ermöglicht das erstellen von "non-floating figures"
+\usepackage{float} %ermï¿½glicht das erstellen von "non-floating figures"
 
-%Hyperref für Verlinkungen im Dokument und URL's
-%hyphens für verbesserten Zeilenumbruch in url's
+%Hyperref fï¿½r Verlinkungen im Dokument und URL's
+%hyphens fï¿½r verbesserten Zeilenumbruch in url's
 \PassOptionsToPackage{hyphens}{url}
 \usepackage[	breaklinks={true},
  						colorlinks	={true},
@@ -49,7 +72,7 @@
   						urlcolor	={tuSecondaryMedium100},						
  					]{hyperref} %Interne Links in Schwarz und externe URL's in bg Farbe
  					
-%Zusätzliche Buchstaben und Zahlen erlauben für Zeilenumbruch bei url's (verbessert den Blocksatz)				
+%Zusï¿½tzliche Buchstaben und Zahlen erlauben fï¿½r Zeilenumbruch bei url's (verbessert den Blocksatz)				
 \expandafter\def\expandafter\UrlBreaks\expandafter{\UrlBreaks%  save the current one
   \do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\i\do\j%
   \do\k\do\l\do\m\do\n\do\o\do\q\do\r\do\s%
@@ -58,10 +81,10 @@
   \do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X%
   \do\Y\do\Z\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9} 	
   
-% Rückseiten-Elemente
+% Rï¿½ckseiten-Elemente
 \address{% Addresse
-  Technische Universität Braunschweig\\
-  Institut für Thermodynamik\\
+  Technische Universitï¿½t Braunschweig\\
+  Institut fï¿½r Thermodynamik\\
   Hans-Sommer-Strasse 5\\
   38106 Braunschweig}
 \backpageinfo{}				
@@ -82,6 +105,9 @@
 \includepdf[pages=-]{\AUFGABENSTELLUNG}
 \input{chapters/Eidesstattliche_Erklaerung}
 \tableofcontents
+\listoffigures
+\makenomenclature
+\printnomenclature
 \pagenumbering{arabic}
 \setcounter{page}{1}}
 
