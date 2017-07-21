@@ -28,10 +28,10 @@
 %---------------------------------------------------
 %---------------Allgemeine Angaben------------------
 %---------------------------------------------------
-\def \TITLE					{EinhornFechten}
+\def \TITLE					{Adaptive Controller Design for Refrigeration Cycle Using the Natural Refrigerant  CO\textsubscript{2}}
 \def \TYPE					{Masterarbeit} %[<Projektarbeit/Bachelorarbeit/Studienarbeit/Masterarbeit>]
-\def \AUTHOR				{Name des Studenten}
-\def \BETREUER				{Name des Betreuers}
+\def \AUTHOR				{Julius Martensen}
+\def \BETREUER				{Dipl. Ing. Michael N\"oding}
 \def \TITELBILD				{pictures/Titelbild.png}
 \def \AUFGABENSTELLUNG		{Aufgabenstellung.pdf}
 \def \TOPLINE				{} %[<\showtopline>] % Aktiviert die rote Trennlinie �ber dem Bild. 
@@ -45,11 +45,14 @@
 %---------------------------------------------------
 %--------------Beginn eigener Kapitel---------------
 %---------------------------------------------------
-\input{chapters/ControlTheory}
+\include{chapters/chapter1_introduction}
+\include{chapters/chapter2_thermodynamics}
+\include{chapters/chapter3_control}
+\input{chapters/chapter4_Application1}
 %\input{chapters/Grundlagen}
 %\input{chapters/Symbolverzeichnis}
 
-\bibliography{chapters/bibliography} 
+\bibliography{chapters/mendeley_masterarbeit} 
 
 \Anhang
 \input{chapters/Anhang}

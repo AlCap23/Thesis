@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6300 64-bit) (preloaded format=pdflatex 2017.5.17)  20 JUL 2017 19:31
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6300 64-bit) (preloaded format=pdflatex 2017.5.17)  21 JUL 2017 09:26
 entering extended mode
 **C:/Users/juliu/Documents/Thesis/Latex/studentischeArbeiten.tex
 (C:/Users/juliu/Documents/Thesis/Latex/studentischeArbeiten.tex
@@ -792,11 +792,12 @@ Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
 \upperfontdim=\dimen161
 \lowerfontdim=\dimen162
 )
-(studentischeArbeiten.aux
+(studentischeArbeiten.aux (chapters/chapter1_introduction.aux)
+(chapters/chapter2_thermodynamics.aux) (chapters/chapter3_control.aux
 
 LaTeX Warning: Label `c:control:s:identification' multiply defined.
 
-)
+))
 \openout1 = `studentischeArbeiten.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 42.
@@ -1201,7 +1202,7 @@ lable
 ne 36.
 \temp@=\dimen175
 \temp@b=\dimen176
-<pictures/Titelbild.png, id=79, 521.95pt x 301.125pt>
+<pictures/Titelbild.png, id=87, 521.95pt x 301.125pt>
 File: pictures/Titelbild.png Graphic file (type png)
 
 <use pictures/Titelbild.png>
@@ -1221,7 +1222,7 @@ File: pictures/Titelbild.png Graphic file (type png)
 Package pdftex.def Info: pictures/Titelbild.png used on input line 46.
 (pdftex.def)             Requested size: 509.42741pt x 409.18277pt.
 
-<TUBraunschweig_4C.pdf, id=84, 199.1691pt x 73.97737pt>
+<TUBraunschweig_4C.pdf, id=92, 199.1691pt x 73.97737pt>
 File: TUBraunschweig_4C.pdf Graphic file (type pdf)
 
 <use TUBraunschweig_4C.pdf>
@@ -1232,7 +1233,7 @@ LaTeX Font Info:    Font shape `LY1/NexusProSans/bx/n' in size <14> not availab
 le
 (Font)              Font shape `LY1/NexusProSans/b/n' tried instead on input li
 ne 46.
- <ift_4C.pdf, id=85, 328.456pt x 137.42065pt>
+ <ift_4C.pdf, id=93, 328.456pt x 137.42065pt>
 File: ift_4C.pdf Graphic file (type pdf)
 
 <use ift_4C.pdf>
@@ -1247,7 +1248,7 @@ Titelbild.png (PNG copy)> <C:/Latex/TUBS/tex/latex/tubs/logos/TUBraunschweig_4C
 
 pdfTeX warning: pdflatex.EXE (file ./ift_4C.pdf): PDF inclusion: multiple pdfs 
 with page group included in a single page
->]) <Aufgabenstellung.pdf, id=96, 597.432pt x 844.83629pt>
+>]) <Aufgabenstellung.pdf, id=104, 597.432pt x 844.83629pt>
 File: Aufgabenstellung.pdf Graphic file (type pdf)
 
 <use Aufgabenstellung.pdf>
@@ -1258,7 +1259,7 @@ File: Aufgabenstellung.pdf Graphic file (type pdf)
 Package pdftex.def Info: Aufgabenstellung.pdf used on input line 43.
 (pdftex.def)             Requested size: 597.43054pt x 844.83423pt.
 
-<Aufgabenstellung.pdf, id=99, page=1, 597.432pt x 844.83629pt>
+<Aufgabenstellung.pdf, id=107, page=1, 597.432pt x 844.83629pt>
 File: Aufgabenstellung.pdf Graphic file (type pdf)
 
 <use Aufgabenstellung.pdf, page 1>
@@ -1315,10 +1316,13 @@ File: LY1NexusProSerif-lnum.fd Fontshop NexusProSerif-lnum font definitions
 
 
 No file studentischeArbeiten.nls.
-(chapters/chapter1_introduction.tex [1
+[1
 
 
 ]
+\openout2 = `chapters/chapter1_introduction.aux'.
+
+ (chapters/chapter1_introduction.tex
 chapter 1.
 
 Class scrbook Warning: \float@addtolists detected!
@@ -1343,10 +1347,14 @@ LaTeX Font Info:    Font shape `LY1/NexusProSans-lnum/bx/n' in size <18> not av
 ailable
 (Font)              Font shape `LY1/NexusProSans-lnum/b/n' tried instead on inp
 ut line 3.
-) (chapters/chapter2_thermodynamics.tex [2
+) [2
+
 
 
 ]
+\openout2 = `chapters/chapter2_thermodynamics.aux'.
+
+ (chapters/chapter2_thermodynamics.tex
 chapter 2.
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
@@ -1381,6 +1389,8 @@ LaTeX Warning: Citation `Weigand2013ThermodynamikKompakt' on page 3 undefined o
 n input line 25.
 
 [3
+
+
 
 
 ]
@@ -1421,11 +1431,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 129--131
 
  []
 
-) (chapters/chapter3_control.tex
+)
 Package scrkbase Info: You've told me to use the font selection of the element
 (scrkbase)             `pagehead' that is an alias of element `pageheadfoot'
-(scrkbase)              on input line 1.
+(scrkbase)              on input line 49.
  [5]
+\openout2 = `chapters/chapter3_control.aux'.
+
+ (chapters/chapter3_control.tex
 chapter 3.
 
 Underfull \hbox (badness 10000) in paragraph at lines 23--24
@@ -1445,6 +1458,8 @@ Underfull \hbox (badness 10000) in paragraph at lines 41--42
 [6
 
 
+
+
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 53--54
 
@@ -1459,7 +1474,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 57--58
 
  []
 
-<./Graphics/2DOFCLOSEDLOOP.png, id=231, 530.783pt x 266.596pt>
+<./Graphics/2DOFCLOSEDLOOP.png, id=241, 530.783pt x 266.596pt>
 File: ./Graphics/2DOFCLOSEDLOOP.png Graphic file (type png)
 
 <use ./Graphics/2DOFCLOSEDLOOP.png>
@@ -1494,145 +1509,199 @@ Underfull \hbox (badness 10000) in paragraph at lines 125--126
 
  []
 
-<./Graphics/MaximumSensitivity.png, id=257, 286.671pt x 227.249pt>
-File: ./Graphics/MaximumSensitivity.png Graphic file (type png)
+(Graphics/MS.pdf_tex
+<./Graphics/MS.pdf, id=267, page=1, 227.62204pt x 180.51967pt>
+File: ./Graphics/MS.pdf Graphic file (type pdf)
 
-<use ./Graphics/MaximumSensitivity.png>
-Package pdftex.def Info: ./Graphics/MaximumSensitivity.png used on input line 1
-30.
-(pdftex.def)             Requested size: 286.67029pt x 227.24841pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 143--144
+<use ./Graphics/MS.pdf, page 1>
+Package pdftex.def Info: ./Graphics/MS.pdf, page1 used on input line 52.
+(pdftex.def)             Requested size: 227.62204pt x 180.52747pt.
+)
+Underfull \hbox (badness 10000) in paragraph at lines 144--145
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 152--153
+Underfull \hbox (badness 10000) in paragraph at lines 153--154
 
  []
 
 Package scrkbase Info: You've told me to use the font selection of the element
 (scrkbase)             `pagehead' that is an alias of element `pageheadfoot'
-(scrkbase)              on input line 153.
-[9 <./Graphics/MaximumSensitivity.png>]
-<./Graphics/SVD.png, id=272, 238.491pt x 203.159pt>
+(scrkbase)              on input line 154.
+[9 <./Graphics/MS.pdf>] <./Graphics/SVD.png, id=297, 238.491pt x 203.159pt>
 File: ./Graphics/SVD.png Graphic file (type png)
- <use ./Graphics/SVD.png>
-Package pdftex.def Info: ./Graphics/SVD.png used on input line 157.
+
+<use ./Graphics/SVD.png>
+Package pdftex.def Info: ./Graphics/SVD.png used on input line 158.
 (pdftex.def)             Requested size: 238.4904pt x 203.1585pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 178--179
+Underfull \hbox (badness 10000) in paragraph at lines 179--180
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 180--181
+Underfull \hbox (badness 10000) in paragraph at lines 181--182
 
  []
 
 Package scrkbase Info: You've told me to use the font selection of the element
 (scrkbase)             `pagehead' that is an alias of element `pageheadfoot'
-(scrkbase)              on input line 181.
+(scrkbase)              on input line 182.
 [10 <./Graphics/SVD.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 182--183
+Underfull \hbox (badness 10000) in paragraph at lines 183--184
 
  []
 
-<./Graphics/AREA_IDENTIFICATION1.png, id=280, 341.275pt x 206.371pt>
+<./Graphics/AREA_IDENTIFICATION1.png, id=305, 341.275pt x 206.371pt>
 File: ./Graphics/AREA_IDENTIFICATION1.png Graphic file (type png)
 
 <use ./Graphics/AREA_IDENTIFICATION1.png>
 Package pdftex.def Info: ./Graphics/AREA_IDENTIFICATION1.png used on input line
- 190.
+ 191.
 (pdftex.def)             Requested size: 417.61612pt x 252.55005pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 198--199
+Underfull \hbox (badness 10000) in paragraph at lines 199--200
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 200--201
+Underfull \hbox (badness 10000) in paragraph at lines 201--202
 
  []
 
-<./Graphics/PT9-Study.png, id=282, 1003.75pt x 1003.75pt>
+<./Graphics/PT9-Study.png, id=307, 1003.75pt x 1003.75pt>
 File: ./Graphics/PT9-Study.png Graphic file (type png)
 
 <use ./Graphics/PT9-Study.png>
-Package pdftex.def Info: ./Graphics/PT9-Study.png used on input line 205.
+Package pdftex.def Info: ./Graphics/PT9-Study.png used on input line 206.
 (pdftex.def)             Requested size: 417.61612pt x 417.6206pt.
 Package scrkbase Info: You've told me to use the font selection of the element
 (scrkbase)             `pagehead' that is an alias of element `pageheadfoot'
-(scrkbase)              on input line 210.
+(scrkbase)              on input line 211.
  [11 <./Graphics/AREA_IDENTIFICATION1.png>]
 Package scrkbase Info: You've told me to use the font selection of the element
 (scrkbase)             `pagehead' that is an alias of element `pageheadfoot'
-(scrkbase)              on input line 228.
+(scrkbase)              on input line 229.
 
 [12 <./Graphics/PT9-Study.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 237--238
+Underfull \hbox (badness 10000) in paragraph at lines 238--239
 
  []
 
 
 LaTeX Warning: Citation `Astrom2006AdvancedControl' on page 13 undefined on inp
-ut line 242.
+ut line 243.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 254--255
+Underfull \hbox (badness 10000) in paragraph at lines 255--256
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 268--269
+Underfull \hbox (badness 10000) in paragraph at lines 269--270
 
  []
 
 Package scrkbase Info: You've told me to use the font selection of the element
 (scrkbase)             `pagehead' that is an alias of element `pageheadfoot'
-(scrkbase)              on input line 269.
+(scrkbase)              on input line 270.
 [13]
-Underfull \hbox (badness 10000) in paragraph at lines 319--320
+Underfull \hbox (badness 10000) in paragraph at lines 320--321
 
  []
 
 Package scrkbase Info: You've told me to use the font selection of the element
 (scrkbase)             `pagehead' that is an alias of element `pageheadfoot'
-(scrkbase)              on input line 320.
+(scrkbase)              on input line 321.
 [14]
-Underfull \hbox (badness 10000) in paragraph at lines 347--348
+Underfull \hbox (badness 10000) in paragraph at lines 348--349
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 375--376
+Underfull \hbox (badness 10000) in paragraph at lines 376--377
 
  []
 
 Package scrkbase Info: You've told me to use the font selection of the element
 (scrkbase)             `pagehead' that is an alias of element `pageheadfoot'
-(scrkbase)              on input line 376.
+(scrkbase)              on input line 377.
 [15]
-Underfull \hbox (badness 10000) in paragraph at lines 442--443
+Underfull \hbox (badness 10000) in paragraph at lines 443--444
 
  []
 
 Package scrkbase Info: You've told me to use the font selection of the element
 (scrkbase)             `pagehead' that is an alias of element `pageheadfoot'
-(scrkbase)              on input line 445.
+(scrkbase)              on input line 446.
 [16]
-Underfull \hbox (badness 10000) in paragraph at lines 496--497
+Underfull \hbox (badness 10000) in paragraph at lines 497--498
 
  []
 
 Package scrkbase Info: You've told me to use the font selection of the element
 (scrkbase)             `pagehead' that is an alias of element `pageheadfoot'
-(scrkbase)              on input line 505.
-[17]) (studentischeArbeiten.bbl
+(scrkbase)              on input line 506.
+[17])
+Package scrkbase Info: You've told me to use the font selection of the element
+(scrkbase)             `pagehead' that is an alias of element `pageheadfoot'
+(scrkbase)              on input line 50.
+ [18] (chapters/chapter4_Application1.tex
+chapter 4.
+
+Overfull \hbox (10.88289pt too wide) in paragraph at lines 1--1
+|\LY1/NexusProSans-lnum/b/n/36 4 \LY1/NexusProSans/b/n/36 Con-trol of Com-mon E
+x-am-ples| 
+ []
+
+[19
+
+
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 95--96
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 115--116
+
+ []
+
+Package scrkbase Info: You've told me to use the font selection of the element
+(scrkbase)             `pagehead' that is an alias of element `pageheadfoot'
+(scrkbase)              on input line 135.
+[20]
+Underfull \hbox (badness 10000) in paragraph at lines 162--163
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 181--182
+
+ []
+
+Package scrkbase Info: You've told me to use the font selection of the element
+(scrkbase)             `pagehead' that is an alias of element `pageheadfoot'
+(scrkbase)              on input line 196.
+[21]
+
+LaTeX Warning: Reference `c:examples:e:Hmax*' on page 22 undefined on input lin
+e 198.
+
+
+LaTeX Warning: Reference `c:examples:e:Hmax*' on page 22 undefined on input lin
+e 259.
+
+Package scrkbase Info: You've told me to use the font selection of the element
+(scrkbase)             `pagehead' that is an alias of element `pageheadfoot'
+(scrkbase)              on input line 270.
+[22]) (studentischeArbeiten.bbl
 Package scrkbase Info: You've told me to use the font selection of the element
 (scrkbase)             `pagehead' that is an alias of element `pageheadfoot'
 (scrkbase)              on input line 1.
- [18]
+ [23]
 chapter without number
 LaTeX Font Info:    Try loading font information for LY1+txtt on input line 15.
 
@@ -1654,10 +1723,10 @@ s . g o o g l e . d e / b o o k s / a b o u t / R o b u st _ a n d _ Opt i m a
 l _ C o nt r o l .ht m l ? i d = R
  []
 
-) [19
+) [24
 
 
-] (chapters/Anhang.tex) [20
+] (chapters/Anhang.tex) [25
 
 
 ]
@@ -1676,17 +1745,18 @@ TextBlockOrigin set to \tubsborderwidth +\tubspage@bcor  x \tubssenderheight
 \tubs@restore@parindent=\dimen187
 \temp@=\dimen188
 \temp@b=\dimen189
-[21
+[26
 
 
 ]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 65.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 65.
- (studentischeArbeiten.aux)
+ (studentischeArbeiten.aux (chapters/chapter1_introduction.aux)
+(chapters/chapter2_thermodynamics.aux) (chapters/chapter3_control.aux))
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 65.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 65.
 Package rerunfilecheck Info: File `studentischeArbeiten.out' has not changed.
-(rerunfilecheck)             Checksum: DD78905B900740F83CD1785B83044217;1358.
+(rerunfilecheck)             Checksum: 75F861F77EFA302606B26D09CC2550E0;1502.
 
 
 LaTeX Warning: There were undefined references.
@@ -1696,13 +1766,13 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 15693 strings out of 493328
- 252189 string characters out of 3142572
- 454904 words of memory out of 3000000
- 18732 multiletter control sequences out of 15000+200000
+ 15766 strings out of 493328
+ 253803 string characters out of 3142572
+ 458367 words of memory out of 3000000
+ 18762 multiletter control sequences out of 15000+200000
  317684 words of font info for 367 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 68i,24n,118p,8897b,638s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 68i,24n,118p,8897b,639s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Latex/TUBS/fonts/enc/dvips/Fontshop/a_molob5.enc}{C:/Latex/MiKTeX 2.9/fon
 ts/enc/dvips/base/8r.enc}{C:/Latex/TUBS/fonts/enc/dvips/Fontshop/a_6g6b3j.enc}{
 C:/Latex/TUBS/fonts/enc/dvips/Fontshop/a_4o7za6.enc}{C:/Latex/TUBS/fonts/enc/dv
@@ -1723,9 +1793,9 @@ e1/public/mathpazo/fplmri.pfb><C:/Latex/MiKTeX 2.9/fonts/type1/public/txfonts/t
 TeX 2.9/fonts/type1/urw/palatino/uplbi8a.pfb><C:/Latex/MiKTeX 2.9/fonts/type1/u
 rw/palatino/uplr8a.pfb><C:/Latex/MiKTeX 2.9/fonts/type1/urw/palatino/uplri8a.pf
 b>
-Output written on studentischeArbeiten.pdf (25 pages, 1303770 bytes).
+Output written on studentischeArbeiten.pdf (30 pages, 1311619 bytes).
 PDF statistics:
- 506 PDF objects out of 1000 (max. 8388607)
- 106 named destinations out of 1000 (max. 500000)
- 237 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 581 PDF objects out of 1000 (max. 8388607)
+ 130 named destinations out of 1000 (max. 500000)
+ 253 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -118,7 +118,7 @@ Or rearranged to be:
 
 \begin{align}
 \begin{split}
-\max_\omega \left| g~k_y\right| &= 1 - \frac{1}{M_S}
+\max_\omega \left| g~k_y\right| &= 1 - s_M
 \end{split}
 \end{align}
 
@@ -127,11 +127,12 @@ Due to Eq. \ref{c:control:e:maxsensitivitynyquist} the maximum gain of the open 
 \begin{figure}[H]
 \begin{minipage}[b]{\textwidth}
 \centering
-\includegraphics[scale=1]{./Graphics/MaximumSensitivity.png}
+\input{./Graphics/MS.pdf_tex}
 \caption{Maximum Sensitivity}
 \label{c:control:f:MaximumSensitivity}
 \end{minipage}
 \end{figure}
+
 
 While the maximum sensitivity is well definied for SISO systems, a MIMO system requires a more general approach due to the interconnection of the systems out- and inputs. A general condition is given by the Small Gain Theorem \cite[p.150 ff.]{Skogestad2005MultivariableDesign}. The theorem states, that a given feedback system is stable iff the open loop transfer function matrix is stable and its sufficient conditioned matrix norm is less than 1 over all frequencies.
 
