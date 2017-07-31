@@ -11,9 +11,9 @@ clc
 % Filename for saving
 %filename = 'Data_80kW_T273.mat';
 % Operating point
-Current = 5;
+Current = 1;
 % Constrains
-Constrains = [0.1,0.1,sqrt(2),sqrt(2)];
+Constrains = [0.1,0.5,sqrt(2),sqrt(2)];
 
 % Add path for functions -> Windows only
 %addpath('C:\Users\juliu\Documents\GIT\New folder\Matlab');
@@ -49,7 +49,8 @@ G_M.IODelay = zeros(size(G));
 G_D = tf([1,1;1,1]);
 G_D.IODelay = G.IODelay;
 %% Decouple via RGA
-C1 = Decoupling_RGA(G,Constrains,'DC',0);
+C1 = Decoupling_A(G,Constrains,'AMIGO',0);
+%C1 = Decoupling_RGA(G,Constrains,'DC',0);
 %C1 = Decoupling_FOTD(G,Constrains,'AMIGO',0);
 % Preprocess PID2 Object -> Set Point Weight
 C = tf(C1); % Convert to TF
@@ -178,35 +179,35 @@ loglog(f2,cn2,'o-')
 loglog(f3,cn3,'o-')
 grid on
 legend('RGA','Decoupling with Q Design','Decoupling with G Design')
-% %% Define a Test Simulation - Constant Temperature
-% time = 0:1:10000; % Time
-% u = zeros(2,length(time)); % Set Point
-% u(1,:) = 0; % Constant Temperature
-% u(2,1:200) = 0; % Pressure
-% u(2,200:4999) = 1;
-% u(2,5000:end) = -1;
-% 
-% figure(2)
-% lsim(CL1,u,time)
-% hold on
-% grid on
-% lsim(CL2,u,time)
-% lsim(CL3,u,time)
-% %lsim(CL4,u,time)
-% legend('RGA','Decoupling with Q Design','Decoupling with G Design')
-% 
-% %% Define a Test Simulation - Constant Pressure
-% u = zeros(2,length(time)); % Set Point
-% u(1,1:200) = 0; % Vary Temperature
-% u(1,200:4999) = 1; 
-% u(1,5000:end) = -1;
-% u(2,:) = 0; % Constant Pressure
-% 
-% figure(3)
-% lsim(CL1,u,time)
-% hold on
-% grid on
-% lsim(CL2,u,time)
-% lsim(CL3,u,time)
-% %lsim(CL4,u,time)
-% legend('RGA','Decoupling with Q Design','Decoupling with G Design')
+%% Define a Test Simulation - Constant Temperature
+time = 0:1:10000; % Time
+u = zeros(2,length(time)); % Set Point
+u(1,:) = 0; % Constant Temperature
+u(2,1:200) = 0; % Pressure
+u(2,200:4999) = 1;
+u(2,5000:end) = -1;
+
+figure(4)
+lsim(CL1,u,time)
+hold on
+grid on
+lsim(CL2,u,time)
+lsim(CL3,u,time)
+%lsim(CL4,u,time)
+legend('RGA','Decoupling with Q Design','Decoupling with G Design')
+
+%% Define a Test Simulation - Constant Pressure
+u = zeros(2,length(time)); % Set Point
+u(1,1:200) = 0; % Vary Temperature
+u(1,200:4999) = 1; 
+u(1,5000:end) = -1;
+u(2,:) = 0; % Constant Pressure
+
+figure(5)
+lsim(CL1,u,time)
+hold on
+grid on
+lsim(CL2,u,time)
+lsim(CL3,u,time)
+%lsim(CL4,u,time)
+legend('RGA','Decoupling with Q Design','Decoupling with G Design')

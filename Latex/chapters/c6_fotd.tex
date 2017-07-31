@@ -1,0 +1,303 @@
+\chapter{Control of TITO FOTD Processes}
+\label{c:fotd}
+
+The folllowing chapter 
+
+\section{Analytic Decoupling}
+\label{c:fotd:s:analytic}
+
+Since a FOTD are the model structure choosen for this work a deeper investigation of transfer function matrices based on this model is performed. For the following section a simple two input two output model given as following is defined:
+
+\begin{align}
+\begin{split}
+\ma{G} = \begin{bmatrix}
+g_{11} & g_{12} \\
+g_{21} & g_{22}
+\end{bmatrix} & ~,g_{ij} = \frac{K_{ij}}{T_{ij} s +1 } e^{-L_{ij}s}
+\end{split}
+\label{c:fotd:e:examplesys}
+\end{align}
+
+For the system described in Eq. \ref{c:fotd:e:examplesys} three different controller based on PI-structure are defined using the methods presented in the previous chapter. Further restrictions on the systems performance are given by the Maximum Sensitivity and Maximum Interaction of the system given by:
+
+\begin{align}
+\begin{split}
+\ma{H}_{A,Max} &= \begin{bmatrix}
+0 & h_{12,Max} \\
+h_{21,Max} & 0 
+\end{bmatrix}\\
+\ma{M}_{S} &= \begin{bmatrix}
+M_{S,1} & 0 \\
+0 & M_{S,2}
+\end{bmatrix}
+\end{split}
+\label{c:fotd:e:restrictions}
+\end{align}
+
+Eq.\ref{c:fotd:e:restrictions} is given under the assumption that only the diagonal transfer functions are requiered and the interaction acts on the antidiagonal entries. Furthermore the system will be operating near steady state and hence the frequency used for Taylor Series Exapnsion is choosen to be $s = 0$.
+
+\subsection*{Controller Design via Relative Gain Array Analysis}
+
+Assuming the diagonal dominance of the system, the controller are designed via the transfer functions $g_{11}$ and $g_{22}$. Since the AMIGO Algorithm has been given earlier ZITIEREN and explicit values for this example will be given later on, no further description will be given at this point.
+
+
+\subsection*{Controller Design via Astr\"om et. al.}
+
+At first the decoupler is designed via the inverse static gain of the system
+
+
+\begin{align}
+\begin{split}
+\ma{D} &= \ma{G}|_{s=0}^{-1}\\
+&= \frac{1}{K_{11}K_{22}-K_{12}K_{21}} 
+\begin{bmatrix}
+K_{22} & -K_{21} \\
+-K_{12} & K_{11}
+\end{bmatrix}
+\end{split}
+\label{c:fotd:e:exampleDecoupler}
+\end{align}
+
+And with the decoupler the transformed system $\ma{G}^*$ is calculated to be
+
+\begin{align}
+\begin{split}
+\ma{G}^* &= \ma{G}\ma{D}\\
+&= \frac{1}{K_{11}K_{22}-K_{12}K_{21}} 
+\begin{bmatrix}
+g_{11} & g_{12} \\
+g_{21} & g_{22}
+\end{bmatrix}
+\begin{bmatrix}
+K_{22} & -K_{21} \\
+-K_{12} & K_{11}
+\end{bmatrix} \\
+&= \frac{1}{K_{11}K_{22}-K_{12}K_{21}}
+\begin{bmatrix}
+K_{22}g_{11}-K_{12}g_{12} & -K_{21}g_{11}+K_{22}g_{12} \\
+K_{22}g_{21}-K_{12}g_{22} &
+-K_{21}g_{21}+K_{11}g_{22}
+\end{bmatrix}
+\end{split}
+\label{c:fotd:e:exampletransformed}
+\end{align}
+
+From Eq. \ref{c:fotd:e:exampletransformed} it is clear that the entries $g_{ij}^*$ are linear combinations of FOTD transfer functions. Due to the properties of the exponential function the superposition principle does not hold. Hence a controller via the AMIGO algorithm can only be designed if a sufficient approximation of the linear combination as a FOTD can be formulated:
+
+\begin{align}
+\begin{split}
+g_{ij}^* & = \frac{K_{ij}^*}{T_{ij}^*s+1}e^{-L_{ij}^* s} + \Delta g_{ij}^*\\
+&\approx \frac{K_{ij}^*}{T_{ij}^*s+1}e^{-L_{ij}^* s} 
+\end{split}
+\label{c:fotd:e:exampleFOTDapprox}
+\end{align}
+
+Within Eq. \ref{c:fotd:e:exampleFOTDapprox} the main drawback of the method is layed out. As stated earlier, most algorithms for PI(D) design rely on a fixed model structure and hence are not fit to process information given by a combination. To use the function, two methods are proposed.\\
+
+Assuming the results of the experiment used for identifying the process are still avaible the process approximate model can be found via a weighted sum of the systems output. First the static gain of every transfer function is determined via
+
+\begin{align}
+\begin{split}
+K_{ij} &= \frac{y_{i}(\infty) - y_{i}(0)}{u_{j}(\infty)-u_j(0)}
+\end{split}
+\label{c:fotd:staticgain}
+\end{align}
+
+As explained earlier. Subsequent the results of a linear combination are given by:
+
+\begin{align}
+\begin{split}
+y_{1}^*(t) &= \frac{K_{22} y_{11}(t) - K_{12} y_{12}(t)}{\det(\ma{K})}
+\end{split}
+\label{c:fotd:e:Combination}
+\end{align}
+
+Eq. \ref{c:fotd:e:Combination} reuses the experimental data to approximate the systems output. $y_{ii}$ is the i-th output of the system reacting to excitation via the i-th input. Hence the data can be used for FOTD identification as presented earlier.\\
+
+The second method relies on knowledge about the behaviour of the transfer functions in the time domain. At first, the static gain is given by:
+
+\begin{align}
+\begin{split}
+K_{11}^* &= \frac{K_{22} K_{11} - K_{12}^2}{\det(K)}
+\end{split}
+\label{c:fotd:e:CombinationGain}
+\end{align}
+
+Since the integral is a linear operator the time integral can be rewritten as:
+
+\begin{align}
+\begin{split}
+\int_0^\infty y_{1}^*(\infty) - y_1^*(t) dt &= K_{11}^* (T_{11}^*+L_{11}^*) \\
+&= \frac{1}{\det(K)} \left( K_{22} \int_0^\infty y_{11}(\infty) - y_{11}(t) dt + K_{12} \int_0^\infty y_{12}(\infty) - y_{12}(t) dt\right) \\
+&= \frac{1}{\det(K)} \left( K_{22} K_{11} (T_{11}+L_{11}) + K_{12}^2 (T_{12}+L_{12}) \right) 
+\end{split}
+\label{c:fotd:e:CombinationIntegral}
+\end{align}
+
+To determine the coefficients of the new system a third equation is needed. It is convinient to choose an appropriate value for the new time delay $L^*$ with several options like a weighted sum, the minimum or maximum of all involved delays. A robust method is given by choosing the maximum and hence implement a conservative tuning. Subsequently Eq. \ref{c:fotd:e:CombinationIntegral} can be rearranged to
+
+\begin{align}
+\begin{split}
+T_{11}^* &= \frac{1}{\det(K)K_{11}^*} \left( K_{22} K_{11} (T_{11}+L_{11}) + K_{12}^2 (T_{12}+L_{12}) \right) - L_{11}^*
+\end{split}
+\label{c:fotd:e:CombinationTimeConstant}
+\end{align}
+
+Assuming a sufficient approximation can be found and the resulting error is minimal the diagonal controller can be designed. A choice for a PI-Structure with set point weighting $b=0$ holds:
+
+\begin{align}
+\begin{split}
+\ma{K}_y^* &= \begin{bmatrix}
+-K_{P1}^* - K_{I1}^*\frac{1}{s} & 0 \\
+0 & -K_{P2}^* - K_{I2}^*\frac{1}{s}
+\end{bmatrix} \\
+\ma{K}_r^* &= \begin{bmatrix}
+K_{I1}^*\frac{1}{s} & 0 \\
+0 & K_{I2}^*\frac{1}{s}
+\end{bmatrix} 
+\end{split}
+\label{c:fotd:e:exampleTransformedControler}
+\end{align}
+
+With parameters $K_{P,i},K_{I,i} \in \mathbb{R}$ are calculated via the AMIGO Tuning Rules as given earlier. Since the approximation given in Eq.\ref{c:fotd:e:exampleFOTDapprox} holds an inevitable error so do the parameter. \\
+
+The coupling matrix of the antidiagonal parts is given by:
+
+\begin{align}
+\begin{split}
+\ma{\Gamma}_A &= \left[\frac{d}{ds}\ma{G}|^*_{s=0}\right]_A s \\
+&= \begin{bmatrix}
+0 & \frac{-K_{21}K_{11}(T_{11}-L_{11}) + K_{22}K_{12}(T_{12}-L{12})}{K_{11}K_{22}-K_{12}K_{21}} \\
+\frac{-K_{12}K_{22}(T_{22}-L_{22}) + K_{22}K_{21}(T_{21}-L_{21})}{K_{11}K_{22}-K_{12}K_{21}} & 0
+\end{bmatrix} s\\
+&\approx \begin{bmatrix}
+0 & K_{12}^* (T_{12}^* - L_{12}^*) \\
+K_{21}^* (T_{21}^* - L_{21}^*) & 0 
+\end{bmatrix} s
+\end{split}
+\label{c:fotd:e:exampleTransformedCoupling}
+\end{align}
+
+From Eq. \ref{c:fotd:e:exampleTransformedCoupling} the dependency of the coupling on the both the static gain of the system and the dynamical behaviour can be observed. This coincides with the statements of LUNZE ZITIEREN.\\
+
+Detuning the controller requires to define both  maximum allowed interactions $h_{ij,Max}$ and maximum sensitivity $M_{S,i}$ of the closed loop:
+
+\begin{align*}
+\begin{split}
+\ma{H}_{A,Max} &= \begin{bmatrix}
+0 & h_{12,Max} \\
+h_{21,Max} & 0 
+\end{bmatrix}\\
+\ma{M}_{S} &= \begin{bmatrix}
+M_{S,1} & 0 \\
+0 & M_{S,2}
+\end{bmatrix}
+\end{split}
+\end{align*}
+
+Solving Eq. \ref{c:fotd:e:Hmax*} for the set point weighting controller holds:
+
+\begin{align}
+\begin{split}
+\ma{K}^*_r &\leq \ma{\Gamma}^{-*}_{A,Max}\ma{M}_S^{-1}\ma{H}^*_{A,Max} \\ 
+&\leq \frac{1}{\det(\ma{M}_S)}\ma{\Gamma}^{-*}_{A,Max}\ma{H}^*_{A,Max}\\
+&\leq \frac{1}{M_{S,1}M_{S,2}}
+\begin{bmatrix}
+\frac{h_{21,Max}}{K_{12}^* (T_{12}^* - L_{12}^*)} & 0\\
+0 & \frac{h_{12,Max}}{K_{21}^* (T_{21}^* - L_{21}^*)} 
+\end{bmatrix}
+\end{split}
+\end{align}
+
+
+\subsection*{Controller Design via Modified Astr\"om}
+
+Now the modified Algorithm proposed in this thesis is applied to the same System. First, we design the controller as a function of the main diagonal entries $g_{ii}$ once again using the AMIGO Tuning rules:
+
+\begin{align}
+\begin{split}
+\ma{K}_y &= \begin{bmatrix}
+-K_{P1} - K_{I1}\frac{1}{s} & 0 \\
+0 & -K_{P2} - K_{I2}\frac{1}{s}
+\end{bmatrix} \\
+\ma{K}_r &= \begin{bmatrix}
+K_{I1}\frac{1}{s} & 0 \\
+0 & K_{I2}\frac{1}{s}
+\end{bmatrix} 
+\end{split}
+\label{c:fotd:e:exampleControler}
+\end{align}
+
+The splitter $\ma{\Sigma}$ is likewise designed by the steady state of the system as:
+
+\begin{align}
+\begin{split}
+\ma{\Sigma} &= \ma{D}_A\ma{D}_D^{-1} \\
+& = \begin{bmatrix}
+0 & -\frac{K_{12}}{K_{11}} \\
+-\frac{K_{21}}{K_{22}} & 0
+\end{bmatrix}
+\end{split}
+\end{align}
+
+To test for interaction define the maximum interaction and the sensitivity like in Eq. FEHLT. The anti diagonal parts of the Taylor series can be identified as:
+
+\begin{align}
+\begin{split}
+\ma{\Gamma}_A &= \frac{d}{ds}\left[\ma{G}_A + \ma{G}_D\ma{\Sigma}\right]|_{s=0} \\
+&= \begin{bmatrix}
+0 & K_{12}(T_{12}-L_{12}) - K_{11}\frac{K_{12}}{K_{11}}(T_{11}-L_{11}) \\
+K_{21}(T_{21}-L_{21}) - K_{22}\frac{K_{21}}{K_{22}}(T_{22}-L_{22}) & 0 
+\end{bmatrix} \\
+&= \begin{bmatrix}
+0 & K_{12}(T_{12}-L_{12} - T_{11}+L_{11}) \\
+K_{21}(T_{21}-L_{21} - T_{22}+L_{22}) & 0 
+\end{bmatrix} 
+\end{split}
+\end{align}
+
+To detune the controller solving Eq. \ref{c:fotd:e:Hmax*} for the integral controller as before holds:
+
+\begin{align}
+\begin{split}
+\ma{K}_I &\leq \ma{\Gamma}_A^{-1} \ma{M}_S^{-1} \ma{H}_{A,Max} \\
+&\leq \frac{1}{\det(\ma{M}_S)} \ma{\Gamma}_A^{-1} \ma{H}_{A,Max} \\
+&\leq \frac{1}{M_{S,1}M_{S,2}}\begin{bmatrix}
+\frac{h_{12,Max}}{K_{12}(T_{12}-L_{12}-T_{11}+L_{11})} & 0 \\
+0 &\frac{h_{21,Max}}{K_{21}(T_{21}-L_{21}-T_{22}+L_{22})}
+\end{bmatrix}
+\end{split}
+\end{align}
+
+\section{Rosenbrook}%
+\label{c:fotd:s:rosenbrook}
+
+Roosenbrooks function as an Example!
+
+\section{Woodberry}%
+\label{c:fotd:s:woodberry}
+
+Woodberry Destillation Column as Example!
+
+\section{Identified System at WP 1}%
+\label{c:fotd:s:wp1}
+
+Working point 1
+
+\section{Identified System at WP 2}%
+\label{c:fotd:s:wp1}
+
+Working point 2
+
+\section{Performance Review} % (fold)
+\label{c:fotd:s:performance_review}
+
+\begin{figure}[H]
+\begin{minipage}[b]{\textwidth}
+\centering
+\includegraphics[width=0.9\textwidth]{./Graphics/Step_MATLAB.png}
+\caption{Step of the MIMO}
+\label{c:fotd:f:mimo_step}
+\end{minipage}
+\end{figure}
+

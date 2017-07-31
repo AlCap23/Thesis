@@ -1,0 +1,294 @@
+\chapter{Multivariable Controller Design}%
+\label{c:controller}
+
+The controller design can be divided into the SISO design process for a single controller and the MIMO design process for the interconnected system. Both tasks are equally important and are studied extensively throughout literature, see e.g. \cite{Astrom2000a}.\\
+
+\section{AMIGO Tuning Rules} % (fold)
+\label{c:controller:s:AMIGO}
+
+Explain MIGO and AMIGO.\\
+Explain Tuning
+
+\section{Relative Gain Array} % (fold)
+\label{c:control:s:rga}
+
+Bristols RGA
+
+\section{Decoupling of Multivariable Processes} % (fold)
+\label{c:controller:s:decoupling}
+
+\subsection*{Decoupling Control proposed by Astrom et.al.}
+A method for the design of decoupling controllers is proposed in \cite{Astrom2001a} and \cite{Astrom2006AdvancedControl}. It designs a controller which limits the interaction near the steady state of the plant. To achieve this behaviour a decoupler $\ma{D} \in  \mathbb{R}^{n_y \times n_y}$ is introduced. A static decoupling is proposed such that $\ma{D} = \ma{G}^{-1}|_{s=0}$ that transforms the system with the mapping $\ma{G} \ma{D} = \ma{G}^* \in \mathbb{R}^{n_y \times n_y}$. The resulting closed loop is then given by: 
+
+\begin{align}
+\begin{split}
+\ma{H} &= \left[ \ma{I}  - \ma{G} \ma{D} \ma{K}_y^* \right]^{-1} \ma{G} \ma{D} \ma{K}_r^* \\
+	 &= \left[ \ma{I}  - \ma{G}^* \ma{K}_y^* \right]^{-1} \ma{G}^* \ma{K}_r^* \\
+     &= \left[ \ma{I}  - \ma{G} \ma{K}_y \right]^{-1} \ma{G} \ma{K}_r \\
+\end{split}
+\label{c:control:e:closedloopastrom}
+\end{align}
+\nomenclature{$\ma{H}$}{Closed Loop Transfer Function}
+
+Eq. \ref{c:control:e:closedloopastrom} gives various important transformations between the controller and system of the original identified system and the new transformed system. \\ 
+
+A Taylor series around the steady state of the  transformed system is given by:
+
+\begin{align}
+\begin{split}
+\ma{G}^* &= \sum_{i=0}^\infty \frac{d^i}{ds^i} \ma{G}^* |_{s=0} \frac{s}{i!} \\
+&= \ma{I} + s \ma{\Gamma}^* + \ma{\mathcal{O}}\left(s^2\right) \\
+&\approx \ma{I} +  \ma{\Gamma}^* s \\
+&\approx \ma{I} + \left( \ma{\Gamma}^*_D + \ma{\Gamma}^*_A \right) s
+\end{split}
+\label{c:control:e:taylor}
+\end{align}
+
+In Eq.\ref{c:control:e:taylor} the coupling for small frequencies can be described via the coupling matrix $\ma{\Gamma}^* = \left( \gamma_{ij}^* \right)\in \mathbb{R}^{n_y \times n_y}$. The matrix consists both of diagonal and anti diagonal entries $\ma{\Gamma}^* = \ma{\Gamma}^*_D + \ma{\Gamma}^*_A$ which describe the small signal behaviour in an adequate way. \newline
+
+Substitute Eq.\ref{c:control:e:taylor} in the numertator of Eq. \ref{c:control:e:closedloopastrom} holds:
+
+\begin{align}
+\begin{split}
+\ma{H} &\approx \left[ \ma{I}  - \ma{G}^* \ma{K}_y^* \right]^{-1} \left[ \ma{I} +  \ma{\Gamma}^* s \right] \ma{K}_r^* \\
+  &\approx \left[ \ma{I}  - \ma{G}^* \ma{K}_y^* \right]^{-1} \left[ \ma{I} + \left( \ma{\Gamma}^*_D + \ma{\Gamma}^*_A \right) s\right] \ma{K}_r^* \\
+\end{split}
+\end{align}
+
+The anti diagonal entries are given by
+
+\begin{align}
+\begin{split}
+\ma{H}_A &\approx \left[ \ma{I}  - \ma{G}^* \ma{K}_y^* \right]^{-1} \left[\ma{\Gamma}_A^* s \right] \ma{K}_r^*
+\end{split}
+\end{align}
+
+Which is simplified according to Aström Paper to:
+
+\begin{align}
+\begin{split}
+|h_{ij}| &= \left|\left(\prod_{k = 1}^{i} S_{k}^*\right)\gamma_{ij}^*s ~k^*_{r,jj} \right| \\
+\end{split}
+\label{c:control:e:interaction}
+\end{align}
+
+Where $k^*_{r,jj}$ is the j-th entry of the diagonal controller used for the reference signal $\ma{K}_r^*$. Eq. \ref{c:control:e:interaction} can be used to describe a decoupling of the controller by using an upper limit $h_{ij,max}^* \geq |h_{ij}^*| \in \mathbb{R}^+$ which describes the maximal allowed or desired interaction between the j-th input and the i-th output. For the special case where $k^*_{r,jj}$ is a pure integrator $k_{r,jj}^* = \frac{k_{I,jj}^*}{s}$ Eq. \ref{c:control:e:interaction} becomes:
+
+\begin{align}
+\begin{split}
+\left| h_{ij} \right| &= \left|\left(\prod_k S_k^*\right) \gamma^*_{ij}~ k^*_{I,jj} \right| \\
+& \leq \left|\left(\prod_k M_{S,k}^*\right) \gamma^*_{ij}~ k^*_{I,jj} \right| \\
+& \leq \left|h_{ij,max}\right|
+\end{split}
+\label{c:control:e:setpointinteraction}
+\end{align}
+
+The relation given by Eq. \ref{c:control:e:setpointinteraction} gives a condition for detuning a purely integral controller. Since not every controller is given in this form, the structure is extended to PI control by:
+
+\begin{align}
+\begin{split}
+\left|h_{ij}\right| &\leq \left| \left(\prod_k M_{S,k} \right) \gamma_{ij}^* s \left(k_{P,jj}^* + k_{I,jj}^* \frac{1}{s} \right) \right| \\
+&\leq \left| \left(\prod_k M_{S,k} \right) \gamma_{ij}^*\right| \left|\left(k_{P,jj}^* s+ k_{I,jj}^* \right) \right| \\
+&\leq \left| \left(\prod_k M_{S,k} \right) \gamma_{ij}^*\right| \left|\left(k_{P,jj}^* j\omega+ k_{I,jj}^* \right) \right| \\
+&\leq \left| \left(\prod_k M_{S,k} \right) \gamma_{ij}^*\right| \sqrt{\left(k_{P,jj}^*\omega\right)^2+ \left(k_{I,jj}^*\right)^2} \\
+\end{split}
+\label{c:control:e:TransformedPIDetuning}
+\end{align}
+
+In Eq.\ref{c:control:e:TransformedPIDetuning} the influence of the proportional controller is increasing with the frequency. To detune the controller sufficiently, an adequate frequency must be chosen. For a small signal interpretation $\omega \ll 1$ a detuning for just the integral gain is acceptable.\\
+
+In \cite[p.172 f.]{Skogestad2005MultivariableDesign} the crossover frequency of a transfer function is limited by an upper bound
+
+\begin{align}
+\omega_C &\leq \frac{1}{L}
+\end{align}
+
+Hence, an appropriate conservative boundary can be established with the minimum time delay of the system $L_{Min} | L\geq L_{Min} \forall L \in \Sigma $ to be:
+
+\begin{align}
+\begin{split}
+\left| h_{ij} \right| &\leq \left| \left(\prod_k M_{S,k} \right) \gamma_{ij}^*\right| \sqrt{\left(\frac{k_{P,jj}^*}{L_{Min}}\right)^2+ \left(k_{I,jj}^*\right)^2}
+\end{split}
+\label{c:control:e:conservativePITuning}
+\end{align}
+
+Both Eq. \ref{c:control:e:setpointinteraction} and \ref{c:control:e:conservativePITuning} can be rewritten with a matrix $\ma{H}_{Max} = \left(h_{ij,Max}\right) \in \mathbb{R}^{n \times n}$ and the matrix of the maximum sensitivities of the diagonal transfer functions $\ma{M}_S^* = \left(M_{S,i}^*\right) \in \mathbb{R}^{n \times n}$. Using the definition of the maximum sensitivity matrix as diagonal, one can rewrite $\prod_k M_{S,k}^* = \det(\ma{M}_S) $. Once again dividing into a diagonal and anti diagonal matrix holds:
+
+\begin{align}
+\begin{split}
+\ma{H}_{A,max} &\geq \det(\ma{M}_S^*) \ma{\Gamma}_A^* \ma{K}_r^* 
+\end{split}
+\label{c:control:e:Hmax*}
+\end{align}
+
+
+
+The method proposed above gives many advantages over a controller design based on RGA while holding the number of controllers minimal. The enhancement of performance comes through the interconnection of the controller outputs via the decoupler, which can be viewed as a simple form of model based control. Whilst giving major performance improvements, the presented method has a significant disadvantages.\\ 
+
+Depending on the model chosen for identification and the values of the coefficients, the resulting transfer function will in general be of other form than the initial identified model. Hence, algorithms depending on these models to design controllers can not be used naturally, but have to use a simplified or approximated model. This process results in a higher model error and thus in poor performance and robustness of the derived controller.
+
+\subsection*{Modified Controller Design Based on Astrom et.al.}
+
+Because of these major penalties, a modified decoupling scheme is proposed. Essentially another interpretation of the equations given above leds to a more physical meaningful design process. At first, diagonal and anti-diagonal entries of a matrix multiplication are reviewed:
+
+\begin{align}
+\begin{split}
+\ma{G}^{A} \ma{G}^{B} &= 
+\begin{bmatrix}
+\ma{G}_{11}^{A} & \ma{G}_{12}^{A} \\
+\ma{G}_{21}^{A} & \ma{G}_{22}^{A} 
+\end{bmatrix}
+\begin{bmatrix}
+\ma{G}_{11}^{B} & \ma{G}_{12}^{B} \\
+\ma{G}_{21}^{B} & \ma{G}_{22}^{B} 
+\end{bmatrix}\\
+&= \begin{bmatrix}
+\ma{G}_{11}^{A}\ma{G}_{11}^{B} + \ma{G}_{12}^{A}\ma{G}_{21}^{B} & \ma{G}_{11}^{A}\ma{G}_{12}^{B} + \ma{G}_{12}^{A}\ma{G}_{22}^{B} \\
+\ma{G}_{21}^{A}\ma{G}_{11}^{B} + \ma{G}_{22}^{A}\ma{G}_{21}^{B} &
+\ma{G}_{21}^{A}\ma{G}_{12}^{B} + \ma{G}_{22}^{A}\ma{G}_{22}^{B}
+\end{bmatrix}
+\end{split}
+\label{c:control:e:matrixmult}
+\end{align}
+
+Eq. \ref{c:control:e:matrixmult} states that the diagonal entries relate to either pure diagonal or pure anti-diagonal entries of the factors. Anti-diagonal entries are always the mixed product of diagonal and anti-diagonal terms.\\
+
+Starting with Eq. \ref{c:control:e:closedloopastrom} diagonal and antidiagonal entries of the numerator can be identified:
+
+\begin{align}
+\begin{split}
+\ma{D}\ma{K}^* &= \ma{K} \\
+\left(\ma{D}_D + \ma{D}_A \right) \ma{K}^* &= \left(\ma{K}_D + \ma{K}_A \right)\\
+\left(\ma{D}_D + \ma{D}_A \right) \ma{D}^{-1} \ma{K} &= \left(\ma{K}_D + \ma{K}_A \right)
+\end{split}
+\label{c:control:e:eqscontroller}
+\end{align}
+
+Eq. \ref{c:control:e:eqscontroller} relates the diagonal controller $\ma{K}_D \in \mathbb{C}^{n \times n}$ designed via the diagonal transfer functions $g_{ii}$  to the decoupling controller proposed by Astr\"om et.al.. Since $\ma{K}^{*}$ is diagonal a direct relationship between the antidiagonal elements of the controller can be established:
+
+\begin{align*}
+\begin{split}
+\ma{K}_A &= \ma{D}_A \ma{K}^* \\
+&= \ma{D}_A D^{-1} \left( \ma{K}_D + \ma{K}_A \right) \\
+\end{split}
+\end{align*}
+
+Which is able to relate the diagonal and antidiagonal controller to each other:
+
+\begin{align}
+\begin{split}
+\ma{K}_A &= \left[ \ma{I} - \ma{D}_A \ma{D}^{-1} \right]^{-1} \ma{D}_A \ma{D}^{-1} \ma{K}_D \\
+&= \left[\ma{D} \ma{D}_D^{-1} - \ma{I} \right] \ma{K}_D \\
+&= \ma{D}_A \ma{D}_D^{-1} \ma{K}_D \\
+&= \ma{\Sigma} \ma{K}_D
+\end{split}
+\label{c:control:e:splitter}
+\end{align}
+
+Eq. \ref{c:control:e:splitter} defines the splitter $\ma{\Sigma} \in \mathbb{R}^{n \times n}$ which can substitute the antidiagonal controller in Eq.\ref{c:control:e:eqscontroller}:
+
+\begin{align}
+\begin{split}
+\ma{D} \ma{K}^* &= \left[ \ma{I} + \ma{\Sigma} \right] \ma{K}_D
+\end{split}
+\label{c:control:e:controleqs}
+\end{align}
+
+An interesting property of the splitter is the intuitive relation between the main diagonal entries of the system and the anti diagonal entries. Since we can invert a block sufficient conditioned block matrix via:
+
+\begin{align}
+\begin{split}
+\begin{bmatrix}
+\ma{G}_{11} & \ma{G}_{12} \\
+\ma{G}_{21} & \ma{G}_{22} 
+\end{bmatrix}^{-1} &= \begin{bmatrix}
+\left[\ma{G}_{11} - \ma{G}_{12}\ma{G}_{22}^{-1}\ma{G}_{22}\right]^{-1} & -\ma{G}_{11}^{-1}\ma{G}_{12}\left[\ma{G}_{22} - \ma{G}_{21}\ma{G}_{11}^{-1}\ma{G}_{12}\right]^{-1}  \\
+-\ma{G}_{22}^{-1}\ma{G}_{21}\left[\ma{G}_{11} - \ma{G}_{12}\ma{G}_{22}^{-1}\ma{G}_{21}\right]^{-1}  & \left[\ma{G}_{22} - \ma{G}_{12}\ma{G}_{11}^{-1}\ma{G}_{12}\right]^{-1} 
+\end{bmatrix} \\
+\end{split}
+\end{align}
+
+The splitter given by $\ma{D}_A\ma{D}_D^{-1}$ becomes in the notation above
+\begin{align}
+\begin{split}
+\ma{\Sigma} &= \begin{bmatrix}
+0 & -\ma{G}_{11}^{-1}\ma{G}_{12}\\
+-\ma{G}_{22}^{-1}\ma{G}_{21}  & 0
+\end{bmatrix}
+\end{split}
+\end{align}
+
+It is clearly visible that the splitter weights the minor with the main diagonals. It can be connected both to feedforward control and disturbance rejection by dividing the system as shown in FIGURE.\\
+
+Investigating the relationship between the diagonal Sensitivity of the transformed System and the ideal Sensitivities of the Diagonal system holds:
+
+\begin{align}
+\begin{split}
+S^* &= \left[\ma{I}+\ma{G} \left[ \ma{I} + \ma{\Sigma} \right] \ma{K}_D \right]_D^{-1} \\
+&= \left[\ma{I}+\ma{G}_D \ma{K}_D + \ma{G}_A \ma{\Sigma} \ma{K}_D  \right]^{-1} \\
+&= \left[ \ma{S}^{-1} + \ma{\Delta}_{S}\right]^{-1}
+\end{split}
+\label{c:control:e:sensitivityerror}
+\end{align}
+
+Eq. \ref{c:control:e:sensitivityerror} states that the transformed sensitivity is not equal to the sensitivity of the main diagonal system. Instead an error $\ma{\Delta}_{S} \in \mathbb{C}^{n \times n}$ relating to the influence of the anti diagonal entries via feedback is formed. From Eq. \ref{c:control:e:sensitivityerror} follows directly
+
+\begin{align}
+\begin{split}
+\ma{S} &= \left[ \ma{S}^{-*}- \ma{\Delta}_{S}\right]^{-1} \\
+&= \left[ \ma{S}^{-*}\left[ \ma{I} - \ma{S}^{-*}\ma{\Delta}_S\right] \right]^{-1} \\
+&= \left[ \ma{I} - \ma{S}^{-*}\ma{\Delta}_S\right]^{-1} \ma{S}^{*}
+\end{split}
+\label{c:control:e:sensitivitysolve}
+\end{align}
+
+Eq. \ref{c:control:e:sensitivitysolve} states equivalently
+
+\begin{align}
+\begin{split}
+\ma{M}_S &\geq \ma{S} \\
+&\geq \left[ \ma{I} - \ma{S}^{-*}\ma{\Delta}_S\right]^{-1} \ma{S}^{*}
+\end{split}
+\label{c:control:e:sensitivitytransform}
+\end{align}
+
+Eq. \ref{c:control:e:sensitivitytransform} describes the transformation between the Maximum Sensitivities. 
+Using the Triangle inequality holds:
+
+\begin{align}
+\begin{split}
+\left[\left| \ma{I} - \ma{S}^{-*} \ma{\Delta}_S  \right| \right]^{-1} &\geq \left[\ma{I} + \left|\ma{S}^{-*} \right| \left| \ma{\Delta}_S  \right| \right]^{-1} \\
+&\geq \left[\ma{I} + \ma{M}_S^{-*} \left| \ma{\Delta}_S  \right| \right]^{-1} 
+\end{split}
+\end{align}
+
+Hence, a conservative lower and upper bound can be defined:
+
+\begin{align}
+\begin{split}
+\left[\ma{I} + \ma{M}_S^{-*} \min_\omega \left|\ma{\Delta}_{S}\right| \right]^{-1} \ma{M}_S^{*}\leq \ma{M}_S \leq 
+\left[\ma{I} + \ma{M}_S^{-*} \max_\omega \left|\ma{\Delta}_{S}\right| \right]^{-1} \ma{M}_S^{*}
+\end{split}
+\label{c:control:e:sensitivitytransformBounds}
+\end{align}
+
+The lower boundary represents a conservative transformation. The most conservative transform is given by $\ma{\Delta}_S = \ma{0}$. This resembles the fact that the magnitude of superpositioned transfer functions is less or equal to the sum of its magnitudes. Hence, the most conservative approximation is given by assuming the system is equal to its transformed system. \\
+
+To detune the controller the anti diagonal parts of the transfer function are used. Explicitly the term is given by
+
+\begin{align}
+\begin{split}
+\ma{\Gamma}_A &= \left[\frac{d}{ds}\left[ \ma{G} \left[ \ma{I} + \ma{\Sigma} \right] \right]|_{s=0}\right]_A\\
+&= \frac{d}{ds}\left[ \ma{G}_A + \ma{G}_D \ma{\Sigma} \right]|_{s=0}
+\end{split}
+\end{align}
+
+With the maximum allowed interaction and sensitivities the detuning formula is given by:
+
+\begin{align}
+\begin{split}
+\ma{H}_{A,Max} &\geq \ma{M}_S \ma{\Gamma}_A \ma{K}_r \\ 
+&\geq \det(\ma{M}_S) \ma{\Gamma}_A \ma{K}_r 
+\end{split}
+\end{align}
+

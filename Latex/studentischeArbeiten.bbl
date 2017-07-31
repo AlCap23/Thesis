@@ -16,19 +16,19 @@
 \newblock  \url{http://dx.doi.org/10.1007/978-3-642-45013-6}. --
 \newblock ISBN 978--3--642--45012--9
 
-\bibitem[2]{Astrom2000a}
-\textsc{{\AA}str{\"{o}}m}, K. :
-\newblock {Limitations on Control System Performance}.
-\newblock {In: }\emph{European Journal of Control} 6 (2000), 1, Nr. 1, 2--20.
-\newblock  \url{http://dx.doi.org/10.1016/S0947-3580(00)70906-X}. --
-\newblock DOI 10.1016/S0947--3580(00)70906--X. --
-\newblock ISSN 09473580
+\bibitem[2]{Astrom2009}
+\textsc{Astr{\"{o}}m}, K.~J. ; \textsc{Murray}, R.~M.:
+\newblock {Feedback Systems An Introduction for Scientists and Engineers}.
+\newblock   (2009).
+\newblock \url{http://press.princeton.edu/titles/8701.html.}
 
-\bibitem[3]{Astrom2001a}
-\textsc{Astrom}, K.  ; \textsc{Johansson}, K. :
-\newblock {Design of decoupled PID controllers for MIMO systems}.
-\newblock {In: }\emph{Control Conference, 2001 {\ldots}}  (2001).
-\newblock \url{http://ieeexplore.ieee.org/abstract/document/946038/}
+\bibitem[3]{Astrom1973}
+\textsc{{\AA}str{\"{o}}m}, K.  ; \textsc{Wittenmark}, B. :
+\newblock {On self tuning regulators}.
+\newblock {In: }\emph{Automatica} 9 (1973), 3, Nr. 2, 185--199.
+\newblock  \url{http://dx.doi.org/10.1016/0005-1098(73)90073-3}. --
+\newblock DOI 10.1016/0005--1098(73)90073--3. --
+\newblock ISSN 00051098
 
 \bibitem[4]{DoyleFeedbackTheory}
 \textsc{Doyle}, J.  ; \textsc{Francis}, B.   ; \textsc{Tannenbaum}, A. :
@@ -51,20 +51,22 @@
 \newblock  \url{http://dx.doi.org/10.1007/978-3-662-52678-1}. --
 \newblock ISBN 978--3--662--52677--4
 
-\bibitem[7]{Skogestad2005MultivariableDesign}
-\textsc{Skogestad}, S.  ; \textsc{Postlethwaite}, I. :
-\newblock \emph{{Multivariable feedback control : analysis and design}}.
-\newblock John Wiley, 2005. --
-\newblock  574 S. --
-\newblock ISBN 047001167X
-
-\bibitem[8]{Struchtrup2014ThermodynamicsConversion}
+\bibitem[7]{Struchtrup2014}
 \textsc{Struchtrup}, H. :
 \newblock \emph{{Thermodynamics and Energy Conversion}}.
 \newblock Springer Berlin Heidelberg.
 \newblock  \url{http://dx.doi.org/10.1007/978-3-662-43715-5}.
 \newblock  \url{http://dx.doi.org/10.1007/978-3-662-43715-5}. --
 \newblock ISBN 978--3--662--43714--8
+
+\bibitem[8]{Weigand2013}
+\textsc{Weigand}, B.  ; \textsc{K{\"{o}}hler}, J.   ; \textsc{Wolfersdorf}, J.
+  von:
+\newblock \emph{{Thermodynamik kompakt}}.
+\newblock Springer Berlin Heidelberg (Springer-Lehrbuch).
+\newblock  \url{http://dx.doi.org/10.1007/978-3-642-37233-9}.
+\newblock  \url{http://dx.doi.org/10.1007/978-3-642-37233-9}. --
+\newblock ISBN 978--3--642--37232--2
 
 \bibitem[9]{2013Springer-HandbuchIII}
 \textsc{Zeidler}, E.  (Hrsg.):
@@ -74,7 +76,15 @@
 \newblock  \url{http://dx.doi.org/10.1007/978-3-658-00275-6}. --
 \newblock ISBN 978--3--658--00274--9
 
-\bibitem[10]{Zhou1996RobustControl}
+\bibitem[10]{Zhou1998}
+\textsc{Zhou}, K.  ; \textsc{Doyle}, J.~C.:
+\newblock \emph{{Essentials of robust control}}.
+\newblock Prentice Hall. --
+\newblock  411 S.
+\newblock \url{https://www.ece.lsu.edu/kemin/essentials.htm}. --
+\newblock ISBN 0135258332
+
+\bibitem[11]{Zhou1996}
 \textsc{Zhou}, K.  ; \textsc{Doyle}, J.~C.  ; \textsc{Glover}, K.~K.:
 \newblock \emph{{Robust and optimal control}}.
 \newblock Prentice-Hall
