@@ -11,9 +11,9 @@ clc
 % Filename for saving
 %filename = 'Data_80kW_T273.mat';
 % Operating point
-Current = 9;
+Current = 5;
 % Constrains
-Constrains = [5,10,sqrt(2),sqrt(2)];
+Constrains = [0.1,0.1,sqrt(2),sqrt(2)];
 
 % Add path for functions -> Windows only
 %addpath('C:\Users\juliu\Documents\GIT\New folder\Matlab');
@@ -72,7 +72,7 @@ CL1.OutputName = {'Temperature';'Pressure'};
 S1 = inv(eye(2)-G*CY);
 OL1 = -G*CY;
 %% Decouple via Astr�m
-C2 = Decoupling_A(G,Constrains,'AMIGO',0);
+C2 = Decoupling_A2(G,Constrains,'AMIGO',0);
 % Preprocess PID2 Object -> Set Point Weight
 C = tf(C2); % Convert to TF
 CA = C(1); % Set Point Controller
