@@ -1,4 +1,21 @@
+%!TEX root = ../studentischeArbeiten.tex
 \chapter{Process Models and System Identification}\label{c:identification}
+
+The following chapter serves as an introduction to the modelling of energy and process plants with analogous models. Its secondary aim is to provide a short introduction to the field of system identification in general while giving an in-depth view of two simple but nonetheless very usefull methods.\\
+
+In Sec. \ref{c:identification:s:fotd} the first order time delay model is introduced. The parameters and key properties are introduced. Furthermore an interpretation of the model error with respect to the dynamic behaviour of the system is given. \\
+
+Afterwards the first parameter estimation method is presented in Sec. \ref{c:identification:s:area}. The basic concept is explained and visualized. An algortihm in pseudo-code is provided to clarify the approach. \\
+
+The second model based fitting process is explained in Sec. \ref{c:identification:s:relay}. Like earlier, important relations between the measured data are given to provide the necessary steps of estimating the parameters. \\
+
+A critical review of both algorithms finishes the chapter in Sec.\ref{c:identification:s:review}. Drawbacks of both methodology are enlisted. It closes with recommending a procedure.\\
+
+Since this chapter deals with system identification, a brief introduction to the subject is given in advance. To design a controller for a given process either a theoretical model based on physical laws or first principles, e.g. energy conservation, Newton's laws or the laws of thermodynamics, or a analogous model based on the measured relation between input and output is required. Since not all processes are well-fitted to be physically modeled, the field of system identification provides a vast toolbox for deriving the needed mathematical description. A good, practical approach towards the principles is given in \cite{Keesman2011}, while \cite{Isermann1992} and \cite{Isermann1992a} covers most of the techniques used today.An overview from a more philosophical and methodological perspective is \cite{Ljung2010}.\\
+
+An important aspect of current techniques is the statistical evaluation of the signals measured. Many simplifications to these data processing procedures requiere the input to be statistical independent from itself and the output. While in theory possible, in reality a signal called pseudo random binary sequence (PRBS) is used.\\
+
+The most important and common used algorithm is called Least squares (LS), e.g. \cite[p.62 ff.]{Keesman2011}. Here the estimation process is viewed as a regression problem. LS is a parameter based estimation approach, and able to estimate models up to nearly infinite order. Several enhancements have been provided so that the algorithm is both fast and effective while being able to handle even nonlinear models. Despite its many advantages, the need for a high order model is neither desireable nor effective. Dealing with PI/PID control requieres a robust set of very little parameter.\\
 
 \section{First Order Time Delay Model}%
 \label{c:identification:s:fotd}
@@ -14,7 +31,7 @@ The model structure used in the scope of the work is a given by the transfer fun
 \label{c:identification:e:fotd_tf}
 \end{align}
 
-Eq. \ref{c:identification:e:fotd_tf} describes the function $\hat{G}: \mathbb{C} \mapsto \mathbb{C}$ in the s-plane and is called a first order time delay (FOTD) or first order plus deadtime (FOPDT) model, \cite[p.16]{Astrom1995}, \cite[p.20]{Astrom2006}, \cite{Fedele2009a}, 
+Eq. \ref{c:identification:e:fotd_tf} describes the function $\hat{G}: \mathbb{C} \mapsto \mathbb{C}$ in the s-plane and is called a first order time delay (FOTD) or first order plus deadtime (FOPDT) model, \cite[p.16]{Astrom1995}, \cite[p.20, p.26]{Astrom2006}, \cite{Fedele2009a}, \cite{Bi1999}.
 The model gain $\hat{K} \in \mathbb{R}$ is the steady state gain of the system, a model time constant $\hat{T} \in \mathbb{R}^+$ and a model time delay $\hat{L} \in \mathbb{R}^+$ describe the dynamic gain and phase. Its represenation as a differential equation is given to be
 
 \begin{align}
@@ -47,7 +64,7 @@ The Heavyside step function $\sigma(t): \mathbb{R} \mapsto \mathbb{R}$ is define
 
 and hence models the delay acting on the connection between the output and the input. It is worth noting that in the special case of a SISO system a delay acting on the systems input or output is mathematical equivalent. However, for a given MIMO system model it can be of importantance to define where the delay intervenes. \\
 
-An important characteristic with respect to the time behaviour of the process is given by the normalized time $\tau, \left[0 \geq \tau \geq 1 \right] $ \cite[p.16]{}AstromPID
+An important characteristic with respect to the time behaviour of the process is given by the normalized time $\tau, \left[0 \geq \tau \geq 1 \right] $ \cite[p.16]{Astrom1995}
 
 \begin{align}
 \begin{split}
@@ -56,7 +73,7 @@ An important characteristic with respect to the time behaviour of the process is
 \label{c:identification:e:normalizedtime}
 \end{align}
 
-Eq. \ref{c:identification:e:normalizedtime} gives the ratio of the delay and the delay and the time constant, called average residence time. It can be used as a rating regarding the difficulty of controlling the process, since a high normalized time indicate a delay dominance and hence a very difficult process to control.\\
+Eq. \ref{c:identification:e:normalizedtime} gives the ratio of the delay and the delay and the time constant, called average residence time. It can be used as a rating regarding the difficulty of controlling the process, since a high normalized time indicate a delay dominance and hence a very difficult process to control. It can also be connected to the gain ratio \cite[p.27]{Astrom2006}.\\
 
 Since the process model is of upmost interest for the overall process, a detailed investigation of its properties is conducted. This detailed description is started by investigating the model gain over the frequency. It is conventional to substitute the complex varibales with the complex frequency $s~=~j~\omega$. The gain of the process modell is hence given by:
 
@@ -95,7 +112,7 @@ G &=  \frac{\sum_{i=0}^n a_i s^i}{\sum_{k=0}^m b_k s^k} \\
 \label{c:identification:e:general_tf}
 \end{align}
 
-Eq.\ref{c:identification:e:general_tf} shows the identities of a transfer function given as a polynomial in $s$ and its equivalent representation as a product of linear factor, see LUNZE1,p.269 ff. . The linear factorization consists of its zeros $z_i \in \mathbb{C}$ and poles $p_k \in \mathbb{C}$. Both identities will be usefull due to the different propoerties of the gain and phase. Additionally it is assumed that the first order dynamics have been idealy identified. Hence, the error depends only on dynamics of higher order.\\
+Eq.\ref{c:identification:e:general_tf} shows the identities of a transfer function given as a polynomial in $s$ and its equivalent representation as a product of linear factor, see \cite[p.269 ff.]{Lunze2016}. The linear factorization consists of its zeros $z_i \in \mathbb{C}$ and poles $p_k \in \mathbb{C}$. Both identities will be usefull due to the different propoerties of the gain and phase. Additionally it is assumed that the first order dynamics have been idealy identified. Hence, the error depends only on dynamics of higher order.\\
 
 Further investigation requiere the relative difference of the FOTD model with respect to the
 
@@ -131,7 +148,7 @@ Of course the chance to identify the first order dynamics right are effectively 
 \section{Integral Fitting Approach}
 \label{c:identification:s:area}
 
-The first algorithm to estimate the parameter of the model is based on inherent knowledge of the time behaviour of the model. These properties described in the section can be found in LUNZE, FEDELE, u.a. and are part of mostly any undergraduate course in control theory. The experiment providing the needed data is a step repsonse around the working point. The algorithm depends on the collected data of the input, the output and the time. It processes the data by evaluating several numerical integrals and connects the outcomes to the process parameters.\\
+The first algorithm to estimate the parameter of the model is based on inherent knowledge of the time behaviour of the model. These properties described in the section can be found in e.g. in \cite{Bi1999}, \cite{Fedele2009a} and are part of mostly any undergraduate course in control theory. The experiment providing the needed data is a step repsonse around the working point. The algorithm depends on the collected data of the input, the output and the time. It processes the data by evaluating several numerical integrals and connects the outcomes to the process parameters.\\
 
 At first, the difference between the settling value of the ouput, $y(\infty)$, and the current value, $y(t)$, is computed over time
 
@@ -148,7 +165,7 @@ At first, the difference between the settling value of the ouput, $y(\infty)$, a
 
 In Eq.\ref{c:identification:e:area_tar} the average residence time $\hat{T}_{ar} \in \mathbb{R}^+$ is calculated from the integral. To simplify the equation above the linearity of the integral has been employed. Additionally the properties of the Heavyside function enabled a change in the lower boundary, hence the simplification.\\
 
-Further exploitation of Eq. \ref{c:identification:e:fodt_dt} leads to 
+Further exploitation of Eq. \ref{c:identification:e:fodt_dt} leads to the following integral
 
 \begin{align}
 \begin{split}
@@ -160,7 +177,7 @@ Further exploitation of Eq. \ref{c:identification:e:fodt_dt} leads to
 \label{c:identification:e:area_t}
 \end{align}
 
-At last, the gain $\hat{K}$ has to be computed. With the common definition, e.g. given in LUNZE1, the parameter can be computed using
+At last, the gain $\hat{K}$ has to be computed. With the common definition, e.g. given in \cite[p.213]{Lunze2016}, the parameter can be computed using
 
 \begin{align}
 \begin{split}
@@ -170,7 +187,7 @@ At last, the gain $\hat{K}$ has to be computed. With the common definition, e.g.
 \end{align}
 
 This interpretation is rooting in the final value theorem. Using Eq. \ref{c:identification:e:area_gain} in combination with the other two relation one is able to compute all needed parameters.\newline
-The system of equations as described above are called area-based methods, FEDELE, with regards to its visualization displayed in Fig. . Another, likewise valid understanding is given as the minimization of the integral of the error between the real system and the model over time.\\
+The system of equations as described above are called area-based methods, \cite{Fedele2009a}, with regards to its visualization displayed in Fig. . Another, likewise valid understanding is given as the minimization of the integral of the error between the real system and the model over time.\\
 
 \begin{figure}
   \centering
@@ -195,7 +212,7 @@ Eq. \ref{c:identification:e:area_sup_gain} defines the gain as the ratio between
 \section{Asymmetric Relay Experiment}
 \label{c:identification:s:relay}
 
-Another class of experimental methods based on a priori model structure is called relay experiments. These methods have been introduced in the early 1980's, ASTROEMHAGGALUND1983, and have since then been investigated, developed and used in an industrial context, see REFEREZEN. The following section is mainly based on the recent works BERNER I, II und III.\\
+Another class of experimental methods based on a priori model structure is called relay experiments. These methods have been introduced in the early 1980's, ASTR_HAGG1984, and have since then been investigated, developed and used in an industrial context, see . The following section is mainly based on the recent works \cite{Berner2016a}, \cite{Berner2015} and \cite{Berner2014a}.\\
 
 The key concept to estimate the needed parameters is based on the systems response to an (asymmetric) relay input, forcing a semi-stationary limit cylce. This behaviour is illustrated in FIG. .\\
 
@@ -223,7 +240,7 @@ In Eq. \ref{c:identification:e:relay_output} the output switches between an uppe
 
 From FIG a difference the period $t_P = t_{on} + t_{off}\in \mathbb{R}^+$ consiting of the sum of the half-periods $t_{on} \in \mathbb{R}^+ | u = u_H$ and $t_{off} \in \mathbb{R}^+ | u = u_L$.\\
 
-To estimate the parameter set of a FOTD model, the normalized time delay is approximated according to BERNER2015:
+To estimate the parameter set of a FOTD model, the normalized time delay is approximated according to \cite[p.26 f.]{Berner2015}:
 
 \begin{align}
 \begin{split}
@@ -263,3 +280,9 @@ Eq. \ref{c:identification:e:relay_time} can be exploited by using the Eq. \ref{c
 \label{c:identification:s:review}
 
 Above two important and well known fitting techniques based on structural knowledge and hence mathematical formulations of the model have been introduced. Even though both methods are used throughout industry, there are certain drawbacks to each method which should be considered.\\
+
+While the asymmetric relay process introduced in Sec. \ref{c:identification:s:relay} is especially useful in determining the model parameter with a quasi stationary limit cylce it requieres several in depth adjustments and process knowledge. Adjusting the asymmetry and the hysteresis in a proper way has an noteable impact on the result \cite{Berner2016a}. The noise level, process gain and sampling times influences the algorithm. Hence, prior experiments have to be made. Additionally, not every process is suited to be estimated in the described way \cite{Berner2016a},\cite{Berner2015}. Depending on the normalized time several changes in model structure or additional experiments must be performed. Depending on the process time scale and the requierement of a quasi stationary cylce the experiment can require several hours.\\
+
+Apperently, the parameter estimation based on area methods as given in Sec.\ref{c:identification:s:area} has the disadvantage of both requiering a steady process output. Hence, the parameter can not fully be estimated. Another drawback is given by the assumption of a dominant static gain. The error in gain and phase get higher by using Eq.\ref{c:identification:e:area_sup_gain}.\\
+
+However, both methods are - up to a certain degree - independent from measurement noise and well established. Due to the simplicity and robustness of the area based identification it is commendable to use this algorithm. 
