@@ -1,59 +1,265 @@
 \chapter{Process Models and System Identification}\label{c:identification}
 
-The following chapter
-
-OUTLINE AND SHORT INTRODUCTION. - System Identification why and why not? Uses and common methods.
-
-Information and so on.
-
 \section{First Order Time Delay Model}%
 \label{c:identification:s:fotd}
 
-Information on FOTD / FOPDT process models -> why and why not!?
+As discussed earlier system identification enables the user to use various methods to process information to derive a suitable dynamical model.To ensure a deterministic, robust and simple controller an identification based on analogous models is choosen. The reasons for this approach are based on the variety of the process itsself as well as the algorithms used for determination of the controller parameter, see \cite{Astrom1995}, \cite{Astrom2006}.\\
 
-ORTSKURVEN,NYQUIST ETC.
+The model structure used in the scope of the work is a given by the transfer function
 
-\section{Graphical Approach} % (fold)
-\label{c:identification:s:graphical}
+\begin{align}
+\begin{split}
+\hat{G} &= \frac{\hat{K}}{\hat{T}s+1}e^{-\hat{L}s}
+\end{split}
+\label{c:identification:e:fotd_tf}
+\end{align}
 
-Fedele Approach for Model fitting and show examples!!!
+Eq. \ref{c:identification:e:fotd_tf} describes the function $\hat{G}: \mathbb{C} \mapsto \mathbb{C}$ in the s-plane and is called a first order time delay (FOTD) or first order plus deadtime (FOPDT) model, \cite[p.16]{Astrom1995}, \cite[p.20]{Astrom2006}, \cite{Fedele2009a}, 
+The model gain $\hat{K} \in \mathbb{R}$ is the steady state gain of the system, a model time constant $\hat{T} \in \mathbb{R}^+$ and a model time delay $\hat{L} \in \mathbb{R}^+$ describe the dynamic gain and phase. Its represenation as a differential equation is given to be
 
-\begin{figure}[H]
-\begin{minipage}[b]{\textwidth}
-\centering
-\includegraphics[width=0.9\textwidth]{./Graphics/AREA_IDENTIFICATION1.png}
-\caption{Graphical Reprensentation of Identification via Jump Response}
-\label{c:control:f:2area}
-\end{minipage}
+\begin{align}
+\begin{split}
+\hat{T}~\frac{dy}{dt} + y &= \hat{K} ~\sigma(t-\hat{L})~u
+\end{split}
+\label{c:identification:e:fotd_de}
+\end{align}
+
+With the general solution for a step response acting on Eq.\ref{c:identification:e:fotd_de} is 
+
+\begin{align}
+\begin{split}
+y &= \hat{K} ~\left( 1 - e^{-\frac{t- \hat{L}}{\hat{T}}}\right)~ \sigma(t-\hat{L}) ~u
+\end{split}
+\label{c:identification:e:fodt_dt}
+\end{align}
+
+The Heavyside step function $\sigma(t): \mathbb{R} \mapsto \mathbb{R}$ is defined as
+
+\begin{align}
+\begin{split}
+\sigma(t) &= \begin{cases} 
+      0 , ~t < 0 \\
+      1, ~t \geq 0
+   \end{cases}
+\end{split}
+\label{c:identificitaion:e:heavyside}
+\end{align}
+
+and hence models the delay acting on the connection between the output and the input. It is worth noting that in the special case of a SISO system a delay acting on the systems input or output is mathematical equivalent. However, for a given MIMO system model it can be of importantance to define where the delay intervenes. \\
+
+An important characteristic with respect to the time behaviour of the process is given by the normalized time $\tau, \left[0 \geq \tau \geq 1 \right] $ \cite[p.16]{}AstromPID
+
+\begin{align}
+\begin{split}
+\tau &= \frac{\hat{L}}{\hat{L}+\hat{T}}
+\end{split}
+\label{c:identification:e:normalizedtime}
+\end{align}
+
+Eq. \ref{c:identification:e:normalizedtime} gives the ratio of the delay and the delay and the time constant, called average residence time. It can be used as a rating regarding the difficulty of controlling the process, since a high normalized time indicate a delay dominance and hence a very difficult process to control.\\
+
+Since the process model is of upmost interest for the overall process, a detailed investigation of its properties is conducted. This detailed description is started by investigating the model gain over the frequency. It is conventional to substitute the complex varibales with the complex frequency $s~=~j~\omega$. The gain of the process modell is hence given by:
+
+\begin{align}
+\begin{split}
+\left| \hat{G} \right| &= \left| \frac{\hat{K}}{\hat{T}~j\omega+1} ~ e^{-\hat{L}~j\omega} \right| \\
+&= \left| \frac{\hat{K}}{\hat{T}~j\omega+1} \right| \underbrace{\left| ~ e^{-\hat{L}~j\omega} \right|}_{\left|cos(\hat{L}\omega)+j~sin(\hat{L}\omega)\right| = 1} \\
+&= \left| \frac{\hat{K}}{\hat{T}~j\omega+1} \right|
+\end{split}
+\label{c:identification:e:fotd_gain}
+\end{align}
+
+Eq.\ref{c:identification:e:fotd_gain} shows that the gain over the frequency of FOTD model is equal to a first order system with the same gain and time constant. The effect of the time delay is cancelled due to the use of Euler's identity, which can be interpreted as an orthonormal roation in the complex plane by an angle $\hat{L}\omega$ around the orign.\\
+
+The systems phase can be described as
+
+\begin{align}
+\begin{split}
+\hat{\varphi} &= \arg\left( \hat{G} \right) \\
+&= \arg\left(\frac{\hat{K}}{\hat{T}~j\omega+1} ~ e^{-\hat{L}~j\omega} \right) \\
+&= \arg\left(\frac{\hat{K}}{\hat{T}~j\omega+1}\right) + \arg\left( e^{-\hat{L}~j\omega}\right) \\
+&= \arg\left(\frac{\hat{K}}{\hat{T}~j\omega+1}\right) - \hat{L}\omega
+\end{split}
+\label{c:identification:e:fotd_phase}
+\end{align}
+
+From Eq.\ref{c:identification:e:fotd_phase} the effect of the time delay follows directly. It imposes a negative shift in phase proportional to the frequency on the system. \\
+
+Defining an error between the real, unknown system and the FOTD model requires the following identities of a general transfer function:
+
+\begin{align}
+\begin{split}
+G &=  \frac{\sum_{i=0}^n a_i s^i}{\sum_{k=0}^m b_k s^k} \\
+&= \frac{\prod_{i=0}^n \left( s^i - z_i \right)}{\prod_{k=0}^m \left( s^k-p_k\right)} 
+\end{split}
+\label{c:identification:e:general_tf}
+\end{align}
+
+Eq.\ref{c:identification:e:general_tf} shows the identities of a transfer function given as a polynomial in $s$ and its equivalent representation as a product of linear factor, see LUNZE1,p.269 ff. . The linear factorization consists of its zeros $z_i \in \mathbb{C}$ and poles $p_k \in \mathbb{C}$. Both identities will be usefull due to the different propoerties of the gain and phase. Additionally it is assumed that the first order dynamics have been idealy identified. Hence, the error depends only on dynamics of higher order.\\
+
+Further investigation requiere the relative difference of the FOTD model with respect to the
+
+The relative error in Gain $\Delta_K \in \mathbb{C}$ can therefore described as
+
+\begin{align}
+\begin{split}
+\Delta_K &= \left| \frac{\hat{G}}{G}\right| \\
+&= \underbrace{\left|\frac{\hat{K}}{\hat{T}~j\omega+1} \frac{\left(\ 1-p_0 \right)\left( s- p_1 \right)}{1-z_0} \right|}_{\approx 1} \left| \frac{\prod_{k=2}^m~(s^k-p_k)}{\prod_{i=1}^n~(s^i-z_i)} \right| \\
+&\approx \left| \frac{\prod_{k=2}^m~(s^k-p_k)}{\prod_{i=1}^n~(s^i-z_i)} \right|
+\end{split}
+\label{c:identification:e:error_gain}
+\end{align}
+
+From Eq.\ref{c:identification:e:error_gain} two important conclusions can be conducted. First, the error is small near the steady state iff the first order dynamics are estimated correctly. The steady state model is even error free, iff the true gain can be identified. Secondly, the error will increase dramaticly for higher order dynamics since the model is not able to project these frequencies in an adequat manner. Another source of error can be found in low order zeros of the system, which will result in an infinite error of the gain.\\
+
+Likewise, the relative error in phase $\Delta_\varphi \in \mathbb{C}$ is given as:
+
+\begin{align}
+\begin{split}
+\Delta_\varphi &= \arg\left(\frac{\hat{G}}{G}\right) \\
+&= \arg\left(\underbrace{\frac{\hat{K}}{\hat{T}~j\omega+1} \frac{\left(\ 1-p_0 \right)\left( s- p_1 \right)}{1-z_0}}_{\approx 1} \frac{\prod_{k=2}^m~(s^k-p_k)}{\prod_{i=1}^n~(s^i-z_i)}e^{-\hat{L}~s} \right)\\
+&= -L~\omega + \arg\left(\frac{\prod_{k=2}^m~(s^k-p_k)}{\prod_{i=1}^n~(s^i-z_i)}\right)
+\end{split}
+\label{c:identification:error_phase}
+\end{align}
+
+Eq. \ref{c:identification:error_phase} gives an important insight to the function of the time delay. It compensates for the higher order dynamics in phase, effectively reducing the error in phase.\\
+
+Of course the chance to identify the first order dynamics right are effectively zero. But since heat transfer is described as a first order equation, called Newton's Law of cooling HIER ZITIEREN, it is valid to assume the higher order dynamics to be small. Furthermore it can be assumed to be the time dominant process of the cycle. Hence the valve, which is normally modeled as a second order system can be described as a first order system as well, since it is acting in much faster timescales.\\
+
+
+\section{Integral Fitting Approach}
+\label{c:identification:s:area}
+
+The first algorithm to estimate the parameter of the model is based on inherent knowledge of the time behaviour of the model. These properties described in the section can be found in LUNZE, FEDELE, u.a. and are part of mostly any undergraduate course in control theory. The experiment providing the needed data is a step repsonse around the working point. The algorithm depends on the collected data of the input, the output and the time. It processes the data by evaluating several numerical integrals and connects the outcomes to the process parameters.\\
+
+At first, the difference between the settling value of the ouput, $y(\infty)$, and the current value, $y(t)$, is computed over time
+
+\begin{align}
+\begin{split}
+\int_0^\infty y(\infty)-y(t)~dt &= \int_0^\infty y(\infty) - \hat{K} ~\left( 1 - e^{-\frac{t- \hat{L}}{\hat{T}}}\right)~ \sigma(t-\hat{L}) ~dt \\
+&= \hat{K} {\int_0^\hat{L}} \sigma(t) ~dt + \hat{K}~{\int^\infty_0} e^{-\frac{t}{\hat{T}}} ~dt \\
+&= \hat{K}~\hat{L} + \hat{K} \left( -\hat{T} e^{-\frac{t}{\hat{T}}}\right) \Bigg\rvert^\infty_0 \\
+&= \hat{K}~\left(\hat{T}+\hat{L}\right) \\
+&= \hat{K}~\hat{T}_{ar}
+\end{split}
+\label{c:identification:e:area_tar}
+\end{align}
+
+In Eq.\ref{c:identification:e:area_tar} the average residence time $\hat{T}_{ar} \in \mathbb{R}^+$ is calculated from the integral. To simplify the equation above the linearity of the integral has been employed. Additionally the properties of the Heavyside function enabled a change in the lower boundary, hence the simplification.\\
+
+Further exploitation of Eq. \ref{c:identification:e:fodt_dt} leads to 
+
+\begin{align}
+\begin{split}
+\int_0^{\hat{T}_{ar}} y(t) ~dt &= \int_0^{\hat{T}_{ar}} \hat{K} ~\left( 1 - e^{-\frac{t- \hat{L}}{\hat{T}}}\right)~ \sigma(t-\hat{L}) ~dt \\
+&= \int_{\hat{L}}^{\hat{T}_{ar}} \hat{K} ~\left( 1 - e^{-\frac{t}{\hat{T}}}\right)~dt \\
+&= \hat{K} \left( t + \hat{T} e^{-\frac{t}{\hat{T}}} \right) \Bigg\rvert_{\hat{L}}^{\hat{T}_{ar}} \\
+&= \frac{\hat{K}}{e} \hat{T}
+\end{split}
+\label{c:identification:e:area_t}
+\end{align}
+
+At last, the gain $\hat{K}$ has to be computed. With the common definition, e.g. given in LUNZE1, the parameter can be computed using
+
+\begin{align}
+\begin{split}
+\hat{K} &= \lim_{t\mapsto \infty} \frac{y(t)-y(0)}{u(t)-u(0)}
+\end{split}
+\label{c:identification:e:area_gain}
+\end{align}
+
+This interpretation is rooting in the final value theorem. Using Eq. \ref{c:identification:e:area_gain} in combination with the other two relation one is able to compute all needed parameters.\newline
+The system of equations as described above are called area-based methods, FEDELE, with regards to its visualization displayed in Fig. . Another, likewise valid understanding is given as the minimization of the integral of the error between the real system and the model over time.\\
+
+\begin{figure}
+  \centering
+
+    \includesvg[width=\textwidth]{../Graphics/TEST.svg}
+    \caption{Area Based Interpretation of the Integral Fitting Approach}
 \end{figure}
 
-Probleme: "Überschwinger" -> Wie geanu annähern?
+However, the algorithm described above is not robust. It only converges iff the systems gain is equivalent with the infitity norm of the output. This resembles a dominant steady state gain. In other words, the integral Eq. \ref{c:identification:e:area_tar} must be positive definite. To ensure this, several options are avaible. \\
 
-\begin{figure}[H]
-\begin{minipage}[b]{\textwidth}
-\centering
-\includegraphics[width=0.9\textwidth]{./Graphics/Overdamped_MATLAB.png}
-\caption{Graphical Reprensentation of Identification via Jump Response}
-\label{c:control:f:2area}
-\end{minipage}
-\end{figure}
+Since a conservative estimation of the system will result in a robust controller, the gain is preferred to be calculated to big. Likewise a smaller phase increases the immunity to disturbance. Hence, a conservative bound is established with truncating the data so that the maximum output is corresponding to the end of measurement. The systems gain will be computed as
 
-\begin{figure}[H]
-\begin{minipage}[b]{\textwidth}
-\centering
-\includegraphics[width=0.9\textwidth]{./Graphics/NYQUIST_MATLAB.png}
-\caption{Graphical Reprensentation of Identification via Jump Response}
-\label{c:control:f:2area}
-\end{minipage}
-\end{figure}
+\begin{align}
+\begin{split}
+\hat{K} &= \lim_{t\mapsto t^*} \frac{y(t^*)-y(0)}{u(\infty)-u(0)}, ~ y(t^*) = \sup_{0 \leq t \leq \infty} y(t)
+\end{split}
+\label{c:identification:e:area_sup_gain}
+\end{align}
 
+Eq. \ref{c:identification:e:area_sup_gain} defines the gain as the ratio between the supremum of the measurement data and the change in input. This results in a positive semidefiniteness of the integral given by Eq.\ref{c:identification:e:area_tar}. Furthermore, the results in two extreme cases. The algorithm can provide the real system, iff the output data is monotonically increasing. With that, the supremum of the collected data is equal to the final value and Eq.\ref{c:identification:e:area_sup_gain} converges to Eq. \ref{c:identification:e:area_gain}. On the other hand the system is identified as a (scaled) step response or a strictly proportional element, iff the supremum is equal to the first collected data point. An illustration of the former reasoning is given in FIGURE.\\
 
-\section{Relay Tuning} % (fold)
-\label{c:identification:s:relay_tuning}
+\section{Asymmetric Relay Experiment}
+\label{c:identification:s:relay}
 
-Relay Tuning for Model fitting
+Another class of experimental methods based on a priori model structure is called relay experiments. These methods have been introduced in the early 1980's, ASTROEMHAGGALUND1983, and have since then been investigated, developed and used in an industrial context, see REFEREZEN. The following section is mainly based on the recent works BERNER I, II und III.\\
 
-\section{Review and Conclusion}%
+The key concept to estimate the needed parameters is based on the systems response to an (asymmetric) relay input, forcing a semi-stationary limit cylce. This behaviour is illustrated in FIG. .\\
+
+HIER FIGURE \\
+
+The block diagram used to generate the output is shown in FIG. \\
+
+HIER FIGURE \\
+
+The relay generating the input signal of the process can be described as follows:
+
+\begin{align}
+\begin{split}
+u(t) = \begin{cases}
+u_H &~e(t) > h, ~\dot{e}(t) > 0 \\
+u_H &~e(t) < h, ~\dot{e}(t) < 0\\
+u_L &~e(t) > -h,~\dot{e}(t) > 0\\
+u_L &~e(t) < -h, ~\dot{e}(t) < 0
+\end{cases}
+\end{split}
+\label{c:identification:e:relay_output}
+\end{align}
+
+In Eq. \ref{c:identification:e:relay_output} the output switches between an upper and lower limit, $u_H, u_L \in \mathbb{R}, u_H \geq u_L$ depending on the hysterises $h \in \mathbb{R}^+$, the error of the signal and its time derivative. Iff the relation $\left| u_H \right¦ = \left| u_L \right¦$ holds true, the relay is called symmetric, if not it is an asymmetric relay, with $\left| u_H \right¦ > \left| u_L \right¦$. Note that the system of equations above can be formulated with respect to the former value of itsself. Since the process is defined around a set point $y_R \in \mathbb{R}$ it is usefull to define the corresponding input $u_R \in \mathbb{R} | y = y_R$. Hence, the difference in input is given by $\delta u_H = \left| u_H-u_R \right|$ and $\delta u_L = \left| u_L - u_R \right|$.\\
+
+From FIG a difference the period $t_P = t_{on} + t_{off}\in \mathbb{R}^+$ consiting of the sum of the half-periods $t_{on} \in \mathbb{R}^+ | u = u_H$ and $t_{off} \in \mathbb{R}^+ | u = u_L$.\\
+
+To estimate the parameter set of a FOTD model, the normalized time delay is approximated according to BERNER2015:
+
+\begin{align}
+\begin{split}
+\tau &= \frac{\hat{L}}{\hat{T}+\hat{L}} \\
+ &= \frac{\gamma - \rho}{ \left(\gamma - 1\right)\left(0.35~\rho+0.65\right)}
+\end{split}
+\label{c:identification:e:relay_normalizedtime}
+\end{align}
+
+With the half-period ratio $\rho = \frac{\max\left(t_{on},t_{off} \right)}{\min\left(t_{on},t_{off} \right)} ~\in \mathbb{R}^+$ and $\gamma = \frac{\max\left(\delta u_H, \delta u_L \right)}{\max\left(\delta u_H, \delta u_L \right)}$ being the asymmetry level of the relay. Notice the impact of an symmetry in the relay, since it immediatly follows that Eq. \ref{c:identification:e:relay_normalizedtime} is singular if the amplitudes are symmetric. Furthermore, the delay is zero estimated to zero iff the half-period ratio is equal to the asymmetry level.\\
+
+To compute the gain the following relationship can be utilized:
+
+\begin{align}
+\begin{split}
+\hat{K} &= \frac{\int_{t_P} y(t)-y_R~dt}{\int_{t_P} u(t)-u_R~dt} \\
+&= \frac{\int_{t_P} y(t)-y_R~dt}{\int_{t_P} \left( u_H -u_R \right)~t_{on} - \left( u_L - u_R \right)~t_{off}} 
+\end{split}
+\label{c:identification:e:relay_gain}
+\end{align}
+
+Eq. \ref{c:identification:e:relay_gain} calculates the gain as a ratio between the quasi stationary limit cycles. The importance of the asymmetry is again visible by investigating the denominator. Singularities of Eq. \ref{c:identification:e:relay_gain} are given iff the quantities of turn-on and turn-off phase are either equal, which resembles a symmetric relay, or in a suitable ratio to each other.\\
+
+The time constant of the model can be calculated using one of the following equations:
+
+\begin{align}
+\begin{split}
+t_{on} &= \hat{T}~ \log\left( \frac{h/\hat{K}-\delta u_L + e^\frac{\hat{L}}{\hat{T}} \left(\delta u_H + \delta u_L \right) }{\delta u_H - h/\hat{K}}\right) \\
+t_{off} &= \hat{T}~  \log\left( \frac{h/\hat{K}-\delta u_H + e^\frac{\hat{L}}{\hat{T}} \left(\delta u_H + \delta u_L \right) }{\delta u_L - h/\hat{K}}\right) 
+\end{split}
+\label{c:identification:e:relay_time}
+\end{align}
+
+Eq. \ref{c:identification:e:relay_time} can be exploited by using the Eq. \ref{c:identification:e:relay_normalizedtime} by solving it for the ratio between time delay and time constant. Hence, the system can be used to computed $\hat{T}$ and thus $\hat{L}$. 
+
+\section{Review}
 \label{c:identification:s:review}
 
-Short review of the results given for both identification processes.
+Above two important and well known fitting techniques based on structural knowledge and hence mathematical formulations of the model have been introduced. Even though both methods are used throughout industry, there are certain drawbacks to each method which should be considered.\\
