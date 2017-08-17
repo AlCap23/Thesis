@@ -114,8 +114,6 @@ G &=  \frac{\sum_{i=0}^n a_i s^i}{\sum_{k=0}^m b_k s^k} \\
 
 Eq.\ref{c:identification:e:general_tf} shows the identities of a transfer function given as a polynomial in $s$ and its equivalent representation as a product of linear factor, see \cite[p.269 ff.]{Lunze2016}. The linear factorization consists of its zeros $z_i \in \mathbb{C}$ and poles $p_k \in \mathbb{C}$. Both identities will be usefull due to the different propoerties of the gain and phase. Additionally it is assumed that the first order dynamics have been idealy identified. Hence, the error depends only on dynamics of higher order.\\
 
-Further investigation requiere the relative difference of the FOTD model with respect to the
-
 The relative error in Gain $\Delta_K \in \mathbb{C}$ can therefore described as
 
 \begin{align}
@@ -127,7 +125,16 @@ The relative error in Gain $\Delta_K \in \mathbb{C}$ can therefore described as
 \label{c:identification:e:error_gain}
 \end{align}
 
-From Eq.\ref{c:identification:e:error_gain} two important conclusions can be conducted. First, the error is small near the steady state iff the first order dynamics are estimated correctly. The steady state model is even error free, iff the true gain can be identified. Secondly, the error will increase dramaticly for higher order dynamics since the model is not able to project these frequencies in an adequat manner. Another source of error can be found in low order zeros of the system, which will result in an infinite error of the gain.\\
+From Eq.\ref{c:identification:e:error_gain} two important conclusions can be conducted. First, the error is small near the steady state iff the first order dynamics are estimated correctly. The steady state model is even error free, iff the true gain can be identified. Secondly, the error will increase dramaticly for higher order dynamics since the model is not able to project these frequencies in an adequat manner. Another source of error can be found in low order zeros of the system, which will result in an infinite error of the gain. The gain error is visualized in Fig.\ref{c:identification:f:nyquist_fotd}. \\
+
+\begin{figure}[H]
+  \centering
+  \def\svgwidth{\textwidth}
+  \input{./Graphics/Area_Nyquist.pdf_tex}
+  \caption{Nyquist Diagram of High Order Transfer Function and Corresponding FOTD model}
+  \label{c:identification:f:nyquist_fotd}
+\end{figure}
+
 
 Likewise, the relative error in phase $\Delta_\varphi \in \mathbb{C}$ is given as:
 
@@ -137,10 +144,19 @@ Likewise, the relative error in phase $\Delta_\varphi \in \mathbb{C}$ is given a
 &= \arg\left(\underbrace{\frac{\hat{K}}{\hat{T}~j\omega+1} \frac{\left(\ 1-p_0 \right)\left( s- p_1 \right)}{1-z_0}}_{\approx 1} \frac{\prod_{k=2}^m~(s^k-p_k)}{\prod_{i=1}^n~(s^i-z_i)}e^{-\hat{L}~s} \right)\\
 &= -L~\omega + \arg\left(\frac{\prod_{k=2}^m~(s^k-p_k)}{\prod_{i=1}^n~(s^i-z_i)}\right)
 \end{split}
-\label{c:identification:error_phase}
+\label{c:identification:e:error_phase}
 \end{align}
 
-Eq. \ref{c:identification:error_phase} gives an important insight to the function of the time delay. It compensates for the higher order dynamics in phase, effectively reducing the error in phase.\\
+Eq. \ref{c:identification:e:error_phase} gives an important insight to the function of the time delay. It compensates for the higher order dynamics in phase, effectively reducing the error in phase. An example is given in Fig.\ref{c:identification:f:phase_fotd}.\\
+
+\begin{figure}[h!]
+  \centering
+  \def\svgwidth{\textwidth}
+  \input{./Graphics/Area_Bode_Phase.pdf_tex}
+  \caption{Phase of High Order Transfer Function and Corresponding FOTD model}
+  \label{c:identification:f:phase_fotd}
+\end{figure}
+
 
 Of course the chance to identify the first order dynamics right are effectively zero. But since heat transfer is described as a first order equation, called Newton's Law of cooling HIER ZITIEREN, it is valid to assume the higher order dynamics to be small. Furthermore it can be assumed to be the time dominant process of the cycle. Hence the valve, which is normally modeled as a second order system can be described as a first order system as well, since it is acting in much faster timescales.\\
 
@@ -189,11 +205,10 @@ At last, the gain $\hat{K}$ has to be computed. With the common definition, e.g.
 This interpretation is rooting in the final value theorem. Using Eq. \ref{c:identification:e:area_gain} in combination with the other two relation one is able to compute all needed parameters.\newline
 The system of equations as described above are called area-based methods, \cite{Fedele2009a}, with regards to its visualization displayed in Fig. . Another, likewise valid understanding is given as the minimization of the integral of the error between the real system and the model over time.\\
 
-\begin{figure}
+\begin{figure}[h]
   \centering
-
-    \includesvg[width=\textwidth]{../Graphics/TEST.svg}
-    \caption{Area Based Interpretation of the Integral Fitting Approach}
+  \def\svgwidth{\textwidth}
+  \input{./Graphics/Area_Example.pdf_tex}
 \end{figure}
 
 However, the algorithm described above is not robust. It only converges iff the systems gain is equivalent with the infitity norm of the output. This resembles a dominant steady state gain. In other words, the integral Eq. \ref{c:identification:e:area_tar} must be positive definite. To ensure this, several options are avaible. \\

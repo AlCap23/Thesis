@@ -1,3 +1,4 @@
+%!TEX root = ../studentischeArbeiten.tex
 \chapter{Multivariable Controller Design}%
 \label{c:controller}
 
@@ -6,13 +7,74 @@ The controller design can be divided into the SISO design process for a single c
 \section{AMIGO Tuning Rules} % (fold)
 \label{c:controller:s:AMIGO}
 
-Explain MIGO and AMIGO.\\
-Explain Tuning
+The Approximate MIGO (AMIGO) tuning rules have been introduced in \cite[p.225 ff.]{Astrom2006}. These rules are derived by evaluating the results of applying the MIGO process \cite[c 6.8]{Astrom2006}, which optimizes the closed loop for robustness, to a test batch. Hereby all processes of the test batch are approximated by a sufficiently analogous model, namely a integrating process with delay and a FOTD model, as described in Sec.\ref{c:identification:s:fotd}.  \\
+
+Evaluating the results of the MIGO processes can be used to formulate equations connecting the parameters of the FOTD to the parameter of a proportional integral PI controller 
+
+\begin{align}
+\begin{split}
+K_P &= \frac{0.15}{\hat{K}}+ \left(0.35 - \frac{\hat{L}\hat{T}}{\left( \hat{L}+\hat{T} \right)^2} \right) \frac{\hat{T}}{\hat{K}\hat{L}} \\
+T_I &= 0.35 \hat{L} + \frac{13 \hat{L}\hat{T}^2}{\hat{T}^2 + 12 \hat{L}\hat{T}+7 \hat{L}^2}
+\end{split}
+\label{c:controller:e:amigo_pi}
+\end{align}s
+
+Eq.\ref{c:controller:e:amigo_pi} defines the proportional gain of the controller $K_P \in \mathbb{R}$ and the integral time $T_I \in \mathbb{R}$.
+It can be seen that the proportional gain is only well defined when a time delay is identified.
+
+Likewise, the parameter of a PID controller can be described by:
+
+\begin{align}
+\begin{split}
+K_P &= \frac{1}{\hat{K}} \left( 0.2 + 0.45 \frac{\hat{T}}{\hat{L}}\right)\\
+T_I &= \frac{0.4\hat{L}+0.8\hat{T}}{\hat{L}+0.1\hat{T}}\hat{L}\\
+T_D &= \frac{0.5 \hat{L}\hat{T}}{0.3\hat{L}+\hat{T}}
+\end{split}
+\label{c:controller:e:amigo_pid}
+\end{align}
+
+Eq.\ref{c:controller:e:amigo_pid} introducing the derivative Time $T_D \in \mathbb{R}$.\\
+
+Several interesting findings are tied to the application of the method, but 
+
+
+In \cite[p.253 ff.]{Astrom2006} the detuning process is described. Since the detuning is an essential element of the overall design procedure it will be described. Based on the maximum sensitivity the following dimensionless factors are defined 
+
+\begin{align}
+\begin{split}
+\alpha_D &= \frac{M_S-1}{M_S}\\
+\beta_D &= M_S \frac{M_S+\sqrt{M_S^2 -1}}{2} 
+\end{split}
+\label{c:controller:e:amigo_factor}
+\end{align}
+
+Eq. \ref{c:controller:e:amigo_factor} defines the factors needed for calculating the new value of the integral gain $K_I = \frac{K_P}{T_I}$ according to
+
+\begin{align}
+\begin{split}
+K_I^{i+1} &= \begin{cases}
+	K_I^i \frac{\alpha_D + K_P^{i+1} \hat{K}}{\alpha_D + K_P^{i} \hat{K}} ~, K_P^{i+1} \hat{K} \geq \frac{K_I^{i}\hat{K}\left(\hat{L}+\hat{T}\right)}{\beta_D \left( \alpha_D + K_P^{i+1} \hat{K}\right)} - \alpha_D\\
+	\beta_D \frac{\left( \alpha_D + K_P^{i+1} \hat{K} \right)^2}{\hat{K} \left( \hat{L}+ \hat{T} \right)}~, K_P^{i+1} \hat{K} < \frac{K_I^{i}\hat{K}\left(\hat{L}+\hat{T}\right)}{\beta_D \left( \alpha_D + K_P^{i+1} \hat{K}\right)} - \alpha_D\\
+\end{cases}
+\end{split}
+\label{c:control:e:amigo_detune}
+\end{align} 
+
+Eq.\ref{c:control:e:amigo_detune} is derived by investigating the robustness of a FOTD sysem in dependence of the parameter of the controller and approximation of the same.\\
 
 \section{Relative Gain Array} % (fold)
 \label{c:control:s:rga}
 
-Bristols RGA
+Current controller design is mostly relying on the assumption that the system is behaving like an assembly of single input single output processes. Controller Design is based not on holistic approaches but on calculating the parameter solely with regards to the current loop. To choose the right pairing of in- and outputs resembling with a maximal dominance over the output the relative gain array (RGA) has been introduced by \cite{Bristol1966}. It is used in industry and described in literature \cite[p. 88 ff.]{Skogestad2005}, \cite[p.219 ff.]{Glad2000}. The RGA is defined as
+
+\begin{align}
+\begin{split}
+\Lambda\left(\ma{G}\right) &= \ma{G} \circ \ma{G}^{-T}
+\end{split}
+\label{c:control:e:rga}
+\end{align}
+
+The RGA $\Lambda \in \mathbb{R}^{n_y \times n_y}$ as defined in Eq.\ref{c:control:e:rga} is given by the hadamard product of the transfer function matrix and its transposed inverse. It can be interpreted as a ratio between the \\
 
 \section{Decoupling of Multivariable Processes} % (fold)
 \label{c:controller:s:decoupling}
