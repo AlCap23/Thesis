@@ -1,7 +1,10 @@
-\chapter{Control of TITO FOTD Processes}
+%!TEX root = ../studentischeArbeiten.tex
+\chapter{Control of Simple Multivariable Processes}
 \label{c:fotd}
 
-The folllowing chapter 
+The following chapter gives several examples to decouple a FOTD transfer function matrix. The process is explained with all three method to design multivariable controller. \\
+
+In Sec.\ref{c:fotd:s:analytic} the analytic description of the methods are given, followed by the example taken from literature in Sec. \ref{c:fotd:s:rosenbrook} and Sec.\ref{c:fotd:s:woodberry}.\\
 
 \section{Analytic Decoupling}
 \label{c:fotd:s:analytic}
@@ -36,15 +39,15 @@ M_{S,1} & 0 \\
 
 Eq.\ref{c:fotd:e:restrictions} is given under the assumption that only the diagonal transfer functions are requiered and the interaction acts on the antidiagonal entries. Furthermore the system will be operating near steady state and hence the frequency used for Taylor Series Exapnsion is choosen to be $s = 0$.
 
-\subsection*{Controller Design via Relative Gain Array Analysis}
+\subsection{Controller Design via Relative Gain Array Analysis}
+\label{c:fotd:su:rga}
 
-Assuming the diagonal dominance of the system, the controller are designed via the transfer functions $g_{11}$ and $g_{22}$. Since the AMIGO Algorithm has been given earlier ZITIEREN and explicit values for this example will be given later on, no further description will be given at this point.
+Using the RGA as an indicator of interaction, the pairing is choosen to be such that the corresponding element $\Lambda_ij(\ma{G})$ equals the maximum entry of the row. Assuming a sufficient sorting, the structure of the controlller is diagonal as well. The controller are designed via the AMIGO algorithm as presented in Sec.\ref{c:controller:s:AMIGO}.\\
 
+\subsection{Controller Design via Astr\"om et. al.}
+\label{c:fotd:su:astrom}
 
-\subsection*{Controller Design via Astr\"om et. al.}
-
-At first the decoupler is designed via the inverse static gain of the system
-
+At first the decoupler is designed via the inverse static gain of the system, since the error connected to the steady state measurement can be assumed small with respect to the dynamic error. Hence, the decoupler is given by:
 
 \begin{align}
 \begin{split}
@@ -58,7 +61,7 @@ K_{22} & -K_{21} \\
 \label{c:fotd:e:exampleDecoupler}
 \end{align}
 
-And with the decoupler the transformed system $\ma{G}^*$ is calculated to be
+The transformed system $\ma{G}^*$ can thus be calculated as
 
 \begin{align}
 \begin{split}
@@ -94,16 +97,7 @@ g_{ij}^* & = \frac{K_{ij}^*}{T_{ij}^*s+1}e^{-L_{ij}^* s} + \Delta g_{ij}^*\\
 
 Within Eq. \ref{c:fotd:e:exampleFOTDapprox} the main drawback of the method is layed out. As stated earlier, most algorithms for PI(D) design rely on a fixed model structure and hence are not fit to process information given by a combination. To use the function, two methods are proposed.\\
 
-Assuming the results of the experiment used for identifying the process are still avaible the process approximate model can be found via a weighted sum of the systems output. First the static gain of every transfer function is determined via
-
-\begin{align}
-\begin{split}
-K_{ij} &= \frac{y_{i}(\infty) - y_{i}(0)}{u_{j}(\infty)-u_j(0)}
-\end{split}
-\label{c:fotd:staticgain}
-\end{align}
-
-As explained earlier. Subsequent the results of a linear combination are given by:
+Assuming the results of the experiment used for identifying the process are still avaible the process approximate model can be found via a weighted sum of the systems output. Calculating the static can as proposed in Ch.\ref{c:identification}, the linear combination of the TITO system can be fitted to the resulting weighted measurement data, e.g. given by
 
 \begin{align}
 \begin{split}
@@ -112,7 +106,7 @@ y_{1}^*(t) &= \frac{K_{22} y_{11}(t) - K_{12} y_{12}(t)}{\det(\ma{K})}
 \label{c:fotd:e:Combination}
 \end{align}
 
-Eq. \ref{c:fotd:e:Combination} reuses the experimental data to approximate the systems output. $y_{ii}$ is the i-th output of the system reacting to excitation via the i-th input. Hence the data can be used for FOTD identification as presented earlier.\\
+Eq. \ref{c:fotd:e:Combination} reuses the experimental data to approximate the systems output. $y_{ii}$ is the i-th output of the system reacting to excitation via the i-th input. Hence the data can be used for FOTD model identification as presented earlier. However, this workaround is limited to static decoupling. Hence, a more dynamic assumed decoupling can not be established.\\
 
 The second method relies on knowledge about the behaviour of the transfer functions in the time domain. At first, the static gain is given by:
 
@@ -129,7 +123,7 @@ Since the integral is a linear operator the time integral can be rewritten as:
 \begin{split}
 \int_0^\infty y_{1}^*(\infty) - y_1^*(t) dt &= K_{11}^* (T_{11}^*+L_{11}^*) \\
 &= \frac{1}{\det(K)} \left( K_{22} \int_0^\infty y_{11}(\infty) - y_{11}(t) dt + K_{12} \int_0^\infty y_{12}(\infty) - y_{12}(t) dt\right) \\
-&= \frac{1}{\det(K)} \left( K_{22} K_{11} (T_{11}+L_{11}) + K_{12}^2 (T_{12}+L_{12}) \right) 
+&= \frac{K_{22} K_{11} (T_{11}+L_{11}) + K_{12}^2 (T_{12}+L_{12})}{\det(K)} 
 \end{split}
 \label{c:fotd:e:CombinationIntegral}
 \end{align}
@@ -138,12 +132,12 @@ To determine the coefficients of the new system a third equation is needed. It i
 
 \begin{align}
 \begin{split}
-T_{11}^* &= \frac{1}{\det(K)K_{11}^*} \left( K_{22} K_{11} (T_{11}+L_{11}) + K_{12}^2 (T_{12}+L_{12}) \right) - L_{11}^*
+T_{11}^* &= \frac{K_{22} K_{11} (T_{11}+L_{11}) + K_{12}^2 (T_{12}+L_{12})}{\det(K)K_{11}^*} - L_{11}^*
 \end{split}
 \label{c:fotd:e:CombinationTimeConstant}
 \end{align}
 
-Assuming a sufficient approximation can be found and the resulting error is minimal the diagonal controller can be designed. A choice for a PI-Structure with set point weighting $b=0$ holds:
+Assuming an approximation can be found and the resulting error is sufficiently small the diagonal controller can be designed. A choice for a PI-Structure with set point weighting $b=0$ holds:
 
 \begin{align}
 \begin{split}
@@ -159,9 +153,9 @@ K_{I1}^*\frac{1}{s} & 0 \\
 \label{c:fotd:e:exampleTransformedControler}
 \end{align}
 
-With parameters $K_{P,i},K_{I,i} \in \mathbb{R}$ are calculated via the AMIGO Tuning Rules as given earlier. Since the approximation given in Eq.\ref{c:fotd:e:exampleFOTDapprox} holds an inevitable error so do the parameter. \\
+With parameters $K_{P,i},K_{I,i} \in \mathbb{R}$ are calculated via the AMIGO tuning rules described in Sec.\ref{c:controller:s:AMIGO}. Since the approximation given in Eq.\ref{c:fotd:e:exampleFOTDapprox} holds an inevitable error so do the parameter. \\
 
-The coupling matrix of the antidiagonal parts is given by:
+Next, the interaction will be used to detune the controller. The Taylor series of the antidiagonal entries of the system $\ma{G}^* = \ma{G} \ma{D}$ is given by:
 
 \begin{align}
 \begin{split}
@@ -178,24 +172,9 @@ K_{21}^* (T_{21}^* - L_{21}^*) & 0
 \label{c:fotd:e:exampleTransformedCoupling}
 \end{align}
 
-From Eq. \ref{c:fotd:e:exampleTransformedCoupling} the dependency of the coupling on the both the static gain of the system and the dynamical behaviour can be observed. This coincides with the statements of LUNZE ZITIEREN.\\
+From Eq. \ref{c:fotd:e:exampleTransformedCoupling} the dependency of the coupling on the both the static gain of the system and the dynamical behaviour can be observed. This coincides with the statements of \cite{Lunze2014} declaring that static decoupling is in general easier if the dynamic behaviour of the involved transfer functions is similar.\\
 
-Detuning the controller requires to define both  maximum allowed interactions $h_{ij,Max}$ and maximum sensitivity $M_{S,i}$ of the closed loop:
-
-\begin{align*}
-\begin{split}
-\ma{H}_{A,Max} &= \begin{bmatrix}
-0 & h_{12,Max} \\
-h_{21,Max} & 0 
-\end{bmatrix}\\
-\ma{M}_{S} &= \begin{bmatrix}
-M_{S,1} & 0 \\
-0 & M_{S,2}
-\end{bmatrix}
-\end{split}
-\end{align*}
-
-Solving Eq. \ref{c:fotd:e:Hmax*} for the set point weighting controller holds:
+Detuning the controller with the constrains on the closed loop given by Eq. \ref{c:fotd:e:restrictions} and solving Eq. \ref{c:controller:e:Hmax*} for the controller with set point holds:
 
 \begin{align}
 \begin{split}
@@ -212,7 +191,7 @@ Solving Eq. \ref{c:fotd:e:Hmax*} for the set point weighting controller holds:
 
 \subsection*{Controller Design via Modified Astr\"om}
 
-Now the modified Algorithm proposed in this thesis is applied to the same System. First, we design the controller as a function of the main diagonal entries $g_{ii}$ once again using the AMIGO Tuning rules:
+Now the modified Algorithm proposed in this thesis is applied to the same System. First, we design the controller as a function of the main diagonal entries $g_{ii}$ once again using the AMIGO tuning rules:
 
 \begin{align}
 \begin{split}
@@ -240,7 +219,7 @@ The splitter $\ma{\Sigma}$ is likewise designed by the steady state of the syste
 \end{split}
 \end{align}
 
-To test for interaction define the maximum interaction and the sensitivity like in Eq. FEHLT. The anti diagonal parts of the Taylor series can be identified as:
+To test for interaction define the maximum interaction and the sensitivity like in Eq. \ref{c:fotd:e:restrictions}. The anti diagonal parts of the Taylor series can be calculated to be
 
 \begin{align}
 \begin{split}
@@ -256,7 +235,7 @@ K_{21}(T_{21}-L_{21} - T_{22}+L_{22}) & 0
 \end{split}
 \end{align}
 
-To detune the controller solving Eq. \ref{c:fotd:e:Hmax*} for the integral controller as before holds:
+To detune the controller solving Eq. \ref{c:controller:e:Hmax*} for the integral controller as before holds:
 
 \begin{align}
 \begin{split}
@@ -268,6 +247,8 @@ To detune the controller solving Eq. \ref{c:fotd:e:Hmax*} for the integral contr
 \end{bmatrix}
 \end{split}
 \end{align}
+
+Hence, the system is detuned by the FOTD model identified originally at the beginning of the process.
 
 \section{Rosenbrook}%
 \label{c:fotd:s:rosenbrook}

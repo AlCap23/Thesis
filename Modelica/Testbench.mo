@@ -384,101 +384,17 @@ package TIL3_AddOn_Supermarkt_Wurm_Februar17
       extent=[-120, 144; 120, 95],
       string="%name",
       style(color=1))),
-    Modelica(version="3.2.1"),
     WurmKomponenten(version="1.0.5"),
       TILMedia(version="3.4.0"),
       TIL3_AddOn_Cabin(version="3.1.3"),
       TILFileReader(version="3.3.2"),
-      TIL(version="3.4.1")),
+      TIL(version="3.4.1"),
+      Modelica(version="3.2.2")),
   Diagram(coordinateSystem(extent={{-100,-100},{100,100}})),
     version="1",
     conversion(noneFromVersion=""));
 end TIL3_AddOn_Supermarkt_Wurm_Februar17;
 
-package ModelicaServices
-  "ModelicaServices (Default implementation) - Models and functions used in the Modelica Standard Library requiring a tool specific implementation"
-extends Modelica.Icons.Package;
-
-package Machine
-
-  final constant Real eps=1.e-15 "Biggest number such that 1.0 + eps = 1.0";
-
-  final constant Real small=1.e-60
-    "Smallest number such that small and -small are representable on the machine";
-  annotation (Documentation(info="<html>
-<p>
-Package in which processor specific constants are defined that are needed
-by numerical algorithms. Typically these constants are not directly used,
-but indirectly via the alias definition in
-<a href=\"modelica://Modelica.Constants\">Modelica.Constants</a>.
-</p>
-</html>"));
-end Machine;
-annotation (
-  Protection(access=Access.hide),
-  preferredView="info",
-  version="3.2.2",
-  versionBuild=0,
-  versionDate="2016-01-15",
-  dateModified = "2016-01-15 08:44:41Z",
-  revisionId="$Id:: package.mo 9141 2016-03-03 19:26:06Z #$",
-  uses(Modelica(version="3.2.2")),
-  conversion(
-    noneFromVersion="1.0",
-    noneFromVersion="1.1",
-    noneFromVersion="1.2",
-    noneFromVersion="3.2.1"),
-  Documentation(info="<html>
-<p>
-This package contains a set of functions and models to be used in the
-Modelica Standard Library that requires a tool specific implementation.
-These are:
-</p>
-
-<ul>
-<li> <a href=\"modelica://ModelicaServices.Animation.Shape\">Shape</a>
-     provides a 3-dim. visualization of elementary
-     mechanical objects. It is used in
-<a href=\"modelica://Modelica.Mechanics.MultiBody.Visualizers.Advanced.Shape\">Modelica.Mechanics.MultiBody.Visualizers.Advanced.Shape</a>
-     via inheritance.</li>
-
-<li> <a href=\"modelica://ModelicaServices.Animation.Surface\">Surface</a>
-     provides a 3-dim. visualization of
-     moveable parameterized surface. It is used in
-<a href=\"modelica://Modelica.Mechanics.MultiBody.Visualizers.Advanced.Surface\">Modelica.Mechanics.MultiBody.Visualizers.Advanced.Surface</a>
-     via inheritance.</li>
-
-<li> <a href=\"modelica://ModelicaServices.ExternalReferences.loadResource\">loadResource</a>
-     provides a function to return the absolute path name of an URI or a local file name. It is used in
-<a href=\"modelica://Modelica.Utilities.Files.loadResource\">Modelica.Utilities.Files.loadResource</a>
-     via inheritance.</li>
-
-<li> <a href=\"modelica://ModelicaServices.Machine\">ModelicaServices.Machine</a>
-     provides a package of machine constants. It is used in
-<a href=\"modelica://Modelica.Constants\">Modelica.Constants</a>.</li>
-
-<li> <a href=\"modelica://ModelicaServices.Types.SolverMethod\">Types.SolverMethod</a>
-     provides a string defining the integration method to solve differential equations in
-     a clocked discretized continuous-time partition (see Modelica 3.3 language specification).
-     It is not yet used in the Modelica Standard Library, but in the Modelica_Synchronous library
-     that provides convenience blocks for the clock operators of Modelica version &ge; 3.3.</li>
-</ul>
-
-<p>
-This implementation is targeted for Dymola.
-</p>
-
-<p>
-<b>Licensed by DLR and Dassault Syst&egrave;mes AB under the Modelica License 2</b><br>
-Copyright &copy; 2009-2016, DLR and Dassault Syst&egrave;mes AB.
-</p>
-
-<p>
-<i>This Modelica package is <u>free</u> software and the use is completely at <u>your own risk</u>; it can be redistributed and/or modified under the terms of the Modelica License 2. For license conditions (including the disclaimer of warranty) see <a href=\"modelica://Modelica.UsersGuide.ModelicaLicense2\">Modelica.UsersGuide.ModelicaLicense2</a> or visit <a href=\"https://www.modelica.org/licenses/ModelicaLicense2\"> https://www.modelica.org/licenses/ModelicaLicense2</a>.</i>
-</p>
-
-</html>"));
-end ModelicaServices;
 
 
 
@@ -1363,7 +1279,7 @@ package Testbench
     TIL.VLEFluidComponents.Sensors.StatePoint Gascooler_Entry(stateViewerIndex=1)
       annotation (Placement(transformation(extent={{26,82},{34,90}})));
     TIL.VLEFluidComponents.Sensors.StatePoint Gascooler_Outlet(stateViewerIndex=2)
-      annotation (Placement(transformation(extent={{-262,82},{-254,90}})));
+      annotation (Placement(transformation(extent={{-262,94},{-254,102}})));
     TIL.VLEFluidComponents.Sensors.Sensor_T sensor_T(useTimeConstant=false,
         initialSensorValue=283.15)
       annotation (Placement(transformation(extent={{-196,86},{-188,94}})));
@@ -1460,8 +1376,8 @@ package Testbench
       annotation (Placement(transformation(extent={{-340,240},{-300,280}}),
           iconTransformation(extent={{-340,240},{-300,280}})));
     Modelica.Blocks.Interfaces.RealInput uVentil
-      annotation (Placement(transformation(extent={{-340,-20},{-300,20}}),
-          iconTransformation(extent={{-340,-20},{-300,20}})));
+      annotation (Placement(transformation(extent={{-340,4},{-300,44}}),
+          iconTransformation(extent={{-340,4},{-300,44}})));
     Modelica.Blocks.Interfaces.RealInput uTUmgebung
       annotation (Placement(transformation(extent={{-340,120},{-300,160}}),
           iconTransformation(extent={{-340,120},{-300,160}})));
@@ -1493,7 +1409,7 @@ package Testbench
       k=1,
       T=5,
       y_start=1)
-      annotation (Placement(transformation(extent={{-294,84},{-286,92}})));
+      annotation (Placement(transformation(extent={{-294,20},{-286,28}})));
   equation
 
     connect(sensor_HP.port,HPValve. portA) annotation (Line(
@@ -1502,7 +1418,7 @@ package Testbench
         thickness=0.5,
         smooth=Smooth.None));
     connect(Gascooler_Outlet.sensorPort, HPValve.portA) annotation (Line(
-        points={{-258,82},{-258,32}},
+        points={{-258,94},{-258,32}},
         color={153,204,0},
         thickness=0.5,
         smooth=Smooth.None));
@@ -1618,9 +1534,9 @@ package Testbench
     connect(hp_Measurement, hp_Measurement) annotation (Line(points={{150,0},{154,
             0},{154,-12},{154,0},{150,0}}, color={0,0,127}));
     connect(HPValve.effectiveFlowArea_in, firstOrder1.y) annotation (Line(
-          points={{-263,24},{-285.6,24},{-285.6,88}},           color={0,0,127}));
-    connect(uVentil, firstOrder1.u) annotation (Line(points={{-320,0},{-300,0},
-            {-300,88},{-294.8,88}}, color={0,0,127}));
+          points={{-263,24},{-274,24},{-285.6,24}},             color={0,0,127}));
+    connect(uVentil, firstOrder1.u) annotation (Line(points={{-320,24},{-320,24},
+            {-294.8,24}},           color={0,0,127}));
     annotation (
       Diagram(coordinateSystem(
           preserveAspectRatio=false,
@@ -1944,7 +1860,7 @@ Bernoulli-Gleichung im Ventil --> da geht die Dichte ein",
   end Gascooler_Valve_System_Tester_Constant_Fan_3;
   annotation (uses(
       TIL(version="3.4.1"),
-      Modelica(version="3.2.1"),
       TILMedia(version="3.4.1"),
-      TIL3_AddOn_Supermarkt_Wurm_Februar17(version="1")));
+      TIL3_AddOn_Supermarkt_Wurm_Februar17(version="1"),
+      Modelica(version="3.2.2")));
 end Testbench;

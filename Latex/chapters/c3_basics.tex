@@ -1,6 +1,15 @@
+%!TEX root = ../studentischeArbeiten.tex
 \chapter{Control Theoretic Model and Problem Statement}\label{c:control}
 
-The following chapter explains the 
+The following chapter gives a brief introduction to the concepts of control theory used in this work. Further information can be found in the literature. A standard, comprehensive introduction is given in the works \cite{Lunze2016},\cite{Lunze2014} and \cite{Astrom2009}. The basics concepts are explained and investigated in great detail. The control of multivariable systems is explained in \cite{Skogestad2005} and \cite{Glad2000}. Standards about the design of robust control are \cite{Zhou1998}, \cite{Zhou1996} and \cite{Doyle}. The concepts of nonlinear control are covered extensively in \cite{Adamy2014}.\\
+
+Sec. \ref{c:control:s:basics} starts by explaining several notations of dynamical systems in the context of control.\\
+
+Afterwards the concept of feedback control is elucidated in Sec. \ref{c:control:s:feedback}. The influence of disturbances and measurement noise is captured in form of mathematical matrix notations.\\
+
+The essentials of robustness and stability of the introduced system is investigated further in Sec.\ref{c:control:s:robustness}. Here the general concepts of a single input single output is extended to multiple input multiple output systems.\\
+
+The chapter concludes in Sec.\ref{c:control:s:gainsched} with a short introduction to gain scheduling in the context of linearized control. 
 
 \section{Basics of Control Theory}\label{c:control:s:basics}
 
@@ -53,6 +62,7 @@ Hence a more compressed form is commonly used to design controller for most tech
 The transfer function matrix consist of single transfer functions $g_{ij}(s)~, i \leq n_y, j \leq n_u$ and maps the transformed input of a system directly to its  transformed output. It describes the relationship between input and output directly and is hence a compact form of describing the behaviour of LTI systems. To control a system with two outputs in every wanted direction a necessary condition is given by $n_y \leq n_u$. It is assumed that all following systems suffice $\dim{\ma{G}} = n_y \times n_y$.  \\
 
 \section{Feedback Control in Presence of Uncertain Signals}
+\label{c:control:s:feedback}
 
 The aim of control theory is to manipulate a systems trajectory via its inputs in such a way, that a desired output is reached and maintained. To do this, several techniques can be used. Most commonly the systems desired output, the setpoint $\ve{y}_r$, is compared to the actual output of the system $\ve{y}$ via a feedback loop. The result of this comparison is called the error $\ve{e} \in \mathbb{R}^{n_y}$ \nomenclature{$\ve{e}$}{Error Signal of a Feedback Loop}. This signal is fed into the controller $\ma{K} \in \mathbb{C}^{n_y \times n_y}$ \nomenclature{$\ma{K}$}{Controller of a Dynamical System} and the result is used as an input for the system. This approach is called feedback control, see e.g. \cite{Astrom2009}, with a single degree of freedom controller.\\
 
@@ -90,8 +100,9 @@ Rewriting the equation as:
 defines the Sensitivity Function $\ma{S} = \left[ \ma{I} - \ma{G} \ma{K}_y\right]^{-1} \in \mathbb{C}^{n_y \times n_y}$ which relates the influences of measurement noise and load disturbance to the systems outputs. The Complementary Sensitivity Function $\ma{T} = \left[\ma{I} - \ma{G} \ma{K}_y\right]^{-1} \ma{G} \ma{K_r} \in \mathbb{C}^{n_y \times n_y}$ describes the response to the reference signal.Both Functions play an important role in the investigation of the systems Robustness and are connected to each other via $\ma{T} = \ma{S} \ma{G} \ma{K}_r$.\\
 
 \section{Robustness and Stability of Feedback Control Systems}
+\label{c:control:s:robustness}
 
-Robustness refers in general to the stability of the system in presence of uncertainties and has been studied extensively, see e.g. \cite{Zhou1998},\cite{Zhou1996}, \cite{DoyleFeedbackTheory}.
+Robustness refers in general to the stability of the system in presence of uncertainties and has been studied extensively, see e.g. \cite{Zhou1998},\cite{Zhou1996}, \cite{Doyle}.
 To give a better understanding of the relevant points of the subject both SISO and MIMO cases are presented. \\
 
 For any given SISO system with a transfer function $g : \mathbb{R} \mapsto \mathbb{C}$ we see from Eq. \ref{c:control:e:2dofclosedloop} that the behaviour of the output with respect to measurement noise and disturbances is strongly dependent on the sensitivity function. A necessary condition for the system to reach the reference is that disturbance and noise are attenuated  near the steady state. Furthermore the destabilizing effect due to uncertain signals can be quantified via the maximum of the sensitivity function. Therefore the Maximum Sensitivity is defined as:
@@ -134,7 +145,7 @@ Due to Eq. \ref{c:control:e:maxsensitivitynyquist} the maximum gain of the open 
 \end{figure}
 
 
-While the maximum sensitivity is well definied for SISO systems, a MIMO system requires a more general approach due to the interconnection of the systems out- and inputs. A general condition is given by the Small Gain Theorem \cite[p.150 ff.]{Skogestad2005MultivariableDesign}. The theorem states, that a given feedback system is stable iff the open loop transfer function matrix is stable and its sufficient conditioned matrix norm is less than 1 over all frequencies.
+While the maximum sensitivity is well definied for SISO systems, a MIMO system requires a more general approach due to the interconnection of the systems out- and inputs. A general condition is given by the Small Gain Theorem \cite[p.150 ff.]{Skogestad2005}. The theorem states, that a given feedback system is stable iff the open loop transfer function matrix is stable and its sufficient conditioned matrix norm is less than 1 over all frequencies.
 
 \begin{align}
 \lVert \ma{G} \ma{K}_y \rVert < 1 ~\forall \omega
@@ -143,7 +154,7 @@ While the maximum sensitivity is well definied for SISO systems, a MIMO system r
 
 Eq. \ref{c:control:e:SmallGainTheorem} can be used with several matrix norms and can be viewed as an MIMO Interpretation of the Nyquist Criterion. \\
 
-For further robustness analysis, the concept of singular values has to be investigated. The singular value decomposition, see e.g. \cite[p.144 f.]{2013Springer-HandbuchIII},states that any matrix $\ma{G} \in \mathbb{C}^{n_a\times n_b}$ can be factorized such that
+For further robustness analysis, the concept of singular values has to be investigated. The singular value decomposition, see e.g. \cite[p.144 f.]{Zeidler2013},states that any matrix $\ma{G} \in \mathbb{C}^{n_a\times n_b}$ can be factorized such that
 
 \begin{align}
 \ma{G} &= \ma{U}\ma{\sigma}\ma{V}^*
