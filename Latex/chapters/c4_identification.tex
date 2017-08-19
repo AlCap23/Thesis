@@ -205,11 +205,13 @@ At last, the gain $\hat{K}$ has to be computed. With the common definition, e.g.
 This interpretation is rooting in the final value theorem. Using Eq. \ref{c:identification:e:area_gain} in combination with the other two relation one is able to compute all needed parameters.\newline
 The system of equations as described above are called area-based methods, \cite{Fedele2009a}, with regards to its visualization displayed in Fig. . Another, likewise valid understanding is given as the minimization of the integral of the error between the real system and the model over time.\\
 
-\begin{figure}[h]
-  \centering
-  \def\svgwidth{\textwidth}
-  \input{./Graphics/Area_Example.pdf_tex}
-\end{figure}
+%\begin{figure}[h]
+%  \centering
+%  \def\svgwidth{\textwidth}
+%  \input{./Graphics/Area_Basic_Interpretation.pdf_tex}
+%  \caption{Area Interpretation}
+%  \label{Aaslflas}
+%\end{figure}
 
 However, the algorithm described above is not robust. It only converges iff the systems gain is equivalent with the infitity norm of the output. This resembles a dominant steady state gain. In other words, the integral Eq. \ref{c:identification:e:area_tar} must be positive definite. To ensure this, several options are avaible. \\
 

@@ -153,6 +153,12 @@ K_{I1}^*\frac{1}{s} & 0 \\
 \label{c:fotd:e:exampleTransformedControler}
 \end{align}
 
+%\begin{figure}[h]
+%  \centering
+%  \def\svgwidth{\textwidth}
+%  \input{./Graphics/Area_Linear_Combination.pdf_tex}
+%\end{figure}
+
 With parameters $K_{P,i},K_{I,i} \in \mathbb{R}$ are calculated via the AMIGO tuning rules described in Sec.\ref{c:controller:s:AMIGO}. Since the approximation given in Eq.\ref{c:fotd:e:exampleFOTDapprox} holds an inevitable error so do the parameter. \\
 
 Next, the interaction will be used to detune the controller. The Taylor series of the antidiagonal entries of the system $\ma{G}^* = \ma{G} \ma{D}$ is given by:
@@ -250,10 +256,54 @@ To detune the controller solving Eq. \ref{c:controller:e:Hmax*} for the integral
 
 Hence, the system is detuned by the FOTD model identified originally at the beginning of the process.
 
-\section{Rosenbrook}%
+\section{Rosenbrocks Function}%
 \label{c:fotd:s:rosenbrook}
 
-Roosenbrooks function as an Example!
+First, the example of Rosenbrock's Function will be considered. The system is given by
+
+\begin{align}
+\begin{split}
+\ma{G} &= \begin{bmatrix}
+\frac{1}{s+1} & \frac{2}{s+3} \\
+\frac{1}{s+1} & \frac{1}{s+1}
+\end{bmatrix}
+\end{split}
+\label{c:fotd:e:rosenbrock_sys}
+\end{align}
+
+and has been introduced by Rosenbrock in REFERENZ ZUM BUCH!. Because of its multiple pole in $s=-1$ it is a common example in literature, see e.g. \cite{Astrom2001a}.\\
+
+The RGA of Eq.\ref{c:fotd:e:rosenbrock_sys} at steady state is given by
+
+\begin{align}
+\begin{split}
+\Lambda(\ma{G})_0 &= \begin{bmatrix}
+3 & -2 \\
+-2 & 3
+\end{bmatrix} 
+\end{split}
+\label{c:fotd:e:rosenbrock_rga}
+\end{align}
+
+Which leads to a main diagonal pairing of the controller. The RGA of the system at the crossover frequency $\omega_C =  \unitfrac[1]{rad}{sec}$ is singular. Hence it can be concluded that the system is ill conditioned near the crossover frequency. \\
+
+Calculating a PI controller holds
+
+\begin{align}
+\ma{K} &= \ma{K}_P + \frac{1}{s}~ \ma{K}_I\\
+&= \begin{bmatrix}
+1.21 & 0 \\
+0 & 1.21
+\end{bmatrix}
++ \frac{1}{s}\begin{bmatrix}
+0.777 & 0 \\
+0 & 0.777
+\end{bmatrix}
+\end{align}
+
+Since $\tau_{ij} = 0$ set-point weighting can be 
+
+
 
 \section{Woodberry}%
 \label{c:fotd:s:woodberry}

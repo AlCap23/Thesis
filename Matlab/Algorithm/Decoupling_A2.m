@@ -132,19 +132,10 @@ switch Method
             % Can be simplified by using the same formula for every check. Do
             % another check nested inside the first
             if b > 0
-                % If the condition is not met, calculate kI and kP
-                % Calculate the terms
-                Damping = 1; % Assume High Damping
-                T = Q(outputs,outputs).Denominator{1,1}(end-1)/Q(outputs,outputs).Denominator{1,1}(end); % Time Constant of Process
-                K = dcgain(Q(outputs,outputs)); % Process Gain
-                % Calculate ki from quadratic equation for sqrt(ki) based on Pole
-                % Placement
-                a1 = 1+2*Damping*b;
-                b1 = -1*sqrt(b^2/(T*K) );
-                c1 = -1*abs(k(1,sys_size(2))) / abs(kc(1,sys_size(2)-outputs+1)*MProd);
-                % If the Condition is not met, set kI and kP according to
-                % condition
-                if abs(a1*kI+b1*sqrt(kI)) + c1 > 1e-5
+                % Get the minimal time delay
+                LMin = min(min(Q.IODelay));
+
+                if abs(k(1,outputs)/MProd/kc(1,outputs))-sqrt( (b*kP/LMin)^2 + kI^2 )  > 1e-2
                     % Check Discriminant
                     if b1^2 -4*a1*c1 > 1e-2
                         kI = min([( -b1 + sqrt( b1^2 -4*a1*c1 ) ) / (2*a1) ,( -b1 - sqrt( b1^2 -4*a1*c1 ) ) / (2*a1)]);
@@ -190,19 +181,11 @@ switch Method
             % another check nested inside the first
             if b > 0
                 % If the condition is not met, calculate kI and kP
-                % Calculate the terms
-                Damping = 1; % Assume High Damping
-                T = Q(outputs,outputs).Denominator{1,1}(end-1)/Q(outputs,outputs).Denominator{1,1}(end); % Time Constant of Process
-                K = dcgain(Q(outputs,outputs)); % Process Gain
-                % Calculate ki from quadratic equation for sqrt(ki) based on Pole
-                % Placement
-                a1 = 1+2*Damping*b;
-                b1 = -1*sqrt(b^2/(T*K) );
-                c1 = -1*abs(k(1,sys_size(2))) / abs(kc(1,sys_size(2)-outputs+1)*MProd);
-                % Check the decoupling condition iteratively
+                % Get the minimal time delay
+                LMin = min(min(Q.IODelay));
                 % Iteration of the Detuning
                 counter = 0; % counter for break
-                while abs(a1*kI+b1*sqrt(kI)) + c1 > 1e-5
+                while abs(abs(k(1,outputs)/MProd/kc(1,sys_size(2)-outputs+1))-sqrt( (kP/LMin)^2 + kI^2 ))  > 1e-2
                     if counter > 1e4
                         break
                     end
@@ -219,7 +202,7 @@ switch Method
                 K_i(outputs,outputs) = kI;
                 
                 % Check for setpoint weight is zero:
-            elseif + abs(kI) - abs(k(1,sys_size(2))) / abs(kc(1,sys_size(2)-outputs+1)*MProd) > 1e-5
+            elseif 1
                 % If the Condition is not met, scale kI down and calculate kP via
                 % Iteration of the Detuning
                 counter = 0; % counter for break

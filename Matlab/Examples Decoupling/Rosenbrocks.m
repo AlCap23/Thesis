@@ -12,8 +12,9 @@ addpath('C:\Users\juliu\Documents\Thesis\Matlab\Examples')
 
 %% Define TF
 %  Rosenbrook Function as an example for a MIMO TF without Delay
-G = tf({12.8,-18.9;6.6,-19.4},{[16.7,1],[21,1];[10.9,1],[14.4,1]},'IODelay',[1,3;7,3]);
-%G = tf({1,2;1,1},{[1,1],[1,3];[1,1],[1,1]},'IODelay',[0,0;0,0]);
+% [1,3;7,3]
+%G = tf({12.8,-18.9;6.6,-19.4},{[16.7,1],[21,1];[10.9,1],[14.4,1]},'IODelay',[1,3;7,3]);
+G = tf({1,2;1,1},{[1,1],[1,3];[1,1],[1,1]},'IODelay',[0,0;0,0]);
 %% Decouple via RGA
 C1 = Decoupling_RGA(G);
 % Preprocess PID2 Object -> Set Point Weight
@@ -27,12 +28,14 @@ for Inputs = 1:2
     end
 end
 
+
+CR = -CY;
 % Closed Loop 
 CL1 = feedback(G,CY,+1)*CR;
 S1 = inv(eye(2)-G*CY);
 OL1 = -G*CY;
 %% Decouple via Automatic Aström
-C2 = Decoupling_A(G,[0.05, 0.05, sqrt(2), sqrt(2)],'AMIGO');
+C2 = Decoupling_A2(G,[0.05, 0.05, sqrt(2), sqrt(2)],'AMIGO',1);
 % Preprocess PID2 Object -> Set Point Weight
 C = tf(C2); % Convert to TF
 CA = C(1); % Set Point Controller
@@ -43,6 +46,12 @@ for Inputs = 1:2
         CY(Inputs,Outputs) = CB(:,:,Inputs,Outputs); % y -> u
     end
 end
+
+CL3 = feedback(G,CY,+1)*CR;
+S3 = inv(eye(2)-G*CY);
+OL3 = -G*CY;
+
+CR = -CY;
 % Closed Loop 
 CL2 = feedback(G,CY,+1)*CR;
 S2 = inv(eye(2)-G*CY);
@@ -59,10 +68,13 @@ for Inputs = 1:2
         CY(Inputs,Outputs) = CB(:,:,Inputs,Outputs); % y -> u
     end
 end
+
+
 % Closed Loop 
-CL3 = feedback(G,CY,+1)*CR;
-S3 = inv(eye(2)-G*CY);
-OL3 = -G*CY;
+%CL3 = feedback(G,CY,+1)*CR;
+%S3 = inv(eye(2)-G*CY);
+%OL3 = -G*CY;
+
 % %% Decouple via Aström Paper
 % % For Comparision
 % 
