@@ -180,8 +180,15 @@ def Control_Decentral(K,T,L, w = 0, b=np.empty, structure = 'PI'):
 
 # Algorithm for computing a decoupling control based on Aström
 
-def Control_Astrom(K,T,L,H, MS= 1.4*np.ones_like(K), w = 0, b=np.empty, structure = 'PI'):
+def Control_Astrom(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
     """Computes a Decoupling Controller via Aström Algortihm based on FOTD"""
+    
+    # Check Input for Maximum Sensitivity
+    if MS is None:
+        MS = 1.4*np.eye(K.shape[0],K.shape[1])
+    # Compute Determinant of Maximum Sensitivity
+    ms = np.linalg.det(MS)
+
     # Compute SISO Case
     if K.ndim <= 1:
         return Control_Decentral(K,T,L,w,b,structure)
@@ -199,8 +206,6 @@ def Control_Astrom(K,T,L,H, MS= 1.4*np.ones_like(K), w = 0, b=np.empty, structur
         Ky = np.empty([outputs,inputs,3])
         Kr = np.empty([outputs,inputs,3])
         
-        # Compute Determinant of Maximum Sensitivity
-        ms = np.linalg.det(MS)
         
         # Get minimal Delay/ Time Constant for robust limit of crossover frequency, ignore zeros
         if (L[np.where(L>0)].size !=0) or (T[np.where(T>0)].size !=0):
