@@ -5,6 +5,60 @@
 # Import numpy 
 import numpy as np 
 
+
+# Step Information of SISO system
+
+def Step_Info(y,t, p=0.02, yr = 1):
+    """
+    Returns the Rise Time, Overshoot, Settling Time and Steady State
+    of a given signal. Requires y, yr, t and optional a percentage for settling time
+    """
+
+    # Check for Steady State
+    # Does series converge?
+    if np.abs(y[-1]-yr) < 1e-2 :
+        yss = y[-1]
+    # If not return error
+    else:
+        return np.NaN, np.NaN, np.NaN, np.NaN
+
+    # Get the rising time as the time
+    # First value above 0.1 steady state
+    index1 = np.where(y>=0.1*yss)
+    # First value equal 0.9 steady stae
+    index2 = np.where(y<=0.9*yss)
+    # Rising Time
+    # Check if empty
+    if index1[0].size == 0:
+        t_rise = np.NaN
+    elif index2[0].size == 0:
+        t_rise = np.NaN
+    else:
+        t_rise = t[index1[0][0]]-t[index2[0][0]]
+
+    # Overshoot for values above steady state
+    # Get all values
+    mp = np.abs(y[np.where(abs(y)>abs(yss))])
+    # Check if empty
+    if mp.size == 0:
+        mp = np.NaN
+    else:
+        mp = np.abs(np.max(mp)-np.abs(yss))
+
+
+    # Settling time for all value between a certain percentage
+    index = np.where(np.logical_and(abs(y)<(1+p)*abs(yss), abs(y)>(1-p)*abs(yss)))
+    # Ceck if empty
+    if index[0].size ==0:
+        t_settle = np.NaN
+    else:
+        t_settle = t[index[0][0]]
+
+
+    return t_rise,mp,t_settle,yss
+
+
+
 # Integral Identification of first order time delay
 
 def Integral_Identification(y,u,t):
@@ -53,12 +107,12 @@ def FOTD_Gain(K,T,L,w=0):
     else:
         outputs,inputs = K.shape
         # Create a system within the complex numbers
-        G = np.zeros_like(K)
+        G = np.zeros_like(K, dtype=complex)
         for i in range(0,inputs):
             for o in range(0,outputs):
                 # Using system Identity by multiplying with the complex conjugate
                 G[o][i] = 1 /(T[o][i]**2 * w**2 +1) * ( K[o][i] - 1j*T[o][i]*w) *(np.cos(-L[o][i]*w)+1j*np.sin(-L[o][i]*w))
-    return G   
+    return np.real(G)
 
 # Algorithm for computing the RGA
 
@@ -164,8 +218,8 @@ def Control_Decentral(K,T,L, w = 0, b=np.empty, structure = 'PI'):
         # Systems dimensions
         outputs,inputs = K.shape
         # Create an empty controller
-        Ky = np.empty([outputs,inputs,3])
-        Kr = np.empty([outputs,inputs,3])
+        Ky = np.zeros([outputs,inputs,3])
+        Kr = np.zeros([outputs,inputs,3])
         # Compute RGA -> Checks for Shape
         LG = RGA(K,T,L,w)
         # Get Pairing as an array for every column
@@ -186,6 +240,7 @@ def Control_Astrom(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
     # Check Input for Maximum Sensitivity
     if MS is None:
         MS = 1.4*np.eye(K.shape[0],K.shape[1])
+
     # Compute Determinant of Maximum Sensitivity
     ms = np.linalg.det(MS)
 
@@ -208,6 +263,7 @@ def Control_Astrom(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
         
         
         # Get minimal Delay/ Time Constant for robust limit of crossover frequency, ignore zeros
+        # Important note: wc_min is actually 1/w_c !!!
         if (L[np.where(L>0)].size !=0) or (T[np.where(T>0)].size !=0):
             if (L[np.where(L>0)].size !=0):
                 wc_min = np.min([np.min(L[np.nonzero(L)]),np.min(T[np.nonzero(T)])])
@@ -224,35 +280,37 @@ def Control_Astrom(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
         Gamma = np.abs(np.dot(np.multiply(-K,T+L),D))
         # Set main diagonal to zero
         np.fill_diagonal(Gamma,0)
-        # Get the maximum of each row
+        # Get the maximum of each row 
         GMax = np.argmax(Gamma,axis=0)
         # Iterate through the outputs 
         for o in range(0,outputs):
             # Estimate the new system parameter
-            # Get the maximal gain
+            # Get the maximal delay
             l = np.max(L[o][:])
             # Add the systems gain -> scaled
             k = np.dot(K[o][:],D[:][o])
             # Get the system time constant
-            t = np.sum(np.multiply(np.multiply(K[o][:],D[:][o]),T[o][:]+L[o][:]))/k - l
+            t = (np.dot(np.multiply(K[o][:],D[:][o]),T[o][:]+L[o][:]))/k - l
             
             # Design a controller based on estimated system
             ky,kr = Control_Decentral(k,t,l,w,b,structure)
             
             # Test for Interaction
-            
+            # We detune the controller of the n-th output in such a way that the maximum of the n-th row is sufficiently small
             # Current maximum interaction
             gmax = Gamma[o][GMax[o]]
+            
             # Check for set point weight, either given
             if b == np.empty:
                 # Or computed from AMIGO_TUNE
                 b = kr[0]/ky[0]
+            
             # Check for structure
             if structure == 'PI':
                 # Set counter for while
                 counter=0
-                # Set shrinking rate in accordance with golden ratio
-                shrink_rate = 0.618
+                # Set shrinking rate 
+                shrink_rate = 0.9
                 while (np.abs(H[o][o]/(ms*gmax)) - np.sqrt( (b*ky[0]/wc_min)**2 + ky[1]**2 ) < 0):
                     if counter > 10:
                         #print('Maximal Iteration for detuning reached! Abort')
@@ -264,8 +322,112 @@ def Control_Astrom(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
                 # Get the controller parameter
                 Ky[o][o][:] = ky
                 Kr[o][o][:] = [b*ky[0], ky[1], ky[2]]
+        
         # Rescale controller for real system
         for c in range(0,2):
             Ky[:][:][c] = np.dot(D,Ky[:][:][c])
             Kr[:][:][c] = np.dot(D,Kr[:][:][c])
+        return Ky,Kr
+
+
+# Modified Detuning
+def Control_Decoupled(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
+    # Check Input for Maximum Sensitivity
+    if MS is None:
+        MS = 1.4*np.eye(K.shape[0],K.shape[1])
+    
+    # Compute Determinant of Maximum Sensitivity
+    ms = np.linalg.det(MS)
+
+    # Compute SISO Case
+    if K.ndim <= 1:
+        return Control_Decentral(K,T,L,w,b,structure)
+    
+    # Compute General MIMO Case
+    else:
+
+        # Compute a decentralized control structure based on RGA
+        Ky, Kr = Control_Decentral(K,T,L, w , b, structure)
+
+        # Get minimal Delay/ Time Constant for robust limit of crossover frequency, ignore zeros
+        # Important note: wc_min is actually 1/w_c !!!
+        if (L[np.where(L>0)].size !=0) or (T[np.where(T>0)].size !=0):
+            if (L[np.where(L>0)].size !=0):
+                wc_min = np.min([np.min(L[np.nonzero(L)]),np.min(T[np.nonzero(T)])])
+            else:
+                wc_min = np.min(np.min(T[np.nonzero(T)]))
+        else:
+            # Use very high frequency
+            wc_min = 1e10
+        
+        # Calculate the Pairing
+        # Compute RGA -> Checks for Shape
+        LG = RGA(K,T,L,w)
+        # Get Pairing as an array for every column
+        Pairing = np.argmax(LG, axis=0)
+        
+        # Compute the Taylor Series 
+        Gamma =  np.multiply(-K,T+L)
+
+        # Initialize 
+        KD = np.zeros_like(Gamma)
+        GD = np.zeros_like(Gamma)
+
+        # Get the Diagonal entries for decoupling
+        for outputs in range(0,K.shape[0]):
+            inputs = Pairing[outputs]
+            KD[outputs][inputs] = K[outputs][inputs]
+            GD[outputs][inputs] = Gamma[outputs][inputs]
+    
+        # Get the Antidiagonal
+        KA = K-KD
+        GA = Gamma-GD
+        
+        # Define the splitter
+        S = -np.dot(np.linalg.inv(KD),KA)
+
+        # Get the interaction
+        GammaA = np.abs(GA + np.dot(GD,S))
+        # Get the maximum of each row 
+        GMax = np.argmax(GammaA,axis=0)
+  
+        #Iterate through the outputs
+        for outputs in range(0,K.shape[0]):
+            inputs = Pairing[outputs]
+            
+            # Test the current controller for interaction
+            # Every controller has the dimension 3 for kp, ki, kd
+            ky = Ky[outputs][inputs]
+            kr = Kr[outputs][inputs]
+
+            # Get the current parameter
+            k = K[outputs][inputs]
+            t = T[outputs][inputs]
+            l = L[outputs][inputs]
+
+            # Check for set point weight, either given
+            if b == np.empty:
+                # Or computed from AMIGO_TUNE
+                b = kr[0]/ky[0]
+            
+            gmax = GammaA[outputs][GMax[outputs]]
+
+            # Check for PI Structure
+            if structure == 'PI':
+                # Define the counter
+                counter = 0
+                # Set shrinking rate 
+                shrink_rate = 0.9
+                while (np.abs(H[outputs][outputs]/(ms*gmax)) - np.sqrt( (b*ky[0]/wc_min)**2 + ky[1]**2 ) < 0):
+                    if counter > 1e5:
+                        #print('Maximal Iteration for detuning reached! Abort')
+                        break
+                    # Detune the controller with the shrinking rate    
+                    ky = AMIGO_DETUNE(k,t,l,ky,shrink_rate*ky[0])
+                    # Increment counter
+                    counter += 1
+                # Get the controller parameter
+                Ky[outputs][inputs][:] = ky
+                Kr[outputs][inputs][:] = [b*ky[0], ky[1], ky[2]]
+
         return Ky,Kr

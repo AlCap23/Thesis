@@ -1,0 +1,16 @@
+INFO - sisostudy - Running command 'experiment'
+INFO - sisostudy - Started run with ID "2"
+GLib-GIO-Message: Using the 'memory' GSettings backend.  Your settings will not be saved or shared with other applications.
+
+(python:3084): Gtk-WARNING **: GModule (/usr/lib/x86_64-linux-gnu/gtk-2.0/2.10.0/immodules/im-ibus.so) initialization check failed: GLib version too old (micro mismatch)
+
+(python:3084): Gtk-WARNING **: Loading IM context type 'ibus' failed
+
+(python:3084): Gtk-WARNING **: GModule (/usr/lib/x86_64-linux-gnu/gtk-2.0/2.10.0/immodules/im-ibus.so) initialization check failed: GLib version too old (micro mismatch)
+
+(python:3084): Gtk-WARNING **: Loading IM context type 'ibus' failed
+
+(python:3084): Gtk-WARNING **: GModule (/usr/lib/x86_64-linux-gnu/gtk-2.0/2.10.0/immodules/im-ibus.so) initialization check failed: GLib version too old (micro mismatch)
+
+(python:3084): Gtk-WARNING **: Loading IM context type 'ibus' failed
+INFO - sisostudy - Completed after 1:40:59
