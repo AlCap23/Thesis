@@ -69,9 +69,9 @@ def Integral_Identification(y,u,t):
     """
     # Truncate for Maximum
     i_end = y.argmax(axis=0)
-    yp = y[0:i_end+1]
-    up = u[0:i_end+1]
-    tp = t[0:i_end+1]
+    yp = y[0:i_end]
+    up = u[0:i_end]
+    tp = t[0:i_end]
     # Get Gain
     KM = (yp[-1]-yp[0])/(up[-1])
     # Get the Residence Time
@@ -100,6 +100,9 @@ def FOTD_Gain(K,T,L,w=0):
     if (K.shape != T.shape) or (K.shape != L.shape) or (L.shape != T.shape):
         print("Shapes of parameter array are not equal!")
         return np.NaN
+    # Steady State
+    if w==0:
+        return K
     # System Dimension
     if K.ndim == 1:
         # Using system Identity by multiplying with the complex conjugate
