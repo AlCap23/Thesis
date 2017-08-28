@@ -1,0 +1,61 @@
+This is BibTeX, Version 0.99d (TeX Live 2015/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: studentischeArbeiten.aux
+The style file: abbrvdin.bst
+A level-1 auxiliary file: chapters/c1_intro.aux
+A level-1 auxiliary file: chapters/c2_thermo.aux
+A level-1 auxiliary file: chapters/c3_basics.aux
+A level-1 auxiliary file: chapters/c5_controller.aux
+A level-1 auxiliary file: chapters/c6_fotd.aux
+A level-1 auxiliary file: chapters/c7_montecarlo.aux
+A level-1 auxiliary file: chapters/c8_physical.aux
+A level-1 auxiliary file: chapters/c9_conclusion.aux
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Database file #1: Mendeley_Masterarbeit.bib
+Warning--there's no year in Doyle
+You've used 27 entries,
+            4332 wiz_defined-function locations,
+            1047 strings with 11568 characters,
+and the built_in function-call counts, 16800 in all, are:
+= -- 1784
+> -- 357
+< -- 366
++ -- 433
+- -- 135
+* -- 1213
+:= -- 2822
+add.period$ -- 58
+call.type$ -- 27
+change.case$ -- 107
+chr.to.int$ -- 0
+cite$ -- 28
+duplicate$ -- 411
+empty$ -- 1388
+format.name$ -- 212
+if$ -- 3543
+int.to.chr$ -- 0
+int.to.str$ -- 27
+missing$ -- 114
+newline$ -- 206
+num.names$ -- 54
+pop$ -- 173
+preamble$ -- 1
+purify$ -- 107
+quote$ -- 0
+skip$ -- 574
+stack$ -- 0
+substring$ -- 1762
+swap$ -- 114
+text.length$ -- 90
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 78
+warning$ -- 1
+while$ -- 143
+width$ -- 29
+write$ -- 443
+(There was 1 warning)

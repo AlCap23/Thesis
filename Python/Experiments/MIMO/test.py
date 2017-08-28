@@ -29,9 +29,9 @@ ex = Experiment()
 @ex.config
 def experimental_setup():
 	# Set up the Experiment and define the range of system gain, lag and delay as well as filename etc
-	filename = 'MIMO_280817_1.csv'
+	filename = 'MIMO_TEST_5.csv'
 	# Sample size per system order
-	sample_size = 1000
+	sample_size = 1
 	# Size, assuming quadratic system
 	sys_size = 2
 	# Maximum System Order (-1)
@@ -51,7 +51,7 @@ def experimental_setup():
 	# Create the system delay
 	L = np.random.uniform(delay_limits[0], delay_limits[1],(max_order,sample_size))
 	# Create an array for the results: sys_no, order, K,T, k,t,l, ms_real,ms_ideal, 4x t_rise, mp, t_settle, yss 
-	columns = ['Sample No.', 'Order', 'sig_max_cl_D', 'sig_min_cl_D', 'sig_max_s_D', 'sig_min_s_D', 'sig_max_cl_A', 'sig_min_cl_A', 'sig_max_s_A', 'sig_min_s_A', 'sig_max_cl_M', 'sig_min_cl_M', 'sig_max_s_M', 'sig_min_s_M', 'S_D', 'S_A', 'S_M']
+	columns = ['Sample No.', 'Order', 'sig_max_cl_D', 'sig_min_cl_D', 'sig_max_s_D', 'sig_min_s_D', 'sig_max_cl_A', 'sig_min_cl_A', 'sig_max_s_A', 'sig_min_s_A', 'sig_max_cl_M', 'sig_min_cl_M', 'sig_max_s_M', 'sig_min_s_M']
 	R = pd.DataFrame(columns=columns)
 
 # Experimental Study
@@ -147,7 +147,6 @@ def experiment(N,D,L,R,noise_limit,sys_size,sample_size,max_order,filename, colu
 			# Singular values 
 			sigmax = np.zeros((2,3,len(w)))
 			sigmin = np.zeros((2,3,len(w)))
-			stable = np.zeros(3)
 			# Iterate over the methods, 0 = Decentralized Control, 1= Astrom , 2 = Decoupling
 			for methods in range(0,3):
 
@@ -209,19 +208,15 @@ def experiment(N,D,L,R,noise_limit,sys_size,sample_size,max_order,filename, colu
 					# Sensitivity characteristic
 					u,sv,d = np.linalg.svd(mag2[:,:,frequency])
 					sigmax[1,methods,frequency] = np.max(sv)
-					sigmin[1,methods,frequency] = np.min(sv)
+					sigmin[1,methods,frequency] = np.min(sv)	
 
-				# Check if system is stable, all poles are smaller than 1e-10
-				# -> Check if stability is really proofable with that!
-				clpoles = cn.pole(CL)
-				stable[methods] = all( poles<1e-10 for poles in clpoles.real)
 
 			
 			# Columns	
-			#['Sample No.', 'Order', 'sig_max_cl_D', 'sig_min_cl_D', 'sig_max_s_D', 'sig_min_s_D', 'sig_max_cl_A', 'sig_min_cl_A', 'sig_max_s_A', 'sig_min_s_A', 'sig_max_cl_M', 'sig_min_cl_M', 'sig_max_s_M', 'sig_min_s_M', 'S_D', 'S_A', 'S_M']
+			#['Sample No.', 'Order', 'sig_max_cl_D', 'sig_min_cl_D', 'sig_max_s_D', 'sig_min_s_D', 'sig_max_cl_A', 'sig_min_cl_A', 'sig_max_s_A', 'sig_min_s_A', 'sig_max_cl_M', 'sig_min_cl_M', 'sig_max_s_M', 'sig_min_s_M']
 			# Append Data
 			#if order == 1:
-			R.loc[sys_no-1] = [sys_no, order, np.max(sigmax[0,0,:]), np.max(sigmin[0,0,:]),np.max(sigmax[1,0,:]), np.max(sigmin[1,0,:]),np.max(sigmax[0,1,:]), np.max(sigmin[0,1,:]),np.max(sigmax[1,1,:]), np.max(sigmin[1,1,:]),np.max(sigmax[0,2,:]), np.max(sigmin[0,2,:]),np.max(sigmax[1,2,:]), np.max(sigmin[1,2,:]),stable[0], stable[1], stable[2]]
+			R.loc[sys_no-1] = [sys_no, order,np.max(sigmax[0,0,:]), np.max(sigmin[0,0,:]),np.max(sigmax[1,0,:]), np.max(sigmin[1,0,:]),np.max(sigmax[0,1,:]), np.max(sigmin[0,1,:]),np.max(sigmax[1,1,:]), np.max(sigmin[1,1,:]),np.max(sigmax[0,2,:]), np.max(sigmin[0,2,:]),np.max(sigmax[1,2,:]), np.max(sigmin[1,2,:])]
 			
 			# Show percentage
 			per = sys_no/((max_order-1)*sample_size)

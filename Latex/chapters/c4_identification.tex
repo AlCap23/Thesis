@@ -1,9 +1,10 @@
 %!TEX root = ../studentischeArbeiten.tex
 \chapter{Process Models and System Identification}\label{c:identification}
 
-The following chapter serves as an introduction to the modelling of energy and process plants with analogous models. Its secondary aim is to provide a short introduction to the field of system identification in general while giving an in-depth view of two simple but nonetheless very usefull methods.\\
+The following chapter serves as an introduction to the modelling of energy and process plants with analogous models. Its secondary aim is to provide a short introduction to the field of system identification in general while giving an in-depth view of two simple but nonetheless very useful methods. 
+\\
 
-In Sec. \ref{c:identification:s:fotd} the first order time delay model is introduced. The parameters and key properties are introduced. Furthermore an interpretation of the model error with respect to the dynamic behaviour of the system is given. \\
+In Sec. \ref{c:identification:s:fotd} the first order time delay model is introduced. The parameters and key properties are introduced. Furthermore, an interpretation of the model error with respect to the dynamic behaviour of the system is given. \\
 
 Afterwards the first parameter estimation method is presented in Sec. \ref{c:identification:s:area}. The basic concept is explained and visualized. An algortihm in pseudo-code is provided to clarify the approach. \\
 
@@ -11,7 +12,7 @@ The second model based fitting process is explained in Sec. \ref{c:identificatio
 
 A critical review of both algorithms finishes the chapter in Sec.\ref{c:identification:s:review}. Drawbacks of both methodology are enlisted. It closes with recommending a procedure.\\
 
-Since this chapter deals with system identification, a brief introduction to the subject is given in advance. To design a controller for a given process either a theoretical model based on physical laws or first principles, e.g. energy conservation, Newton's laws or the laws of thermodynamics, or a analogous model based on the measured relation between input and output is required. Since not all processes are well-fitted to be physically modeled, the field of system identification provides a vast toolbox for deriving the needed mathematical description. A good, practical approach towards the principles is given in \cite{Keesman2011}, while \cite{Isermann1992} and \cite{Isermann1992a} covers most of the techniques used today.An overview from a more philosophical and methodological perspective is \cite{Ljung2010}.\\
+Since this chapter deals with system identification, a brief introduction to the subject is given in advance. To design a controller for a given process either a theoretical model based on physical laws or first principles, e.g. energy conservation, Newton's laws or the laws of thermodynamics, or an analogous model based on the measured relation between input and output is required. Since not all processes are well-fitted to be physically modelled, the field of system identification provides a vast toolbox for deriving the needed mathematical description. A good, practical approach towards the principles is given in \cite{Keesman2011}, while \cite{Isermann1992} and \cite{Isermann1992a} covers most of the techniques used today.An overview from a more philosophical and methodological perspective is \cite{Ljung2010}.\\
 
 An important aspect of current techniques is the statistical evaluation of the signals measured. Many simplifications to these data processing procedures requiere the input to be statistical independent from itself and the output. While in theory possible, in reality a signal called pseudo random binary sequence (PRBS) is used.\\
 
@@ -20,7 +21,7 @@ The most important and common used algorithm is called Least squares (LS), e.g. 
 \section{First Order Time Delay Model}%
 \label{c:identification:s:fotd}
 
-As discussed earlier system identification enables the user to use various methods to process information to derive a suitable dynamical model.To ensure a deterministic, robust and simple controller an identification based on analogous models is choosen. The reasons for this approach are based on the variety of the process itsself as well as the algorithms used for determination of the controller parameter, see \cite{Astrom1995}, \cite{Astrom2006}.\\
+As discussed earlier system identification enables the user to use various methods to process information to derive a suitable dynamical model.To ensure a deterministic, robust and simple controller, an identification based on a process model with simple dynamics is chosen. The reasons for this approach are based on the variety of the process itsself as well as the algorithms used for determination of the controller parameter, see \cite{Astrom1995}, \cite{Astrom2006}.\\
 
 The model structure used in the scope of the work is a given by the transfer function
 
@@ -41,7 +42,7 @@ The model gain $\hat{K} \in \mathbb{R}$ is the steady state gain of the system, 
 \label{c:identification:e:fotd_de}
 \end{align}
 
-With the general solution for a step response acting on Eq.\ref{c:identification:e:fotd_de} is 
+The general solution for a step response acting on Eq.\ref{c:identification:e:fotd_de} is 
 
 \begin{align}
 \begin{split}
@@ -62,7 +63,7 @@ The Heavyside step function $\sigma(t): \mathbb{R} \mapsto \mathbb{R}$ is define
 \label{c:identificitaion:e:heavyside}
 \end{align}
 
-and hence models the delay acting on the connection between the output and the input. It is worth noting that in the special case of a SISO system a delay acting on the systems input or output is mathematical equivalent. However, for a given MIMO system model it can be of importantance to define where the delay intervenes. \\
+and hence models the delay acting on the connection between the output and the input. It is worth noting that in the special case of a SISO system a delay acting on the systems input or output is mathematical equivalent. However, for a given MIMO system model it can be of importance to model correctly where the delay intervenes. \\
 
 An important characteristic with respect to the time behaviour of the process is given by the normalized time $\tau, \left[0 \geq \tau \geq 1 \right] $ \cite[p.16]{Astrom1995}
 
@@ -73,9 +74,9 @@ An important characteristic with respect to the time behaviour of the process is
 \label{c:identification:e:normalizedtime}
 \end{align}
 
-Eq. \ref{c:identification:e:normalizedtime} gives the ratio of the delay and the delay and the time constant, called average residence time. It can be used as a rating regarding the difficulty of controlling the process, since a high normalized time indicate a delay dominance and hence a very difficult process to control. It can also be connected to the gain ratio \cite[p.27]{Astrom2006}.\\
+Eq. \ref{c:identification:e:normalizedtime} gives the ratio of the delay and the sum of delay and time constant, called average residence time. It can be used as a rating regarding the difficulty of controlling the process, since a high normalized time indicate a delay dominance and hence a very difficult process to control. It can also be connected to the gain ratio \cite[p.27]{Astrom2006}.\\
 
-Since the process model is of upmost interest for the overall process, a detailed investigation of its properties is conducted. This detailed description is started by investigating the model gain over the frequency. It is conventional to substitute the complex varibales with the complex frequency $s~=~j~\omega$. The gain of the process modell is hence given by:
+Since the process model is of upmost interest for the overall process, a detailed investigation of its properties is conducted. This detailed description is started by investigating the model gain over the frequency. It is conventional to substitute the complex varibales with the complex frequency $s~=~j~\omega$. The gain of the process model is hence given by:
 
 \begin{align}
 \begin{split}
@@ -86,7 +87,7 @@ Since the process model is of upmost interest for the overall process, a detaile
 \label{c:identification:e:fotd_gain}
 \end{align}
 
-Eq.\ref{c:identification:e:fotd_gain} shows that the gain over the frequency of FOTD model is equal to a first order system with the same gain and time constant. The effect of the time delay is cancelled due to the use of Euler's identity, which can be interpreted as an orthonormal roation in the complex plane by an angle $\hat{L}\omega$ around the orign.\\
+Eq.\ref{c:identification:e:fotd_gain} shows that the gain over the frequency of a FOTD model is equal to the gain of a first order system with the same time constant. The effect of the time delay is cancelled due to the use of Euler's identity, which can be interpreted as an orthonormal roation in the complex plane by an angle $\hat{L}\omega \in \mathbb{R}^+$ around the orign.\\
 
 The systems phase can be described as
 
@@ -125,7 +126,7 @@ The relative error in Gain $\Delta_K \in \mathbb{C}$ can therefore described as
 \label{c:identification:e:error_gain}
 \end{align}
 
-From Eq.\ref{c:identification:e:error_gain} two important conclusions can be conducted. First, the error is small near the steady state iff the first order dynamics are estimated correctly. The steady state model is even error free, iff the true gain can be identified. Secondly, the error will increase dramaticly for higher order dynamics since the model is not able to project these frequencies in an adequat manner. Another source of error can be found in low order zeros of the system, which will result in an infinite error of the gain. The gain error is visualized in Fig.\ref{c:identification:f:nyquist_fotd}. \\
+From Eq.\ref{c:identification:e:error_gain} two important conclusions can be conducted. First, the error is small near the steady state iff the first order dynamics are estimated correctly. The steady state model is even error free, iff the true gain can be identified. Secondly, the error will increase dramaticly for higher order dynamics since the model is not able to project these frequencies in an adequat manner. Another source of error can be found in low order zeros of the system, which will result in an infinite error of the gain. The gain error is visualized in Fig.\ref{c:identification:f:nyquist_fotd}. Here a high order system with a dominant first order dynamics is approximated by a FOTD process model. The gain is nearly identical until the point $\rbrace[2,-j6\lbrace]$. Here the system models time delay rotate the real and imaginary part and hence transformes the position of the trajectory. \\
 
 \begin{figure}[H]
   \centering
@@ -158,9 +159,6 @@ Eq. \ref{c:identification:e:error_phase} gives an important insight to the funct
 \end{figure}
 
 
-Of course the chance to identify the first order dynamics right are effectively zero. But since heat transfer is described as a first order equation, called Newton's Law of cooling HIER ZITIEREN, it is valid to assume the higher order dynamics to be small. Furthermore it can be assumed to be the time dominant process of the cycle. Hence the valve, which is normally modeled as a second order system can be described as a first order system as well, since it is acting in much faster timescales.\\
-
-
 \section{Integral Fitting Approach}
 \label{c:identification:s:area}
 
@@ -170,7 +168,7 @@ At first, the difference between the settling value of the ouput, $y(\infty)$, a
 
 \begin{align}
 \begin{split}
-\int_0^\infty y(\infty)-y(t)~dt &= \int_0^\infty y(\infty) - \hat{K} ~\left( 1 - e^{-\frac{t- \hat{L}}{\hat{T}}}\right)~ \sigma(t-\hat{L}) ~dt \\
+\int_0^\infty \left[ y(\infty)-y(t) \right] ~dt &= \int_0^\infty \left[ y(\infty) - \hat{K} ~\left( 1 - e^{-\frac{t- \hat{L}}{\hat{T}}}\right)~ \sigma(t-\hat{L}) \right] ~dt \\
 &= \hat{K} {\int_0^\hat{L}} \sigma(t) ~dt + \hat{K}~{\int^\infty_0} e^{-\frac{t}{\hat{T}}} ~dt \\
 &= \hat{K}~\hat{L} + \hat{K} \left( -\hat{T} e^{-\frac{t}{\hat{T}}}\right) \Bigg\rvert^\infty_0 \\
 &= \hat{K}~\left(\hat{T}+\hat{L}\right) \\
@@ -185,8 +183,8 @@ Further exploitation of Eq. \ref{c:identification:e:fodt_dt} leads to the follow
 
 \begin{align}
 \begin{split}
-\int_0^{\hat{T}_{ar}} y(t) ~dt &= \int_0^{\hat{T}_{ar}} \hat{K} ~\left( 1 - e^{-\frac{t- \hat{L}}{\hat{T}}}\right)~ \sigma(t-\hat{L}) ~dt \\
-&= \int_{\hat{L}}^{\hat{T}_{ar}} \hat{K} ~\left( 1 - e^{-\frac{t}{\hat{T}}}\right)~dt \\
+\int_0^{\hat{T}_{ar}} y(t) ~dt &= \int_0^{\hat{T}_{ar}} \left[ \hat{K} ~\left( 1 - e^{-\frac{t- \hat{L}}{\hat{T}}}\right)~ \sigma(t-\hat{L}) \right] ~dt \\
+&= \int_{\hat{L}}^{\hat{T}_{ar}} \left[ \hat{K} ~\left( 1 - e^{-\frac{t}{\hat{T}}}\right) \right]~dt \\
 &= \hat{K} \left( t + \hat{T} e^{-\frac{t}{\hat{T}}} \right) \Bigg\rvert_{\hat{L}}^{\hat{T}_{ar}} \\
 &= \frac{\hat{K}}{e} \hat{T}
 \end{split}
@@ -202,7 +200,28 @@ At last, the gain $\hat{K}$ has to be computed. With the common definition, e.g.
 \label{c:identification:e:area_gain}
 \end{align}
 
-This interpretation is rooting in the final value theorem. Using Eq. \ref{c:identification:e:area_gain} in combination with the other two relation one is able to compute all needed parameters.\newline
+This interpretation is rooting in the final value theorem. Using Eq. \ref{c:identification:e:area_gain} in combination with the other two relation one is able to compute all needed parameters.\\
+
+Assuming a disturbed output $\eta$ as described earlier, where measurement noise is added to the real output one can see the benefits of using Eq.\ref{c:identification:e:area_tar} and \ref{c:identification:e:area_t}. Since the expected value / mean of the noise is given by 
+
+\begin{align}
+\begin{split}
+\int_{-\infty}^{\infty} \eta \left( t \right) dt&= \int_{-\infty}^{\infty} \left[ y \left(t \right) + n\left(t\right) \right] dt \\
+&\approx \int_{0}^{\infty}  y \left(t \right) dt + \underbrace{\int_{0}^{\infty} n\left(t\right) dt }_{= 0}\\
+&\approx \int_{0}^{\infty}  y \left(t \right) dt
+\end{split}
+\label{c:identification:e:integral_noisechancel}
+\end{align}
+
+From Eq. \ref{c:identification:e:integral_noisechancel} follows that measurement noise has no effect on the average residence time and the time constant. Hence, both model parameter can robustly be estimated. In contrast, Eq.\ref{c:identification:e:area_gain} is strongly relient on the singal to noise ratio. If the system is stricly monotone, meaning its outputs is only increasing over time, one can use an average over a measured time interval $\Delta T \in \mathbb{R}^+$. The model gain can be estimated with
+
+\begin{align}
+\begin{split}
+\hat{K} &= \lim_{\Delta T\mapsto \infty} \frac{1}{\Delta T} \frac{\int_{0}^{\Delta T} \left[ y \left( t\right) - y\left(0\right)\right] dt}{u \left( t \right)-u \left( 0 \right)}
+\end{split}
+\label{c:identification:e:area_averagegain}
+\end{align}
+
 The system of equations as described above are called area-based methods, \cite{Fedele2009a}, with regards to its visualization displayed in Fig. . Another, likewise valid understanding is given as the minimization of the integral of the error between the real system and the model over time.\\
 
 %\begin{figure}[h]
@@ -229,7 +248,7 @@ Eq. \ref{c:identification:e:area_sup_gain} defines the gain as the ratio between
 \section{Asymmetric Relay Experiment}
 \label{c:identification:s:relay}
 
-Another class of experimental methods based on a priori model structure is called relay experiments. These methods have been introduced in the early 1980's, ASTR_HAGG1984, and have since then been investigated, developed and used in an industrial context, see . The following section is mainly based on the recent works \cite{Berner2016a}, \cite{Berner2015} and \cite{Berner2014a}.\\
+Another class of experimental methods based on a priori model structure is called relay experiments. These methods have been introduced in the early 1980's, ZITIEREN, and have since then been investigated, developed and used in an industrial context, see . The following section is mainly based on the recent works \cite{Berner2016a}, \cite{Berner2015} and \cite{Berner2014a}.\\
 
 The key concept to estimate the needed parameters is based on the systems response to an (asymmetric) relay input, forcing a semi-stationary limit cylce. This behaviour is illustrated in FIG. .\\
 
@@ -274,7 +293,7 @@ To compute the gain the following relationship can be utilized:
 \begin{align}
 \begin{split}
 \hat{K} &= \frac{\int_{t_P} y(t)-y_R~dt}{\int_{t_P} u(t)-u_R~dt} \\
-&= \frac{\int_{t_P} y(t)-y_R~dt}{\int_{t_P} \left( u_H -u_R \right)~t_{on} - \left( u_L - u_R \right)~t_{off}} 
+&= \frac{\int_{t_P} y(t)-y_R~dt}{ \left( u_H -u_R \right)~t_{on} - \left( u_L - u_R \right)~t_{off}} 
 \end{split}
 \label{c:identification:e:relay_gain}
 \end{align}
@@ -291,7 +310,9 @@ t_{off} &= \hat{T}~  \log\left( \frac{h/\hat{K}-\delta u_H + e^\frac{\hat{L}}{\h
 \label{c:identification:e:relay_time}
 \end{align}
 
-Eq. \ref{c:identification:e:relay_time} can be exploited by using the Eq. \ref{c:identification:e:relay_normalizedtime} by solving it for the ratio between time delay and time constant. Hence, the system can be used to computed $\hat{T}$ and thus $\hat{L}$. 
+Eq. \ref{c:identification:e:relay_time} can be exploited by using the Eq. \ref{c:identification:e:relay_normalizedtime} by solving it for the ratio between time delay and time constant. Hence, the system can be used to computed $\hat{T}$ and thus $\hat{L}$. \\
+
+While computing the gain is robust to measurement noise, see Eq. \ref{c:identification:e:integral_noisechancel}, an immediate disadvantage can be seen from the computation of the systems delay and time constant. If the first order dynamics are FORTSETZEN!!!
 
 \section{Review}
 \label{c:identification:s:review}
