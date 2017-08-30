@@ -4,6 +4,16 @@ Use this script from terminal / console with
 ./python sisostudy.py --file_storage=my_runs
 
 Will create an output with all the necessary information
+
+TODO:
+- Set Point Weight!
+- Dynamisches Verhalten bewerten -> Ähnlichkeiten? Kann gut entkoppelt werden?
+- Nur PT1 und Zeitkonstante nur zwischen 50...100 -> Ist das wirklich besser!?
+- Wie bewertet man NANs?
+- Setzte K iterativ ( for loop ) soweit hoch, bis system instabil! Bei 2x2
+- Hierbei main diagonal = 1,1 , minor diagonal = 0.1...0.9
+- ggf auch Zeitkonstanten vorgeben
+
 '''
 
 # Import the pacakges

@@ -67,8 +67,9 @@ def Integral_Identification(y,u,t):
     u - array of inputs
     t - array of time values
     """
-    # Truncate for Maximum
-    i_end = y.argmax(axis=0)
+    
+    # Truncate for Maximum value of abs
+    i_end = np.argmax(abs(y),axis=0)
     yp = y[0:i_end]
     up = u[0:i_end]
     tp = t[0:i_end]
@@ -315,7 +316,7 @@ def Control_Astrom(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
                 # Set shrinking rate 
                 shrink_rate = 0.9
                 while (np.abs(H[o][o]/(ms*gmax)) - np.sqrt( (b*ky[0]/wc_min)**2 + ky[1]**2 ) < 0):
-                    if counter > 10:
+                    if counter > 1e5:
                         #print('Maximal Iteration for detuning reached! Abort')
                         break
                     # Detune the controller with the shrinking rate    
