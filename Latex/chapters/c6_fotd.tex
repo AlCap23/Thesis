@@ -256,6 +256,7 @@ To detune the controller solving Eq. \ref{c:controller:e:Hmax*} for the integral
 
 Hence, the system is detuned by the FOTD model identified originally at the beginning of the process.
 
+\newpage
 \section{Rosenbrocks Function}%
 \label{c:fotd:s:rosenbrook}
 
@@ -267,13 +268,32 @@ First, the example of Rosenbrock's Function will be considered. The system is gi
 \frac{1}{s+1} & \frac{2}{s+3} \\
 \frac{1}{s+1} & \frac{1}{s+1}
 \end{bmatrix}
+\\
+&=\begin{bmatrix}
+\frac{1}{s+1} & \frac{\frac{2}{3}}{\frac{1}{3}s+1} \\
+\frac{1}{s+1} & \frac{1}{s+1}
+\end{bmatrix} 
 \end{split}
 \label{c:fotd:e:rosenbrock_sys}
 \end{align}
 
-and has been introduced by Rosenbrock in REFERENZ ZUM BUCH!. Because of its multiple pole in $s=-1$ it is a common example in literature, see e.g. \cite{Astrom2001a}.\\
+The transfer function matrix given in \ref{c:fotd:s:rosenbrook} is delay free. The systems time constants and gains are equal for the transfer functions for the input-output pairing  $(u_1, y_1)$,$(u_1,y_2)$ and $(u_2,y_1)$ all equal $T = \unitfrac[1]{sec}{rad}$ and $K = 1$. The transfer function from input 2 to output 1 has a time constant $T = \unitfrac[\frac{1}{3}]{sec}{rad}$ and a gain of $K = \frac{2}{3}$. Hence,whilst not a influencial with respect to gain, $g_{21}$ is acting faster on $y_1$ than $g_{11}$.\\ 
 
-The RGA of Eq.\ref{c:fotd:e:rosenbrock_sys} at steady state is given by
+Rosenbrock's system is a common example. As stated in \cite{Astrom2001a}, it looks easy to control but is not stable, since its characteristic equation given in Eq. \ref{c:fotd:rosenbrock_chareq} has a pole in the right half plane at $s=1$.
+
+\begin{align}
+\begin{split}
+\det\left( \ma{G} \right) &= \frac{1}{\left( s + 1\right)^2} - \frac{2}{\left( s + 1\right) \left( s + 3\right)}
+\end{split}
+\label{c:fotd:rosenbrock_chareq}
+\end{align}
+
+The system is used as an example in \cite{Astrom2001a}, where a controller has been computed using analytical methods. This controller will serve as a reference to the methods developed in Ch. \ref{c:controller}. 
+
+\subsection{Decntralized Controller}%
+\label{c:fotd:s:rosebrock:sub:decentral}
+
+To determine the system input-ouput pairing the RGA of Eq.\ref{c:fotd:e:rosenbrock_sys} at steady state is computed to be:
 
 \begin{align}
 \begin{split}
@@ -285,9 +305,7 @@ The RGA of Eq.\ref{c:fotd:e:rosenbrock_sys} at steady state is given by
 \label{c:fotd:e:rosenbrock_rga}
 \end{align}
 
-Which leads to a main diagonal pairing of the controller. The RGA of the system at the crossover frequency $\omega_C =  \unitfrac[1]{rad}{sec}$ is singular. Hence it can be concluded that the system is ill conditioned near the crossover frequency. \\
-
-Calculating a PI controller holds
+The result of Eq.\ref{c:fotd:e:rosenbrock_rga} advices to control the process using the main diagonal of the system. Following this advice, one is able to design the decentralised controller via the AMIGO tuning rules given in Sec. \ref{c:controller:s:AMIGO}. Designing a PI controller by Eq. \ref{c:controller:e:amigo_pi} with the system coefficients gives a diagonal controller with
 
 \begin{align}
 \ma{K} &= \ma{K}_P + \frac{1}{s}~ \ma{K}_I\\
@@ -301,8 +319,65 @@ Calculating a PI controller holds
 \end{bmatrix}
 \end{align}
 
-Since $\tau_{ij} = 0$ set-point weighting can be 
+With a set-point weight of $ b = 0 $, since $\tau_{ij} = 0$. The parameter of the controller have been computed using an artificial delay of $L = 0.3~T$, since it enables a more robust tuning.
 
+\subsection{Decoupled Controller based on Astr\"om}%
+\label{c:fotd:s:rosebrock:sub:astrom}
+
+At first, the decoupler $\ma{D}$ is designed based on the steady state gain to be 
+
+\begin{align}
+\begin{split}
+\ma{D} &= \begin{bmatrix}
+3 & -2 \\
+-3 & 3
+\end{bmatrix}
+\end{split}
+\label{c:fotd:s:rosenbrock:eq:ast_decoupler}
+\end{align}
+
+This results in the transformed system $\ma{G}^*$ as given in \cite{Astrom2001a}:
+
+\begin{align}
+\begin{split}
+\ma{G}^* &= \ma{G} ~\ma{D} \\
+&= \begin{bmatrix}
+\frac{3\left(1-s\right)}{\left(s+1\right)\left(s+3\right)} & \frac{4~s}{\left(s+1\right)\left(s+3\right)} \\
+0 &   \frac{1}{s+1}
+\end{bmatrix}
+\end{split}
+\label{c:fotd:s:rosenbrock:eq:ast_transformed}
+\end{align}
+
+From Eq.\ref{c:fotd:s:rosenbrock:eq:ast_transformed} it is easy to see that the influence of input 1 to output 2 is already decoupled. The interaction is therefore zero. This relies on the similarities of the dynamics of $g_{12}$ and $g_{22}$. The first order linearization of $g_{21}^*$ holds:
+
+\begin{align}
+\begin{split}
+\gamma_{12} &= \frac{d}{ds}g_{21}^* |_{s=0} \\
+&= \frac{4}{3}
+\end{split}
+\label{c:fotd:rosenbrock:eq:ast_interaction}
+\end{align}
+
+To design a controller based on the simple tuning rules, the main diagonal transfer functions of the system Eq.\ref{c:fotd:s:rosenbrock:eq:ast_transformed} have to be estimated with a FOTD model. According to Eq. \ref{c:fotd:e:CombinationIntegral}, one can estimate the influence of the first input to the first output via:
+
+\begin{align}
+\begin{split}
+g_{11}^* &= 
+\frac{3\left(1-s\right)}{\left(s+1\right)\left(s+3\right)} \\
+&\approx \frac{1}{\frac{7}{9}~s + 1}
+\end{split}
+\label{c:fotd:s:rosenbrock:eq:ast_approx}
+\end{align}
+
+Which is consisting of the steady state gain $K_{11}^* = 1$ and the approximate lag of:
+
+\begin{align}
+\begin{split}
+T_{11}^* & \approx \frac{1+ \frac{2}{3}^2 \left(\frac{1}{3} \right)}{\frac{1}{3}} \\
+& \approx \frac{7}{9}
+\end{split}
+\end{align}
 
 
 \section{Woodberry}%

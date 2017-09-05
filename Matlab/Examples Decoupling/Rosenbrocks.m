@@ -35,7 +35,7 @@ CL1 = feedback(G,CY,+1)*CR;
 S1 = inv(eye(2)-G*CY);
 OL1 = -G*CY;
 %% Decouple via Automatic Aström
-C2 = Decoupling_A2(G,[0.05, 0.05, sqrt(2), sqrt(2)],'AMIGO',1);
+C2 = Decoupling_A(G,[0.01, 0.01, sqrt(2), sqrt(2)],'AMIGO',1);
 % Preprocess PID2 Object -> Set Point Weight
 C = tf(C2); % Convert to TF
 CA = C(1); % Set Point Controller

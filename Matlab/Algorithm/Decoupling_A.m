@@ -98,7 +98,7 @@ for output = 1: sys_size(1)
         L = max(L1,L2);
         K = K1+K2;
         T = abs((K1*(T1+L1)+K2*(T2+L2))/K-L);
-        
+
         % Form new transfer function of the main Diagonal
         Q(output,output) = tf(K,[T,1],'IODelay',L);
     end
@@ -262,6 +262,7 @@ switch Method
         end
 end 
 % Create a PID Controller with Set Point Weight
+K_p,K_i,D
 K_p = D*K_p;
 K_i = D*K_i;
 C = pid2(K_p,K_i,0,0,b,0);

@@ -1,0 +1,672 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fmiModelDescription
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  fmiVersion="2.0"
+  modelName="MIMO_Study.TITO_FOTD"
+  guid="{2468574d-3540-424e-8e3a-f15d338d35a4}"
+  description="Two Input Two Output Process with Delay"
+  generationTool="Dymola Version 2017 FD01 (64-bit), 2016-10-11 (requires license to execute)"
+  generationDateAndTime="2017-08-30T13:24:58Z"
+  variableNamingConvention="structured"
+  numberOfEventIndicators="0">
+  <ModelExchange
+    modelIdentifier="MIMO_0Study_TITO_0FOTD"
+    canGetAndSetFMUstate="true"
+    providesDirectionalDerivative="true"/>
+  <UnitDefinitions>
+    <Unit
+      name="1"/>
+    <Unit
+      name="s">
+      <BaseUnit s="1"/>
+    </Unit>
+  </UnitDefinitions>
+  <TypeDefinitions>
+    <SimpleType
+      name="Modelica.Blocks.Interfaces.RealInput">
+      <Real/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.Blocks.Interfaces.RealOutput">
+      <Real/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.SIunits.Time">
+      <Real
+        quantity="Time"
+        unit="s"/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.Blocks.Types.Init">
+      <Enumeration>
+        <Item name="NoInit"
+          value="1"
+          description="No initialization (start values are used as guess values with fixed=false)"/>
+        <Item name="SteadyState"
+          value="2"
+          description="Steady state initialization (derivatives of states are zero)"/>
+        <Item name="InitialState"
+          value="3"
+          description="Initialization with initial states"/>
+        <Item name="InitialOutput"
+          value="4"
+          description="Initialization with initial outputs (and steady state of the states if possible)"/>
+      </Enumeration>
+    </SimpleType>
+  </TypeDefinitions>
+  <DefaultExperiment startTime="0.0"
+    stopTime="1.0"
+    tolerance="0.0001"/>
+  <ModelVariables>
+    <!-- Index for next variable = 1 -->
+    <ScalarVariable
+      name="K[1,1]"
+      valueReference="16777216"
+      causality="parameter"
+      variability="fixed">
+      <Real start="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 2 -->
+    <ScalarVariable
+      name="K[1,2]"
+      valueReference="16777217"
+      causality="parameter"
+      variability="fixed">
+      <Real start="2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 3 -->
+    <ScalarVariable
+      name="K[2,1]"
+      valueReference="16777218"
+      causality="parameter"
+      variability="fixed">
+      <Real start="3"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 4 -->
+    <ScalarVariable
+      name="K[2,2]"
+      valueReference="16777219"
+      causality="parameter"
+      variability="fixed">
+      <Real start="4"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 5 -->
+    <ScalarVariable
+      name="T[1,1]"
+      valueReference="16777220"
+      causality="parameter"
+      variability="fixed">
+      <Real start="10"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 6 -->
+    <ScalarVariable
+      name="T[1,2]"
+      valueReference="16777221"
+      causality="parameter"
+      variability="fixed">
+      <Real start="10"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 7 -->
+    <ScalarVariable
+      name="T[2,1]"
+      valueReference="16777222"
+      causality="parameter"
+      variability="fixed">
+      <Real start="10"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 8 -->
+    <ScalarVariable
+      name="T[2,2]"
+      valueReference="16777223"
+      causality="parameter"
+      variability="fixed">
+      <Real start="10"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 9 -->
+    <ScalarVariable
+      name="L[1,1]"
+      valueReference="16777224"
+      causality="parameter"
+      variability="fixed">
+      <Real start="2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 10 -->
+    <ScalarVariable
+      name="L[1,2]"
+      valueReference="16777225"
+      causality="parameter"
+      variability="fixed">
+      <Real start="3"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 11 -->
+    <ScalarVariable
+      name="L[2,1]"
+      valueReference="16777226"
+      causality="parameter"
+      variability="fixed">
+      <Real start="5"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 12 -->
+    <ScalarVariable
+      name="L[2,2]"
+      valueReference="16777227"
+      causality="parameter"
+      variability="fixed">
+      <Real start="4"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 13 -->
+    <ScalarVariable
+      name="firstOrder.k"
+      valueReference="100663296"
+      description="Gain"
+      variability="fixed">
+      <Real
+        unit="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 14 -->
+    <ScalarVariable
+      name="firstOrder.T"
+      valueReference="100663297"
+      description="Time Constant"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Time"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 15 -->
+    <ScalarVariable
+      name="firstOrder.initType"
+      valueReference="100663298"
+      description="Type of initialization (1: no init, 2: steady state, 3/4: initial output)"
+      variability="constant">
+      <Enumeration
+        declaredType="Modelica.Blocks.Types.Init"
+        start="3"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 16 -->
+    <ScalarVariable
+      name="firstOrder.y_start"
+      valueReference="16777228"
+      description="Initial or guess value of output (= state)"
+      causality="parameter"
+      variability="fixed">
+      <Real start="0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 17 -->
+    <ScalarVariable
+      name="firstOrder.u"
+      valueReference="352321536"
+      description="Connector of Real input signal">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 18 -->
+    <ScalarVariable
+      name="firstOrder.y"
+      valueReference="33554432"
+      description="Connector of Real output signal">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 19 -->
+    <ScalarVariable
+      name="der(firstOrder.y)"
+      valueReference="587202560"
+      description="der(Connector of Real output signal)">
+      <Real derivative="18"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 20 -->
+    <ScalarVariable
+      name="fixedDelay.u"
+      valueReference="33554432"
+      description="Connector of Real input signal">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 21 -->
+    <ScalarVariable
+      name="fixedDelay.y"
+      valueReference="369098755"
+      description="Connector of Real output signal">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 22 -->
+    <ScalarVariable
+      name="fixedDelay.delayTime"
+      valueReference="100663300"
+      description="Delay time of output with respect to input signal"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Time"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 23 -->
+    <ScalarVariable
+      name="u_1"
+      valueReference="352321536"
+      causality="input">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        start="0.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 24 -->
+    <ScalarVariable
+      name="y_1"
+      valueReference="335544320"
+      causality="output">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 25 -->
+    <ScalarVariable
+      name="u_2"
+      valueReference="352321537"
+      causality="input">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        start="0.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 26 -->
+    <ScalarVariable
+      name="y_2"
+      valueReference="335544321"
+      causality="output">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 27 -->
+    <ScalarVariable
+      name="add.u1"
+      valueReference="369098755"
+      description="Connector of Real input signal 1">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 28 -->
+    <ScalarVariable
+      name="add.u2"
+      valueReference="369098757"
+      description="Connector of Real input signal 2">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 29 -->
+    <ScalarVariable
+      name="add.y"
+      valueReference="335544320"
+      description="Connector of Real output signal">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 30 -->
+    <ScalarVariable
+      name="add.k1"
+      valueReference="16777229"
+      description="Gain of upper input"
+      causality="parameter"
+      variability="tunable">
+      <Real start="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 31 -->
+    <ScalarVariable
+      name="add.k2"
+      valueReference="16777230"
+      description="Gain of lower input"
+      causality="parameter"
+      variability="tunable">
+      <Real start="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 32 -->
+    <ScalarVariable
+      name="add1.u1"
+      valueReference="369098758"
+      description="Connector of Real input signal 1">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 33 -->
+    <ScalarVariable
+      name="add1.u2"
+      valueReference="369098759"
+      description="Connector of Real input signal 2">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 34 -->
+    <ScalarVariable
+      name="add1.y"
+      valueReference="335544321"
+      description="Connector of Real output signal">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 35 -->
+    <ScalarVariable
+      name="add1.k1"
+      valueReference="16777231"
+      description="Gain of upper input"
+      causality="parameter"
+      variability="tunable">
+      <Real start="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 36 -->
+    <ScalarVariable
+      name="add1.k2"
+      valueReference="16777232"
+      description="Gain of lower input"
+      causality="parameter"
+      variability="tunable">
+      <Real start="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 37 -->
+    <ScalarVariable
+      name="firstOrder1.k"
+      valueReference="100663304"
+      description="Gain"
+      variability="fixed">
+      <Real
+        unit="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 38 -->
+    <ScalarVariable
+      name="firstOrder1.T"
+      valueReference="100663305"
+      description="Time Constant"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Time"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 39 -->
+    <ScalarVariable
+      name="firstOrder1.initType"
+      valueReference="100663306"
+      description="Type of initialization (1: no init, 2: steady state, 3/4: initial output)"
+      variability="constant">
+      <Enumeration
+        declaredType="Modelica.Blocks.Types.Init"
+        start="3"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 40 -->
+    <ScalarVariable
+      name="firstOrder1.y_start"
+      valueReference="16777233"
+      description="Initial or guess value of output (= state)"
+      causality="parameter"
+      variability="fixed">
+      <Real start="0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 41 -->
+    <ScalarVariable
+      name="firstOrder1.u"
+      valueReference="352321536"
+      description="Connector of Real input signal">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 42 -->
+    <ScalarVariable
+      name="firstOrder1.y"
+      valueReference="33554433"
+      description="Connector of Real output signal">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 43 -->
+    <ScalarVariable
+      name="der(firstOrder1.y)"
+      valueReference="587202561"
+      description="der(Connector of Real output signal)">
+      <Real derivative="42"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 44 -->
+    <ScalarVariable
+      name="fixedDelay1.u"
+      valueReference="33554433"
+      description="Connector of Real input signal">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 45 -->
+    <ScalarVariable
+      name="fixedDelay1.y"
+      valueReference="369098758"
+      description="Connector of Real output signal">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 46 -->
+    <ScalarVariable
+      name="fixedDelay1.delayTime"
+      valueReference="100663307"
+      description="Delay time of output with respect to input signal"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Time"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 47 -->
+    <ScalarVariable
+      name="firstOrder2.k"
+      valueReference="100663308"
+      description="Gain"
+      variability="fixed">
+      <Real
+        unit="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 48 -->
+    <ScalarVariable
+      name="firstOrder2.T"
+      valueReference="100663309"
+      description="Time Constant"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Time"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 49 -->
+    <ScalarVariable
+      name="firstOrder2.initType"
+      valueReference="100663310"
+      description="Type of initialization (1: no init, 2: steady state, 3/4: initial output)"
+      variability="constant">
+      <Enumeration
+        declaredType="Modelica.Blocks.Types.Init"
+        start="3"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 50 -->
+    <ScalarVariable
+      name="firstOrder2.y_start"
+      valueReference="16777234"
+      description="Initial or guess value of output (= state)"
+      causality="parameter"
+      variability="fixed">
+      <Real start="0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 51 -->
+    <ScalarVariable
+      name="firstOrder2.u"
+      valueReference="352321537"
+      description="Connector of Real input signal">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 52 -->
+    <ScalarVariable
+      name="firstOrder2.y"
+      valueReference="33554434"
+      description="Connector of Real output signal">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 53 -->
+    <ScalarVariable
+      name="der(firstOrder2.y)"
+      valueReference="587202562"
+      description="der(Connector of Real output signal)">
+      <Real derivative="52"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 54 -->
+    <ScalarVariable
+      name="fixedDelay2.u"
+      valueReference="33554434"
+      description="Connector of Real input signal">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 55 -->
+    <ScalarVariable
+      name="fixedDelay2.y"
+      valueReference="369098757"
+      description="Connector of Real output signal">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 56 -->
+    <ScalarVariable
+      name="fixedDelay2.delayTime"
+      valueReference="100663311"
+      description="Delay time of output with respect to input signal"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Time"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 57 -->
+    <ScalarVariable
+      name="firstOrder3.k"
+      valueReference="100663312"
+      description="Gain"
+      variability="fixed">
+      <Real
+        unit="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 58 -->
+    <ScalarVariable
+      name="firstOrder3.T"
+      valueReference="100663313"
+      description="Time Constant"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Time"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 59 -->
+    <ScalarVariable
+      name="firstOrder3.initType"
+      valueReference="100663314"
+      description="Type of initialization (1: no init, 2: steady state, 3/4: initial output)"
+      variability="constant">
+      <Enumeration
+        declaredType="Modelica.Blocks.Types.Init"
+        start="3"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 60 -->
+    <ScalarVariable
+      name="firstOrder3.y_start"
+      valueReference="16777235"
+      description="Initial or guess value of output (= state)"
+      causality="parameter"
+      variability="fixed">
+      <Real start="0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 61 -->
+    <ScalarVariable
+      name="firstOrder3.u"
+      valueReference="352321537"
+      description="Connector of Real input signal">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 62 -->
+    <ScalarVariable
+      name="firstOrder3.y"
+      valueReference="33554435"
+      description="Connector of Real output signal">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 63 -->
+    <ScalarVariable
+      name="der(firstOrder3.y)"
+      valueReference="587202563"
+      description="der(Connector of Real output signal)">
+      <Real derivative="62"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 64 -->
+    <ScalarVariable
+      name="fixedDelay3.u"
+      valueReference="33554435"
+      description="Connector of Real input signal">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 65 -->
+    <ScalarVariable
+      name="fixedDelay3.y"
+      valueReference="369098759"
+      description="Connector of Real output signal">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 66 -->
+    <ScalarVariable
+      name="fixedDelay3.delayTime"
+      valueReference="100663315"
+      description="Delay time of output with respect to input signal"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Time"/>
+    </ScalarVariable>
+  </ModelVariables>
+  <ModelStructure>
+    <Outputs>
+      <Unknown index="24"
+        dependencies="18 52"
+        dependenciesKind="dependent dependent"/>
+      <Unknown index="26"
+        dependencies="42 62"
+        dependenciesKind="dependent dependent"/>
+    </Outputs>
+    <Derivatives>
+      <Unknown index="19"
+        dependencies="18 23"
+        dependenciesKind="fixed fixed"/>
+      <Unknown index="43"
+        dependencies="23 42"
+        dependenciesKind="fixed fixed"/>
+      <Unknown index="53"
+        dependencies="25 52"
+        dependenciesKind="fixed fixed"/>
+      <Unknown index="63"
+        dependencies="25 62"
+        dependenciesKind="fixed fixed"/>
+    </Derivatives>
+    <InitialUnknowns>
+      <Unknown index="18"
+        dependencies="16"
+        dependenciesKind="dependent"/>
+      <Unknown index="19"
+        dependencies="1 5 16 23"
+        dependenciesKind="dependent dependent dependent dependent"/>
+      <Unknown index="24"
+        dependencies="9 11 16 30 31 50"
+        dependenciesKind="dependent dependent dependent dependent dependent dependent"/>
+      <Unknown index="26"
+        dependencies="10 12 35 36 40 60"
+        dependenciesKind="dependent dependent dependent dependent dependent dependent"/>
+      <Unknown index="42"
+        dependencies="40"
+        dependenciesKind="dependent"/>
+      <Unknown index="43"
+        dependencies="2 6 23 40"
+        dependenciesKind="dependent dependent dependent dependent"/>
+      <Unknown index="52"
+        dependencies="50"
+        dependenciesKind="dependent"/>
+      <Unknown index="53"
+        dependencies="3 7 25 50"
+        dependenciesKind="dependent dependent dependent dependent"/>
+      <Unknown index="62"
+        dependencies="60"
+        dependenciesKind="dependent"/>
+      <Unknown index="63"
+        dependencies="4 8 25 60"
+        dependenciesKind="dependent dependent dependent dependent"/>
+    </InitialUnknowns>
+  </ModelStructure>
+</fmiModelDescription>

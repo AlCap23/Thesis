@@ -15,7 +15,7 @@ TODO:
 - ggf auch Zeitkonstanten vorgeben
 
 '''
-
+# coding: utf8
 # Import the pacakges
 # Numpy for numerical methods
 import numpy as np 

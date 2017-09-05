@@ -1,3 +1,4 @@
+# coding: utf8
 """
 	Contains the Python package for Algorithm used
 """
@@ -68,8 +69,15 @@ def Integral_Identification(y,u,t):
     t - array of time values
     """
     
+    # If the output is zero return emtpy function
+    if np.max(abs(y)) == 0:
+        return 0,0,0
+
     # Truncate for Maximum value of abs
     i_end = np.argmax(abs(y),axis=0)
+    # If Last indice is used
+    if i_end <= 0:
+        i_end = 1
     yp = y[0:i_end]
     up = u[0:i_end]
     tp = t[0:i_end]
@@ -138,32 +146,36 @@ def AMIGO_Tune(K,T,L, structure = 'PI'):
        Needs first order time delay parameter as input
     """
     # Check for small delay
-    if L < 1e-1:
-        L = 1e-1
+    if L < 0.3*T:
+        if 0.3*T < 1e-2:
+            L = 1e-2
+        else:
+            L = 0.3*T
     # PI Controller
     if structure == 'PI':
         # Parameter as Defined in Aström et. al., Advanced PID Control,p.229 
         KP = 0.15/K + (0.35 - L*T /(L+T)**2)*T/(K*L)
         TI = 0.35*L+(13*L*T**2)/(T**2+12*L*T+7*L**2)
         TD = 0.0
-        # Set Point Weight, as given on p.235
-        if L/(T+L) > 0.5:
-            b = 1
-        else:
-            b = 0.0
-        
-    elif structure == 'PID':
-        KP = 1/K*(0.2+0.45*T/L)
-        TI = (0.4*L + 0.8*T)/(L+0.1*T)*L
-        TD = (0.5*L*T)/(0.3*L+T)
         # Set Point Weight, Derived from Fig. 7.2, p. 230
         if L/(T+L) < 0.2:
-            b = 0.4
+            b = 0.0
         elif L/(T+L) > 0.3:
             b = 1.0
         else:
             # Approximate as Linear Function
-            b = 0.4 + (1.0 - 0.4)/(0.3-0.2)*L/(T+L)
+            b = 0.0 + (1.0 - 0.0)/(0.3-0.2)*(L/(T+L)-0.2)  
+
+    elif structure == 'PID':
+        KP = 1/K*(0.2+0.45*T/L)
+        TI = (0.4*L + 0.8*T)/(L+0.1*T)*L
+        TD = (0.5*L*T)/(0.3*L+T)
+        # Set Point Weight, as given on p.235
+        # PRÜFEN!!!
+        if L/(T+L) > 0.5:
+            b = 1
+        else:
+            b = 0.0
     else:
         print("Undefined controller Structure")
         return np.NaN
@@ -178,6 +190,8 @@ def AMIGO_DETUNE(K,T,L,params,KP, MS = 1.4, structure = 'PI'):
     # Check for small delay
     if L < 1e-1:
         L = 1e-1
+    # Calculate normalized Time
+    tau = L/(L+T)
     # Needed Parameter
     alpha_D = (MS-1)/MS # See p.255 Eq. 7.19
     beta_D = MS*(MS+np.sqrt(MS**2-1))/2# See p.257 Eq. 7.24
@@ -188,12 +202,16 @@ def AMIGO_DETUNE(K,T,L,params,KP, MS = 1.4, structure = 'PI'):
     KD0 = params[2]
     
     if structure=='PI':
-        # Needed constrain for switch case,See p. 258 Eq. 7.27
-        c = KP*K - KP0*K*(L+T)/(beta_D*(alpha_D+KP*K)) - alpha_D
-        if c < 0:
-            KI = beta_D*(alpha_D+KP*K)**2/(K*(L+T))
+        # Use normalized time to determine Process as explained on p.255 f.
+        if tau > 0.1:
+            KI = KI0*(K*KP+alpha_D)/(K*KP0+alpha_D)
         else:
-            KI = KI0*(alpha_D+KP*K)/(alpha_D+KP0*K)
+            # Needed constrain for switch case,See p. 258 Eq. 7.27
+            c = KP*K - KP0*K*(L+T)/(beta_D*(alpha_D+KP*K)) - alpha_D
+            if c < 0:
+                KI = beta_D*(alpha_D+KP*K)**2/(K*(L+T))
+            else:
+                KI = KI0*(alpha_D+KP*K)/(alpha_D+KP0*K)
         return [KP,KP/KI,0.0]
     if structure == 'PID':
         print("Not implemented")
@@ -212,18 +230,21 @@ def Control_Decentral(K,T,L, w = 0, b=np.empty, structure = 'PI'):
         params, b0 = AMIGO_Tune(K,T,L)
         # If b is not given, use b from AMIGO
         if b == np.empty:
-            Kr = [b0*params[0], params[1], params[2]]
+            B = b0
+            #Kr = [b0*params[0], params[1], params[2]]
             Ky = params
         else:
-            Kr = [b*params[0],params[1],params[2]]
+            B  = b
             Ky = params
+        D = 1
     # Compute general MIMO Case
     else:
         # Systems dimensions
         outputs,inputs = K.shape
         # Create an empty controller
         Ky = np.zeros([outputs,inputs,3])
-        Kr = np.zeros([outputs,inputs,3])
+        B = np.zeros([outputs,inputs])
+        D = np.eye(outputs,inputs)
         # Compute RGA -> Checks for Shape
         LG = RGA(K,T,L,w)
         # Get Pairing as an array for every column
@@ -233,8 +254,8 @@ def Control_Decentral(K,T,L, w = 0, b=np.empty, structure = 'PI'):
             # Best Pairing
             i = Pairing[o]
             # Compute controller via recursion
-            Ky[o][i],Kr[o][i] = Control_Decentral(K[o][i],T[o][i],L[o][i],b)
-    return Ky, Kr
+            Ky[o][i],B[o][i],d = Control_Decentral(K[o][i],T[o][i],L[o][i],b)
+    return Ky, B, D
 
 # Algorithm for computing a decoupling control based on Aström
 
@@ -263,16 +284,16 @@ def Control_Astrom(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
         
         # Create an empty controller
         Ky = np.empty([outputs,inputs,3])
-        Kr = np.empty([outputs,inputs,3])
+        B = np.empty([outputs,inputs])
         
         
         # Get minimal Delay/ Time Constant for robust limit of crossover frequency, ignore zeros
         # Important note: wc_min is actually 1/w_c !!!
         if (L[np.where(L>0)].size !=0) or (T[np.where(T>0)].size !=0):
             if (L[np.where(L>0)].size !=0):
-                wc_min = np.min([np.min(L[np.nonzero(L)]),np.min(T[np.nonzero(T)])])
+                wc_min = np.max([np.max(L[np.nonzero(L)]),np.max(T[np.nonzero(T)])])
             else:
-                wc_min = np.min(np.min(T[np.nonzero(T)]))
+                wc_min = np.max(np.max(T[np.nonzero(T)]))
         else:
             # Use very high frequency
             wc_min = 1e10
@@ -285,19 +306,21 @@ def Control_Astrom(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
         # Set main diagonal to zero
         np.fill_diagonal(Gamma,0)
         # Get the maximum of each row 
-        GMax = np.argmax(Gamma,axis=0)
+        GMax = np.argmax(Gamma,axis=1)
+        
         # Iterate through the outputs 
         for o in range(0,outputs):
             # Estimate the new system parameter
             # Get the maximal delay
+            #l = np.max(L[o][:])
             l = np.max(L[o][:])
-            # Add the systems gain -> scaled
-            k = np.dot(K[o][:],D[:][o])
-            # Get the system time constant
-            t = (np.dot(np.multiply(K[o][:],D[:][o]),T[o][:]+L[o][:]))/k - l
-            
+            # Add the systems gain -> scaled to 1 because of inversion
+            k = np.array([1])
+            # Get the array of gains
+            # Get the system time constant as weighted sum
+            t = np.dot(K[o][:],np.dot(D,np.add(T[o][:],L[o][:])))/k - l # np.max(T[o][:])
             # Design a controller based on estimated system
-            ky,kr = Control_Decentral(k,t,l,w,b,structure)
+            ky, b0, d = Control_Decentral(k,t,l,w,b,structure)
             
             # Test for Interaction
             # We detune the controller of the n-th output in such a way that the maximum of the n-th row is sufficiently small
@@ -307,31 +330,30 @@ def Control_Astrom(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
             # Check for set point weight, either given
             if b == np.empty:
                 # Or computed from AMIGO_TUNE
-                b = kr[0]/ky[0]
+                b = b0
             
             # Check for structure
             if structure == 'PI':
                 # Set counter for while
                 counter=0
                 # Set shrinking rate 
-                shrink_rate = 0.9
-                while (np.abs(H[o][o]/(ms*gmax)) - np.sqrt( (b*ky[0]/wc_min)**2 + ky[1]**2 ) < 0):
-                    if counter > 1e5:
-                        #print('Maximal Iteration for detuning reached! Abort')
-                        break
-                    # Detune the controller with the shrinking rate    
-                    ky = AMIGO_DETUNE(k,t,l,ky,shrink_rate*ky[0])
-                    # Increment counter
-                    counter += 1
+                shrink_rate = 0.7
+                # Check if decoupling is needed
+                if gmax < 1e-3:
+                    while (np.abs(H[o][o]/(ms*gmax)) - np.sqrt( (b*ky[0]/wc_min)**2 + ky[1]**2 ) < 0):
+                        if counter > 1e6:
+                            #print('Maximal Iteration for detuning reached! Abort')
+                            break
+                        # Detune the controller with the shrinking rate    
+                        ky = AMIGO_DETUNE(k,t,l,ky,shrink_rate*ky[0])
+                        # Increment counter
+                        counter += 1
                 # Get the controller parameter
                 Ky[o][o][:] = ky
-                Kr[o][o][:] = [b*ky[0], ky[1], ky[2]]
+                B[o][o] = b
         
-        # Rescale controller for real system
-        for c in range(0,2):
-            Ky[:][:][c] = np.dot(D,Ky[:][:][c])
-            Kr[:][:][c] = np.dot(D,Kr[:][:][c])
-        return Ky,Kr
+
+        return Ky,B,D
 
 
 # Modified Detuning
@@ -351,15 +373,15 @@ def Control_Decoupled(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
     else:
 
         # Compute a decentralized control structure based on RGA
-        Ky, Kr = Control_Decentral(K,T,L, w , b, structure)
+        Ky, B, D = Control_Decentral(K,T,L, w , b, structure)
 
         # Get minimal Delay/ Time Constant for robust limit of crossover frequency, ignore zeros
         # Important note: wc_min is actually 1/w_c !!!
         if (L[np.where(L>0)].size !=0) or (T[np.where(T>0)].size !=0):
             if (L[np.where(L>0)].size !=0):
-                wc_min = np.min([np.min(L[np.nonzero(L)]),np.min(T[np.nonzero(T)])])
+                wc_min = np.max([np.max(L[np.nonzero(L)]),np.max(T[np.nonzero(T)])])
             else:
-                wc_min = np.min(np.min(T[np.nonzero(T)]))
+                wc_min = np.max(np.max(T[np.nonzero(T)]))
         else:
             # Use very high frequency
             wc_min = 1e10
@@ -393,8 +415,8 @@ def Control_Decoupled(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
         # Get the interaction
         GammaA = np.abs(GA + np.dot(GD,S))
         # Get the maximum of each row 
-        GMax = np.argmax(GammaA,axis=0)
-  
+        GMax = np.argmax(GammaA,axis=1)
+        
         #Iterate through the outputs
         for outputs in range(0,K.shape[0]):
             inputs = Pairing[outputs]
@@ -402,7 +424,7 @@ def Control_Decoupled(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
             # Test the current controller for interaction
             # Every controller has the dimension 3 for kp, ki, kd
             ky = Ky[outputs][inputs]
-            kr = Kr[outputs][inputs]
+            #kr = Kr[outputs][inputs]
 
             # Get the current parameter
             k = K[outputs][inputs]
@@ -412,7 +434,7 @@ def Control_Decoupled(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
             # Check for set point weight, either given
             if b == np.empty:
                 # Or computed from AMIGO_TUNE
-                b = kr[0]/ky[0]
+                b = B[outputs][inputs]
             
             gmax = GammaA[outputs][GMax[outputs]]
 
@@ -421,17 +443,19 @@ def Control_Decoupled(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
                 # Define the counter
                 counter = 0
                 # Set shrinking rate 
-                shrink_rate = 0.9
-                while (np.abs(H[outputs][outputs]/(ms*gmax)) - np.sqrt( (b*ky[0]/wc_min)**2 + ky[1]**2 ) < 0):
-                    if counter > 1e5:
-                        #print('Maximal Iteration for detuning reached! Abort')
-                        break
-                    # Detune the controller with the shrinking rate    
-                    ky = AMIGO_DETUNE(k,t,l,ky,shrink_rate*ky[0])
-                    # Increment counter
-                    counter += 1
+                shrink_rate = 0.7
+                if gmax < 1e-3:
+                    while (np.abs(H[outputs][outputs]/(ms*gmax)) - np.sqrt( (b*ky[0]/wc_min)**2 + ky[1]**2 ) < 0):
+                        if counter > 1e6:
+                            #print('Maximal Iteration for detuning reached! Abort')
+                            break
+                        # Detune the controller with the shrinking rate    
+                        ky = AMIGO_DETUNE(k,t,l,ky,shrink_rate*ky[0])
+                        # Increment counter
+                        counter += 1
                 # Get the controller parameter
                 Ky[outputs][inputs][:] = ky
-                Kr[outputs][inputs][:] = [b*ky[0], ky[1], ky[2]]
-
-        return Ky,Kr
+                #Kr[outputs][inputs][:] = [b*ky[0], ky[1], ky[2]]
+            
+        # Return the controller with splitter
+        return Ky,B,np.eye(K.shape[0],K.shape[1])+S

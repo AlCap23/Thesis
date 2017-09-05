@@ -1,0 +1,18 @@
+Model: MIMO_Study.TITO_FOTD_CLOSED
+Integration started at 0 using integration method:
+cvode from sundials
+
+Integration terminated successfully at T = 100
+   CPU time for integration                  : 0.033 seconds
+   Number of result points                   : 2002
+   Number of grid points                     : 1999
+   Number of (successful) steps              : 43
+   Number of rejected steps                  : 0
+   Number of F-evaluations                   : 67
+   Number of non-linear iteration            : 59
+   Number of non-linear convergence failures : 0
+   Number of Jacobian-evaluations            : 4
+   Number of crossing function evaluations   : 2042
+   Number of (model) time events             : 1
+   Number of state    events                 : 0
+   Number of step     events                 : 0

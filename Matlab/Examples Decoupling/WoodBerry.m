@@ -43,6 +43,7 @@ for Inputs = 1:2
         CY(Inputs,Outputs) = CB(:,:,Inputs,Outputs); % y -> u
     end
 end
+CY
 % Closed Loop 
 CL2 = feedback(G,CY,+1)*CR;
 S2 = inv(eye(2)-G*CY);
