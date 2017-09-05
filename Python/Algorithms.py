@@ -144,18 +144,22 @@ def AMIGO_Tune(K,T,L, structure = 'PI'):
     """Computes the PI(D) controller parameter based on AMIGO algorithm;
        Parameter are returned as parallel notation KP,KI,KD and set point;
        Needs first order time delay parameter as input
+
+       
     """
     # Check for small delay
     if L < 0.3*T:
         if 0.3*T < 1e-2:
-            L = 1e-2
+            L_P = 1e-2
         else:
-            L = 0.3*T
+            L_P = 0.3*T
+    else:
+        L_P = L
     # PI Controller
     if structure == 'PI':
         # Parameter as Defined in Aström et. al., Advanced PID Control,p.229 
-        KP = 0.15/K + (0.35 - L*T /(L+T)**2)*T/(K*L)
-        TI = 0.35*L+(13*L*T**2)/(T**2+12*L*T+7*L**2)
+        KP = 0.15/K + (0.35 - L_P*T /(L_P+T)**2)*T/(K*L_P)
+        TI = 0.35*L_P+(13*L_P*T**2)/(T**2+12*L_P*T+7*L_P**2)
         TD = 0.0
         # Set Point Weight, Derived from Fig. 7.2, p. 230
         if L/(T+L) < 0.2:
@@ -167,9 +171,9 @@ def AMIGO_Tune(K,T,L, structure = 'PI'):
             b = 0.0 + (1.0 - 0.0)/(0.3-0.2)*(L/(T+L)-0.2)  
 
     elif structure == 'PID':
-        KP = 1/K*(0.2+0.45*T/L)
-        TI = (0.4*L + 0.8*T)/(L+0.1*T)*L
-        TD = (0.5*L*T)/(0.3*L+T)
+        KP = 1/K*(0.2+0.45*T/L_P)
+        TI = (0.4*L_P + 0.8*T)/(L_P+0.1*T)*L
+        TD = (0.5*L_P*T)/(0.3*L_P+T)
         # Set Point Weight, as given on p.235
         # PRÜFEN!!!
         if L/(T+L) > 0.5:
@@ -307,21 +311,24 @@ def Control_Astrom(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
         np.fill_diagonal(Gamma,0)
         # Get the maximum of each row 
         GMax = np.argmax(Gamma,axis=1)
-        
+        # Get the new System
+        Tt = np.dot(np.multiply(K,np.add(T,L)),D)-np.diag(np.max(L,axis=1))#np.dot(K,np.dot(np.transpose(np.add(T,L)),D))-np.diag(np.max(L,axis=1))
+        Lt = np.diag(np.max(np.transpose(L),axis=0))
+        Kt = np.eye(K.shape[0],K.shape[1])
+        print()
         # Iterate through the outputs 
         for o in range(0,outputs):
             # Estimate the new system parameter
             # Get the maximal delay
             #l = np.max(L[o][:])
-            l = np.max(L[o][:])
+            l = Lt[o][o]
             # Add the systems gain -> scaled to 1 because of inversion
-            k = np.array([1])
+            k = Kt[o][o]
             # Get the array of gains
             # Get the system time constant as weighted sum
-            t = np.dot(K[o][:],np.dot(D,np.add(T[o][:],L[o][:])))/k - l # np.max(T[o][:])
+            t = Tt[o][o]
             # Design a controller based on estimated system
             ky, b0, d = Control_Decentral(k,t,l,w,b,structure)
-            
             # Test for Interaction
             # We detune the controller of the n-th output in such a way that the maximum of the n-th row is sufficiently small
             # Current maximum interaction
@@ -348,6 +355,7 @@ def Control_Astrom(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
                         ky = AMIGO_DETUNE(k,t,l,ky,shrink_rate*ky[0])
                         # Increment counter
                         counter += 1
+                    print(counter)
                 # Get the controller parameter
                 Ky[o][o][:] = ky
                 B[o][o] = b

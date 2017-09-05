@@ -310,16 +310,16 @@ The result of Eq.\ref{c:fotd:e:rosenbrock_rga} advices to control the process us
 \begin{align}
 \ma{K} &= \ma{K}_P + \frac{1}{s}~ \ma{K}_I\\
 &= \begin{bmatrix}
-1.21 & 0 \\
-0 & 1.21
+0.725 & 0 \\
+0 & 0.725
 \end{bmatrix}
 + \frac{1}{s}\begin{bmatrix}
-0.777 & 0 \\
-0 & 0.777
+0.852 & 0 \\
+0 & 0.852
 \end{bmatrix}
 \end{align}
 
-With a set-point weight of $ b = 0 $, since $\tau_{ij} = 0$. The parameter of the controller have been computed using an artificial delay of $L = 0.3~T$, since it enables a more robust tuning.
+With a set-point weight of $ b = 0 $, since $\tau_{ij} = 0 ~\forall i,j \in [1,2]$. The parameter of the controller have been computed using an artificial delay of $L = 0.3~T$, since it enables a more robust tuning.
 
 \subsection{Decoupled Controller based on Astr\"om}%
 \label{c:fotd:s:rosebrock:sub:astrom}
@@ -353,7 +353,7 @@ From Eq.\ref{c:fotd:s:rosenbrock:eq:ast_transformed} it is easy to see that the 
 
 \begin{align}
 \begin{split}
-\gamma_{12} &= \frac{d}{ds}g_{21}^* |_{s=0} \\
+\gamma_{12} &= \frac{d}{ds}\left(g_{21}^*\right) |_{s=0} \\
 &= \frac{4}{3}
 \end{split}
 \label{c:fotd:rosenbrock:eq:ast_interaction}
@@ -374,11 +374,51 @@ Which is consisting of the steady state gain $K_{11}^* = 1$ and the approximate 
 
 \begin{align}
 \begin{split}
-T_{11}^* & \approx \frac{1+ \frac{2}{3}^2 \left(\frac{1}{3} \right)}{\frac{1}{3}} \\
-& \approx \frac{7}{9}
+T_{11}^* & \approx \frac{K_{11} K_{22} T_{11} + K_{12}^2 T_{12}}{\det \left( \ma{K}\right) K_{11}^*} \\
+& \approx \frac{1+ \frac{2}{3}^2 \left(\frac{1}{3} \right)}{\frac{1}{3}} \\
+& \approx 10.333
 \end{split}
+\label{c:fotd:s:rosenbrock:eq:ast_lag_approx}
 \end{align}
 
+Eq. \ref{c:fotd:s:rosenbrock:eq:ast_approx} and \ref{c:fotd:s:rosenbrock:eq:ast_lag_approx} give insight into the approximation method. Since the coupling between $y_1$ and $u_2$ reacts faster to incitement, the resulting estimation is faster than the original transfer function of the main diagonal. The bode plot of both functions can be seen below.\\
+
+FIGURE\\
+
+From FIG the conservative character of the approximation can be seen. With regards to the design of a PI controller this results in an aggressive, more faster controller, since $K_P,~T_I \propto \frac{1}{T}$. The resulting parameter of the controller are calculated to be:
+
+\begin{align}
+\ma{K} &= \ma{K}_P + \frac{1}{s}~ \ma{K}_I\\
+&= \begin{bmatrix}
+0.725 & 0 \\
+0 & 0.725
+\end{bmatrix}
++ \frac{1}{s}\begin{bmatrix}
+1.096 & 0 \\
+0 & 0.852
+\end{bmatrix}
+\end{align}
+
+With a set-point weight of $b = 0$ since $\tau_{ij} = 0 ~\forall i,j \in [1,2]$. For the detuning an upper limit regarding the interaction of the process is required. Since a minimal interaction is desired, the upper limit of the interaction is set to $h_{ij} = 0.01 ~ \forall i,j \in [1,2]$. Iterative detuning of the controller with a decay of $\frac{K_P^{i+1}}{K_P^{i}} = 0.7 $ changes the parameter value to be:
+
+\begin{align}
+\ma{K} &= \ma{K}_P + \frac{1}{s}~ \ma{K}_I\\
+&= \begin{bmatrix}
+0.725 & 0 \\
+0 & 0.725
+\end{bmatrix}
++ \frac{1}{s}\begin{bmatrix}
+0.856 & 0 \\
+0 & 0.852
+\end{bmatrix}
+\end{align}
+
+The parameter values of the controller after detuning are similar to the results of the decentralized controller described above. This similarity arises from  
+
+
+
+\subsection{Decoupled Controller based on Modified Astr\"om}
+\label{c:fotd:s:rosenbrock:ss:modifiedastr}
 
 \section{Woodberry}%
 \label{c:fotd:s:woodberry}

@@ -18,6 +18,7 @@ import bokeh.io as bi
 import Algorithms as alg
 
 ## Model Parameter
+
 #k = np.random.uniform(-10,10,(2,2))
 #k[k==0] = 1e-10
 #t = np.random.uniform(1,5,(2,2))
@@ -39,6 +40,7 @@ l = [[1e-10,1e-10],[1e-10,1e-10]]
 #t = [[16.7,21.0],[10.9,14.4]]
 #l = [[1e-10,5],[1e-10,1e-10]]
 
+## Store the identified Parameter
 
 # The needed Parameter
 K = np.zeros((2,2))
@@ -85,6 +87,7 @@ u = res["fmu.u[1]"]
 time = res["time"]
 
 # Get TF from Input 1 to Output 1
+# Data is always stored with Output = Row, Input = Column
 K[0][0],T[0][0],L[0][0]=alg.Integral_Identification(y,u,time)
 # Get TF from Input 1 to Output 2
 K[1][0],T[1][0],L[1][0]=alg.Integral_Identification(y2,u,time)
