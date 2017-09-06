@@ -7,7 +7,7 @@ Will create an output with all the necessary information
 
 TODO:
 - Set Point Weight!
-- Dynamisches Verhalten bewerten -> Ähnlichkeiten? Kann gut entkoppelt werden?
+- Dynamisches Verhalten bewerten -> aehnlichkeiten? Kann gut entkoppelt werden?
 - Nur PT1 und Zeitkonstante nur zwischen 50...100 -> Ist das wirklich besser!?
 - Wie bewertet man NANs?
 - Setzte K iterativ ( for loop ) soweit hoch, bis system instabil! Bei 2x2
@@ -129,7 +129,7 @@ def experiment(N,D,L,R,noise_limit,sys_size,sample_size,max_order,filename, colu
 						if current_order >= order:
 							num[outputs][inputs][0] = N[order][sample][outputs][inputs]
 				# Make the MIMO System
-			G = cn.tf2ss(cn.tf(num,den1))
+			G = cn.tf(num,den1)
 			
 
 			# Preallocate the Parameter

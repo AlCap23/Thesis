@@ -112,7 +112,9 @@ The second method relies on knowledge about the behaviour of the transfer functi
 
 \begin{align}
 \begin{split}
-K_{11}^* &= \frac{K_{22} K_{11} - K_{12}^2}{\det(K)}
+K_{11}^* &= \frac{K_{22} K_{11} - K_{12}^2}{\det(K)} \\
+&= \frac{K_{22} K_{11} -  K_{12}^2}{K_{11}K_{22}- K_{12}K_{21}}\\
+&= 1
 \end{split}
 \label{c:fotd:e:CombinationGain}
 \end{align}
@@ -374,8 +376,9 @@ Which is consisting of the steady state gain $K_{11}^* = 1$ and the approximate 
 
 \begin{align}
 \begin{split}
-T_{11}^* & \approx \frac{K_{11} K_{22} T_{11} + K_{12}^2 T_{12}}{\det \left( \ma{K}\right) K_{11}^*} \\
-& \approx \frac{1+ \frac{2}{3}^2 \left(\frac{1}{3} \right)}{\frac{1}{3}} \\
+T_{11}^* & \approx \frac{K_{11} D_{11} T_{11} + K_{12} D_{21} T_{12}}{ K_{11}^*} \\
+& \approx \frac{3 - 3 ~\left(\frac{2}{3}\right) \left(\frac{1}{3} \right)}{1} \\
+& \approx \\
 & \approx 10.333
 \end{split}
 \label{c:fotd:s:rosenbrock:eq:ast_lag_approx}
