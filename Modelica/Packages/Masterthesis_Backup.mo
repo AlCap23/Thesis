@@ -1,4 +1,4 @@
-package Masterthesis "Includes all necessary models"
+package Masterthesis_Backup "Includes all necessary models"
   package Transferfunctions "Package for transfer functions."
     model miso_transferfunction
       "Creates an array of transfer function with multiple inputs and a single output"
@@ -79,20 +79,6 @@ where the signal sizes of the input and output vector are identical.
   end mimo_transferfunction;
   end Transferfunctions;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   package Controller "Package including controller, miso and mimo"
     model PIController
       "PI-Controller with optional inputs for gain scheduling"
@@ -100,8 +86,8 @@ where the signal sizes of the input and output vector are identical.
       /******************** Connectors *****************************/
 
       Modelica.Blocks.Interfaces.RealInput u_s "Connector of setpoint input signal"
-        annotation (Placement(transformation(extent={{-74,-30},{-54,-10}}, rotation=
-               0), iconTransformation(extent={{-66,-10},{-46,10}})));
+        annotation (Placement(transformation(extent={{-74,-10},{-54,10}}, rotation=
+                0), iconTransformation(extent={{-66,-10},{-46,10}})));
       Modelica.Blocks.Interfaces.RealInput u_m
         "Connector of measurement input signal" annotation (Placement(
             transformation(
@@ -112,13 +98,13 @@ where the signal sizes of the input and output vector are identical.
             rotation=270,
             origin={-26,-58})));
       Modelica.Blocks.Interfaces.RealOutput y(start=yInitial)
-        "Connector of actuator output signal" annotation (Placement(transformation(
-              extent={{54,-10},{74,10}}, rotation=0), iconTransformation(extent={{54,
-                -10},{74,10}})));
+        "Connector of actuator output signal"
+        annotation (Placement(transformation(extent={{54,-10},{74,10}}, rotation=0),
+            iconTransformation(extent={{54,-10},{74,10}})));
       Modelica.Blocks.Interfaces.BooleanInput activeInput if use_activeInput
-        "true, if controller is on" annotation (Placement(transformation(extent={{-74,
-                -50},{-54,-30}}, rotation=0), iconTransformation(extent={{-66,-48},{
-                -46,-28}})));
+        "true, if controller is on" annotation (Placement(transformation(extent={{
+                -74,-50},{-54,-30}}, rotation=0), iconTransformation(extent={{-66,-48},
+                {-46,-28}})));
 
       /*************************************************/
 
@@ -126,71 +112,62 @@ where the signal sizes of the input and output vector are identical.
 
     public
       parameter String controllerType="P" "Controller Type" annotation (choices(
-          choice="P" "P controller",
-          choice="PI" "PI controller",
-          choice="I" "I controller"), dialog(group="Settings"));
+            choice="P" "P controller", choice="PI" "PI controller",  choice="I"
+            "I controller"),                                                                     dialog(group=
+              "Settings"));
 
-      parameter Boolean invertFeedback=false
-        "true, if feedback Modelica.SIUnitsgnal is inverted"
+      parameter Boolean invertFeedback=false "true, if feedback Modelica.SIUnitsgnal is inverted"
         annotation (dialog(group="Settings"));
 
-      parameter Real offset=0.0 "Operating point, added to proportional output"
-        annotation (dialog(enable=(controllerType == "P"), group="Settings"));
+      parameter Real offset = 0.0 "Operating point, added to proportional output"
+        annotation (dialog(enable=(controllerType=="P"), group="Settings"));
 
       parameter String integralParameterType="Ti"
         "Controller Structure [k*(u + 1/Ti*integral(u))] or [k*u + ki*integral(u)]"
-        annotation (choices(choice="Ti", choice="ki"), dialog(enable=((
-              controllerType == "PI") or (controllerType == "I")), group="Settings"));
+        annotation (choices(choice="Ti", choice="ki"), dialog(enable=(
+              (controllerType == "PI") or (controllerType == "I")), group="Settings"));
 
-      parameter Real k=1 "Proportional gain of controller" annotation (Dialog(
-            enable=(not use_kInput) and (not (controllerType == "I" and
-              integralParameterType == "ki")), group="Setting parameters"));
+      parameter Real k=1 "Proportional gain of controller"
+        annotation (Dialog(enable=(not use_kInput) and (not (controllerType == "I" and integralParameterType == "ki")),  group="Setting parameters"));
 
       parameter Modelica.SIunits.Time Ti(min=Modelica.Constants.small) = 0.5
         "Time constant of Integrator block" annotation (Dialog(enable=(not
-              use_TiInput and controllerType <> "P" and integralParameterType == "Ti"),
-            group="Setting parameters"));
+              use_TiInput and controllerType <> "P" and integralParameterType ==
+              "Ti"), group="Setting parameters"));
 
-      parameter Modelica.SIunits.DampingCoefficient ki(min=Modelica.Constants.small)=
-           0.5 "Integral gain" annotation (Dialog(enable=(not use_kiInput and
-              controllerType <> "P" and integralParameterType == "ki"), group="Setting parameters"));
+      parameter Modelica.SIunits.DampingCoefficient ki(min=Modelica.Constants.small) = 0.5
+        "Integral gain" annotation (Dialog(enable=(not use_kiInput and
+              controllerType <> "P" and integralParameterType == "ki"), group=
+              "Setting parameters"));
 
       parameter Boolean use_kInput=false "= true, if k defined by input"
-        annotation (Dialog(
-          enable=not (controllerType == "I" and integralParameterType == "ki"),
-          tab="Advanced",
-          group="Enable gain scheduling"));
-      parameter Boolean use_TiInput=false "= true, if Ti defined by input"
-        annotation (Dialog(
-          enable=(controllerType <> "P" and integralParameterType == "Ti"),
-          tab="Advanced",
-          group="Enable gain scheduling"));
+        annotation (Dialog(enable= not (controllerType == "I" and integralParameterType == "ki"), tab="Advanced", group="Enable gain scheduling"));
+     parameter Boolean use_TiInput=false "= true, if Ti defined by input"
+        annotation (Dialog(enable=(controllerType <> "P" and integralParameterType
+               == "Ti"), tab="Advanced", group="Enable gain scheduling"));
       parameter Boolean use_kiInput=false "= true, if ki defined by input"
-        annotation (Dialog(
-          enable=(controllerType <> "P" and integralParameterType == "ki"),
-          tab="Advanced",
-          group="Enable gain scheduling"));
-      parameter Boolean use_setpointWeighting=false "Available for PI" annotation (
-          Dialog(
-          enable=(controllerType == "PI"),
-          tab="Advanced",
-          group="Setpoint weighting"));
-      parameter Boolean use_bInput=false "True, if b is defined by external input"
-        annotation (Dialog(enable = (use_setpointWeighting),tab="Advanced", group="Enable gain scheduling"));
+        annotation (Dialog(enable=(controllerType <> "P" and integralParameterType
+               == "ki"), tab="Advanced", group="Enable gain scheduling"));
 
-      parameter Real b=0.5 "Setpoint weight 0 >= b >= 1" annotation (Dialog(
-          enable=(use_setpointWeighting),
-          tab="Advanced",
-          group="Setpoint weighting"));
+    //   parameter Real yMax=1 "Upper limit of output"
+    //     annotation (dialog(group="Limits"));
+    //   parameter Real yMin=-yMax "Lower limit of output"
+    //     annotation (dialog(group="Limits"));
+
+      parameter Boolean use_setpointWeighting=false "Available for PI"
+        annotation (Dialog(enable=(controllerType == "PI"), tab="Advanced", group="Setpoint weighting"));
+
+      parameter Real b = 0.5
+        "Setpoint weight 0 >= b >= 1" annotation (Dialog(enable=(use_setpointWeighting), tab="Advanced", group="Setpoint weighting"));
 
       /***************** Initialization *************************/
 
-      parameter String initType="initialOutput" "Type of initialization"
-        annotation (choices(choice="zeroIntegralState", choice="initialOutput"),
-          dialog(enable=controllerType <> "P", group="Initialization"));
+      parameter String initType="initialOutput" "Type of initialization" annotation (
+          choices(choice="zeroIntegralState", choice="initialOutput"),
+          dialog(enable=controllerType<>"P", group="Initialization"));
 
       parameter Real yInitial=0 "Initial output of controller"
-        annotation (dialog(enable=controllerType <> "P", group="Initialization"));
+        annotation (dialog(enable=controllerType<>"P", group="Initialization"));
 
       /******************** Activation *****************************/
     public
@@ -202,14 +179,13 @@ where the signal sizes of the input and output vector are identical.
         "= true, if output of not activated controller is defined externally. Otherwise output is hold at deactivation."
         annotation (dialog(group="Activation"));
 
-      parameter Modelica.SIunits.Time activationTime=0.0
-        "Time when controller is switched on"
+       parameter Modelica.SIunits.Time activationTime=0.0 "Time when controller is switched on"
         annotation (dialog(enable=not use_activeInput, group="Activation"));
 
     protected
       Modelica.Blocks.Routing.BooleanPassThrough getActive;
-      Modelica.Blocks.Sources.BooleanExpression active_(y=time >= activationTime) if
-                               not use_activeInput;
+      Modelica.Blocks.Sources.BooleanExpression active_(y= time >=
+            activationTime) if not use_activeInput;
 
       /**********************************************************/
 
@@ -219,49 +195,35 @@ where the signal sizes of the input and output vector are identical.
       Real u_antiWindUp;
       Real u_setpointWeighting;
       Real integral;
-      Real ki_internal=if integralParameterType == "Ti" then k_int/
-          ti_int else ki_int;
+      Real ki_internal = if integralParameterType == "Ti" then getInputs.k_in/getInputs.Ti_in else getInputs.ki_in;
 
-      //   PI_SP.Internals.GetInputs getInputs
-      //     annotation (Placement(transformation(extent={{-20,16},{0,36}})));
-      // Internal Connector
-    protected
-      Modelica.Blocks.Interfaces.RealInput k_int "Internal Use of kp";
-      Modelica.Blocks.Interfaces.RealInput ki_int "Internal use of ki";
-      Modelica.Blocks.Interfaces.RealInput b_int "Internal use of b";
-      Modelica.Blocks.Interfaces.RealInput y_int "Internal use of y_notactive";
-      Modelica.Blocks.Interfaces.RealInput ti_int "Internal use of ti";
-      //Modelica.Blocks.Interfaces.BooleanInput act_int "Internal use of activation";
-      // Sources for Parameter
-    public
+      PI_SP.Internals.GetInputs getInputs
+        annotation (Placement(transformation(extent={{-20,16},{0,36}})));
+
       Modelica.Blocks.Sources.Constant k_in_(k=k) if not use_kInput;
       Modelica.Blocks.Sources.Constant ki_in_(k=ki) if not use_kiInput;
       Modelica.Blocks.Sources.Constant Ti_in_(k=Ti) if not use_TiInput;
-      Modelica.Blocks.Sources.Constant b_in_(k=b) if  not use_bInput;
       Modelica.Blocks.Sources.RealExpression y_notActive_(y=y_old) if not use_y_notActive;
 
     public
       Modelica.Blocks.Interfaces.RealInput k_in if use_kInput
-        "External propotional gain" annotation (Placement(transformation(
-              extent={{-74,30},{-54,50}}, rotation=0), iconTransformation(extent={{-66,
-                30},{-46,50}})));
+        "Connector of setpoint input signal" annotation (Placement(transformation(
+              extent={{-74,30},{-54,50}}, rotation=0), iconTransformation(extent={{
+                -66,30},{-46,50}})));
       Modelica.Blocks.Interfaces.RealInput ki_in if use_kiInput
-        "External integral gain" annotation (Placement(transformation(
-              extent={{-74,10},{-54,30}}, rotation=0), iconTransformation(extent={{-66,
+        "Connector of setpoint input signal" annotation (Placement(transformation(
+              extent={{-74,10},{-54,30}},rotation=0), iconTransformation(extent={{-66,
                 10},{-46,30}})));
       Modelica.Blocks.Interfaces.RealInput Ti_in if use_TiInput
-        "External integral time constant" annotation (Placement(transformation(
-              extent={{-74,10},{-54,30}}, rotation=0), iconTransformation(extent={{-74,
-                10},{-54,30}})));
-      Modelica.Blocks.Interfaces.RealInput b_in if use_bInput
-        "External setpoint weight" annotation (Placement(transformation(
-              extent={{-74,-10},{-54,10}}, rotation=0), iconTransformation(extent={{
-                -66,-10},{-46,10}})));
+        "Connector of setpoint input signal" annotation (Placement(transformation(
+              extent={{-74,10},{-54,30}},rotation=0), iconTransformation(extent={{-66,
+                10},{-46,30}})));
+
       Modelica.Blocks.Interfaces.RealInput y_notActive if use_y_notActive
         "Controller output if not active" annotation (Placement(transformation(
-            extent={{-10,-10},{10,10}},
+              extent={{-10,-10},{10,10}},
             rotation=270,
-            origin={0,62}), iconTransformation(
+            origin={0,62}),              iconTransformation(
             extent={{-10,-10},{10,10}},
             rotation=270,
             origin={0,58})));
@@ -274,7 +236,6 @@ where the signal sizes of the input and output vector are identical.
             extent={{10,-10},{-10,10}},
             rotation=270,
             origin={26,-58})));
-
     initial equation
 
       if initType == "zeroIntegralState" then
@@ -284,9 +245,9 @@ where the signal sizes of the input and output vector are identical.
           integral = 0.0;
         elseif controllerType == "PI" then
           if use_setpointWeighting then
-            integral = yInitial - k_int*u_setpointWeighting;
+            integral = yInitial - getInputs.k_in*u_setpointWeighting;
           else
-            integral = yInitial - k_int*u;
+            integral = yInitial - getInputs.k_in*u;
           end if;
         else
           integral = yInitial;
@@ -297,34 +258,33 @@ where the signal sizes of the input and output vector are identical.
 
     equation
 
-
       if invertFeedback then
         u = (u_m - u_s);
-        u_setpointWeighting = (u_m - b_int*u_s);
+        u_setpointWeighting = (u_m - b*u_s);
       else
         u = (u_s - u_m);
-        u_setpointWeighting = (b_int*u_s - u_m);
+        u_setpointWeighting = (b*u_s - u_m);
       end if;
 
       if controllerType == "P" then
         der(integral) = 0;
-        y_unlim = k_int*u + offset;
+        y_unlim = getInputs.k_in*u + offset;
       elseif controllerType == "I" then
         der(integral) = if getActive.y then ki_internal*(u + u_antiWindUp) else 0.0;
         y_unlim = integral;
       else
         der(integral) = if getActive.y then ki_internal*(u + u_antiWindUp) else 0.0;
         if use_setpointWeighting then
-          y_unlim = k_int*u_setpointWeighting + integral;
+          y_unlim = getInputs.k_in*u_setpointWeighting + integral;
         else
-          y_unlim = k_int*u + integral;
+          y_unlim = getInputs.k_in*u + integral;
         end if;
       end if;
 
-      //u_antiWindUp = if controllerType == "PI" then (y - y_unlim)/k_int else (y - y_unlim);
-      u_antiWindUp = if abs(k_int) > 1e-10 then (if controllerType == "PI" then u_a/k_int else u_a) else u_a;
+      //u_antiWindUp = if controllerType == "PI" then (y - y_unlim)/getInputs.k_in else (y - y_unlim);
+      u_antiWindUp = if controllerType == "PI" then u_a/getInputs.k_in else u_a;
 
-      //__________ Activation _________________________
+    //__________ Activation _________________________
 
       when not getActive.y and not initial() then
         y_old = pre(y);
@@ -332,39 +292,50 @@ where the signal sizes of the input and output vector are identical.
 
       when getActive.y then
         if controllerType == "PI" then
-          reinit(integral, pre(y) - k_int*u);
+           reinit(integral, pre(y) - getInputs.k_in*u);
         elseif controllerType == "I" then
-          reinit(integral, pre(y));
+           reinit(integral, pre(y));
         end if;
       end when;
 
-      if getActive.y then
-        y = smooth(0, y_unlim);
-      else
-        y = y_int;
-      end if;
+       if getActive.y then
+         y = smooth(0, y_unlim);
+       else
+         y = getInputs.y_notActive;
+       end if;
 
-      //__________ Connections _________________________
+    //__________ Connections _________________________
 
       connect(activeInput, getActive.u);
       connect(active_.y, getActive.u);
-      // Connect the Constants with the internals
-      connect(k_in_.y, k_int);
-      connect(ki_in_.y, ki_int);
-      connect(Ti_in_.y, ti_int);
-      connect(b_in_.y, b_int);
-      connect(y_notActive_.y, y_int);
-      // Connect the inputs for external definition with the internals
-      connect(b_in, b_int);
-      connect(k_in, k_int);
-      connect(ki_in, ki_int);
-      connect(Ti_in, ti_int);
+
+      connect(k_in_.y, getInputs.k_in);
+      connect(ki_in_.y, getInputs.ki_in);
+      connect(Ti_in_.y, getInputs.Ti_in);
+      connect(y_notActive_.y, getInputs.y_notActive);
+
+      connect(k_in, getInputs.k_in) annotation (Line(
+          points={{-64,40},{-40,40},{-40,26},{-22,26}},
+          color={0,0,127},
+          smooth=Smooth.None));
+      connect(ki_in, getInputs.ki_in) annotation (Line(
+          points={{-64,20},{-44,20},{-44,18},{-22,18}},
+          color={0,0,127},
+          smooth=Smooth.None));
+      connect(Ti_in, getInputs.Ti_in) annotation (Line(
+          points={{-64,20},{-40,20},{-40,22},{-22,22}},
+          color={0,0,127},
+          smooth=Smooth.None));
+      connect(y_notActive, getInputs.y_notActive) annotation (Line(points={{0,62},{0,
+              46},{-26,46},{-26,34},{-22,34}}, color={0,0,127}));
       annotation (
-        Icon(coordinateSystem(preserveAspectRatio=true, extent={{-60,-60},{60,60}}),
+        Icon(coordinateSystem(preserveAspectRatio=true,  extent={{-60,-60},{60,60}}),
             graphics={Bitmap(
               extent={{-60,-60},{60,60}},
-              imageSource="iVBORw0KGgoAAAANSUhEUgAAAHgAAAB4CAIAAAC2BqGFAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAyklEQVR42u3SsQ3AIAxEUZwhvP98XsIpoUBUKErxfnft040hSfprsY6qInKxzNxDdzedmy+Oyfvg+CbQoEELNGjQCECDFmjQoAUatECDBi3QoAUaNGiBBi3QoEELNGiBBg1aoEELNGjQAg1aoEGDFmjQAg0atECDFmjQoAUatECDBi3QoAUaNGiBBi3QoEELNGiBBg1aoEELNGjQAg1aoEGDFmjQAg0atECDFmjQoAUatECDBi3QoAUaNGiBBi3QoEELNGiBliTp2AvV3wbfxPDYfgAAAABJRU5ErkJggg==",
-              fileName="modelica://TIL/Images/PI_Controller_Icon.png"), Text(
+              imageSource=
+                  "iVBORw0KGgoAAAANSUhEUgAAAHgAAAB4CAIAAAC2BqGFAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAyklEQVR42u3SsQ3AIAxEUZwhvP98XsIpoUBUKErxfnft040hSfprsY6qInKxzNxDdzedmy+Oyfvg+CbQoEELNGjQCECDFmjQoAUatECDBi3QoAUaNGiBBi3QoEELNGiBBg1aoEELNGjQAg1aoEGDFmjQAg0atECDFmjQoAUatECDBi3QoAUaNGiBBi3QoEELNGiBBg1aoEELNGjQAg1aoEGDFmjQAg0atECDFmjQoAUatECDBi3QoAUaNGiBBi3QoEELNGiBliTp2AvV3wbfxPDYfgAAAABJRU5ErkJggg==",
+              fileName="modelica://TIL/Images/PI_Controller_Icon.png"),
+                                                                   Text(
               extent={{-60,30},{60,-30}},
               lineColor={0,0,0},
               textString="%controllerType")}),
@@ -372,186 +343,62 @@ where the signal sizes of the input and output vector are identical.
         Documentation(info="<html>
 <p>This controller can be used as P- or PI-controller. The controller can be switched on and off during the simulation. The output can be limited and an anti-wind-up function is included. The initialization can be set as steady state: der(y)=0 or with an initial output: y=yInitial. </p>
 </html>"));
-
     end PIController;
 
-    block miso_decentralcontroller
+    model miso_decentralcontroller
       "Creates an array of PI controller with multiple inputs and a single output"
       extends Modelica.Blocks.Icons.Block;
-      /*************PARAMETER***************/
-    public
-      parameter Integer n(min=1) "Number of inputs"
-        annotation (dialog(group="Settings"));
-      outer parameter String controllerType="P" "Controller Type" annotation (choices(
-          choice="P" "P controller",
-          choice="PI" "PI controller",
-          choice="I" "I controller"), dialog(group="Settings"));
-      parameter Real KP[n]=ones(n) "Proportional Gain" annotation (dialog(enable=(
-              not use_kInput) and (not (controllerType == "I")), group="Parameters"));
-      parameter Real KI[n]=ones(n) "Integral Gain" annotation (dialog(enable=(not
-              use_kiInput) and (not (controllerType == "P")), group="Parameters"));
-      parameter Real B[n]=ones(n) "Set Point Weights" annotation (dialog(enable=(
-              not use_bInput) or (use_setpointWeighting), group="Parameters"));
-      parameter Real offset=0.0 "Operating point, added to proportional output"
-        annotation (dialog(enable=(controllerType == "P"), group="Settings"));
-      /**********************CONNECTOR*******************/
-    public
+       parameter Integer n(min=1)
+                          "Number of inputs";
+      parameter Real KP[n] = ones(n) "Proportional Gain";
+      parameter Real KI[n] = ones(n) "Integral Gain";
+      parameter Real B[n] = ones(n) "Set Point Weights";
       Modelica.Blocks.Interfaces.RealInput u_s[n] "Connector of Set Point value"
-        annotation (Placement(transformation(extent={{-124,-46},{-84,-6}}),
-            iconTransformation(extent={{-120,-38},{-88,-6}})));
-
-      Modelica.Blocks.Interfaces.RealOutput y "Connector of Real output signal"
-        annotation (Placement(transformation(extent={{100,-8},{120,12}}),
-            iconTransformation(extent={{80,-20},{120,20}})));
-
+        annotation (Placement(transformation(extent={{-128,40},{-88,80}}),
+            iconTransformation(extent={{-128,40},{-88,80}})));
+      Modelica.Blocks.Interfaces.RealOutput y "Connector of Real output signal" annotation (Placement(
+            transformation(extent={{100,-8},{120,12}}), iconTransformation(extent=
+               {{80,-20},{120,20}})));
+      Modelica.Blocks.Math.MultiSum add(nu=n)
+        annotation (Placement(transformation(extent={{24,-6},{36,6}})));
+      PIController[n] pIController_sw(
+        each controllerType="PI",
+        each integralParameterType="ki",
+        k = KP,
+        ki = KI,
+        each use_setpointWeighting=true,
+        b = B,
+        each initType="initialOutput",
+        each yInitial=0)
+        annotation (Placement(transformation(extent={{-50,-6},{-38,6}})));
       Modelica.Blocks.Interfaces.RealInput u_m[n] "Connector of measurement value"
-        annotation (Placement(transformation(
+                                         annotation (Placement(transformation(
             extent={{-20,-20},{20,20}},
-            rotation=90,
-            origin={-58,-108}), iconTransformation(extent={{-20,-20},{20,20}},
-            rotation=90,
-            origin={-58,-92})));
+            rotation=0,
+            origin={-108,-60}), iconTransformation(extent={{-120,-80},{-80,-40}})));
 
       Modelica.Blocks.Interfaces.RealInput u_a "Connector of anti-windup"
         annotation (Placement(transformation(
             extent={{-20,-20},{20,20}},
             rotation=90,
-            origin={60,-108}), iconTransformation(
-            extent={{-20,-20},{20,20}},
+            origin={0,-108}), iconTransformation(extent={{-20,-20},{20,20}},
             rotation=90,
-            origin={58,-92})));
-
-      Modelica.Blocks.Interfaces.RealInput y_notActive if use_y_notActive
-        "Activation" annotation (Placement(transformation(
-            extent={{-20,-20},{20,20}},
-            rotation=270,
-            origin={0,110}), iconTransformation(extent={{-20,-20},{20,20}},
-            rotation=270,
-            origin={0,100})));
-
-      Modelica.Blocks.Interfaces.RealInput KP_in[n] if use_kInput "Activation"
-        annotation (Placement(transformation(
-            extent={{-20,-20},{20,20}},
-            rotation=0,
-            origin={-110,80}), iconTransformation(extent={{-118,72},{-90,100}})));
-
-      Modelica.Blocks.Interfaces.RealInput KI_in[n] if use_kiInput "Activation"
-        annotation (Placement(transformation(
-            extent={{-20,-20},{20,20}},
-            rotation=0,
-            origin={-108,44}), iconTransformation(extent={{-148,24},{-90,82}})));
-
-      Modelica.Blocks.Interfaces.BooleanInput activeInput if use_activeInput
-        "Connector for active input" annotation (Placement(transformation(extent={{-124,
-                -100},{-84,-60}}), iconTransformation(extent={{-122,-98},{-82,-58}})));
-
-      Modelica.Blocks.Interfaces.RealInput B_in[n] if use_bInput
-        "Connector of Set Point value" annotation (Placement(transformation(extent={
-                {-128,-20},{-88,20}}), iconTransformation(extent={{-120,2},{-88,34}})));
-      /*********************ACTIVATION********************/
-    public
-       parameter Boolean use_activeInput=false
-        "True, if controller is switched on/off externally"
-        annotation (Dialog(group="Activation"));
-       parameter Boolean use_y_notActive=false
-        "True, if output of not activated controller is defined externally"
-        annotation (Dialog(group="Activation"));
-      parameter Modelica.SIunits.Time activationTime=0.0
-        "Time when controller is switched on"
-        annotation (Dialog(group="Activation"));
-
-       parameter Boolean use_kInput=false
-        "True, if proportional gain is defined externally" annotation (Dialog(
-          enable=not (controllerType == "I"),
-          tab="Advanced",
-          group="Gain Scheduling"));
-       parameter Boolean use_kiInput=false
-        "True, if integral gain is defined externally" annotation (Dialog(
-          enable=not (controllerType == "P"),
-          tab="Advanced",
-          group="Gain Scheduling"));
-       parameter Boolean use_bInput=false
-        "True, if setpoint weight is defined externally"
-        annotation (Dialog(tab="Advanced", group="Gain Scheduling"));
-       parameter Boolean invertFeedback=false
-        "true, if feedback Modelica.SIUnitsgnal is inverted"
-        annotation (dialog(group="Settings"));
-       parameter Boolean use_setpointWeighting=true "Available for PI"
-        annotation (Dialog(
-          enable=(controllerType == "PI") or (controllerType == "P"),
-          tab="Advanced",
-          group="Setpoint weighting"));
-      /*********************INITIALIZATION****************/
-       parameter String initType="initialOutput" "Type of initialization"
-        annotation (choices(choice="zeroIntegralState", choice="initialOutput"),
-          dialog(enable=controllerType <> "P", group="Initialization"));
-      parameter Real yInitial=0 "Initial output of controller"
-        annotation (dialog(enable=controllerType <> "P", group="Initialization"));
-      parameter Real[n] xInitial=zeros(n) "Initial states of controller"
-        annotation (dialog(enable=(controllerType == "I") or (controllerType == "PI"),
-            group="Initialization"));
-      /*********************COMPONENTS********************/
-    protected
-      Modelica.Blocks.Math.MultiSum add(nu=n)
-        annotation (Placement(transformation(extent={{24,-6},{36,6}})));
-      PIController[n] pIController_sw(
-        each controllerType=controllerType,
-        each integralParameterType="ki",
-        k=KP,
-        ki=KI,
-        each use_setpointWeighting=use_setpointWeighting,
-        b=B,
-        each initType=initType,
-        each yInitial= yInitial,
-        each use_activeInput=use_activeInput,
-        each use_y_notActive=use_y_notActive,
-        each activationTime=activationTime,
-        each invertFeedback=invertFeedback,
-        each use_kInput=use_kInput,
-        each use_kiInput=use_kiInput,
-        each use_bInput=use_bInput)
-        annotation (Placement(transformation(extent={{-50,-6},{-38,6}})));
-    //     Modelica.Blocks.Sources.RealExpression yna_in(y=0);
-    // Modelica.Blocks.Sources.BooleanExpression active_in(y= false) if use_activeInput;
+            origin={-2,-92})));
     equation
-      // Connect Input Signals
-      connect(u_s, pIController_sw.u_s);
-      connect(u_m, pIController_sw.u_m);
-      // Loop over all controller
+        connect(u_s,pIController_sw.u_s);
+        connect(u_m,pIController_sw.u_m);
       for inputs in 1:n loop
-        // Connect each anti-windup to input
-        connect(u_a, pIController_sw[inputs].u_a);
-        // Connect activation
-        if use_activeInput then
-          //connect(active_in.y, activeInput);
-          connect(activeInput, pIController_sw[inputs].activeInput);
-    //       // Activation
-    //       if use_y_notActive then
-    //         connect(yna_in.y, y_notActive);
-    //         connect(yna_in.y, pIController_sw[inputs].y_notActive);
-    //       end if;
-        end if;
+        connect(pIController_sw[inputs].y,add.u[inputs]);
+         connect(u_a,pIController_sw[inputs].u_a);
       end for;
-      // Connect exteral parameter conditionally
-      if use_kInput then
-        connect(KP_in, pIController_sw.k_in);
-      end if;
-      if use_kiInput then
-        connect(KI_in, pIController_sw.ki_in);
-      end if;
-      if use_bInput then
-        connect(B_in, pIController_sw.b_in);
-      end if;
-      // Connect output
-      connect(pIController_sw.y, add.u);
-      connect(add.y, y);
 
+      connect(add.y,y);
       annotation (Documentation(info="<html>
 <p>
 Block has a vector of continuous Real input signals and
 one continuous Real output signal.
 </p>
-</html>"),     Icon(graphics={Text(
+</html>"),   Icon(graphics={Text(
               extent={{-52,64},{40,-50}},
               lineColor={0,0,0},
               textStyle={TextStyle.Bold},
@@ -560,132 +407,58 @@ one continuous Real output signal.
 
     block mimo_decentralcontroller
       extends Modelica.Blocks.Icons.Block;
-      /**************PARAMETER**********/
-    public
-      parameter Integer n(min=1) "Number of inputs (= number of outputs)";
-      inner parameter String controllerType="P" "Controller Type" annotation (
-          choices(
-          choice="P" "P controller",
-          choice="PI" "PI controller",
-          choice="I" "I controller"), dialog(group="Settings"));
-      parameter Real[n,n] KP=identity(n) "Proportional Gain";
-      parameter Real[n,n] KI=identity(n) "Integral Gain";
-      parameter Real[n,n] B=identity(n) "Set Point Weights";
-      parameter Real[n] offset=zeros(n)
-        "Operating point, added to proportional output";
+      parameter Integer n(min = 1) "Number of inputs (= number of outputs)";
+      parameter Real KP[n,n]              "Proportional Gain";
+      parameter Real KI[n,n]              "Integral Gain";
+      parameter Real B[n,n] "Set Point Weights";
 
-      /*************CONNECTOR************/
-      // All
-      Modelica.Blocks.Interfaces.RealInput u_s[n] "Connector of Set Point value"
-        annotation (Placement(transformation(extent={{-122,-60},{-82,-20}}),
-            iconTransformation(extent={{-122,-60},{-82,-20}})));
-      Modelica.Blocks.Interfaces.RealInput u_m[n] "Connector of measurement value"
-        annotation (Placement(transformation(
+      Modelica.Blocks.Interfaces.RealInput u_s[n]
+        "Connector of Set Point value"                                           annotation (
+        Placement(transformation(extent={{-120,40},{-80,80}}), iconTransformation(
+              extent={{-120,40},{-80,80}})));
+        Modelica.Blocks.Interfaces.RealInput u_m[n]
+        "Connector of measurement value"                                             annotation (
+        Placement(transformation(extent={{-120,-80},{-80,-40}}),
+            iconTransformation(extent={{-120,-80},{-80,-40}})));
+      Modelica.Blocks.Interfaces.RealOutput y[n] "Connector of Real output signals" annotation (
+        Placement(transformation(extent={{80,-20},{120,20}}), iconTransformation(
+              extent={{80,-20},{120,20}})));
+
+    Controller.miso_decentralcontroller[n] pi(
+      each n=n,
+     KP=KP,
+     KI=KI,
+     B=B) annotation (Placement(transformation(extent={{34,-8},{54,12}})));
+        Modelica.Blocks.Interfaces.RealInput u_a[n]
+        "Connector of anti-windup inputs" annotation (Placement(transformation(
             extent={{-20,-20},{20,20}},
             rotation=90,
-            origin={-60,-108}), iconTransformation(
+            origin={0,-100}), iconTransformation(
             extent={{-20,-20},{20,20}},
             rotation=90,
-            origin={-60,-96})));
-      Modelica.Blocks.Interfaces.RealOutput y[n] "Connector of Real output signals"
-        annotation (Placement(transformation(extent={{80,-20},{120,20}}),
-            iconTransformation(extent={{80,-20},{120,20}})));
-      // External
-      Modelica.Blocks.Interfaces.RealInput B_in[n,n] if use_bInput "External defined B"
-        annotation (Placement(transformation(extent={{-122,-20},{-82,20}}),
-            iconTransformation(extent={{-122,-20},{-82,20}})));
-      Modelica.Blocks.Interfaces.RealInput KI_in[n,n] if
-                                                        use_kiInput "External defined KI."
-        annotation (Placement(transformation(extent={{-130,20},{-90,60}}),
-            iconTransformation(extent={{-122,20},{-82,60}})));
-      Modelica.Blocks.Interfaces.RealInput KP_in[n,n] if use_kInput
-                                                                   "External defined KP."
-        annotation (Placement(transformation(extent={{-130,60},{-90,100}}),
-            iconTransformation(extent={{-122,60},{-82,100}})));
-      Modelica.Blocks.Interfaces.RealInput activeInput if use_activeInput "activeInput" annotation (
-          Placement(transformation(extent={{-122,-100},{-82,-60}}),
-            iconTransformation(extent={{-122,-100},{-82,-60}})));
-
-
-      /*********************ACTIVATION********************/
-    public
-      inner parameter Boolean use_activeInput=false
-        "True, if controller is switched on/off externally"
-        annotation (Dialog(group="Activation"));
-      inner parameter Boolean use_y_notActive=false
-        "True, if output of not activated controller is defined externally"
-        annotation (Dialog(group="Activation"));
-      parameter Modelica.SIunits.Time activationTime=0.0
-        "Time when controller is switched on"
-        annotation (Dialog(group="Activation"));
-
-      inner parameter Boolean use_kInput=false
-        "True, if proportional gain is defined externally" annotation (Dialog(
-          enable=not (controllerType == "I"),
-          tab="Advanced",
-          group="Gain Scheduling"));
-      inner parameter Boolean use_kiInput=false
-        "True, if integral gain is defined externally" annotation (Dialog(
-          enable=not (controllerType == "P"),
-          tab="Advanced",
-          group="Gain Scheduling"));
-      inner parameter Boolean use_bInput=false
-        "True, if setpoint weight is defined externally"
-        annotation (Dialog(tab="Advanced", group="Gain Scheduling"));
-      inner parameter Boolean invertFeedback=false
-        "true, if feedback Modelica.SIUnitsgnal is inverted"
-        annotation (dialog(group="Settings"));
-      inner parameter Boolean use_setpointWeighting=true "Available for PI"
-        annotation (Dialog(
-          enable=(controllerType == "PI") or (controllerType == "P"),
-          tab="Advanced",
-          group="Setpoint weighting"));
-      /*********************INITIALIZATION****************/
-      inner parameter String initType="initialOutput" "Type of initialization"
-        annotation (choices(choice="zeroIntegralState", choice="initialOutput"),
-          dialog(enable=controllerType <> "P", group="Initialization"));
-      parameter Real yInitial=0 "Initial output of controller"
-        annotation (dialog(enable=controllerType <> "P", group="Initialization"));
-      parameter Real[n] xInitial=zeros(n) "Initial states of controller"
-        annotation (dialog(enable=(controllerType == "I") or (controllerType == "PI"),
-            group="Initialization"));
-      /*********************COMPONENTS********************/
-
-      Controller.miso_decentralcontroller[n] pi(
-        each n=n,
-        KP=KP,
-        KI=KI,
-        B=B) annotation (Placement(transformation(extent={{-46,-10},{-26,10}})));
-      Modelica.Blocks.Interfaces.RealInput u_a[n] "Connector of anti-windup inputs"
-        annotation (Placement(transformation(
-            extent={{-20,-20},{20,20}},
-            rotation=90,
-            origin={60,-106}), iconTransformation(
-            extent={{-20,-20},{20,20}},
-            rotation=90,
-            origin={58,-94})));
+            origin={0,-96})));
 
     equation
       for outputs in 1:n loop
-        connect(u_s, pi[outputs].u_s);
-        connect(u_m, pi[outputs].u_m);
-        connect(pi[outputs].y, y[outputs]);
-        connect(u_a[outputs],pi[outputs].u_a);
+        connect(u_s,pi[outputs].u_s);
+        connect(u_m,pi[outputs].u_m);
+        connect(pi[outputs].y,y[outputs]);
       end for;
+      connect(u_a,pi.u_a);
 
       annotation (
-        Documentation(info="<html>
+        Documentation(info = "<html>
 <p>
 Block has a continuous Real input and a continuous Real output signal vector
 where the signal sizes of the input and output vector are identical.
 </p>
-</html>"),
-        Icon(coordinateSystem(preserveAspectRatio=false), graphics={Text(
+</html>"),                 Icon(coordinateSystem(preserveAspectRatio=false),
+            graphics={Text(
               extent={{-52,64},{40,-50}},
               lineColor={0,0,0},
               textStyle={TextStyle.Bold},
-              textString="K")}),
-        Diagram(coordinateSystem(preserveAspectRatio=false)));
+              textString="K")}),                                              Diagram(
+            coordinateSystem(preserveAspectRatio=false)));
     end mimo_decentralcontroller;
 
     block mimo_decentralcontroller_2 "MIMO PI Controller with optional inputs for gain scheduling"
@@ -759,8 +532,6 @@ where the signal sizes of the input and output vector are identical.
       // Internal States
       Real[n] x(start=x_start) "Integral Part of the Output";
 
-
-
     equation
       // Connections for the variables
       connect(KP_in, KP_internal);
@@ -802,13 +573,11 @@ where the signal sizes of the input and output vector are identical.
       Modelica.Blocks.Nonlinear.Limiter limiter[n](uMax=ymax, uMin=ymin)
         annotation (Placement(transformation(extent={{2,-10},{22,10}})));
 
-
     equation
 
     limiter.y = y; // Output of the limiter is system output
     limiter.u = D*u; // Input of the limiter is D*u
     y_a = (Modelica.Math.Matrices.inv(D)*(limiter.y)- u);// Output for Controller
-
 
       annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={Text(
               extent={{-50,60},{42,-54}},
@@ -1173,32 +942,25 @@ where the signal sizes of the input and output vector are identical.
         integralParameterType="ki",
         k=1,
         ki=0.1,
-        initType="zeroIntegralState",
-        use_setpointWeighting=true,
-        use_activeInput=true,
-        use_y_notActive=true)
+        initType="zeroIntegralState")
         annotation (Placement(transformation(extent={{-10,8},{2,20}})));
       Modelica.Blocks.Sources.Step u_r(
         height=1,
         offset=0,
         startTime=2)
-        annotation (Placement(transformation(extent={{-76,4},{-56,24}})));
+        annotation (Placement(transformation(extent={{-82,8},{-62,28}})));
       Modelica.Blocks.Sources.RealExpression u_m
-        annotation (Placement(transformation(extent={{-84,-54},{-64,-34}})));
+        annotation (Placement(transformation(extent={{-82,-18},{-62,2}})));
       Modelica.Blocks.Nonlinear.Limiter limiter(uMax=1)
         annotation (Placement(transformation(extent={{26,8},{46,28}})));
       Modelica.Blocks.Math.Add add(k2=-1) annotation (Placement(transformation(
             extent={{-10,-10},{10,10}},
             rotation=270,
             origin={38,-22})));
-      Modelica.Blocks.Sources.RealExpression u_m1(y=0.75)
-        annotation (Placement(transformation(extent={{-40,48},{-20,68}})));
-      Modelica.Blocks.Sources.BooleanStep booleanStep(startTime=2)
-        annotation (Placement(transformation(extent={{-76,28},{-56,48}})));
-      Modelica.Blocks.Logical.Not not1
-        annotation (Placement(transformation(extent={{-46,28},{-26,48}})));
     equation
-      connect(u_m.y, pIController.u_m) annotation (Line(points={{-63,-44},{-63,
+      connect(pIController.u_s, u_r.y) annotation (Line(points={{-9.6,14},{-9.6,
+              18},{-61,18}}, color={0,0,127}));
+      connect(u_m.y, pIController.u_m) annotation (Line(points={{-61,-8},{-61,
               -8},{-6.6,-8},{-6.6,8.2}}, color={0,0,127}));
       connect(pIController.y, limiter.u)
         annotation (Line(points={{2.4,14},{2.4,18},{24,18}}, color={0,0,127}));
@@ -1208,14 +970,6 @@ where the signal sizes of the input and output vector are identical.
         annotation (Line(points={{44,-10},{47,-10},{47,18}}, color={0,0,127}));
       connect(add.y, pIController.u_a) annotation (Line(points={{38,-33},{38,
               -33},{38,-60},{38,-62},{-1.4,-62},{-1.4,8.2}}, color={0,0,127}));
-      connect(pIController.u_s, u_r.y) annotation (Line(points={{-9.6,14},{-32,
-              14},{-55,14}}, color={0,0,127}));
-      connect(pIController.y_notActive, u_m1.y) annotation (Line(points={{-4,
-              19.8},{-4,19.8},{-4,58},{-19,58}}, color={0,0,127}));
-      connect(booleanStep.y, not1.u) annotation (Line(points={{-55,38},{-52,38},
-              {-48,38}}, color={255,0,255}));
-      connect(pIController.activeInput, not1.y) annotation (Line(points={{-9.6,
-              10.2},{-18,10.2},{-18,38},{-25,38}}, color={255,0,255}));
       annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
             coordinateSystem(preserveAspectRatio=false)));
     end Test_SISOCN;
@@ -1224,77 +978,109 @@ where the signal sizes of the input and output vector are identical.
 
       Controller.miso_decentralcontroller miso_decentralcontroller1(
         n=2,
-        controllerType="PI",
-        invertFeedback=false,
-        B={0,0},
-        KP={1,2},
-        KI={0.1,0.01})
+        B={0.5,1},
+        KP={1,1},
+        KI={1,1})
         annotation (Placement(transformation(extent={{12,22},{32,42}})));
       Modelica.Blocks.Sources.Step step(
-        startTime=150,
         height=1,
-        offset=0)
-        annotation (Placement(transformation(extent={{-74,64},{-54,84}})));
+        offset=0,
+        startTime=1)
+        annotation (Placement(transformation(extent={{-92,74},{-72,94}})));
+      Modelica.Blocks.Sources.Step step1(
+        offset=0,
+        startTime=5,
+        height=0)
+        annotation (Placement(transformation(extent={{-96,-22},{-76,-2}})));
+      Modelica.Blocks.Sources.Ramp ramp(
+        duration=10,
+        startTime=3,
+        height=0)
+        annotation (Placement(transformation(extent={{-88,30},{-68,50}})));
       Modelica.Blocks.Sources.Constant const(k=0)
-        annotation (Placement(transformation(extent={{-46,-20},{-26,0}})));
-      Modelica.Blocks.Nonlinear.Limiter limiter(        uMin=-1, uMax=1)
-        annotation (Placement(transformation(extent={{50,22},{70,42}})));
+        annotation (Placement(transformation(extent={{-94,-50},{-74,-30}})));
+      Modelica.Blocks.Nonlinear.Limiter limiter(uMax=5, uMin=-1)
+        annotation (Placement(transformation(extent={{52,40},{72,60}})));
       Modelica.Blocks.Math.Add add(k2=-1) annotation (Placement(transformation(
             extent={{-10,-10},{10,10}},
             rotation=270,
-            origin={60,0})));
+            origin={48,-6})));
     equation
-      connect(miso_decentralcontroller1.y, limiter.u) annotation (Line(points={{32,32},
-              {42,32},{48,32}},                 color={0,0,127}));
-      connect(add.u2, miso_decentralcontroller1.y) annotation (Line(points={{54,12},
-              {38,12},{38,32},{32,32}},   color={0,0,127}));
-      connect(add.u1, limiter.y) annotation (Line(points={{66,12},{86,12},{86,
-              32},{71,32}},
-                        color={0,0,127}));
-      connect(add.y, miso_decentralcontroller1.u_a) annotation (Line(points={{
-              60,-11},{60,-12},{60,-28},{27.8,-28},{27.8,22.8}}, color={0,0,127}));
+      connect(miso_decentralcontroller1.u_m[2], step1.y) annotation (Line(
+            points={{12,27},{-38,27},{-38,-12},{-75,-12}},color={0,0,127}));
       connect(miso_decentralcontroller1.u_m[1], const.y) annotation (Line(
-            points={{16.2,21.8},{-4,21.8},{-4,-10},{-25,-10}}, color={0,0,127}));
-      connect(miso_decentralcontroller1.u_m[2], const.y) annotation (Line(
-            points={{16.2,23.8},{-4,23.8},{-4,-10},{-25,-10}}, color={0,0,127}));
-      connect(miso_decentralcontroller1.u_s[1], step.y) annotation (Line(points
-            ={{11.6,29},{-14,29},{-20,29},{-20,74},{-53,74}}, color={0,0,127}));
-      connect(miso_decentralcontroller1.u_s[2], step.y) annotation (Line(points
-            ={{11.6,30.6},{-20,30.6},{-20,74},{-53,74}}, color={0,0,127}));
+            points={{12,25},{-36,25},{-36,-40},{-73,-40}},  color={0,0,127}));
+      connect(miso_decentralcontroller1.u_s[1], ramp.y) annotation (Line(points={{11.2,37},
+              {-38,37},{-38,40},{-67,40}},          color={0,0,127}));
+      connect(miso_decentralcontroller1.u_s[2], step.y) annotation (Line(points={{11.2,39},
+              {-40,39},{-40,84},{-71,84}},          color={0,0,127}));
+      connect(miso_decentralcontroller1.y, limiter.u) annotation (Line(points={
+              {32,32},{42,32},{42,50},{50,50}}, color={0,0,127}));
+      connect(add.u2, miso_decentralcontroller1.y) annotation (Line(points={{42,
+              6},{38,6},{38,32},{32,32}}, color={0,0,127}));
+      connect(add.u1, limiter.y) annotation (Line(points={{54,6},{64,6},{64,50},
+              {73,50}}, color={0,0,127}));
+      connect(add.y, miso_decentralcontroller1.u_a) annotation (Line(points={{
+              48,-17},{28,-17},{28,-24},{21.8,-24},{21.8,22.8}}, color={0,0,127}));
       annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
             coordinateSystem(preserveAspectRatio=false)));
     end Test_MISOCN;
 
     model Test_MIMOCN "Tester for MIMO Controller"
 
-      Controller.mimo_decentralcontroller mimo_decentralcontroller1(
+      Controller.mimo_decentralcontroller_2 mimo_decentralcontroller1(
         n=2,
-        KP={{1,0},{0,1}},
-        controllerType="PI",
-        KI={{0.1,0},{0,0.1}},
-        B={{0,0},{0,0}})
+        KP={{10,1},{1,5}},
+        KI={{0.1,0},{0.05,6}},
+        B={{0,1},{0.2,0.3}})
         annotation (Placement(transformation(extent={{-12,-10},{8,10}})));
-      Modelica.Blocks.Sources.Step step(height=5)
-        annotation (Placement(transformation(extent={{-86,24},{-66,44}})));
-      Modelica.Blocks.Sources.Step step1(height=10, startTime=5)
-        annotation (Placement(transformation(extent={{-86,52},{-66,72}})));
-      Modelica.Blocks.Sources.Constant const(k=0)
-        annotation (Placement(transformation(extent={{-84,-20},{-64,0}})));
+      Modelica.Blocks.Sources.Step step
+        annotation (Placement(transformation(extent={{-90,20},{-70,40}})));
+      Modelica.Blocks.Sources.Step step1(height=5, startTime=5)
+        annotation (Placement(transformation(extent={{-88,-16},{-68,4}})));
+      Modelica.Blocks.Sources.Step step2(height=-1, startTime=3)
+        annotation (Placement(transformation(extent={{-88,-54},{-68,-34}})));
+      Modelica.Blocks.Sources.Step step3(height=-1, startTime=3)
+        annotation (Placement(transformation(extent={{-70,-90},{-50,-70}})));
+      Modelica.Blocks.Nonlinear.Limiter limiter(uMax=5, uMin=-1)
+        annotation (Placement(transformation(extent={{22,6},{42,26}})));
+      Modelica.Blocks.Nonlinear.Limiter limiter1(uMax=1, uMin=-5)
+        annotation (Placement(transformation(extent={{48,-32},{68,-12}})));
+      Modelica.Blocks.Math.Add add(k2=-1) annotation (Placement(transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=270,
+            origin={36,-60})));
+      Modelica.Blocks.Math.Add add1(k2=-1) annotation (Placement(transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=270,
+            origin={76,-82})));
     equation
-      connect(const.y, mimo_decentralcontroller1.u_m[1]) annotation (Line(points={{-63,-10},
-              {-42,-10},{-42,-10.6},{-8,-10.6}}, color={0,0,127}));
-      connect(const.y, mimo_decentralcontroller1.u_m[2]) annotation (Line(points={{-63,-10},
-              {-42,-10},{-42,-8.6},{-8,-8.6}},   color={0,0,127}));
-      connect(step1.y, mimo_decentralcontroller1.u_s[2]) annotation (Line(points={{-65,62},
-              {-40,62},{-40,-3},{-12.2,-3}}, color={0,0,127}));
-      connect(step.y, mimo_decentralcontroller1.u_s[1]) annotation (Line(points={{-65,34},
-              {-42,34},{-42,-5},{-12.2,-5}},   color={0,0,127}));
-      connect(const.y, mimo_decentralcontroller1.u_a[1]) annotation (Line(
-            points={{-63,-10},{-32,-10},{-32,-28},{3.8,-28},{3.8,-10.4}}, color
-            ={0,0,127}));
-      connect(const.y, mimo_decentralcontroller1.u_a[2]) annotation (Line(
-            points={{-63,-10},{-42,-10},{-42,-66},{3.8,-66},{3.8,-8.4}}, color=
-              {0,0,127}));
+      connect(step.y, mimo_decentralcontroller1.u_s[1]) annotation (Line(points={{-69,30},
+              {-42,30},{-42,5},{-12,5}},                color={0,0,127}));
+      connect(mimo_decentralcontroller1.u_s[2], step1.y) annotation (Line(
+            points={{-12,7},{-40,7},{-40,-6},{-67,-6}},       color={0,0,127}));
+      connect(mimo_decentralcontroller1.u_m[1], step2.y) annotation (Line(
+            points={{-12,-7},{-40,-7},{-40,-44},{-67,-44}},         color={0,0,
+              127}));
+      connect(mimo_decentralcontroller1.u_m[2], step3.y) annotation (Line(
+            points={{-12,-5},{-32,-5},{-32,-80},{-49,-80}},         color={0,0,
+              127}));
+      connect(mimo_decentralcontroller1.y[1], limiter.u) annotation (Line(points={{8,
+              -1},{14,-1},{14,16},{20,16}}, color={0,0,127}));
+      connect(mimo_decentralcontroller1.y[2], limiter1.u) annotation (Line(points={{
+              8,1},{28,1},{28,-22},{46,-22}}, color={0,0,127}));
+      connect(add.u2, limiter.u) annotation (Line(points={{30,-48},{22,-48},{22,10},
+              {14,10},{14,16},{20,16}}, color={0,0,127}));
+      connect(add.u1, limiter.y)
+        annotation (Line(points={{42,-48},{43,-48},{43,16}}, color={0,0,127}));
+      connect(add.y, mimo_decentralcontroller1.u_a[1]) annotation (Line(points={{36,
+              -71},{18,-71},{18,-10.6},{-2,-10.6}}, color={0,0,127}));
+      connect(add1.u2, limiter1.u) annotation (Line(points={{70,-70},{54,-70},{54,-22},
+              {46,-22}}, color={0,0,127}));
+      connect(add1.u1, limiter1.y) annotation (Line(points={{82,-70},{76,-70},{76,-22},
+              {69,-22}}, color={0,0,127}));
+      connect(add1.y, mimo_decentralcontroller1.u_a[2]) annotation (Line(points={{76,
+              -93},{38,-93},{38,-62},{-2,-62},{-2,-8.6}}, color={0,0,127}));
       annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
             coordinateSystem(preserveAspectRatio=false)));
     end Test_MIMOCN;
@@ -1398,7 +1184,6 @@ where the signal sizes of the input and output vector are identical.
 
     model Test_CL_2
 
-
       Controller.mimo_decentralcontroller_2 mimo_decentralcontroller_2_1(
           use_KP_in=false)
         annotation (Placement(transformation(extent={{-10,-4},{10,16}})));
@@ -1497,4 +1282,4 @@ where the signal sizes of the input and output vector are identical.
   end Models;
   annotation (
     uses(Modelica(version = "3.2.2")));
-end Masterthesis;
+end Masterthesis_Backup;

@@ -255,8 +255,7 @@ package PI_SP
             extent={{-60,30},{60,-30}},
             lineColor={0,0,0},
             textString="%controllerType")}),
-      Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-60,-60},{60,60}}),
-                     graphics),
+      Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-60,-60},{60,60}})),
       Documentation(info="<html>
 <p>This controller can be used as P- or PI-controller. The controller can be switched on and off during the simulation. The output can be limited and an anti-wind-up function is included. The initialization can be set as steady state: der(y)=0 or with an initial output: y=yInitial. </p>
 </html>"));
