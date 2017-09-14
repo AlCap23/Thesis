@@ -299,9 +299,9 @@ package PI_SP
         yInitial=45,
         Ti=0.5,
         use_activeInput=false,
-        activationTime=0,
         initType="initialOutput",
-        use_setpointWeighting=false) annotation (Placement(transformation(
+        use_setpointWeighting=false,
+        activationTime=10)           annotation (Placement(transformation(
               extent={{26,-24},{14,-36}}, rotation=0)));
       TIL.VLEFluidComponents.Compressors.EffCompressor effCompressor(
         use_mechanicalPort=true,
@@ -345,8 +345,8 @@ package PI_SP
       Modelica.Blocks.Sources.Pulse pulse(
         offset=0.05,
         amplitude=0.03,
-        startTime=10,
-        period=20)
+        period=30,
+        startTime=0)
         annotation (Placement(transformation(extent={{60,-40},{40,-20}})));
     equation
       connect(boundaryWithInputs.port, effCompressor.portA) annotation (Line(
