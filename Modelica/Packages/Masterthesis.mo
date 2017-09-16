@@ -13,8 +13,7 @@ package Masterthesis "Includes all necessary models"
       Modelica.Blocks.Interfaces.RealOutput y "Connector of Real output signal" annotation (Placement(
             transformation(extent={{80,-20},{120,20}}), iconTransformation(extent=
                {{80,-20},{120,20}})));
-      Modelica.Blocks.Continuous.TransferFunction[n] transferFunction( b = num,  a = den,
-        each initType=Modelica.Blocks.Types.Init.InitialOutput)
+      Modelica.Blocks.Continuous.TransferFunction[n] transferFunction( b = num,  a = den)
         annotation (Placement(transformation(extent={{-64,-10},{-44,10}})));
       Modelica.Blocks.Math.MultiSum add(nu=n, significantDigits=5)
         annotation (Placement(transformation(extent={{24,-6},{36,6}})));
@@ -375,6 +374,45 @@ where the signal sizes of the input and output vector are identical.
 </html>"));
     end PIController;
 
+    package Simple_MIMO "Simple MIMO Controller for Study"
+
+      model Simple_MIMO
+        // Connector
+        Modelica.Blocks.Interfaces.RealInput[n] u_s "Setpoint input"
+          annotation (Placement(transformation(extent={{-126,-20},{-86,20}})));
+        Modelica.Blocks.Interfaces.RealInput[n] u_m "Measurement input"
+          annotation (Placement(transformation(extent={{-126,-80},{-86,-40}})));
+        Modelica.Blocks.Interfaces.RealOutput[n] y "Controller Output"
+          annotation (Placement(transformation(extent={{96,-10},{116,10}})));
+
+        // Parameter
+        parameter Integer n(min=1) "Number of in- and outputs";
+        parameter Real[n,n] KP=identity(n) "Proportional gain";
+        parameter Real[n,n] KI=identity(n) "Integral gain";
+        parameter Real[n,n] B=identity(n) "Setpoint-Weights";
+        parameter Real[n,n] D=identity(n) "Decoupler";
+        // Inner parameter
+      protected
+        Real[n] x  "Integral part";
+        // Initial Equation
+      initial equation
+        y = zeros(n);
+        x = zeros(n);
+      equation
+        // Integral part
+        der(x) = KI*(u_s-u_m);
+        // System output
+        y = D*(KP*(B*u_s - u_m) + x);
+        annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={Text(
+                extent={{-72,74},{70,-72}},
+                lineColor={0,0,0},
+                textStyle={TextStyle.Bold},
+                textString="KD"), Rectangle(extent={{-100,100},{100,-100}}, lineColor=
+                   {28,108,200})}),                                    Diagram(
+              coordinateSystem(preserveAspectRatio=false)));
+      end Simple_MIMO;
+    end Simple_MIMO;
+
     package MISO_Controller "Pacakage for MISO Controller"
 
       block miso_decentralcontroller_outer
@@ -485,14 +523,11 @@ where the signal sizes of the input and output vector are identical.
             tab="Advanced",
             group="Setpoint weighting"));
         /*********************INITIALIZATION****************/
-         outer parameter String initType="initialOutput" "Type of initialization"
+        parameter String initType="initialOutput" "Type of initialization"
           annotation (choices(choice="zeroIntegralState", choice="initialOutput"),
             dialog(enable=controllerType <> "P", group="Initialization"));
         parameter Real yInitial=0 "Initial output of controller"
           annotation (dialog(enable=controllerType <> "P", group="Initialization"));
-        parameter Real[n] xInitial=zeros(n) "Initial states of controller"
-          annotation (dialog(enable=(controllerType == "I") or (controllerType == "PI"),
-              group="Initialization"));
         /*********************COMPONENTS********************/
       protected
         Modelica.Blocks.Math.MultiSum add(nu=n)
@@ -504,15 +539,15 @@ where the signal sizes of the input and output vector are identical.
           ki=KI,
           each use_setpointWeighting=use_setpointWeighting,
           b=B,
-          each initType=initType,
-          each yInitial= yInitial,
+          each yInitial= 0,
           each use_activeInput=use_activeInput,
           each use_y_notActive=use_y_notActive,
           each activationTime=activationTime,
           each invertFeedback=invertFeedback,
           each use_kInput=use_kInput,
           each use_kiInput=use_kiInput,
-          each use_bInput=use_bInput)
+          each use_bInput=use_bInput,
+          each initType="zeroIntegralState")
           annotation (Placement(transformation(extent={{-50,-6},{-38,6}})));
       //     Modelica.Blocks.Sources.RealExpression yna_in(y=0);
         // Modelica.Blocks.Sources.BooleanExpression active_in(y= false) if use_activeInput;
@@ -829,14 +864,13 @@ one continuous Real output signal.
             tab="Advanced",
             group="Setpoint weighting"));
         /*********************INITIALIZATION****************/
-        outer parameter String initType="initialOutput" "Type of initialization"
+        parameter String initType="initialOutput" "Type of initialization"
           annotation (choices(choice="zeroIntegralState", choice="initialOutput"),
             dialog(enable=controllerType <> "P", group="Initialization"));
-        parameter Real yInitial=0 "Initial output of controller"
+      protected
+        Real[n] yInitial=zeros(n) "Initial output of controller"
           annotation (dialog(enable=controllerType <> "P", group="Initialization"));
-        parameter Real[n] xInitial=zeros(n) "Initial states of controller"
-          annotation (dialog(enable=(controllerType == "I") or (controllerType == "PI"),
-              group="Initialization"));
+
         /*********************COMPONENTS********************/
       protected
         MISO_Controller.miso_decentralcontroller_outer[n] pi(
@@ -844,8 +878,7 @@ one continuous Real output signal.
           KP=KP,
           KI=KI,
           B=B,
-          each activationTime = activationTime,
-          yInitial = zeros(n)) annotation (Placement(transformation(extent={{-46,-10},{-26,10}})));
+          each activationTime = activationTime) annotation (Placement(transformation(extent={{-46,-10},{-26,10}})));
 
       equation
         for outputs in 1:n loop
@@ -1292,6 +1325,7 @@ where the signal sizes of the input and output vector are identical.
         outer parameter Real[n] ymax "Maximum Output";
         outer parameter Real[n] ymin "Minimum Output";
         outer parameter Real[n] offset "Offset";
+        outer parameter Real[n] yInitial "Initial output of controller";
         Modelica.Blocks.Interfaces.RealInput u[n] "Connector of Real input signals" annotation (Placement(
               transformation(extent={{-120,-20},{-80,20}}), iconTransformation(extent=
                  {{-120,-20},{-80,20}})));
@@ -1313,12 +1347,15 @@ where the signal sizes of the input and output vector are identical.
               origin={0,108}), iconTransformation(extent={{-20,-20},{20,20}},
               rotation=270,
               origin={2,94})));
+        // External decoupler
       protected
         Modelica.Blocks.Sources.Constant[n,n] D_in_(k = D) if not use_dInput;
-        //Modelica.Blocks.Math.MatrixGain Gain(K = D_int.k);
         Modelica.Blocks.Interfaces.RealInput[n,n] D_int;
         Modelica.Blocks.Nonlinear.Limiter limiter[n](uMax=ymax, uMin=ymin)
           annotation (Placement(transformation(extent={{2,-10},{22,10}})));
+          /***********INITIAL******************/
+
+      /*************EQUATION*******************/
       equation
         connect(D_in_.y,D_int);
         connect(D_in, D_int);
@@ -1330,7 +1367,9 @@ where the signal sizes of the input and output vector are identical.
         limiter.u = D_int*u + offset;
         // Anti-Windup is difference between limiter Input and Output
         y_a = limiter.y - limiter.u;
-        annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={Text(
+          annotation (choices(choice="zeroIntegralState", choice="initialOutput"),
+            dialog(enable=controllerType <> "P", group="Initialization"),
+                    Icon(coordinateSystem(preserveAspectRatio=false), graphics={Text(
                 extent={{-50,60},{42,-54}},
                 lineColor={0,0,0},
                 textStyle={TextStyle.Bold},
@@ -1430,7 +1469,7 @@ where the signal sizes of the input and output vector are identical.
     public
       inner parameter Integer n(min=1) "Number of inputs (= number of outputs)";
 
-      inner parameter String initType="initialOutput" "Type of initialization"
+      parameter String initType="initialOutput" "Type of initialization"
         annotation (choices(choice="zeroIntegralState", choice="initialOutput"),
           dialog(enable=controllerType <> "P", group="Initialization"));
       inner parameter String controllerType="PI" "Controller Type" annotation (
@@ -1452,6 +1491,7 @@ where the signal sizes of the input and output vector are identical.
       inner parameter Boolean use_activeInput=false
         "True, if controller is switched on/off externally"
         annotation (Dialog(group="Activation"));
+      inner parameter Real[n] yInitial = zeros(n) "Initial Output of Decoupler" annotation(dialog(enable=(not controllerType=="P"), group = "Initialization"));
       parameter Modelica.SIunits.Time activationTime=0.0
         "Time when controller is switched on"
         annotation (Dialog(group="Activation", enable = not use_activeInput));
@@ -1872,25 +1912,24 @@ where the signal sizes of the input and output vector are identical.
         startTime=1,
         offset=0,
         height=8)
-        annotation (Placement(transformation(extent={{-92,-12},{-72,8}})));
+        annotation (Placement(transformation(extent={{-98,-10},{-78,10}})));
       Modelica.Blocks.Sources.Step step1(
         startTime=5,
         offset=0,
         height=9)
-        annotation (Placement(transformation(extent={{-94,-66},{-74,-46}})));
+        annotation (Placement(transformation(extent={{-96,-42},{-76,-22}})));
       Controller.Multivariable_Controller multivariable_Controller(
         n=2,
-        controllerType="PI",
         use_kiInput=true,
         use_bInput=true,
         use_dInput=true,
         use_activeInput=true,
         activationTime=0,
         ymax={20,10},
-        ymin={5,2},
-        offset={15,6},
         use_kInput=true,
-        initType="zeroIntegralState")
+        ymin={-20,-10},
+        controllerType="PI",
+        offset={5,15})
         annotation (Placement(transformation(extent={{-12,0},{8,20}})));
       Modelica.Blocks.Sources.RealExpression[2,2] KI(y={{0.852,0},{0,0.852}})
         annotation (Placement(transformation(extent={{-100,42},{-80,62}})));
@@ -1900,7 +1939,7 @@ where the signal sizes of the input and output vector are identical.
         annotation (Placement(transformation(extent={{-100,30},{-80,50}})));
       Modelica.Blocks.Sources.RealExpression[2,2] D(y={{1,0},{0,1}})
         annotation (Placement(transformation(extent={{-100,16},{-80,36}})));
-      Modelica.Blocks.Sources.BooleanStep booleanStep(startTime=30)
+      Modelica.Blocks.Sources.BooleanStep booleanStep(startTime=2)
         annotation (Placement(transformation(extent={{-44,70},{-24,90}})));
     equation
       for inputs in 1:n loop
@@ -1910,10 +1949,10 @@ where the signal sizes of the input and output vector are identical.
       connect(multivariable_Controller.u_m, Rosenbrocks_System.y) annotation (
           Line(points={{-5.8,-0.9},{-5.8,-32},{76,-32},{76,10},{60,10}}, color=
               {0,0,127}));
-      connect(multivariable_Controller.u_s[1], step1.y) annotation (Line(points
-            ={{-12,1},{-42,1},{-42,-56},{-73,-56}}, color={0,0,127}));
-      connect(multivariable_Controller.u_s[2], step.y) annotation (Line(points=
-              {{-12,3},{-42,3},{-42,-2},{-71,-2}}, color={0,0,127}));
+      connect(multivariable_Controller.u_s[1], step1.y) annotation (Line(points={{-12,1},
+              {-42,1},{-42,-32},{-75,-32}},         color={0,0,127}));
+      connect(multivariable_Controller.u_s[2], step.y) annotation (Line(points={{-12,3},
+              {-42,3},{-42,0},{-77,0}},            color={0,0,127}));
       connect(multivariable_Controller.KP_in, KP.y) annotation (Line(points={{
               -12,18},{-14,18},{-14,64},{-79,64}}, color={0,0,127}));
       connect(multivariable_Controller.KI_in, KI.y) annotation (Line(points={{
@@ -2068,56 +2107,67 @@ where the signal sizes of the input and output vector are identical.
 
   package Models "Package for used models"
     model mimo_closedloop
-
+      /***************MODEL PARAMETER******************/
       parameter Integer n=2 "Number of in- and outputs";
       parameter Integer o=9 "Order of the Process";
-      parameter Real[n,n,:] num = fill(1e-10,n,n,1) "Numerator of the system";
-      parameter Real[n,n,:] den = fill(1e-10,n,n,o) "Denominator of the system";
-      parameter Real[n,n] delay = zeros(n,n) "Delay of the system for every transfer function";
-      parameter Real[n,n] kp = fill(1e-10,n,n) "Proportional gain of the controller";
-      parameter Real[n,n] ki = fill(1e-10,n,n) "Integral gain of the controller";
-      parameter Real[n,n] b =  fill(1e-10,n,n) "Set Point Weight of the controller";
-      parameter Real[n,n] d =  fill(1e-10,n,n) "Decoupler of the System";
-      parameter Real[n] ymax = fill(1e10,n) "Maximum Output of the System";
-      parameter Real[n] ymin = fill(1e10,n) "Minimum Output of the System";
-
+      parameter Real[n,n,:] num=fill(
+          1e-10,
+          n,
+          n,
+          1) "Numerator of the system";
+      parameter Real[n,n,:] den=fill(
+          1e-10,
+          n,
+          n,
+          o) "Denominator of the system";
+      parameter Real[n,n] delay=zeros(n, n)
+        "Delay of the system for every transfer function";
+      parameter Real[n,n] kp=fill(
+          1e-10,
+          n,
+          n) "Proportional gain of the controller";
+      parameter Real[n,n] ki=fill(
+          1e-10,
+          n,
+          n) "Integral gain of the controller";
+      parameter Real[n,n] b=fill(
+          1e-10,
+          n,
+          n) "Set Point Weight of the controller";
+      parameter Real[n,n] d=fill(
+          1e-10,
+          n,
+          n) "Decoupler of the System";
+      /***************MODEL COMPONENTS****************/
+      // Connector
+      Modelica.Blocks.Interfaces.RealInput u[n] "Systems set point"
+        annotation (Placement(transformation(extent={{-127,-18},{-92,18}}),
+            iconTransformation(extent={{-120,-4},{-80,36}})));
+      Modelica.Blocks.Interfaces.RealOutput y[n]
+        "Systems real output" annotation (Placement(transformation(extent={{92,-18},
+                {128,18}}), iconTransformation(extent={{-120,40},{-80,80}})));
+      Modelica.Blocks.Interfaces.RealInput u_d[n](each start=0) "Disturbance input";
+      Modelica.Blocks.Interfaces.RealInput u_n[n](each start=0)
+        "Measurement noise input";
+      // System + Controller
+      Controller.Simple_MIMO.Simple_MIMO simple_MIMO(n=n)
+        annotation (Placement(transformation(extent={{-44,-10},{-24,10}})));
       Transferfunctions.mimo_transferfunction System(
         n=n,
         num=num,
         den=den,
-        delay = delay) annotation (Placement(transformation(extent={{42,0},{62,20}})));
-      Controller.MIMO_Controller.mimo_decentralcontroller_outer
-        Decentral_Controller(
-        n=n,
-        B=b,
-        KI=ki,
-        KP=kp) annotation (Placement(transformation(extent={{-36,0},{-16,20}})));
+        delay=delay)
+        annotation (Placement(transformation(extent={{32,-10},{52,10}})));
 
-      Controller.MIMO_Decoupler.mimo_decoupler_outer Decoupler(
-        n=n,
-        D=d,
-        ymax=ymax,
-        ymin=ymin)
-        annotation (Placement(transformation(extent={{2,0},{22,20}})));
-        Modelica.Blocks.Interfaces.RealInput u[n](each start=0) "Systems set point" annotation (
-        Placement(transformation(extent={{-127,-18},{-92,18}}), iconTransformation(
-              extent={{-120,-4},{-80,36}})));
-           Modelica.Blocks.Interfaces.RealOutput y[n](each start=0) "Systems real output" annotation (
-        Placement(transformation(extent={{92,-18},{128,18}}), iconTransformation(
-              extent={{-120,40},{-80,80}})));
     equation
-      for inputs in 1:n loop
-        connect(u[inputs],Decentral_Controller.u_s[inputs]);
-        connect(y[inputs],System.y[inputs]);
-      end for;
-      connect(Decentral_Controller.y, Decoupler.u)
-        annotation (Line(points={{-16,10},{-7,10},{2,10}}, color={0,0,127}));
-      connect(Decoupler.y, System.u)
-        annotation (Line(points={{22,10},{32,10},{42,10}}, color={0,0,127}));
-      connect(System.y, Decentral_Controller.u_m) annotation (Line(points={{62,10},{
-              72,10},{80,10},{80,-20},{-50,-20},{-50,4},{-36,4}}, color={0,0,127}));
-      connect(Decoupler.y_a, Decentral_Controller.u_a) annotation (Line(points={{12,
-              0},{12,-10},{-26,-10},{-26,0.4}}, color={0,0,127}));
+      // Input is Setpoint of the system
+      connect(u, simple_MIMO.u_s);
+      // Input of the system is controller output + disturbance input
+      System.u = simple_MIMO.y + u_d;
+      // Output of the system is controller output
+      connect(System.y, y);
+      // Input of the measurement of the controller is system output + noise
+      simple_MIMO.u_m = System.y + u_n;
       annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
             coordinateSystem(preserveAspectRatio=false)));
     end mimo_closedloop;
@@ -2126,9 +2176,9 @@ where the signal sizes of the input and output vector are identical.
       "Processmodel for a multiple input, multiple output system"
 
       parameter Integer n=2 "Number of in- and outputs";
-      parameter Integer o=9 "Order of the Process";
-      parameter Real[n,n,:] num = fill(1e-10,n,n,1) "Numerator of the system";
-      parameter Real[n,n,:] den = fill(1e-10,n,n,o) "Denominator of the system";
+      parameter Integer o=10 "Order of the Process = Degree -1 -> PT1 = 2";
+      parameter Real[n,n,:] num = fill(1e-3,n,n,1) "Numerator of the system";
+      parameter Real[n,n,:] den = fill(1e-3,n,n,o) "Denominator of the system";
       parameter Real[n,n] delay = zeros(n,n) "Delay of the system for every transfer function";
         Modelica.Blocks.Interfaces.RealInput u[n]
                                                  "Systems set point" annotation (
@@ -2142,10 +2192,10 @@ where the signal sizes of the input and output vector are identical.
         num=num,
         den=den,
         delay = delay)
-        annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
+        annotation (Placement(transformation(extent={{-12,-10},{8,10}})));
     equation
-      connect(u,system.u);
       connect(system.y,y);
+      connect(system.u, u);
       annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
             coordinateSystem(preserveAspectRatio=false)));
     end mimo_processmodel;

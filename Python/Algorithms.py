@@ -91,14 +91,14 @@ def Integral_Identification(y,u,t):
     L = Tar-T
     # Check if all arguments are valid
     if (T < 0):
-        print("Error - Negative lag")
-        return -1
-    if (L < 0):
-        if (L < 1e-2):
+        print("Error - Negative lag - Using 10 instead")
+        T = 20
+    if (L < 1e-2):
+        print("Error - Small delay - Using 0 instead")
+        if (L > 0):
             L = 0
         else:    
-            print("Error - Negative delay")
-            return -1
+            L = 0
     return KM,T,L
 
 # Algrotihm for computing gain of first order time delay
@@ -315,7 +315,7 @@ def Control_Astrom(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
         Tt = np.dot(np.multiply(K,np.add(T,L)),D)-np.diag(np.max(L,axis=1))#np.dot(K,np.dot(np.transpose(np.add(T,L)),D))-np.diag(np.max(L,axis=1))
         Lt = np.diag(np.max(np.transpose(L),axis=0))
         Kt = np.eye(K.shape[0],K.shape[1])
-        print()
+        
         # Iterate through the outputs 
         for o in range(0,outputs):
             # Estimate the new system parameter
