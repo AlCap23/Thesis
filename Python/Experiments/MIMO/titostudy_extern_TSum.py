@@ -109,13 +109,15 @@ def experimental_setup():
 	# Filename to store in
 	filename  = 'TITOStudy_external_15092017_1.csv'
 	# Overall sample_size 
-	sample_size = 27
+	sample_size = 9
 	# Max degree
 	max_deg = 9
 	# Gain Limits
-	gain_limits = [1, 10.0]
-	# Lag Limits
-	lag_limits = [0.1,1.]
+	gain_limits = [-10., 10.0]
+	# Lag Limits in percent of TSum
+	lag_limits = [.1,1.]
+	# TSum
+	T_Sum = 180; 
 	# Delay Limits, if small approx. no delay
 	delay_limits = [1,10]
 	# Step size for simulate
@@ -168,11 +170,11 @@ def experimental_setup():
 				# Sort until current degree
 				dist = np.sort(t[samples, outputs, inputs, :degree])
 				# Insert a zero for the first distance
-				dist = np.insert(dist, [0], 0.0)
-				# Calculate the distance 
-				dist = np.ediff1d(dist)
+				#dist = np.insert(dist, [0], 0.0)
+				# Calculate percentage
+				dist = T_Sum*dist/np.sum(dist)
 				# Calculate a stable polynomial, which highest coefficient is normed!!!
-				den[samples, outputs, inputs, :(degree+1)] = np.polynomial.polynomial.polyfromroots(-1.*dist)
+				den[samples, outputs, inputs, :(degree+1)] = np.polynomial.polynomial.polyfromroots(-1./dist)
 				# Hence, normalize the gain with the highest coefficient
 				num[samples, outputs, inputs] = k[samples, outputs, inputs] * den[samples, outputs, inputs, 0]
 
@@ -244,7 +246,7 @@ def experiment(num, den, l, R, filename, sample_size, max_deg, dt, t_sim, H, wmi
 		# Set the parameter
 		sim.set(params)
 		# Show the Parameter
-		# sim.showParameterDialog()
+		sim.showParameterDialog()
 		# Store the state space rep for later use
 		ss = sim.analyser_getStateSpaceForm()
 
@@ -261,6 +263,11 @@ def experiment(num, den, l, R, filename, sample_size, max_deg, dt, t_sim, H, wmi
 		y2 = res["fmu.y[2]"]
 		u = res["fmu.u[1]"]
 		time = res["time"]
+
+		# Plot the system
+		p.plot(time,y)
+		p.plot(time,y2)
+		p.show()
 
 		# Get TF from Input 1 to Output 1
 		K[0][0],T[0][0],L[0][0]=alg.Integral_Identification(y,u,time)
