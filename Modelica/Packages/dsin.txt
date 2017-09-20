@@ -42,7 +42,7 @@ double experiment(7,1)
 
 #    Method tuning parameters
 double method(27,1)
-       3                   # grid     type of communication time grid, defined by
+       1                   # grid     type of communication time grid, defined by
                            #          = 1: equidistant points ("Increment/nInterval")
                            #          = 2: vector of grid points ("tgrid")
                            #          = 3: variable step integrator (automatically)
@@ -106,9 +106,9 @@ char initialName(17007,94)
 TUmgebung
 Qdotkaelte
 Mitteldruck
-K_Fan_Temperature
-T_Fan_Temperature
-L_Fan_Temperature
+K_Valve_Temperature
+T_Valve_Temperature
+L_Valve_Temperature
 Regelung.TUmgebung
 Regelung.u_s_Temperature
 Regelung.u_s_Pressure
@@ -190,7 +190,7 @@ Regelung.PI_Fan.Ti_in_.k
 Regelung.add.u1
 Regelung.add.k1
 Regelung.add.k2
-Regelung.yFan
+Regelung.yValve
 Regelung.booleanStep1.startTime
 Regelung.booleanStep1.startValue
 Regelung.booleanStep1.y
@@ -17119,11 +17119,11 @@ double initialValue(17007,6)
  -1 3.5000000000000000E+006       0                       0                
   1   280   # Mitteldruck
   0       0                       0                       0                
-  4   320   # K_Fan_Temperature
+  4   320   # K_Valve_Temperature
   0       0                       0                       0                
-  4   320   # T_Fan_Temperature
+  4   320   # T_Valve_Temperature
   0       0                       0                       0                
-  4   320   # L_Fan_Temperature
+  4   320   # L_Valve_Temperature
   0       0                       0                 1.0000000000000000E+100
   6   256   # Regelung.TUmgebung
   0       0                       0                       0                
@@ -17144,7 +17144,7 @@ double initialValue(17007,6)
   1   280   # Regelung.Ti_PI_Valve
  -1    1000                       0                       0                
   1   280   # Regelung.startPI
-  0 1.0000000000000001E-001       0                       0                
+  0 -1.0000000000000001E-001       0                       0                
   6   256   # Regelung.sprungfaktor
  -1       2                       0                       0                
   1   280   # Regelung.Lmin
@@ -17176,7 +17176,7 @@ double initialValue(17007,6)
   6   256   # Regelung.messgroesse
   0       0                       0                       0                
   6   256   # Regelung.reglerausgang
-  0      -1                       0                       0                
+  0       1                       0                       0                
   6   258   # Regelung.SignofK
   0       0                       0                       0                
   6   256   # Regelung.u_m_Pressure
@@ -17281,13 +17281,13 @@ double initialValue(17007,6)
   0       1                       0                       0                
   6  1280   # Regelung.PI_Fan.Ti_in_.k
   0       0                       0                       0                
-  6   320   # Regelung.add.u1
+  6   256   # Regelung.add.u1
  -1       1                       0                       0                
   1   280   # Regelung.add.k1
  -1       1                       0                       0                
   1   280   # Regelung.add.k2
   0       0                       0                       0                
-  6   256   # Regelung.yFan
+  6   256   # Regelung.yValve
   0       0                       0                       0                
   6   256   # Regelung.booleanStep1.startTime
  -1       1                       0                       0                
@@ -48314,9 +48314,9 @@ double initialValue(17007,6)
   1   280   # System.sensor_subcooling.initialSensorValue
  -1 9.9999999999999995E-007       0                       0                
   1   280   # System.k.k
- -1 -2.9600000000000000E+000       0                       0                
+ -1 5.6500000000000004E+000       0                       0                
   1   280   # firstOrder.k
- -1 1.0650000000000000E+002       0                       0                
+ -1      41                       0                       0                
   1   280   # firstOrder.T
   0       3                       1                       4                
   6   258   # firstOrder.initType
@@ -48328,7 +48328,7 @@ double initialValue(17007,6)
   3   256   # firstOrder.der(y)
   0       0                       0                       0                
   6   256   # fixedDelay.y
- -1 2.4699999999999999E+001       0                       0                
+ -1 9.6500000000000004E+000       0                       0                
   1   280   # fixedDelay.delayTime
   0       0                       0                       0                
   6   769   # System.MTCabinet.moistAirA.gasType.fixedMixingRatio
@@ -51264,7 +51264,7 @@ Constant output value
 Connector of Real input signal 1
 Gain of upper input
 Gain of lower input
-Relay output
+
 Time instant of step start [s]
 Output before startTime [:#(type=Boolean)]
 Connector of Boolean output signal [:#(type=Boolean)]

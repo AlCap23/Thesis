@@ -1,27 +1,27 @@
 Log-file of program ./dymosim
-(generated: Wed Sep 20 12:13:43 2017)
+(generated: Wed Sep 20 13:20:41 2017)
 
 dymosim started
 ... "dsin.txt" loading (dymosim input file)
-... "Tester_Fedele_Fan_Temperature_KMax.mat" creating (simulation result file)
+... "Tester_Fedele_Valve_Temperature_KMax.mat" creating (simulation result file)
 
 Integration started at T = 0 using integration method DASSL
 (DAE multi-step solver (dassl/dasslrt of Petzold modified by Dynasim))
 Integration terminated successfully at T = 150000
-   CPU-time for integration      : 15.2 seconds
-   CPU-time for one GRID interval: 9.72 milli-seconds
-   Number of result points       : 1663
-   Number of GRID   points       : 1564
-   Number of (successful) steps  : 1612
-   Number of F-evaluations       : 54761
-   Number of H-evaluations       : 2004
-   Number of Jacobian-evaluations: 618
-   Number of (model) time events : 9
+   CPU-time for integration      : 21.6 seconds
+   CPU-time for one GRID interval: 43.2 milli-seconds
+   Number of result points       : 609
+   Number of GRID   points       : 501
+   Number of (successful) steps  : 1819
+   Number of F-evaluations       : 67251
+   Number of H-evaluations       : 2762
+   Number of Jacobian-evaluations: 763
+   Number of (model) time events : 11
    Number of (U) time events     : 0
-   Number of state    events     : 40
+   Number of state    events     : 44
    Number of step     events     : 0
-   Minimum integration stepsize  : 5.5e-11
-   Maximum integration stepsize  : 1.71e+04
+   Minimum integration stepsize  : 6.23e-08
+   Maximum integration stepsize  : 1.31e+04
    Maximum integration order     : 5
 Calling terminal section
 ... "dsfinal.txt" creating (final states)

@@ -16393,24 +16393,24 @@ DeclareParameter("System.sensor_subcooling.initialSensorValue", "[K,]", 570, 0, 
 0.0,0.0,0.0,0,560)
 DeclareParameter("System.k.k", "Gain value multiplied with input signal [1]", 571,\
  1E-006, 0.0,0.0,0.0,0,560)
-DeclareAlias2("System.k.u", "Input signal connector", "Regelung.PI_Valve.y", 1, 5,\
- 22, 0)
+DeclareAlias2("System.k.u", "Input signal connector", "Regelung.yValve", 1, 5, 57,\
+ 0)
 DeclareAlias2("System.k.y", "Output signal connector", "System.HPValve.AEffAux", 1,\
  5, 3982, 0)
-DeclareAlias2("System.nFan", "", "Regelung.yFan", 1, 5, 57, 0)
-DeclareAlias2("System.Ventil", "", "Regelung.PI_Valve.y", 1, 5, 22, 0)
+DeclareAlias2("System.nFan", "", "Regelung.PI_Fan.y", 1, 5, 39, 0)
+DeclareAlias2("System.Ventil", "", "Regelung.yValve", 1, 5, 57, 0)
 DeclareAlias2("System.yHP", "", "Regelung.u_m_Pressure", 1, 5, 21, 0)
 DeclareAlias2("System.realExpression3.y", "Value of Real output", \
 "Regelung.u_m_Pressure", 1, 5, 21, 0)
 DeclareAlias2("Input1.y", "Value of Real output", "Mitteldruck", 1, 7, 2, 0)
 DeclareAlias2("Input2.y", "Value of Real output", "Qdotkaelte", 1, 7, 1, 0)
-DeclareParameter("firstOrder.k", "Gain [1]", 572, -2.96, 0.0,0.0,0.0,0,560)
-DeclareParameter("firstOrder.T", "Time Constant [s]", 573, 106.5, 0.0,0.0,0.0,0,560)
+DeclareParameter("firstOrder.k", "Gain [1]", 572, 5.65, 0.0,0.0,0.0,0,560)
+DeclareParameter("firstOrder.T", "Time Constant [s]", 573, 41, 0.0,0.0,0.0,0,560)
 DeclareVariable("firstOrder.initType", "Type of initialization (1: no init, 2: steady state, 3/4: initial output) [:#(type=Modelica.Blocks.Types.Init)]",\
  3, 1.0,4.0,0.0,0,517)
 DeclareParameter("firstOrder.y_start", "Initial or guess value of output (= state)",\
  574, 0, 0.0,0.0,0.0,0,560)
-DeclareAlias2("firstOrder.u", "Connector of Real input signal", "Regelung.yFan", 1,\
+DeclareAlias2("firstOrder.u", "Connector of Real input signal", "Regelung.yValve", 1,\
  5, 57, 0)
 DeclareState("firstOrder.y", "Connector of Real output signal", 129, 0.0, \
 0.0,0.0,0.0,0,544)
@@ -16421,7 +16421,7 @@ DeclareAlias2("fixedDelay.u", "Connector of Real input signal", "firstOrder.y", 
 DeclareVariable("fixedDelay.y", "Connector of Real output signal", 0.0, 0.0,0.0,\
 0.0,0,512)
 DeclareParameter("fixedDelay.delayTime", "Delay time of output with respect to input signal [s]",\
- 575, 24.7, 0.0,0.0,0.0,0,560)
+ 575, 9.65, 0.0,0.0,0.0,0,560)
 DeclareAlias2("Regelung.PI_Valve.activeInput", "true, if controller is on [:#(type=Boolean)]",\
  "Regelung.and1.y", 1, 5, 61, 65)
 DeclareAlias2("Regelung.PI_Fan.activeInput", "true, if controller is on [:#(type=Boolean)]",\

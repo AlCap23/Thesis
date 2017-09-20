@@ -9,13 +9,13 @@ DeclareParameter("Qdotkaelte", "", 1, -50000.0, 0.0,0.0,0.0,0,560)
 DeclareParameter("Mitteldruck", "", 2, 3500000.0, 0.0,0.0,0.0,0,560)
 DeclareAlias2("realExpression.y", "Value of Real output", "Regelung.K", 1, 5, 14,\
  0)
-DeclareOutput("K_Fan_Temperature", "", 0, 0, 0.0,0.0,0.0,0,640)
-DeclareOutput("T_Fan_Temperature", "", 1, 0.0, 0.0,0.0,0.0,0,640)
+DeclareOutput("K_Valve_Temperature", "", 0, 0, 0.0,0.0,0.0,0,640)
+DeclareOutput("T_Valve_Temperature", "", 1, 0.0, 0.0,0.0,0.0,0,640)
 DeclareAlias2("realExpression1.y", "Value of Real output", "Regelung.T", 1, 5, 15,\
  0)
 DeclareAlias2("realExpression2.y", "Value of Real output", "Regelung.L", 1, 5, 16,\
  0)
-DeclareOutput("L_Fan_Temperature", "", 2, 0.0, 0.0,0.0,0.0,0,640)
+DeclareOutput("L_Valve_Temperature", "", 2, 0.0, 0.0,0.0,0.0,0,640)
 DeclareVariable("Regelung.TUmgebung", "", 0.0, 0.0,1E+100,300.0,0,513)
 DeclareVariable("Regelung.u_s_Temperature", "", 0.0, 0.0,0.0,0.0,0,513)
 DeclareVariable("Regelung.u_s_Pressure", "", 0.0, 0.0,0.0,0.0,0,513)
@@ -32,7 +32,7 @@ DeclareParameter("Regelung.Ti_PI_Valve", "Used to initialize", 6, 100, 0.0,0.0,\
 DeclareParameter("Regelung.startPI", "Time when to switch on controller", 7, \
 1000.0, 0.0,0.0,0.0,0,560)
 DeclareVariable("Regelung.sprungfaktor", "Defines step in relation to previous input",\
- 0.1, 0.0,0.0,0.0,0,513)
+ -0.1, 0.0,0.0,0.0,0,513)
 DeclareParameter("Regelung.Lmin", "Minimum value for delay", 8, 2, 0.0,0.0,0.0,0,560)
 DeclareVariable("Regelung.k_PI", "", 0.0, 0.0,0.0,0.0,0,640)
 DeclareVariable("Regelung.Ti_PI", "", 0.0, 0.0,0.0,0.0,0,640)
@@ -48,7 +48,7 @@ DeclareVariable("Regelung.L", "", 0.0, 0.0,0.0,0.0,0,656)
 DeclareVariable("Regelung.Tar", "", 0.0, 0.0,0.0,0.0,0,656)
 DeclareVariable("Regelung.messgroesse", "", 288.15, 0.0,1E+100,300.0,0,512)
 DeclareVariable("Regelung.reglerausgang", "", 0.0, 0.0,0.0,0.0,0,512)
-DeclareVariable("Regelung.SignofK", "[:#(type=Integer)]", -1, 0.0,0.0,0.0,0,517)
+DeclareVariable("Regelung.SignofK", "[:#(type=Integer)]", 1, 0.0,0.0,0.0,0,517)
 DeclareAlias2("Regelung.u_m_Temperature", "Process output", "Regelung.messgroesse", 1,\
  5, 18, 0)
 DeclareVariable("Regelung.u_m_Pressure", "", 0.0, 0.0,0.0,0.0,0,512)
@@ -191,15 +191,15 @@ DeclareAlias2("Regelung.PI_Fan.Ti_in_.y", "Connector of Real output signal", \
 DeclareAlias2("Regelung.PI_Fan.y_notActive_.y", "Value of Real output", \
 "Regelung.PI_Fan.y_old", 1, 5, 50, 1024)
 DeclareVariable("Regelung.add.u1", "Connector of Real input signal 1", 0.0, \
-0.0,0.0,0.0,0,640)
+0.0,0.0,0.0,0,512)
 DeclareAlias2("Regelung.add.u2", "Connector of Real input signal 2", \
 "Regelung.reglerausgang", 1, 5, 19, 0)
 DeclareAlias2("Regelung.add.y", "Connector of Real output signal", \
-"Regelung.yFan", 1, 5, 57, 0)
+"Regelung.yValve", 1, 5, 57, 0)
 DeclareParameter("Regelung.add.k1", "Gain of upper input", 21, 1, 0.0,0.0,0.0,0,560)
 DeclareParameter("Regelung.add.k2", "Gain of lower input", 22, 1, 0.0,0.0,0.0,0,560)
-DeclareVariable("Regelung.yFan", "Relay output", 0.0, 0.0,0.0,0.0,0,512)
-DeclareAlias2("Regelung.yValve", "", "Regelung.PI_Valve.y", 1, 5, 22, 0)
+DeclareAlias2("Regelung.yFan", "Relay output", "Regelung.PI_Fan.y", 1, 5, 39, 0)
+DeclareVariable("Regelung.yValve", "", 0.0, 0.0,0.0,0.0,0,512)
 DeclareAlias2("Regelung.yTUmgebung", "", "Regelung.TUmgebung", 1, 5, 0, 0)
 DeclareAlias2("Regelung.realExpression1.y", "Value of Real output", \
 "Regelung.TUmgebung", 1, 5, 0, 0)
@@ -15574,7 +15574,7 @@ DeclareVariable("System.firstOrder.initType", "Type of initialization (1: no ini
 DeclareParameter("System.firstOrder.y_start", "Initial or guess value of output (= state)",\
  313, 10, 0.0,0.0,0.0,0,560)
 DeclareAlias2("System.firstOrder.u", "Connector of Real input signal", \
-"Regelung.yFan", 1, 5, 57, 0)
+"Regelung.PI_Fan.y", 1, 5, 39, 0)
 DeclareState("System.firstOrder.y", "Connector of Real output signal", 43, 0.0, \
 0.0,0.0,0.0,0,544)
 DeclareDerivative("System.firstOrder.der(y)", "der(Connector of Real output signal)",\

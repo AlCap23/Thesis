@@ -290,18 +290,6 @@ def Control_Astrom(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
         Ky = np.empty([outputs,inputs,3])
         B = np.empty([outputs,inputs])
         
-        
-        # Get minimal Delay/ Time Constant for robust limit of crossover frequency, ignore zeros
-        # Important note: wc_min is actually 1/w_c !!!
-        if (L[np.where(L>0)].size !=0) or (T[np.where(T>0)].size !=0):
-            if (L[np.where(L>0)].size !=0):
-                wc_min = np.max([np.max(L[np.nonzero(L)]),np.max(T[np.nonzero(T)])])
-            else:
-                wc_min = np.max(np.max(T[np.nonzero(T)]))
-        else:
-            # Use very high frequency
-            wc_min = 1e10
-        
         # Compute the decoupler
         D = np.linalg.inv(K)
         # Compute the interaction indeces
@@ -315,7 +303,8 @@ def Control_Astrom(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
         Tt = np.dot(np.multiply(K,np.add(T,L)),D)-np.diag(np.max(L,axis=1))#np.dot(K,np.dot(np.transpose(np.add(T,L)),D))-np.diag(np.max(L,axis=1))
         Lt = np.diag(np.max(np.transpose(L),axis=0))
         Kt = np.eye(K.shape[0],K.shape[1])
-        
+                
+
         # Iterate through the outputs 
         for o in range(0,outputs):
             # Estimate the new system parameter
@@ -327,6 +316,10 @@ def Control_Astrom(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
             # Get the array of gains
             # Get the system time constant as weighted sum
             t = Tt[o][o]
+            # Calculate the detuning frequency
+            R = 0.8
+            wc_min = 2.0/R * (t+l)/((t+l)**2 + t**2)
+            print(wc_min)
             # Design a controller based on estimated system
             ky, b0, d = Control_Decentral(k,t,l,w,b,structure)
             # Test for Interaction
@@ -344,10 +337,10 @@ def Control_Astrom(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
                 # Set counter for while
                 counter=0
                 # Set shrinking rate 
-                shrink_rate = 0.7
+                shrink_rate = 0.9
                 # Check if decoupling is needed
 
-                while (np.abs(H[o][o]/(ms*gmax)) - np.sqrt( (b*ky[0]/wc_min)**2 + ky[1]**2 ) < 0):
+                while (np.abs(H[o][o]/(ms*gmax)) - np.sqrt( (b*ky[0]*wc_min)**2 + ky[1]**2 ) < 0):
                     if counter > 1e6:
                         #print('Maximal Iteration for detuning reached! Abort')
                         break
@@ -383,17 +376,6 @@ def Control_Decoupled(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
         # Compute a decentralized control structure based on RGA
         Ky, B, D = Control_Decentral(K,T,L, w , b, structure)
 
-        # Get minimal Delay/ Time Constant for robust limit of crossover frequency, ignore zeros
-        # Important note: wc_min is actually 1/w_c !!!
-        if (L[np.where(L>0)].size !=0) or (T[np.where(T>0)].size !=0):
-            if (L[np.where(L>0)].size !=0):
-                wc_min = np.max([np.max(L[np.nonzero(L)]),np.max(T[np.nonzero(T)])])
-            else:
-                wc_min = np.max(np.max(T[np.nonzero(T)]))
-        else:
-            # Use very high frequency
-            wc_min = 1e10
-        
         # Calculate the Pairing
         # Compute RGA -> Checks for Shape
         LG = RGA(K,T,L,w)
@@ -404,7 +386,9 @@ def Control_Decoupled(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
         Gamma =  np.multiply(-K,T+L)
 
         # Initialize 
+        # Gain
         KD = np.zeros_like(Gamma)
+        # Interaction
         GD = np.zeros_like(Gamma)
 
         # Get the Diagonal entries for decoupling
@@ -414,16 +398,21 @@ def Control_Decoupled(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
             GD[outputs][inputs] = Gamma[outputs][inputs]
     
         # Get the Antidiagonal
+        # Gain
         KA = K-KD
+        # Interaction
         GA = Gamma-GD
         
         # Define the splitter
         S = -np.dot(np.linalg.inv(KD),KA)
 
-        # Get the interaction, absolute
-        # GammaA = np.abs(GA + np.dot(GD,S))
-        # Interaction relative
+        # Get the interaction relative to the gain
+        #GammaA = np.abs(GA + np.dot(GD,S))
+        # Interaction relative to the dynamic of the interaction
         GammaA = np.abs(np.dot(np.linalg.inv(GD),GA) + S)
+        # Interaction relative to the gain
+        #GammaA = np.abs(np.dot(np.linalg.inv(KD),GA + np.dot(GD,S)))
+        print(GammaA)
         # Get the maximum of each row 
         GMax = np.argmax(GammaA,axis=1)
         
@@ -441,19 +430,25 @@ def Control_Decoupled(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
             t = T[outputs][inputs]
             l = L[outputs][inputs]
 
+            # Calculate the detuning frequency
+            R = 0.8
+            wc_min = 2.0/R * (t+l)/((t+l)**2 + t**2)
+            print(wc_min)
+
             # Check for set point weight, either given
             if b == np.empty:
                 # Or computed from AMIGO_TUNE
                 b = B[outputs][inputs]
             
             gmax = GammaA[outputs][GMax[outputs]]
+            print(gmax, H[outputs][outputs])
 
             # Check for PI Structure
             if structure == 'PI':
                 # Define the counter
                 counter = 0
                 # Set shrinking rate 
-                shrink_rate = 0.7
+                shrink_rate = 0.9
                
                 while (np.abs(H[outputs][outputs]/(ms*gmax)) - np.sqrt( (b*ky[0]/wc_min)**2 + ky[1]**2 ) < 0):
                     if counter > 1e6:

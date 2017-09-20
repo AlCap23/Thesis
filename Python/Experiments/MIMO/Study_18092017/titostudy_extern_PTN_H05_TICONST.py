@@ -129,7 +129,7 @@ def experimental_setup():
 	wmax = 3
 	dw = 10000
 	# Special frequencies
-	w_special = np.array([0.1, 0.5, 1.0])
+	w_special = np.array([0.01, 0.02, 0.1, 1./150., 1./200.])
 	# Store the results
 	# System Order, Maximum Sensitivity, corresponding Frequency, MS_w0.1, MS_w0.5, MS_w1, Grad_MS(w0.1...1)
 	columns = ['Degree','MS_RGA','w_MS_RGA','Grad_RGA','MS_A', 'w_MS_A','Grad_A', 'MS_D','w_MS_D', 'Grad_D']
