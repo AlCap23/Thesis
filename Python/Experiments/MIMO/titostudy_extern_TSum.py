@@ -223,6 +223,11 @@ def experiment(num, den, l, R, filename, sample_size, max_deg, dt, t_sim, H, wmi
 
 		# Reload the model
 		sim.reloadModel()
+		# Set Simulation Parameter
+		daeSolverParams = sim.getDAESolverParameters()
+		daeSolverParams['absTol'] = 1e-7
+		daeSolverParams['relTol'] = 1e-8
+		sim.setDAESolverParameters(daeSolverParams)
 
 	###########################################################
 	####################### MODEL SETUP #######################

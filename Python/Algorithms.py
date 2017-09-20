@@ -346,16 +346,16 @@ def Control_Astrom(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
                 # Set shrinking rate 
                 shrink_rate = 0.7
                 # Check if decoupling is needed
-                if gmax < 1e-3:
-                    while (np.abs(H[o][o]/(ms*gmax)) - np.sqrt( (b*ky[0]/wc_min)**2 + ky[1]**2 ) < 0):
-                        if counter > 1e6:
-                            #print('Maximal Iteration for detuning reached! Abort')
-                            break
-                        # Detune the controller with the shrinking rate    
-                        ky = AMIGO_DETUNE(k,t,l,ky,shrink_rate*ky[0])
-                        # Increment counter
-                        counter += 1
-                    print(counter)
+
+                while (np.abs(H[o][o]/(ms*gmax)) - np.sqrt( (b*ky[0]/wc_min)**2 + ky[1]**2 ) < 0):
+                    if counter > 1e6:
+                        #print('Maximal Iteration for detuning reached! Abort')
+                        break
+                    # Detune the controller with the shrinking rate    
+                    ky = AMIGO_DETUNE(k,t,l,ky,shrink_rate*ky[0])
+                    # Increment counter
+                    counter += 1
+                print("Aström Detuning Iterations:" +str(counter))
                 # Get the controller parameter
                 Ky[o][o][:] = ky
                 B[o][o] = b
@@ -420,8 +420,10 @@ def Control_Decoupled(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
         # Define the splitter
         S = -np.dot(np.linalg.inv(KD),KA)
 
-        # Get the interaction
-        GammaA = np.abs(GA + np.dot(GD,S))
+        # Get the interaction, absolute
+        # GammaA = np.abs(GA + np.dot(GD,S))
+        # Interaction relative
+        GammaA = np.abs(np.dot(np.linalg.inv(GD),GA) + S)
         # Get the maximum of each row 
         GMax = np.argmax(GammaA,axis=1)
         
@@ -452,15 +454,16 @@ def Control_Decoupled(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
                 counter = 0
                 # Set shrinking rate 
                 shrink_rate = 0.7
-                if gmax < 1e-3:
-                    while (np.abs(H[outputs][outputs]/(ms*gmax)) - np.sqrt( (b*ky[0]/wc_min)**2 + ky[1]**2 ) < 0):
-                        if counter > 1e6:
-                            #print('Maximal Iteration for detuning reached! Abort')
-                            break
-                        # Detune the controller with the shrinking rate    
-                        ky = AMIGO_DETUNE(k,t,l,ky,shrink_rate*ky[0])
-                        # Increment counter
-                        counter += 1
+               
+                while (np.abs(H[outputs][outputs]/(ms*gmax)) - np.sqrt( (b*ky[0]/wc_min)**2 + ky[1]**2 ) < 0):
+                    if counter > 1e6:
+                        #print('Maximal Iteration for detuning reached! Abort')
+                        break
+                    # Detune the controller with the shrinking rate    
+                    ky = AMIGO_DETUNE(k,t,l,ky,shrink_rate*ky[0])
+                    # Increment counter
+                    counter += 1
+                print("Modified Detuning Iterationts "+str(counter))
                 # Get the controller parameter
                 Ky[outputs][inputs][:] = ky
                 #Kr[outputs][inputs][:] = [b*ky[0], ky[1], ky[2]]

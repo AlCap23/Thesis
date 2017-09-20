@@ -123,7 +123,7 @@ def experimental_setup():
 	# Final time for simulation
 	t_sim = 1500
 	# Maximum Interaction
-	H = 0.5*np.eye(2,2)
+	H = 0.1*np.eye(2,2)
 	# Frequency parameter (as dB)
 	wmin = -5
 	wmax = 3
@@ -213,7 +213,7 @@ def experiment(num, den, l, R, filename, sample_size, max_deg, dt, t_sim, H, wmi
 			# Load new model
 			sim.loadModel("C:/Users/juliu/Documents/Thesis/Modelica/FMU/2_2_n"+str(degree)+"/Masterthesis_Models_mimo_0processmodel.fmu")
 			sim.setOperationMode('FMU for ModelExchange')
-
+			
 		# Preallocat identification parameter
 		K = np.zeros((2,2))
 		T = np.zeros((2,2))
@@ -221,6 +221,11 @@ def experiment(num, den, l, R, filename, sample_size, max_deg, dt, t_sim, H, wmi
 
 		# Reload the model
 		sim.reloadModel()
+		# Set Simulation Parameter
+		daeSolverParams = sim.getDAESolverParameters()
+		daeSolverParams['absTol'] = 1e-7
+		daeSolverParams['relTol'] = 1e-8
+		sim.setDAESolverParameters(daeSolverParams)
 
 	###########################################################
 	####################### MODEL SETUP #######################
@@ -244,7 +249,7 @@ def experiment(num, den, l, R, filename, sample_size, max_deg, dt, t_sim, H, wmi
 		# Set the parameter
 		sim.set(params)
 		# Show the Parameter
-		#sim.showParameterDialog()
+		sim.showParameterDialog()
 		# Store the state space rep for later use
 		ss = sim.analyser_getStateSpaceForm()
 
