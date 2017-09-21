@@ -1,14 +1,14 @@
 # coding: utf8
 """
 	Contains the Python package for Algorithm used
-    Added Graphical Output
 """
 
 # Import numpy 
 import numpy as np 
-# Import control
-import control as cn 
-# Import Bokeh
+
+# Import control for plotting option
+import control as cn
+# Import bokeh for plotting
 import bokeh.plotting as bk
 
 # TUBS Rot, Gelb, Orange, Hellgrün, Grün, Dunkelgrün, Hellblau, Blau, Dunkelblau, Violett
@@ -22,6 +22,7 @@ TUBScolorscale=[(190,30,60,0.9),
                (0,112,155,0.9),
                (0,63,87,0.9),
                (138,48,127,0.9)]
+
 
 # Step Information of SISO system
 
@@ -107,14 +108,15 @@ def Integral_Identification(y,u,t, graphics = "off"):
     L = Tar-T
     # Check if all arguments are valid
     if (T < 0):
-        print("Error - Negative lag")
-        return -1
-    if (L < 0):
-        if (L < 1e-2):
+        print("Error - Negative lag - Using 20 instead")
+        T = 20
+    if (L < 1e-2):
+        print("Error - Small delay - Using 0 instead")
+        if (L > 0):
             L = 0
         else:    
-            print("Error - Negative delay")
-            return -1
+            L = 0
+    #Plotting
     if graphics == 'on':
         # Pade Polynomial
         num,den = cn.pade(L,10)
@@ -126,7 +128,6 @@ def Integral_Identification(y,u,t, graphics = "off"):
         fig.line(t,y,color=TUBScolorscale[6],legend='Original System')
         fig.line(tm,ym,color=TUBScolorscale[2], legend='Model System')
         fig.legend.location = "bottom_right"
-        bk.show(fig)
     return KM,T,L
 
 # Algrotihm for computing gain of first order time delay
@@ -291,7 +292,7 @@ def Control_Decentral(K,T,L, w = 0, b=np.empty, structure = 'PI'):
 
 # Algorithm for computing a decoupling control based on Aström
 
-def Control_Astrom(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI', graphics = 'off'):
+def Control_Astrom(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI', graphics = "off"):
     """Computes a Decoupling Controller via Aström Algortihm based on FOTD"""
     
     # Check Input for Maximum Sensitivity
@@ -318,18 +319,6 @@ def Control_Astrom(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI', graph
         Ky = np.empty([outputs,inputs,3])
         B = np.empty([outputs,inputs])
         
-        
-        # Get minimal Delay/ Time Constant for robust limit of crossover frequency, ignore zeros
-        # Important note: wc_min is actually 1/w_c !!!
-        if (L[np.where(L>0)].size !=0) or (T[np.where(T>0)].size !=0):
-            if (L[np.where(L>0)].size !=0):
-                wc_min = np.max([np.max(L[np.nonzero(L)]),np.max(T[np.nonzero(T)])])
-            else:
-                wc_min = np.max(np.max(T[np.nonzero(T)]))
-        else:
-            # Use very high frequency
-            wc_min = 1e10
-        
         # Compute the decoupler
         D = np.linalg.inv(K)
         # Compute the interaction indeces
@@ -343,33 +332,43 @@ def Control_Astrom(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI', graph
         Tt = np.dot(np.multiply(K,np.add(T,L)),D)-np.diag(np.max(L,axis=1))#np.dot(K,np.dot(np.transpose(np.add(T,L)),D))-np.diag(np.max(L,axis=1))
         Lt = np.diag(np.max(np.transpose(L),axis=0))
         Kt = np.eye(K.shape[0],K.shape[1])
-        print(Kt,Tt,Lt)
-        # Plotting
+
+        # Plotting 
+        # When on, simulation of closed loop is not working correctly! 
+        # WHY!?
         if graphics == 'on':
             # Open Figure
             fig = bk.figure(title = "Approximation of FOTD Sum")
             # Loop over the outputs
-            for outputs in range(0,K.shape[0]):
+            for o in range(0,outputs):
                 # Make system model
-                G = cn.tf(0,1)
+                system = cn.tf(0,1)
                 # Loop over inputs
-                for inputs in range(0,K.shape[1]):
+                for i in range(0,inputs):
                     # Make the system
-                    num,den = cn.pade(L[outputs][inputs],10)
-                    G = G + D[inputs][outputs] * cn.tf(K[outputs][inputs],[T[outputs][inputs],1])*cn.tf(num,den)
+                    numerator,denominator = cn.pade(L[o][i],10)
+                    system = system + D[i][o] * cn.tf(K[o][i],[T[o][i],1])*cn.tf(numerator,denominator)
 
                 # System
-                y,t = cn.step(G)
+                output_system,sim_time = cn.step(system)
                 # System Model
-                num,den = cn.pade(Lt[outputs][outputs],10)
-                GM = cn.tf(Kt[outputs][outputs],[Tt[outputs][outputs],1])*cn.tf(num,den)
-                ym, tm = cn.step(GM)
+                numerator,denominator = cn.pade(Lt[o][o],10)
+                system_model = cn.tf(Kt[o][o],[Tt[o][o],1])*cn.tf(numerator,denominator)
+                output_system_model, sim_time = cn.step(system_model,sim_time)
         
-                fig.line(t,y,color=TUBScolorscale[6],legend='Original System '+str(outputs))
-                fig.line(tm,ym,color=TUBScolorscale[2], legend='Model System '+str(outputs))
-                fig.legend.location="bottom_right"
-                #input("Press Enter to continue...")
+                fig.line(sim_time,output_system,color=TUBScolorscale[6],legend='Original System '+str(outputs))
+                fig.line(sim_time,output_system_model,color=TUBScolorscale[2], legend='Model System '+str(outputs))
+            
+            # Legend of the system
+            fig.legend.location="bottom_right"
+            # Show the plot
             bk.show(fig)
+
+            # Delete variables
+            del numerator,denominator,system_model,system,output_system,output_system_model, fig, sim_time
+            
+                
+
         # Iterate through the outputs 
         for o in range(0,outputs):
             # Estimate the new system parameter
@@ -381,6 +380,10 @@ def Control_Astrom(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI', graph
             # Get the array of gains
             # Get the system time constant as weighted sum
             t = Tt[o][o]
+            # Calculate the detuning frequency
+            R = 0.8
+            wc_min = 2.0/R * (t+l)/((t+l)**2 + t**2)
+            print(wc_min)
             # Design a controller based on estimated system
             ky, b0, d = Control_Decentral(k,t,l,w,b,structure)
             # Test for Interaction
@@ -398,18 +401,18 @@ def Control_Astrom(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI', graph
                 # Set counter for while
                 counter=0
                 # Set shrinking rate 
-                shrink_rate = 0.7
+                shrink_rate = 0.9
                 # Check if decoupling is needed
-                if gmax < 1e-3:
-                    while (np.abs(H[o][o]/(ms*gmax)) - np.sqrt( (b*ky[0]/wc_min)**2 + ky[1]**2 ) < 0):
-                        if counter > 1e6:
-                            #print('Maximal Iteration for detuning reached! Abort')
-                            break
-                        # Detune the controller with the shrinking rate    
-                        ky = AMIGO_DETUNE(k,t,l,ky,shrink_rate*ky[0])
-                        # Increment counter
-                        counter += 1
-                    print(counter)
+
+                while (np.abs(H[o][o]/(ms*gmax)) - np.sqrt( (b*ky[0]*wc_min)**2 + ky[1]**2 ) < 0):
+                    if counter > 1e6:
+                        #print('Maximal Iteration for detuning reached! Abort')
+                        break
+                    # Detune the controller with the shrinking rate    
+                    ky = AMIGO_DETUNE(k,t,l,ky,shrink_rate*ky[0])
+                    # Increment counter
+                    counter += 1
+                print("Aström Detuning Iterations:" +str(counter))
                 # Get the controller parameter
                 Ky[o][o][:] = ky
                 B[o][o] = b
@@ -437,17 +440,6 @@ def Control_Decoupled(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
         # Compute a decentralized control structure based on RGA
         Ky, B, D = Control_Decentral(K,T,L, w , b, structure)
 
-        # Get minimal Delay/ Time Constant for robust limit of crossover frequency, ignore zeros
-        # Important note: wc_min is actually 1/w_c !!!
-        if (L[np.where(L>0)].size !=0) or (T[np.where(T>0)].size !=0):
-            if (L[np.where(L>0)].size !=0):
-                wc_min = np.max([np.max(L[np.nonzero(L)]),np.max(T[np.nonzero(T)])])
-            else:
-                wc_min = np.max(np.max(T[np.nonzero(T)]))
-        else:
-            # Use very high frequency
-            wc_min = 1e10
-        
         # Calculate the Pairing
         # Compute RGA -> Checks for Shape
         LG = RGA(K,T,L,w)
@@ -458,7 +450,9 @@ def Control_Decoupled(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
         Gamma =  np.multiply(-K,T+L)
 
         # Initialize 
+        # Gain
         KD = np.zeros_like(Gamma)
+        # Interaction
         GD = np.zeros_like(Gamma)
 
         # Get the Diagonal entries for decoupling
@@ -468,14 +462,21 @@ def Control_Decoupled(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
             GD[outputs][inputs] = Gamma[outputs][inputs]
     
         # Get the Antidiagonal
+        # Gain
         KA = K-KD
+        # Interaction
         GA = Gamma-GD
         
         # Define the splitter
         S = -np.dot(np.linalg.inv(KD),KA)
 
-        # Get the interaction
-        GammaA = np.abs(GA + np.dot(GD,S))
+        # Get the interaction relative to the gain
+        #GammaA = np.abs(GA + np.dot(GD,S))
+        # Interaction relative to the dynamic of the interaction
+        GammaA = np.abs(np.dot(np.linalg.inv(GD),GA) + S)
+        # Interaction relative to the gain
+        #GammaA = np.abs(np.dot(np.linalg.inv(KD),GA + np.dot(GD,S)))
+        print(GammaA)
         # Get the maximum of each row 
         GMax = np.argmax(GammaA,axis=1)
         
@@ -493,28 +494,35 @@ def Control_Decoupled(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
             t = T[outputs][inputs]
             l = L[outputs][inputs]
 
+            # Calculate the detuning frequency
+            R = 0.8
+            wc_min = 2.0/R * (t+l)/((t+l)**2 + t**2)
+            print(wc_min)
+
             # Check for set point weight, either given
             if b == np.empty:
                 # Or computed from AMIGO_TUNE
                 b = B[outputs][inputs]
             
             gmax = GammaA[outputs][GMax[outputs]]
+            print(gmax, H[outputs][outputs])
 
             # Check for PI Structure
             if structure == 'PI':
                 # Define the counter
                 counter = 0
                 # Set shrinking rate 
-                shrink_rate = 0.7
-                if gmax < 1e-3:
-                    while (np.abs(H[outputs][outputs]/(ms*gmax)) - np.sqrt( (b*ky[0]/wc_min)**2 + ky[1]**2 ) < 0):
-                        if counter > 1e6:
-                            #print('Maximal Iteration for detuning reached! Abort')
-                            break
-                        # Detune the controller with the shrinking rate    
-                        ky = AMIGO_DETUNE(k,t,l,ky,shrink_rate*ky[0])
-                        # Increment counter
-                        counter += 1
+                shrink_rate = 0.9
+               
+                while (np.abs(H[outputs][outputs]/(ms*gmax)) - np.sqrt( (b*ky[0]/wc_min)**2 + ky[1]**2 ) < 0):
+                    if counter > 1e6:
+                        #print('Maximal Iteration for detuning reached! Abort')
+                        break
+                    # Detune the controller with the shrinking rate    
+                    ky = AMIGO_DETUNE(k,t,l,ky,shrink_rate*ky[0])
+                    # Increment counter
+                    counter += 1
+                print("Modified Detuning Iterationts "+str(counter))
                 # Get the controller parameter
                 Ky[outputs][inputs][:] = ky
                 #Kr[outputs][inputs][:] = [b*ky[0], ky[1], ky[2]]
