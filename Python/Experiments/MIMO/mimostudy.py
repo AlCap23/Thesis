@@ -41,7 +41,7 @@ def experimental_setup():
 	# Set up the Experiment and define the range of system gain, lag and delay as well as filename etc
 	filename = 'MIMO_280817_1.csv'
 	# Sample size per system order
-	sample_size = 1000
+	sample_size = 1
 	# Size, assuming quadratic system
 	sys_size = 2
 	# Maximum System Order (-1)
@@ -55,9 +55,9 @@ def experimental_setup():
 	# Delay Limits -> If small no delay
 	delay_limits = [1e-2, 1e-3]
 	# Create the system numerator
-	N = np.random.uniform(gain_limits[0],gain_limits[1],(max_order,sample_size,sys_size,sys_size))
+	Num = np.random.uniform(gain_limits[0],gain_limits[1],(max_order,sample_size,sys_size,sys_size))
 	# Create the system denominator -> Several
-	D = np.random.uniform(lag_limits[0],lag_limits[1],(max_order,sample_size,max_order,sys_size,sys_size))
+	Den = np.random.uniform(lag_limits[0],lag_limits[1],(max_order,sample_size,max_order,sys_size,sys_size))
 	# Create the system delay
 	L = np.random.uniform(delay_limits[0], delay_limits[1],(max_order,sample_size))
 	# Create an array for the results: sys_no, order, K,T, k,t,l, ms_real,ms_ideal, 4x t_rise, mp, t_settle, yss 
@@ -66,7 +66,7 @@ def experimental_setup():
 
 # Experimental Study
 @ex.automain
-def experiment(N,D,L,R,noise_limit,sys_size,sample_size,max_order,filename, columns):
+def experiment(Num,Den,L,R,noise_limit,sys_size,sample_size,max_order,filename, columns):
 	# Define system no
 	sys_no = 0
 
@@ -118,18 +118,18 @@ def experiment(N,D,L,R,noise_limit,sys_size,sample_size,max_order,filename, colu
 				for outputs in range(0,sys_size):
 					for inputs in range(0,sys_size):
 						if current_order == 1:
-							den1[outputs][inputs][-2] = D[order][sample][current_order][outputs][inputs]
+							den1[outputs][inputs][-2] = Den[order][sample][current_order][outputs][inputs]
 							
 						else:  
 							# Get the current first order system
-							den2[outputs][inputs][-2] = D[order][sample][current_order][outputs][inputs]
+							den2[outputs][inputs][-2] = Den[order][sample][current_order][outputs][inputs]
 							den1[outputs][inputs] = np.convolve(den1[outputs][inputs],den2[outputs][inputs])
 							
 						# Get the system gain for last order
 						if current_order >= order:
-							num[outputs][inputs][0] = N[order][sample][outputs][inputs]
+							num[outputs][inputs][0] = Num[order][sample][outputs][inputs]
 				# Make the MIMO System
-			G = cn.tf(num,den1)
+			G = cn.tf2ss(cn.tf(num,den1))
 			
 
 			# Preallocate the Parameter
@@ -164,17 +164,27 @@ def experiment(N,D,L,R,noise_limit,sys_size,sample_size,max_order,filename, colu
 				# Check method
 				if methods == 0:
 					# Design decentralised controller
-					KY,KR = alg.Control_Decentral(K,T,L)
+					KY,B,D = alg.Control_Decentral(K,T,L)
 				elif methods == 1:
 					# Design Astrom controller with maximum decoupling = 0.1
 					H = np.diag(0.1*np.ones(sys_size))
-					KY, KR = alg.Control_Astrom(K,T,L,H)
+					KY, B, D = alg.Control_Astrom(K,T,L,H)
 				elif methods == 2:
 					# Design decoupled controller with maximum decoupling = 0.1
 					H = np.diag(0.1*np.ones(sys_size))
-					KY, KR = alg.Control_Decoupled(K,T,L,H)
+					KY, B, D = alg.Control_Decoupled(K,T,L,H)
 			
 				# Make a Controller
+	
+				# Multiply Parameter with Decoupler
+				KY[:,:,0] = np.dot(KY[:,:,0],D)
+				KY[:,:,1] = np.dot(KY[:,:,1],D)
+				# Make set point Controller
+				KR = KY
+				# Implement Set Point Weight
+				KR[:,:,0] = np.dot(B,KR[:,:,0])
+
+				print(KY,KR)
 
 				# Define PIY / PIR
 
@@ -224,6 +234,7 @@ def experiment(N,D,L,R,noise_limit,sys_size,sample_size,max_order,filename, colu
 				# Check if system is stable, all poles are smaller than 1e-10
 				# -> Check if stability is really proofable with that!
 				clpoles = cn.pole(CL)
+				cn.step(CL)
 				stable[methods] = all( poles<1e-10 for poles in clpoles.real)
 
 			
