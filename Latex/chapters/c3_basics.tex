@@ -102,7 +102,14 @@ defines the Sensitivity Function $\ma{S} = \left[ \ma{I} - \ma{G} \ma{K}_y\right
 \section{Stability and Robustness of Feedback Control Systems}
 \label{c:control:s:robustness}
 
-The stability of dynamical systems is a key concept of control theory. In general, a system is said to be stable if all trajectories starting near a final state end in or near this state \cite[p.10]{Adamy2014}. Several measurements, e.g. Lyapunov based methods, exist to proof a system is stable, see \cite{Lunze2016},\cite{Lunze2014} or \cite{Adamy2014}. From a practical point of view, a system is said to be stable if it reaches a final value in a finite amount of time.\\ 
+The stability of dynamical systems is a key concept of control theory. In general, a system is said to be stable if all trajectories starting near a final state end in or near this state \cite[p.10]{Adamy2014}. Several measurements, e.g. Lyapunov based methods, exist to proof a system is stable, see \cite{Lunze2016},\cite{Lunze2014} or \cite{Adamy2014}. A necessary condition for a stable state $\ve{x}_S \in \mathbb{R}^{n_y}$ can be formulated for the system given in Eq. \ref{c:control:e:nonlinearsystem} as:
+
+\begin{align}
+\begin{split}
+\ve{x}_S = \lbrace \ve{x} \in \mathbb{R}^{n_y} ~ | ~\ve{f}(\ve{x}) = \ve{0} \rbrace 
+\end{split}
+\label{c:control:e:StabilityCondition}
+\end{align} 
 
 Robustness refers in general to the stability of the system in presence of uncertainties and has been studied extensively, see e.g. \cite{Zhou1998},\cite{Zhou1996}, \cite{Doyle}.
 To give a better understanding of the relevant points of the subject both SISO and MIMO cases are presented. \\
@@ -147,7 +154,7 @@ Due to Eq. \ref{c:control:e:maxsensitivitynyquist} the maximum gain of the open 
 \end{figure}
 
 
-While the maximum sensitivity is well definied for SISO systems, a MIMO system requires a more general approach due to the interconnection of the systems out- and inputs. A general condition is given by the Small Gain Theorem \cite[p.150 ff.]{Skogestad2005}. The theorem states, that a given feedback system is stable iff the open loop transfer function matrix is stable and its sufficient conditioned matrix norm is less than 1 over all frequencies.
+While the maximum sensitivity is well defined for SISO systems, a MIMO system requires a more general approach due to the interconnection of the systems out- and inputs. A general condition is given by the Small Gain Theorem \cite[p.150 ff.]{Skogestad2005}. The theorem states, that a given feedback system is stable iff the open loop transfer function matrix is stable and its sufficient conditioned matrix norm is less than 1 over all frequencies.
 
 \begin{align}
 \lVert \ma{G} \ma{K}_y \rVert < 1 ~\forall \omega
@@ -163,7 +170,7 @@ For further robustness analysis, the concept of singular values has to be invest
 \label{c:control:e:SVD}
 \end{align}
 
-Where as $\ma{U} \in \mathbb{C}^{n_a \times n_a}$ and $\ma{V} \in \mathbb{C}^{n_b \times n_b} $ are unitary matrices representing the left and right eigenvectors of matrix. The matrix $\ma{\sigma} \in \mathbb{C}^{n_a \times n_b}$ is a rectangular, diagonal matrix consisting of the singular values $\sigma \in \mathbb{C}$ of $\ma{G}$. A practical point of view suggest a rotation of any given input vector via $\ma{V}^*$, distributing the magnitude of the input over the columns of $\ma{\sigma}$, where they are scaled according to the magnitude of the corresponding singular value. Then the scaled and rotated vector is once again rotated by $\ma{U}$ and distributed over the output vector. \\
+Where $\ma{U} \in \mathbb{C}^{n_a \times n_a}$ and $\ma{V} \in \mathbb{C}^{n_b \times n_b} $ are unitary matrices representing the left and right eigenvectors of matrix. The matrix $\ma{\sigma} \in \mathbb{C}^{n_a \times n_b}$ is a rectangular, diagonal matrix consisting of the singular values $\sigma \in \mathbb{C}$ of $\ma{G}$. A practical point of view suggest a rotation of any given input vector via $\ma{V}^*$, distributing the magnitude of the input over the columns of $\ma{\sigma}$, where they are scaled according to the magnitude of the corresponding singular value. Then the scaled and rotated vector is once again rotated by $\ma{U}$ and distributed over the output vector. \\
 
 \begin{figure}[H]
 \begin{minipage}[b]{\textwidth}

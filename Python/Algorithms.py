@@ -124,7 +124,7 @@ def FOTD_Gain(K,T,L,w=0):
             for o in range(0,outputs):
                 # Using system Identity by multiplying with the complex conjugate
                 G[o][i] = 1 /(T[o][i]**2 * w**2 +1) * ( K[o][i] - 1j*T[o][i]*w) *(np.cos(-L[o][i]*w)+1j*np.sin(-L[o][i]*w))
-    return np.real(G)
+    return G
 
 # Algorithm for computing the RGA
 
@@ -133,7 +133,7 @@ def RGA(K,T,L,w=0):
     if (K.shape != T.shape) or (K.shape != L.shape) or (L.shape != T.shape):
         print("Shapes of parameter array are not equal!")
     # Compute the System
-    G = np.absolute(FOTD_Gain(K,T,L,w))
+    G = FOTD_Gain(K,T,L,w)
     # Calculate the RGA
     RGA = np.multiply(G, np.transpose(np.linalg.inv(G)))
     return RGA
