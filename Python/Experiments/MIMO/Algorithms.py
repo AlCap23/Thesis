@@ -124,7 +124,7 @@ def FOTD_Gain(K,T,L,w=0):
             for o in range(0,outputs):
                 # Using system Identity by multiplying with the complex conjugate
                 G[o][i] = 1 /(T[o][i]**2 * w**2 +1) * ( K[o][i] - 1j*T[o][i]*w) *(np.cos(-L[o][i]*w)+1j*np.sin(-L[o][i]*w))
-    return np.real(G)
+    return G
 
 # Algorithm for computing the RGA
 
@@ -133,7 +133,7 @@ def RGA(K,T,L,w=0):
     if (K.shape != T.shape) or (K.shape != L.shape) or (L.shape != T.shape):
         print("Shapes of parameter array are not equal!")
     # Compute the System
-    G = np.absolute(FOTD_Gain(K,T,L,w))
+    G = FOTD_Gain(K,T,L,w)
     # Calculate the RGA
     RGA = np.multiply(G, np.transpose(np.linalg.inv(G)))
     return RGA
@@ -319,7 +319,6 @@ def Control_Astrom(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
             # Calculate the detuning frequency
             R = 0.8
             wc_min = 2.0/R * (t+l)/((t+l)**2 + t**2)
-            print(wc_min)
             # Design a controller based on estimated system
             ky, b0, d = Control_Decentral(k,t,l,w,b,structure)
             # Test for Interaction
@@ -386,7 +385,9 @@ def Control_Decoupled(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
         Gamma =  np.multiply(-K,T+L)
 
         # Initialize 
+        # Gain
         KD = np.zeros_like(Gamma)
+        # Interaction
         GD = np.zeros_like(Gamma)
 
         # Get the Diagonal entries for decoupling
@@ -396,16 +397,20 @@ def Control_Decoupled(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
             GD[outputs][inputs] = Gamma[outputs][inputs]
     
         # Get the Antidiagonal
+        # Gain
         KA = K-KD
+        # Interaction
         GA = Gamma-GD
         
         # Define the splitter
         S = -np.dot(np.linalg.inv(KD),KA)
 
-        # Get the interaction, absolute
-        # GammaA = np.abs(GA + np.dot(GD,S))
-        # Interaction relative
+        # Get the interaction relative to the gain
+        #GammaA = np.abs(GA + np.dot(GD,S))
+        # Interaction relative to the dynamic of the interaction
         GammaA = np.abs(np.dot(np.linalg.inv(GD),GA) + S)
+        # Interaction relative to the gain
+        #GammaA = np.abs(np.dot(np.linalg.inv(KD),GA + np.dot(GD,S)))
         # Get the maximum of each row 
         GMax = np.argmax(GammaA,axis=1)
         
@@ -426,7 +431,6 @@ def Control_Decoupled(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
             # Calculate the detuning frequency
             R = 0.8
             wc_min = 2.0/R * (t+l)/((t+l)**2 + t**2)
-            print(wc_min)
 
             # Check for set point weight, either given
             if b == np.empty:
@@ -434,6 +438,7 @@ def Control_Decoupled(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
                 b = B[outputs][inputs]
             
             gmax = GammaA[outputs][GMax[outputs]]
+            
 
             # Check for PI Structure
             if structure == 'PI':
@@ -457,3 +462,71 @@ def Control_Decoupled(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
             
         # Return the controller with splitter
         return Ky,B,np.eye(K.shape[0],K.shape[1])+S
+
+
+################################# MIMO FUNCTIONS FOR SIMULATION############################
+
+def tf_system(ss, omega):
+    # Get the matrices
+    A = ss['A']
+    B = ss['B']
+    C = ss['C']
+    D = ss['D']
+    # Make a I matrix ( depends on the states)
+    I = np.eye(A.shape[0])
+    # The Transfer Function
+    G = np.dot(np.dot(C,np.linalg.inv(omega*1j*I-A)),B)+D
+    
+    return G
+
+# Compute a controller for a given KY, B, D
+def compute_pi(KY, B, D):
+    # Make KPR,KPY, KIR and KIY
+    KPR = np.zeros((2,2))
+    KPY = np.zeros((2,2))
+    KIR = np.zeros((2,2))
+    KIY = np.zeros((2,2))
+
+    # Fill with values
+    for outputs in range(0,2):
+        for inputs in range(0,2):
+            # Proportional Controller
+            KPY[outputs,inputs] = KY[outputs,inputs,0]
+            # Intergral Controller
+            KIY[outputs,inputs] = KY[outputs,inputs,1]
+
+    # Implement Set-point Weight
+    KPR = np.dot(B,KPY)
+    KIR = KIY
+
+    # Implement Decoupler
+    KPR = np.dot(D,KPR)
+    KIR = np.dot(D,KIR)
+    KPY = np.dot(D,KPY)
+    KIY = np.dot(D,KIY)
+
+    return KPR, KIR, KPY, KIY
+
+# Compute the sensitivity function of a closed loop
+# Takes system, controller and frequency
+def compute_sensitivity(ss,KY,B,D,omega):
+    # Compute the transfer function matrix
+    G = tf_system(ss, omega)
+    # Compute the controller
+    KPR, KIR, KPY, KIY = compute_pi(KY,B,D)
+    # Compute the sensitivity
+    S = np.linalg.inv(np.eye(2,2)+np.dot(G,np.add(KPY,1/(omega*1j)*KIY)))
+    return S
+
+# Compute complementary sensitivity of a closed loop
+# Takes system, controller and frequency
+def compute_complementarysensitivity(ss, KY, B, D, omega):
+    # Compute the transfer function matrix
+    G = tf_system(ss, omega)
+    # Compute the controller
+    KPR, KIR, KPY, KIY = compute_pi(KY,B,D)
+    # Compute the sensitivitiy
+    S = compute_sensitivity(ss, KY, B, D, omega)
+    # Compute the complementary sensitivity
+    T = np.dot(S,np.dot(G, np.add(KPR,1/(omega*1j)*KIR) ))
+    return T

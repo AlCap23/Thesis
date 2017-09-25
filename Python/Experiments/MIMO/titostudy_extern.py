@@ -26,71 +26,6 @@ import pylab as p
 # Define an experiment
 from sacred import Experiment
 
-###########################################################
-########################## FUNCTIONS ######################
-###########################################################
-
-# Function for the transfer function matrix of a system given a steady state rep 
-# and a frequency for a 2 Output 2 Input system
-
-def tf_system(ss, omega):
-	# Get the matrices
-	A = ss['A']
-	B = ss['B']
-	C = ss['C']
-	D = ss['D']
-	# Make a I matrix ( depends on the states)
-	I = np.eye(A.shape[0])
-	# The Transfer Function
-	G = np.dot(np.dot(C,np.linalg.inv(omega*1j*I-A)),B)+D
-
-	return G
-
-# Compute a controller for a given KY, B, D
-def compute_pi(KY, B, D):
-	# Make KPR,KPY, KIR and KIY
-	KPR = np.zeros((2,2))
-	KPY = np.zeros((2,2))
-	KIR = np.zeros((2,2))
-	KIY = np.zeros((2,2))
-
-	# Fill with values
-	for outputs in range(0,2):
-	    for inputs in range(0,2):
-	        # Proportional Controller
-	        KPY[outputs,inputs] = KY[outputs,inputs,0]
-	        # Intergral Controller
-	        KIY[outputs,inputs] = KY[outputs,inputs,1]
-
-	# Implement Set-point Weight
-	KPR = np.dot(B,KPY)
-	KIR = KIY
-
-	return KPR, KIR, KPY, KIY
-
-# Compute the sensitivity function of a closed loop
-# Takes system, controller and frequency
-def compute_sensitivity(ss,KY,B,D,omega):
-	# Compute the transfer function matrix
-	G = tf_system(ss, omega)
-	# Compute the controller
-	KPR, KIR, KPY, KIY = compute_pi(KY,B,D)
-	# Compute the sensitivity
-	S = np.linalg.inv(np.eye(2,2)-np.dot(G,np.add(KPY,1/(omega*1j)*KIY)))
-	return S
-
-# Compute complementary sensitivity of a closed loop
-# Takes system, controller and frequency
-def compute_complementarysensitivity(ss, KY, B, D, omega):
-	# Compute the transfer function matrix
-	G = tf_system(ss, omega)
-	# Compute the controller
-	KPR, KIR, KPY, KIY = compute_pi(KY,B,D)
-	# Compute the sensitivitiy
-	S = compute_sensitivity(ss, KY, B, D, omega)
-	# Compute the complementary sensitivity
-	T = np.dot(S,np.dot(G, np.add(KPR,1/(omega*1j)*KIR) ))
-	return T
 
 ###########################################################
 ########################## MAIN PROGRAM ###################
@@ -311,7 +246,7 @@ def experiment(num, den, l, R, filename, sample_size, max_deg, dt, t_sim, H, wmi
 			# Loop over the frequency
 			for freq in range(0, omega.shape[0]):
 				# Evaluate the sensitivity at given frequency
-				S = compute_sensitivity(ss, KY,B,D, omega[freq])
+				S = alg.compute_sensitivity(ss, KY,B,D, omega[freq])
 				u, sv[:, freq], w = np.linalg.svd(np.abs(S))
 			# Clear variables
 			del u,w
@@ -337,7 +272,7 @@ def experiment(num, den, l, R, filename, sample_size, max_deg, dt, t_sim, H, wmi
 
 			for freq in w_special:
 				# Evaluate the sensitivity at given frequency
-				S = compute_sensitivity(ss, KY,B,D, freq)
+				S = alg.compute_sensitivity(ss, KY,B,D, freq)
 				u, v, w = np.linalg.svd(np.abs(S))
 				ms_s.append(np.max(v))
 			# Clear variables

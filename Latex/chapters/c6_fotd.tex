@@ -9,7 +9,7 @@ In Sec.\ref{c:fotd:s:analytic} the analytic description of the methods are given
 \section{Analytic Decoupling}
 \label{c:fotd:s:analytic}
 
-Since a FOTD are the model structure chosen for this work a deeper investigation of transfer function matrices based on this model is performed. For the following section a simple two input two output model given as following is defined:
+Since a FOTD is the model structure chosen for this work a deeper investigation of transfer function matrices based on this model and the corresponding decoupling algorithms is performed. For the following section a simple two input two output model is defined:
 
 \begin{align}
 \begin{split}
@@ -21,7 +21,7 @@ g_{21} & g_{22}
 \label{c:fotd:e:examplesys}
 \end{align}
 
-For the system described in Eq. \ref{c:fotd:e:examplesys} three different controller based on PI-structure are defined using the methods presented in the previous chapter. Further restrictions on the systems performance are given by the Maximum Sensitivity and Maximum Interaction of the system given by:
+For the system described in Eq. \ref{c:fotd:e:examplesys} three different controller based on PI-structure are defined using the methods presented in the previous chapter. Further restrictions on the systems behavior are given by the Maximum Sensitivity $\ma{M}_S$ as a robustness requirement and Maximum Interaction $\ma{H}_{A,Max}$ as a decoupling requirement:
 
 \begin{align}
 \begin{split}
@@ -37,13 +37,33 @@ M_{S,1} & 0 \\
 \label{c:fotd:e:restrictions}
 \end{align}
 
-Eq.\ref{c:fotd:e:restrictions} is given under the assumption that only the diagonal transfer functions are required and the interaction acts on the antidiagonal entries. Furthermore the system will be operating near steady state and hence the frequency used for Taylor Series Expansion is chosen to be $s = 0$.
+Eq.\ref{c:fotd:e:restrictions} is given under the assumption that only the diagonal transfer functions are required and the interaction acts on the antidiagonal entries. Furthermore the system will be operating near steady state and hence the frequency used for the RGA analysis and the Taylor Series Expansion is chosen to be $s = 0$.
 
 \subsection{Controller Design via Relative Gain Array Analysis}
 \label{c:fotd:su:rga}
 
-Using the RGA as an indicator of interaction, the pairing is choosen to be such that the corresponding element $\Lambda_ij(\ma{G})$ equals the maximum entry of the row. Assuming a sufficient sorting, the structure of the controlller is diagonal as well. The controller are designed via the AMIGO algorithm as presented in Sec.\ref{c:controller:s:AMIGO}.\\
+To design decentralized controller an adequat pairing has to be chosen as and a controller has to be computed by means of a suitable algorithm with the given identified parameters of the transfer function. Using the RGA as an indicator of interaction, the pairing is choosen to be such that the corresponding element $\Lambda_{ij}(\ma{G}_0)$ equals the maximum entry of the row. Assuming a sufficient sorting, the structure of the controlller is diagonal as well. The PI controller are designed via the AMIGO algorithm as presented in Sec.\ref{c:controller:s:AMIGO}.\\
 
+Hence, for every pairing $i,j$ the controller parameter are given by:
+
+\begin{align*}
+\begin{split}
+K_P &= \frac{0.15}{\hat{K}}+ \left(0.35 - \frac{\hat{L}+\hat{T}}{(\hat{L}+\hat{T})^2}\right) \frac{\hat{T}}{\hat{K}\hat{L}} \\
+T_I &= 0.35 \hat{L} + \frac{13 \hat{L}\hat{T}^2}{\hat{T}^2 + 12 \hat{L}\hat{T} + 7 \hat{L}^2}
+\end{split}
+\end{align*}
+
+With a minimum requirement for the delay of $\hat{L} \geq 0.3 \hat{T}$. The setpoint-weight is chosen according to the normalized time delay $\tau = \frac{\hat{L}}{\hat{L}+\hat{T}}$:
+
+\begin{align*}
+b = \begin{cases}
+\begin{split}
+0 &, \tau < 0.2 \\
+10(\tau-0.2) &, \tau \geq 0.2 \\
+1.0 &, \tau \geq 0.3
+\end{split}
+\end{cases}
+\end{align*}
 \subsection{Controller Design via Astr\"om et. al.}
 \label{c:fotd:su:astrom}
 
@@ -51,8 +71,13 @@ At first the decoupler is designed via the inverse static gain of the system, si
 
 \begin{align}
 \begin{split}
-\ma{D} &= \ma{G}|_{s=0}^{-1}\\
+\ma{D} &= \ma{G}_0^{-1}\\
 &= \frac{1}{K_{11}K_{22}-K_{12}K_{21}} 
+\begin{bmatrix}
+K_{22} & -K_{21} \\
+-K_{12} & K_{11}
+\end{bmatrix} \\
+&= \frac{1}{\det(\ma{G}_0)} 
 \begin{bmatrix}
 K_{22} & -K_{21} \\
 -K_{12} & K_{11}
@@ -66,7 +91,7 @@ The transformed system $\ma{G}^*$ can thus be calculated as
 \begin{align}
 \begin{split}
 \ma{G}^* &= \ma{G}\ma{D}\\
-&= \frac{1}{K_{11}K_{22}-K_{12}K_{21}} 
+&= \frac{1}{\det(\ma{G}_0)} 
 \begin{bmatrix}
 g_{11} & g_{12} \\
 g_{21} & g_{22}
@@ -75,7 +100,7 @@ g_{21} & g_{22}
 K_{22} & -K_{21} \\
 -K_{12} & K_{11}
 \end{bmatrix} \\
-&= \frac{1}{K_{11}K_{22}-K_{12}K_{21}}
+&= \frac{1}{\det(\ma{G}_0)}
 \begin{bmatrix}
 K_{22}g_{11}-K_{12}g_{12} & -K_{21}g_{11}+K_{22}g_{12} \\
 K_{22}g_{21}-K_{12}g_{22} &
@@ -95,18 +120,18 @@ g_{ij}^* & = \frac{K_{ij}^*}{T_{ij}^*s+1}e^{-L_{ij}^* s} + \Delta g_{ij}^*\\
 \label{c:fotd:e:exampleFOTDapprox}
 \end{align}
 
-Within Eq. \ref{c:fotd:e:exampleFOTDapprox} the main drawback of the method is layed out. As stated earlier, most algorithms for PI(D) design rely on a fixed model structure and hence are not fit to process information given by a combination. To use the function, two methods are proposed.\\
+Within Eq. \ref{c:fotd:e:exampleFOTDapprox} the main drawback of the method is layed out. As stated earlier, most algorithms for PI(D) design rely on a fixed model structure and hence are not fit to process information given by a combination. To use the function, two methods are proposed to approximate the linear combination of FOTD.\\
 
 Assuming the results of the experiment used for identifying the process are still avaible the process approximate model can be found via a weighted sum of the systems output. Calculating the static can as proposed in Ch.\ref{c:identification}, the linear combination of the TITO system can be fitted to the resulting weighted measurement data, e.g. given by
 
 \begin{align}
 \begin{split}
-y_{1}^*(t) &= \frac{K_{22} y_{11}(t) - K_{12} y_{12}(t)}{\det(\ma{K})}
+y_{1}^*(t) &= \frac{K_{22} y_{11}(t) - K_{12} y_{12}(t)}{\det(\ma{G}_0)}
 \end{split}
 \label{c:fotd:e:Combination}
 \end{align}
 
-Eq. \ref{c:fotd:e:Combination} reuses the experimental data to approximate the systems output. $y_{ii}$ is the i-th output of the system reacting to excitation via the i-th input. Hence the data can be used for FOTD model identification as presented earlier. However, this workaround is limited to static decoupling. Hence, a more dynamic assumed decoupling can not be established.\\
+Eq. \ref{c:fotd:e:Combination} reuses the experimental data to approximate the systems output. $y_{ii}$ is the i-th output of the system reacting to excitation via the i-th input. With the weighted data given by $y_{1}^*$, a FOTD model could be fitted according to the already known algorithm presented in Ch. \ref{c:identification}. However, this approach is limited to the reuse of data and requires that the process is always weighted by a decoupler.\\
 
 The second method relies on knowledge about the behaviour of the transfer functions in the time domain. At first, the static gain is given by:
 
@@ -119,22 +144,22 @@ The second method relies on knowledge about the behaviour of the transfer functi
 \label{c:fotd:e:CombinationGain}
 \end{align}
 
-The integral can be rewritten as
+The integral of every part of the experiment, given by a matrix $\ma{Y} = (y_{ij}) \in \mathbb{R}^{n_y \times n_y}$ and its transformed counterpart can be rewritten as
 
 \begin{align}
 \begin{split}
-\int_0^\infty \ve{y}^*(\infty) - \ve{y}^*(t) dt &= \int_0^\infty \ve{y}(\infty) - \ve{y}(t) dt ~\ma{D} \\
-\ma{K}^* \bigotimes \ma{T}_{ar}^{*} &= \ma{K}^* \bigotimes \left( \ma{T}^* + \ma{L}^* \right) \\
-&= \left(\ma{K}^* \bigotimes \left( \ma{T} + \ma{L} \right) \right) \ma{D}\\
+\int_0^\infty \ma{Y}^*(\infty) - \ma{Y}^*(t) dt &= \int_0^\infty \ma{Y}(\infty) - \ma{Y}(t) dt ~\ma{D} \\
+\ma{K}^* \circ \ma{T}_{ar}^{*} &= \ma{K}^* \circ \left( \ma{T}^* + \ma{L}^* \right) \\
+&= \left(\ma{K}^* \circ \left( \ma{T} + \ma{L} \right) \right) \ma{D}\\
 \end{split}
 \label{c:fotd:e:CombinationIntegral}
 \end{align}
 
-Where $\bigotimes$ denotes the element wise multiplication, also called Hadamard Product. Since the Hadamard Product relates to the row and column sum, one can rewrite the transformed average residence time for a static decoupler as
+Where $\circ$ denotes the element wise multiplication, also called Hadamard Product. It gives the transformed average residence times $\ma{T}_{ar}^*$. Since the Hadamard Product relates to the row and column sum, one can rewrite the transformed average residence time for a static decoupler as
 
 \begin{align}
 \begin{split}
-\sum_{i = 1}^{n_y} \left[ \left(\ma{K} \bigotimes \left( \ma{T} + \ma{L} \right) \right) \ma{D} \right]_{i,j} &= \left[\left(\left( \ma{T} + \ma{L} \right)^T \ma{K}^T \right) \ma{D} \right]_{j,j}\\
+\sum_{i = 1}^{n_y} \left[ \left(\ma{K} \circ \left( \ma{T} + \ma{L} \right) \right) \ma{D} \right]_{i,j} &= \left[\left(\left( \ma{T} + \ma{L} \right)^T \ma{K}^T \right) \ma{D} \right]_{j,j}\\
 &= \left[\left( \ma{T} + \ma{L} \right)^T \ma{\Lambda}^T\left( \ma{G} \right) \right]_{j,j} 
 \end{split}
 \label{c:fotd:e:AverageResidenceTime_Transform}
@@ -147,11 +172,12 @@ To determine the coefficients of the new system a third equation is needed. It i
 \begin{align}
 \begin{split}
 \ma{T}^* &= \ma{T}_{ar}^* - \ma{L}^* \\
+&= \ma{T}_{ar}^* - \ma{L}_{Max} 
 \end{split}
 \label{c:fotd:e:CombinationTimeConstant}
 \end{align}
 
-Assuming an approximation can be found and the resulting error is sufficiently small the diagonal controller can be designed. A choice for a PI-Structure with set point weighting $b=0$ holds:
+Assuming an approximation can be found and the resulting error is sufficiently small the diagonal controller can be designed. Since the main coupling are always on the main diagonal, the RGA has not to be performed. The single, decentralized controllers are design as explain earlier by the use of the AMIGO Tuning rules. A controller is then given by:
 
 \begin{align}
 \begin{split}
@@ -160,8 +186,8 @@ Assuming an approximation can be found and the resulting error is sufficiently s
 0 & -K_{P2}^* - K_{I2}^*\frac{1}{s}
 \end{bmatrix} \\
 \ma{K}_r^* &= \begin{bmatrix}
-K_{I1}^*\frac{1}{s} & 0 \\
-0 & K_{I2}^*\frac{1}{s}
+b_1~K_{P1}^* + K_{I1}^*\frac{1}{s} & 0 \\
+0 & b_2~K_{P2}^* + K_{I2}^*\frac{1}{s}
 \end{bmatrix} 
 \end{split}
 \label{c:fotd:e:exampleTransformedControler}
@@ -173,16 +199,16 @@ K_{I1}^*\frac{1}{s} & 0 \\
 %  \input{./Graphics/Area_Linear_Combination.pdf_tex}
 %\end{figure}
 
-With parameters $K_{P,i},K_{I,i} \in \mathbb{R}$ are calculated via the AMIGO tuning rules described in Sec.\ref{c:controller:s:AMIGO}. Since the approximation given in Eq.\ref{c:fotd:e:exampleFOTDapprox} holds an inevitable error so do the parameter. \\
+With parameters $K_{P,i},K_{I,i} \in \mathbb{R}$ are calculated via the AMIGO tuning rules as described in Sec.\ref{c:controller:s:AMIGO}. Since the approximation given in Eq.\ref{c:fotd:e:exampleFOTDapprox} holds an inevitable error so do the parameter. \\
 
-Next, the interaction will be used to detune the controller. The Taylor series of the antidiagonal entries of the system $\ma{G}^* = \ma{G} \ma{D}$ is given by:
+Next, the interaction will be used to detune the controller. The first order term of the Taylor series of the antidiagonal entries of the system $\ma{G}^* = \ma{G} \ma{D}$ is given by:
 
 \begin{align}
 \begin{split}
 \ma{\Gamma}_A &= \left[\frac{d}{ds}\ma{G}|^*_{s=0}\right]_A s \\
-&= \begin{bmatrix}
-0 & \frac{-K_{21}K_{11}(T_{11}-L_{11}) + K_{22}K_{12}(T_{12}-L{12})}{K_{11}K_{22}-K_{12}K_{21}} \\
-\frac{-K_{12}K_{22}(T_{22}-L_{22}) + K_{22}K_{21}(T_{21}-L_{21})}{K_{11}K_{22}-K_{12}K_{21}} & 0
+&= \frac{1}{\det(\ma{G}_0)}~\begin{bmatrix}
+0 & -K_{21}K_{11}(T_{11}-L_{11}) + K_{22}K_{12}(T_{12}-L{12}) \\
+-K_{12}K_{22}(T_{22}-L_{22}) + K_{22}K_{21}(T_{21}-L_{21}) & 0
 \end{bmatrix} s\\
 &\approx \begin{bmatrix}
 0 & K_{12}^* (T_{12}^* - L_{12}^*) \\
@@ -194,7 +220,7 @@ K_{21}^* (T_{21}^* - L_{21}^*) & 0
 
 From Eq. \ref{c:fotd:e:exampleTransformedCoupling} the dependency of the coupling on the both the static gain of the system and the dynamical behaviour can be observed. This coincides with the statements of \cite{Lunze2014} declaring that static decoupling is in general easier if the dynamic behaviour of the involved transfer functions is similar.\\
 
-Detuning the controller with the constrains on the closed loop given by Eq. \ref{c:fotd:e:restrictions} and solving Eq. \ref{c:controller:e:Hmax*} for the controller with set point holds:
+Detuning the controller with the constrains on the closed loop given by Eq. \ref{c:fotd:e:restrictions} and solving Eq. \ref{c:controller:e:Hmax*} for the controller with setpoint holds:
 
 \begin{align}
 \begin{split}
@@ -208,10 +234,11 @@ Detuning the controller with the constrains on the closed loop given by Eq. \ref
 \end{split}
 \end{align}
 
+A detuning of the controller parameter is performed according to the detuning rules given in Sec.\ref{c:controller:s:AMIGO} to ensure the controller is within the limits specified earlier.
 
 \subsection*{Controller Design via Modified Astr\"om}
 
-Now the modified Algorithm proposed in this thesis is applied to the same System. First, we design the controller as a function of the main diagonal entries $g_{ii}$ once again using the AMIGO tuning rules:
+Now the modified algorithm proposed in this thesis is applied to the same system. First, we design the controller as a function of the main diagonal entries $g_{ii}$ once again using the AMIGO tuning rules:
 
 \begin{align}
 \begin{split}
@@ -220,9 +247,9 @@ Now the modified Algorithm proposed in this thesis is applied to the same System
 0 & -K_{P2} - K_{I2}\frac{1}{s}
 \end{bmatrix} \\
 \ma{K}_r &= \begin{bmatrix}
-K_{I1}\frac{1}{s} & 0 \\
-0 & K_{I2}\frac{1}{s}
-\end{bmatrix} 
+b_1~K_{P1} + K_{I1}\frac{1}{s} & 0 \\
+0 & b_2~K_{P2} + K_{I2}\frac{1}{s}
+\end{bmatrix}
 \end{split}
 \label{c:fotd:e:exampleControler}
 \end{align}
@@ -268,7 +295,7 @@ To detune the controller solving Eq. \ref{c:controller:e:Hmax*} for the integral
 \end{split}
 \end{align}
 
-Hence, the system is detuned by the FOTD model identified originally at the beginning of the process.
+The system is detuned according to the detuning rules of the AMIGO algroithm. In contrast to Aströms decoupling algortihm, the original system is used the original structure of the model is preserved.
 
 \newpage
 \section{Rosenbrocks Function}%
@@ -377,8 +404,8 @@ To design a controller based on the simple tuning rules, the main diagonal trans
 
 \begin{align}
 \begin{split}
-\ma{K}^* \bigotimes \ma{T}_{ar}^{*} &= \ma{K}^* \bigotimes \left( \ma{T}^* + \ma{L}^* \right)\\
-&=  \left( \ma{K} \bigotimes \left[ \ma{T} + \ma{L} \right] \right) \ma{D} \\
+\ma{K}^* \circ \ma{T}_{ar}^{*} &= \ma{K}^* \circ \left( \ma{T}^* + \ma{L}^* \right)\\
+&=  \left( \ma{K} \circ \left[ \ma{T} + \ma{L} \right] \right) \ma{D} \\
 &= \begin{bmatrix} 
 2.330 & -1.335 \\ 
 0.003 & 0.977	
@@ -392,7 +419,7 @@ Which is consisting of the steady state gain $\ma{K}^* = \ma{I}$ and the approxi
 
 \begin{align}
 \begin{split}
-\ma{T}^* & = \ma{T}_{ar}^* -\cancelto{0}{\ma{L}}^* \\
+\ma{T}^* & = \ma{T}_{ar}^* - \underbrace{{\ma{L}}}_{0}^* \\
 &= \ma{T}_{ar}^*
 \end{split}
 \label{c:fotd:s:rosenbrock:eq:ast_lag_approx}
@@ -414,7 +441,7 @@ The transfer function $g_{22}$ of the approximated system given in Eq.\ref{c:fot
 
 FIGURE\\
 
-From FIG the conservative character of the approximation can be seen. With regards to the design of a PI controller this results in an aggressive, more faster controller, since $K_P,~T_I \propto \frac{1}{T}$. The resulting parameter of the controller are calculated to be:
+From FIG the conservative character of the approximation can be seen. With regards to the design of a PI controller this results in an aggressive, more faster controller, since $K_P,~T_I \propto \frac{1}{T}$. The controller calculated for the diagonal system is given by:
 
 \begin{align}
 \ma{K} &= \ma{K}_P + \frac{1}{s}~ \ma{K}_I\\
@@ -423,31 +450,87 @@ From FIG the conservative character of the approximation can be seen. With regar
 0 & 0.725
 \end{bmatrix}
 + \frac{1}{s}\begin{bmatrix}
-1.096 & 0 \\
+0.363 & 0 \\
 0 & 0.852
 \end{bmatrix}
 \end{align}
 
-With a set-point weight of $b = 0$ since $\tau_{ij} = 0 ~\forall i,j \in [1,2]$. For the detuning an upper limit regarding the interaction of the process is required. Since a minimal interaction is desired, the upper limit of the interaction is set to $h_{ij} = 0.01 ~ \forall i,j \in [1,2]$. Iterative detuning of the controller with a decay of $\frac{K_P^{i+1}}{K_P^{i}} = 0.7 $ changes the parameter value to be:
+ The set-point weight for the proportional gain is $b = 0$ since $\tau_{ij} = 0 ~\forall i,j \in [1,2]$. From the integral gain of the first loop we see the conservative estimation of the approximation.\\
+
+ For the detuning an upper limit regarding the interaction of the process is required. Since a minimal interaction is desired, the upper limit of the interaction is set to $h_{ij} = 0.3 ~ \forall i,j \in [1,2]$. Iterative detuning of the controller with a decay of $\frac{K_P^{i+1}}{K_P^{i}} = 0.9 $ changes the parameter value to be:
 
 \begin{align}
 \ma{K} &= \ma{K}_P + \frac{1}{s}~ \ma{K}_I\\
 &= \begin{bmatrix}
-0.725 & 0 \\
+0.006 & 0 \\
 0 & 0.725
 \end{bmatrix}
 + \frac{1}{s}\begin{bmatrix}
-0.856 & 0 \\
+0.109 & 0 \\
 0 & 0.852
 \end{bmatrix}
 \end{align}
 
-The parameter values of the controller after detuning are similar to the results of the decentralized controller described above. This similarity arises from  
+After 45 iterations. The impact of the strong coupling of the second input to the first output of the system is clearly visible in the number of iterations. The first controller is tuned to be much less aggressive than its predecessor.
 
 
 
-\subsection{Decoupled Controller based on Modified Astr\"om}
+\subsection{Decoupled Controller based on Robust Relative Dynamic Detuning}
 \label{c:fotd:s:rosenbrock:ss:modifiedastr}
+
+Since the process until the detuning is nearly identical to the controller design by a simple RGA analysis previously, these steps are not discussed. The decoupler of the process is given as the ration of the diagonal and anti-diagonal entries as:
+
+\begin{align*}
+\begin{split}
+\ma{\Sigma} &= \begin{bmatrix}
+0 & -\frac{\frac{2}{3}}{1} \\
+-\frac{1}{1} & 0
+\end{bmatrix}
+\\
+&= \begin{bmatrix}
+0 & -0.667 \\
+-1.000 & 0
+\end{bmatrix}
+\end{split}
+\end{align*}
+
+Within the same limitations for the controller, namely $h_{ij} = 0.3 ~ \forall i,j \in [1,2]$, the dynamicly detuned controller is given by:
+
+\begin{align*}
+\ma{K} &= \ma{K}_P + \frac{1}{s}~ \ma{K}_I\\
+&= \begin{bmatrix}
+0.059 & 0 \\
+0 & 0.725
+\end{bmatrix}
++ \frac{1}{s}\begin{bmatrix}
+0.324 & 0 \\
+0 & 0.852
+\end{bmatrix}
+\end{align*}
+
+After 24 iterations and a shrinking rate of $\frac{K_P^{i+1}}{K_P^{i}} = 0.9 $. While reflecting the detuning with respect to the purely decentralized controller of the RGA, it is much more aggressive than the controller designed by the previous decoupling algorithm. \\
+
+\subsection{Results}
+\label{c:fotd:s:rosenbrocks:ss:results}
+
+To evaluate the performance of the controller, a simulation has been performed. As a reference, the decoupled controller presented by \cite{Astrom2001a} for the same process with the following parameters has been added as well:
+
+\begin{align*}
+\ma{K} &= \ma{K}_P + \frac{1}{s}~ \ma{K}_I\\
+&= \begin{bmatrix}
+0.245 & 0 \\
+0 & -0.452
+\end{bmatrix}
++ \frac{1}{s}\begin{bmatrix}
+0.248 & 0 \\
+0 & 0.075
+\end{bmatrix}
+\end{align*}
+
+The controller has been designed using analytical methods. It has a setpoint-weight of $b_i = 0, \forall i \in [1,2]$.\\
+
+To see the effect of the decoupler, at first the system is simulated without the detuned controller. 
+
 
 \section{Woodberry}%
 \label{c:fotd:s:woodberry}
