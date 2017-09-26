@@ -529,7 +529,51 @@ To evaluate the performance of the controller, a simulation has been performed. 
 
 The controller has been designed using analytical methods. It has a setpoint-weight of $b_i = 0, \forall i \in [1,2]$.\\
 
-To see the effect of the decoupler, at first the system is simulated without the detuned controller. 
+To see the effect of the decoupler, at first the system is simulated without the detuned controller.  The inital output is set to zero $\ve{y}_0 = \ve{0}$ and at $t = 0~s$ a jump on the reference value $y_{R,1}$ is given. When the system is in a steady state, at $t = 100~s$, the reference value for the second ouput is set to $y_{R,2} = 1$. The results for all three controller are presented in FIG. The response of the reference controller is in dashed grey, while the decentralized controller is colored blue, the decoupled controller designed as proposed by Astr\"om is red and the robust relative dynamic detuned controller is given in orange.\\
+
+
+The performance measurements are given in Tab.\ref{c:fotd:s:rosenbrock:tab:eval1}.
+
+\begin{table}[H]
+\centering
+\caption{Evaluation of closed loop behaviour of Rosenbrock's system, Not Detuned}
+\label{c:fotd:s:rosenbrock:tab:eval1}
+\begin{tabular}{l|c|c|c|c}
+
+\multicolumn{2}{l}{}                   & Rise Time & Overshoot & Settling Time \\ \cline{3-5} 
+ 
+\multicolumn{2}{l}{\multirow{-2}{*}} & s         & \%        & s             \\ \hline
+                              & y1     & 0.70      & 0.00      & 17.30         \\ \cline{2-5} 
+\multirow{-2}{*}{RGA}         & y2     & 0.60      & 0.00      & 17.30         \\ \hline
+                              & y1     & 2.00      & 0.00      & 14.30         \\ \cline{2-5} 
+\multirow{-2}{*}{Astr\"om}      & y2     & 0.50      & 0.00      & 5.99          \\ \hline
+                              & y1     & 2.30      & 0.00      & 9.01          \\ \cline{2-5} 
+\multirow{-2}{*}{R2D2}        & y2     & 1.0       & 0.00      & 14.3          \\ \hline
+\end{tabular}
+\end{table}
+It can be seen that while the decentralized controller is acting fast on its main coupling, the impact due to the coupling of the excited input and the coupled output of $y_2$ is exalted. The overshoot of the cross coupled output is nearly $y_2 \approx 0.46$, while both decoupled controllers are able to suppress the interaction completly. This behavior is induced due to the similar dynamics of the the transfer functions $g_{12}$ and $g_{22}$. Since both gain and time constant are equal, a simple interconnection is able to completly cancel out the negative effects of the first input excitation.\\
+
+Observing the input response an undershoot of both decoupled controllers can be seen. This origins in the conservative estimation of the decoupler, which acts instantly and corrects with the full strength of the ratio of the steady state gains. Hence, the signal given onto the second input of the system acts at first to progressive. It is noteworthy that while both the decentralized controller and the controller in addition to the splitter are equal, the last of both is acting faster. This is another effect caused by the decoupling, since the controller does not have to adjust to disturbances due to the systems second output. It can also be observed in weaker form on the fully static decoupler, given as proposed by Astr\"om.\\
+
+With respect to the reference controller introduced in \cite{Astrom2001a}, the autotuned controller show nearly identical behavior.\\
+
+The second outputs response to a step of its reference value gives interesting results as well. Since both transfer functions acting on the output behave identical with respect to gain and dynamic, the undershoot observed in the second output is missing. Additionally, the controller tuned via the decoupling method proposed by Astr\"om et. al. is clearly acting the fastes referring to input response. The positive effect of the splitter exists but is much weaker than before. Hence, the controller is not notably faster than the decentralized controller.\\
+
+A clear picture is given by the disturbance acting on the first ouput $y_1$ due to the excitation of $u_2$. The magnitude of the overshoot of the decoupled controller designed with a static decoupler is even worse than its non-decoupled counterpart, reaching nearly $\Delta y_1 = 0.56$. Since the gains of the system are captured well, the reason for this effect can be found in the controller designed by the analogous model. Since the approximated time constant is twice as much as its original, the controller is not able to act fast enough on the disturbance. Additionally, it amplifies the effect since the processes $g_{11}$ and $g_{12}$ differ from each other dynamically. Afterwards the controller tries to counter the effect and undershoots its target value before slowly reaching a steady state once again.\\
+
+Oppose to that, the decentralized controller acts more reasonable, slowly reducing the error of the output on a monotone decreasing track. The controller in addition to the splitter reduces the effect of the coupling immensely, but shows small undershoots due to the same reasons as mentioned beforehand. However, it is acting smoother and less drastically than the decoupler based on the static inverse. The reference controller shows only slight influences due to the disturbance and limmits the overshoot to $\Delta y_1 = 0.11$. This is reasonable, since it is designed and detuned for that limitation.\\
+
+Regarding the robustness and the tracking performance, the singular values of the closed loops sensitivity and complementary sensitivity have been calculated. The results can be seen in FIG.\\
+
+The decentralized controller performs reasonable well. Its maximum singular value of the sensitivity is given by $\overline{\sigma} = 1.25$ at the frequency of $\omega = 0.60 ~rad/s$. The process is robust within the frequencies lower than $\omega \leq 0.22$, since this is the first time that the sensitivity exceeds the limit of $\overline{\sigma} \geq 1$. Likewise, the processes tracking performance begins to decrease at that frequency. Until that frequency is reached, the singular values are nearly identical and have a gain of 0 dB, which corresponds to an evenly distributed tracking performance of both outputs. \\
+
+The singular values of the decoupling controller as proposed by Astr\"om differ strongly. The maximum singular value of the sensitivity reaches its peak at a frequency of $\omega = 1.91 ~rad/s$ with a magnitude of $\overline{\sigma} = 3.40$. Hence, a more robust with respect to the useable frequency spectrum of the complementary sensitivity function is given. The maximum singular value exceeds 0 dB around a frequency of $\omega = 0.5 rad/s$, which is much higher than the frequency range of the decentralized controller. However, the lower value of the complementary sensitivity decreases faster at hence the outputs are not controllable evenly.\\
+
+At last, the controller designed by robust relative dynamic decoupling is investigated with respect to its sensitivity and complementary sensitivity. The peark of the sensitivity is given with $\overline{\sigma} = 1.59$ at a frequency of $\omega = 0.88 ~rad/s$. It can be seen that while the decoupler widens the useable frequency range it also amplifies the maximum singular value of the sensitivity function. Furthermore, until the frequency of $\omega = 0.30 rad/s$, the singular values are very evenly distributed. This indicates the effect of the decoupler with respect to tracking efficiency and the distribution of noise or disturbances.\\
+
+Next, the controller are detuned for a maximum interaction of $h_{A,Max} \leq 0.3$. The simulation results are shown in Fig. FIG.
+
+
 
 
 \section{Woodberry}%

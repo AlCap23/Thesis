@@ -404,7 +404,7 @@ def Control_Decoupled(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
         
         # Define the splitter
         S = -np.dot(np.linalg.inv(KD),KA)
-
+        
         # Get the interaction relative to the gain
         #GammaA = np.abs(GA + np.dot(GD,S))
         # Interaction relative to the dynamic of the interaction
