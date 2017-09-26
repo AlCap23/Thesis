@@ -295,10 +295,12 @@ def Control_Astrom(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
         # Compute the interaction indeces
         # Since d/ds(Q*K) = d/ds(Q)*K = d/ds(G) we can write the Taylor coefficient
         Gamma = np.abs(np.dot(np.multiply(-K,T+L),D))
+        #print(Gamma)
         # Set main diagonal to zero
         np.fill_diagonal(Gamma,0)
         # Get the maximum of each row 
         GMax = np.argmax(Gamma,axis=1)
+        #print(GMax)
         # Get the new System
         Tt = np.dot(np.multiply(K,np.add(T,L)),D)-np.diag(np.max(L,axis=1))#np.dot(K,np.dot(np.transpose(np.add(T,L)),D))-np.diag(np.max(L,axis=1))
         Lt = np.diag(np.max(np.transpose(L),axis=0))
@@ -324,7 +326,7 @@ def Control_Astrom(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
             # Test for Interaction
             # We detune the controller of the n-th output in such a way that the maximum of the n-th row is sufficiently small
             # Current maximum interaction
-            gmax = Gamma[o][GMax[o]]
+            gmax = Gamma[GMax[o]][o]
             
             # Check for set point weight, either given
             if b == np.empty:
@@ -404,16 +406,17 @@ def Control_Decoupled(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
         
         # Define the splitter
         S = -np.dot(np.linalg.inv(KD),KA)
-
+        
         # Get the interaction relative to the gain
         #GammaA = np.abs(GA + np.dot(GD,S))
         # Interaction relative to the dynamic of the interaction
         GammaA = np.abs(np.dot(np.linalg.inv(GD),GA) + S)
+        #print(GammaA)
         # Interaction relative to the gain
         #GammaA = np.abs(np.dot(np.linalg.inv(KD),GA + np.dot(GD,S)))
-        # Get the maximum of each row 
+        # Get the maximum of each row
         GMax = np.argmax(GammaA,axis=1)
-        
+        #print(GMax)
         #Iterate through the outputs
         for outputs in range(0,K.shape[0]):
             inputs = Pairing[outputs]
@@ -437,9 +440,8 @@ def Control_Decoupled(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
                 # Or computed from AMIGO_TUNE
                 b = B[outputs][inputs]
             
-            gmax = GammaA[outputs][GMax[outputs]]
-            
-
+            gmax = GammaA[GMax[outputs]][outputs]
+            #print(gmax)
             # Check for PI Structure
             if structure == 'PI':
                 # Define the counter

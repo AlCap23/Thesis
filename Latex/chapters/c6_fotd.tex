@@ -295,7 +295,7 @@ To detune the controller solving Eq. \ref{c:controller:e:Hmax*} for the integral
 \end{split}
 \end{align}
 
-The system is detuned according to the detuning rules of the AMIGO algroithm. In contrast to Aströms decoupling algortihm, the original system is used the original structure of the model is preserved.
+The system is detuned according to the detuning rules of the AMIGO algorithm. In contrast to Astr\"oms decoupling algorithm, the original system is used the original structure of the model is preserved.
 
 \newpage
 \section{Rosenbrocks Function}%
@@ -462,12 +462,12 @@ From FIG the conservative character of the approximation can be seen. With regar
 \begin{align}
 \ma{K} &= \ma{K}_P + \frac{1}{s}~ \ma{K}_I\\
 &= \begin{bmatrix}
-0.006 & 0 \\
-0 & 0.725
+0.725 & 0 \\
+0 & 0.015
 \end{bmatrix}
 + \frac{1}{s}\begin{bmatrix}
-0.109 & 0 \\
-0 & 0.852
+0.363 & 0 \\
+0 & 0.108
 \end{bmatrix}
 \end{align}
 
@@ -494,17 +494,28 @@ Since the process until the detuning is nearly identical to the controller desig
 \end{split}
 \end{align*}
 
-Within the same limitations for the controller, namely $h_{ij} = 0.3 ~ \forall i,j \in [1,2]$, the dynamicly detuned controller is given by:
+The relative dynamic interaction acting on the process are given from $u_2$ to $y_1$:
+
+\begin{align*}
+\begin{split}
+\gamma_{R,12} &= \left|\frac{K_{12} \left( T_{12} + L_{12}  - T_{11} - L_{11} \right)}{K_{11} \left( T_{11} + L_{11}\right)} \right| \\
+&= \left|\frac{\frac{2}{3} \left( 1  - \frac{1}{3} \right)}{1 \left( 1\right)} \right| \\
+&= \frac{2}{3} ~\frac{2}{3}\\
+&= 0.\overline{4}
+\end{split}
+\end{align*}
+
+Within the same limitations for the controller, namely $h_{ij} = 0.3 ~ \forall i,j \in [1,2]$, the dynamically detuned controller is given by:
 
 \begin{align*}
 \ma{K} &= \ma{K}_P + \frac{1}{s}~ \ma{K}_I\\
 &= \begin{bmatrix}
-0.059 & 0 \\
-0 & 0.725
+0.725 & 0 \\
+0 & 0.058
 \end{bmatrix}
 + \frac{1}{s}\begin{bmatrix}
-0.324 & 0 \\
-0 & 0.852
+0.852 & 0 \\
+0 & 0.324
 \end{bmatrix}
 \end{align*}
 
@@ -529,8 +540,7 @@ To evaluate the performance of the controller, a simulation has been performed. 
 
 The controller has been designed using analytical methods. It has a setpoint-weight of $b_i = 0, \forall i \in [1,2]$.\\
 
-To see the effect of the decoupler, at first the system is simulated without the detuned controller.  The inital output is set to zero $\ve{y}_0 = \ve{0}$ and at $t = 0~s$ a jump on the reference value $y_{R,1}$ is given. When the system is in a steady state, at $t = 100~s$, the reference value for the second ouput is set to $y_{R,2} = 1$. The results for all three controller are presented in FIG. The response of the reference controller is in dashed grey, while the decentralized controller is colored blue, the decoupled controller designed as proposed by Astr\"om is red and the robust relative dynamic detuned controller is given in orange.\\
-
+To see the effect of the decoupler, at first the system is simulated without the detuned controller.  The initial output is set to zero $\ve{y}_0 = \ve{0}$ and at $t = 0~s$ a jump on the reference value $y_{R,1}$ is given. When the system is in a steady state, at $t = 100~s$, the reference value for the second output is set to $y_{R,2} = 1$. The results for all three controller are presented in FIG. The response of the reference controller is in dashed gray, while the decentralized controller is colored blue, the decoupled controller designed as proposed by Astr\"om is red and the robust relative dynamic detuned controller is given in orange.\\
 
 The performance measurements are given in Tab.\ref{c:fotd:s:rosenbrock:tab:eval1}.
 
@@ -571,15 +581,71 @@ The singular values of the decoupling controller as proposed by Astr\"om differ 
 
 At last, the controller designed by robust relative dynamic decoupling is investigated with respect to its sensitivity and complementary sensitivity. The peark of the sensitivity is given with $\overline{\sigma} = 1.59$ at a frequency of $\omega = 0.88 ~rad/s$. It can be seen that while the decoupler widens the useable frequency range it also amplifies the maximum singular value of the sensitivity function. Furthermore, until the frequency of $\omega = 0.30 rad/s$, the singular values are very evenly distributed. This indicates the effect of the decoupler with respect to tracking efficiency and the distribution of noise or disturbances.\\
 
-Next, the controller are detuned for a maximum interaction of $h_{A,Max} \leq 0.3$. The simulation results are shown in Fig. FIG.
+Next, the controller are detuned for a maximum interaction of $h_{A,Max} \leq 0.3$. The simulation results are shown in Fig. FIG. with the same color coding as before. \\
 
 
+In comparison to the not-detuned closed loop, both decoupled controller show a less aggressive performance as a result of the much lesser values for the proportional and integral gain. This is visible from the step response of the second output $y_2$, where rising times have increased.Likewise, the detuning reduces the interaction enormous. Both decoupled controller have a maximum overshoot of $\Delta y_{1} \leq 0.11$.\\
+
+The singular values of the decoupled controller designed by Astr\"om changed to, as can be seen in FIG. While the frequency where the maximum singular value of the sensitivity function occurs changed only little from $\omega = 1.91~rad/s$ to $\omega = 1.94 rad/s$, the magnitude has decreased to $\overline{\sigma} = 2.61$. But, due to the less aggressive and hence less effective controller, the crossing point of the maximum singular value changed to a lower frequency  of $\omega = 0.22~rad/s$. Hence, the tracking performance of the controller has a smaller bandwidth than before.\\
+
+The controller designed by means of R2D2 is not significantly influenced, as can be seen in FIG. Both the frequency of the maximum singular value of the sensitivity and the magnitude change litte, given by $\omega = 0.87 rad/s$ and $\overline{\sigma} = 1.48$. Opposed to the not detuned controller, a broader spread of the singular values of the sensitivity can be seen. Hence, the tracking performance is already decreasing at lower frequencies, as can be seen from the lower singular value of the complementary sensitivity function. However, the bandwidth of the controller, limited by $\omega = 0.22 rad/s$, is nearly identical to before.\\
 
 
 \section{Woodberry}%
 \label{c:fotd:s:woodberry}
 
-Woodberry Destillation Column as Example!
+As a second example the model of a binary distillation column, introduced by Wood and Berry REFERENZ, and used throughout academia, e.g. \cite{Astrom2001a}, RGAMEASURES, \cite{Skogestad2005}, will be investigated.\\
+
+The model is given by the following transfer matrix, consisting of FOTD models:
+
+\begin{align*}
+\ma{G} = \begin{bmatrix}
+\frac{12.8}{16.7 ~s+1}~e^{-s}  & \frac{-18.9}{21.0 ~s+1}~e^{-3s}\\
+\frac{6.6}{10.9 ~s+1}~e^{-7s} & \frac{-19.4}{14.4 ~s+1}~e^{-3s}
+\end{bmatrix}
+\end{align*} 
+
+Since the system is under the effect of time delay, the dynamics will be influenced from the average residence time $T_{ar} = T + L$ instead of a pure time constant in the previous section. The processes normalized time is given as following:
+
+\begin{align*}
+\ma{\tau} = \begin{bmatrix}
+\frac{1}{16.7+1} & \frac{3}{21.0+3} \\
+\frac{7}{10.9+7} & \frac{3}{14.4+3}
+\end{bmatrix} \approx \begin{bmatrix} 
+0.056 & 0.125 \\
+0.391 & 0.172
+\end{bmatrix}
+\end{align*}
+Which indicates that most of the transfer functions involved can be controlled without much effort. Only the entry $\tau_{12} \approx 0.391$ is challenging, since the delay has much influence on the outputs behavior. Due to these mixed normalized times, the effectiveness of the AMIGO algorithm in presence delays can be seen. Furthermore, the effectiveness of the decoupler in presence of delays is to be investigated. At first, the identification is performed. The identified system is given by:
+
+\begin{align*}
+\hat{\ma{G}} = \begin{bmatrix}
+\frac{12.800}{16.684 ~s+1}~e^{-1.016s}  & \frac{-18.899}{20.984 ~s+1}~e^{-3.014s}\\
+\frac{6.600}{10.901 ~s+1}~e^{-7.005s} & \frac{-19.400}{14.384 ~s+1}~e^{-3.014s}
+\end{bmatrix}
+\end{align*} 
+
+Since the values are given by a noise free, numerical simulation it is obvious that the identification will perform less optimal in a real environment. Nonetheless, the precision of the method can be seen from the values of the parameter.\\
+
+The RGA analysis of the steady state gain computes to be:
+
+\begin{align*}
+\ma{\Lambda}(\ma{G}_0) = \begin{bmatrix}
+2.01 & -1.01 \\
+-1.01 & 2.01
+\end{bmatrix}
+\end{align*} 
+
+Which indicates the diagonal pairing $u_1 \mapsto y_1~, u_2 \mapsto y_2$. Oppose to Sec.\ref{c:fotd:s:rosenbrook}, the process of designing the controller will not be explained in its entirety. The parameter for the decentralized control, the decoupling controller based on Astr\"om and the R2D2 are listed in the TABLE!! below for both a not detuned and detuned case.\\
+
+TABLE\\
+
+The static decoupler and the splitter are given as:
+
+\begin{align*}
+\ma{D} = 42, \ma{\Sigma} = 42
+\end{align*}
+
 
 \section{Identified System at WP 1}%
 \label{c:fotd:s:wp1}

@@ -683,14 +683,14 @@ Further investigation of term given in Eq. \ref{c:controller:e:TaylorSplitterAnt
 \begin{align}
 \begin{split}
 \ma{\Gamma}_A &= \frac{d}{ds}\left[ \ma{G}_A + \ma{G}_D \ma{\Sigma} \right]|_{s=0} \\
-&= \left[ \ma{G}_{A,0}~\circ~\ma{T}_{AR,A} + \left(\ma{G}_{D,0}~\circ~\ma{T}_{AR,D} \right) \left(-\ma{G}_{D,0}^{-1} \ma{G}_A \right)\right] \\
+&= \left[ \ma{G}_{A,0}~\circ~\ma{T}_{AR,A} + \left(\ma{G}_{D,0}~\circ~\ma{T}_{AR,D} \right) \ma{\Sigma} \right] \\
 &= \left[ \ma{G}_{A,0}~\circ~\ma{T}_{AR,A} - \ma{G}_A~\circ~\ma{T}_{AR,D}  \right] \\
 &= \ma{G}_{A,0}~\circ~\left[ \ma{T}_{AR,A} - \ma{T}_{AR,D}\right]
 \end{split}
 \label{c:controller:e:TaylorSplitterDynamics}
 \end{align}
 
-With $\ma{T}_{AR} = (T_{ar,ij}) = (T_{ij} + L_{ij})\in \mathbb{R}^{n_y \times n_y}$ being the matrix consisting of the average residence times of the single transfer functions $g_{ij}$ of the process. The operator $\circ$ is the Hadamard Product and stands for the elementwise multiplication. From Eq. \ref{c:controller:e:TaylorSplitterDynamics} we can see that the first order dynamics acting on the output are related to the difference in the dynamics of the main diagonal and the anti-diagonal terms. This coincides with the statements of e.g. LUNZE, where a static decoupling is described to be able to decouple the dynamics if the dynamic behavior of the process are alike. Using this knowledge, the goal of the detuning can be reformulated to change the controller in such a way that the dynamic behavior of the output is nearly equivalent to the dynamics of the main coupling. \\
+With $\ma{T}_{AR} = (T_{ar,ij}) = (T_{ij} + L_{ij})\in \mathbb{R}^{n_y \times n_y}$ being the matrix consisting of the average residence times of the single transfer functions $g_{ij}$ of the process. The operator $\circ$ is the Hadamard Product and stands for the element-wise multiplication. Note that normally, the Hadamard Product is not distributive over multiplication. But since the splitter can be written as a product of a rotation matrix $\ma{O}$ and a diagonal matrix $\ma{\Sigma}_D$, $\ma{\Sigma} = \ma{\Sigma}_D \ma{0} $, it is possible. From Eq. \ref{c:controller:e:TaylorSplitterDynamics} we can see that the first order dynamics acting on the output are related to the difference in the dynamics of the main diagonal and the anti-diagonal terms. This coincides with the statements of e.g. LUNZE, where a static decoupling is described to be able to decouple the dynamics if the dynamic behavior of the process are alike. Using this knowledge, the goal of the detuning can be reformulated to change the controller in such a way that the dynamic behavior of the output is nearly equivalent to the dynamics of the main coupling. \\
 
 Hence, we relate both dynamics with each other to find the relative dynamic interaction of the process $\ma{\Gamma}_R \in \mathbb{R}^{n_y \times n_y}$:
 
