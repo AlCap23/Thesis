@@ -128,14 +128,12 @@ The relative error in Gain $\Delta_K \in \mathbb{C}$ can therefore described as
 
 From Eq.\ref{c:identification:e:error_gain} two important conclusions can be conducted. First, the error is small near the steady state iff the first order dynamics are estimated correctly. The steady state model is even error free, iff the true gain can be identified. Secondly, the error will increase dramatically for higher order dynamics since the model is not able to project these frequencies in an adequate manner. Another source of error can be found in low order zeros of the system, which will result in an infinite error of the gain. The gain error is visualized in Fig.\ref{c:identification:f:nyquist_fotd}. Here a high order system with a dominant first order dynamics is approximated by a FOTD process model. The gain is nearly identical until the point $\rbrace[2,-j6\lbrace]$. Here the system models time delay rotate the real and imaginary part and hence transforms the position of the trajectory. \\
 
-\begin{figure}[H]
-  \centering
+\begin{figure}[H]\centering
   \def\svgwidth{\textwidth}
-  \input{./Graphics/Area_Nyquist.pdf_tex}
+  \includesvg{Area_Nyquist.svg}
   \caption{Nyquist Diagram of High Order Transfer Function and Corresponding FOTD model}
   \label{c:identification:f:nyquist_fotd}
 \end{figure}
-
 
 Likewise, the relative error in phase $\Delta_\varphi \in \mathbb{C}$ is given as:
 
@@ -150,10 +148,10 @@ Likewise, the relative error in phase $\Delta_\varphi \in \mathbb{C}$ is given a
 
 Eq. \ref{c:identification:e:error_phase} gives an important insight to the function of the time delay. It compensates for the higher order dynamics in phase, effectively reducing the error in phase. An example is given in Fig.\ref{c:identification:f:phase_fotd}. In Fig. \ref{c:identification:e:error_phase} shows the ability of the approximation to mimic the phase of the real process. Until $\omega \approx 0.13 \frac{rad}{s}$ the phase of the system model is nearly equivalent to the original system. After crossing this frequency, the model approximates a phase less than that of the original system, which is identical with a conservative estimate of the dynamic behavior.
 
-\begin{figure}[H]
-  \centering
+
+\begin{figure}[H]\centering
   \def\svgwidth{\textwidth}
-  \input{./Graphics/Area_Bode_Phase.pdf_tex}
+  \includesvg{Area_Bode_Phase.svg}
   \caption{Phase of High Order Transfer Function and Corresponding FOTD model}
   \label{c:identification:f:phase_fotd}
 \end{figure}
@@ -168,8 +166,8 @@ At first, the difference between the settling value of the output, $y(\infty)$, 
 
 \begin{align}
 \begin{split}
-\int_0^\infty \left[ y(\infty)-y(t) \right] ~dt &= \int_0^\infty \left[ y(\infty) - \hat{K} ~\left( 1 - e^{-\frac{t- \hat{L}}{\hat{T}}}\right)~ \sigma(t-\hat{L}) \right] ~dt \\
-&= \hat{K} {\int_0^\hat{L}} \sigma(t) ~dt + \hat{K}~{\int^\infty_0} e^{-\frac{t}{\hat{T}}} ~dt \\
+\int_0^\infty \left[ y(\infty)-y(t) \right] ~dt &= \int_0^\infty \left[ y\left(\infty \right) - \hat{K} ~\left( 1 - e^{ -\frac{t- \hat{L}}{\hat{T}} } \right)~ \sigma(t-\hat{L}) \right] ~dt \\
+&= \hat{K} \int_0^{\hat{L}} \sigma(t) ~dt + \hat{K} ~\int^{\infty}_0 e^{ -\frac{t}{ \hat{T} } } ~dt \\
 &= \hat{K}~\hat{L} + \hat{K} \left( -\hat{T} e^{-\frac{t}{\hat{T}}}\right) \Bigg\rvert^\infty_0 \\
 &= \hat{K}~\left(\hat{T}+\hat{L}\right) \\
 &= \hat{K}~\hat{T}_{ar}
@@ -222,15 +220,13 @@ From Eq. \ref{c:identification:e:integral_noisechancel} follows that measurement
 \label{c:identification:e:area_averagegain}
 \end{align}
 
-The system of equations as described above are called area-based methods, \cite{Fedele2009a}, with regards to its visualization displayed in Fig. . Another, likewise valid understanding is given as the minimization of the integral of the error between the real system and the model over time.\\
+The system of equations as described above are called area-based methods, \cite{Fedele2009a}, with regards to its visualization displayed in Fig.\ref{c:identification:f:Area} . Another, likewise valid understanding is given as the minimization of the integral of the error between the real system and the model over time.\\
 
-%\begin{figure}[h]
-%  \centering
-%  \def\svgwidth{\textwidth}
-%  \input{./Graphics/Area_Basic_Interpretation.pdf_tex}
-%  \caption{Area Interpretation}
-%  \label{Aaslflas}
-%\end{figure}
+\begin{figure}[H]\centering
+\includesvg[width = \textwidth]{Graphics/FOTD_AREA_INTERPRETATION.svg}
+\caption{Interpretation of the Integral Fitting Approach using Areas}
+\label{c:identification:f:Area}
+\end{figure}
 
 However, the algorithm described above is not robust. It only converges iff the systems gain is equivalent with the infinity norm of the output. This resembles a dominant steady state gain. In other words, the integral Eq. \ref{c:identification:e:area_tar} must be positive definite. To ensure this, several options are available. \\
 
@@ -243,7 +239,13 @@ Since a conservative estimation of the system will result in a robust controller
 \label{c:identification:e:area_sup_gain}
 \end{align}
 
-Eq. \ref{c:identification:e:area_sup_gain} defines the gain as the ratio between the supremum of the measurement data and the change in input. This results in a positive semidefiniteness of the integral given by Eq.\ref{c:identification:e:area_tar}. Furthermore, the results in two extreme cases. The algorithm can provide the real system, iff the output data is monotonically increasing. With that, the supremum of the collected data is equal to the final value and Eq.\ref{c:identification:e:area_sup_gain} converges to Eq. \ref{c:identification:e:area_gain}. On the other hand the system is identified as a (scaled) step response or a strictly proportional element, iff the supremum is equal to the first collected data point. An illustration of the former reasoning is given in FIGURE.\\
+Eq. \ref{c:identification:e:area_sup_gain} defines the gain as the ratio between the supremum of the measurement data and the change in input. This results in a positive semidefiniteness of the integral given by Eq.\ref{c:identification:e:area_tar}. Furthermore, the results in two extreme cases. The algorithm can provide the real system, iff the output data is monotonically increasing. With that, the supremum of the collected data is equal to the final value and Eq.\ref{c:identification:e:area_sup_gain} converges to Eq. \ref{c:identification:e:area_gain}. On the other hand the system is identified as a (scaled) step response or a strictly proportional element, iff the supremum is equal to the first collected data point. An illustration of the former reasoning is given in Fig.\ref{c:identification:f:SupGain}.\\
+
+\begin{figure}[H]\centering
+\includesvg[width = \textwidth]{Graphics/Area_Fitting}
+\caption{Identification of the Systems Gain using the Supremum of the Step Response}
+\label{c:identification:f:SupGain}
+\end{figure}
 
 \section{Asymmetric Relay Experiment}
 \label{c:identification:s:relay}
@@ -272,7 +274,7 @@ u_L &~e(t) < -h, ~\dot{e}(t) < 0
 \label{c:identification:e:relay_output}
 \end{align}
 
-In Eq. \ref{c:identification:e:relay_output} the output switches between an upper and lower limit, $u_H, u_L \in \mathbb{R}, u_H \geq u_L$ depending on the hysteresis $h \in \mathbb{R}^+$, the error of the signal and its time derivative. Iff the relation $\left| u_H \right¦ = \left| u_L \right¦$ holds true, the relay is called symmetric, if not it is an asymmetric relay, with $\left| u_H \right¦ > \left| u_L \right¦$. Note that the system of equations above can be formulated with respect to the former value of itself. Since the process is defined around a set point $y_R \in \mathbb{R}$ it is useful to define the corresponding input $u_R \in \mathbb{R} | y = y_R$. Hence, the difference in input is given by $\delta u_H = \left| u_H-u_R \right|$ and $\delta u_L = \left| u_L - u_R \right|$.\\
+In Eq. \ref{c:identification:e:relay_output} the output switches between an upper and lower limit, $u_H, u_L \in \mathbb{R}, u_H \geq u_L$ depending on the hysteresis $h \in \mathbb{R}^+$, the error of the signal and its time derivative. Iff the relation $\left| u_H \right| = \left| u_L \right|$ holds true, the relay is called symmetric, if not it is an asymmetric relay, with $\left| u_H \right| > \left| u_L \right|$. Note that the system of equations above can be formulated with respect to the former value of itself. Since the process is defined around a set point $y_R \in \mathbb{R}$ it is useful to define the corresponding input $u_R \in \mathbb{R} | y = y_R$. Hence, the difference in input is given by $\delta u_H = \left| u_H-u_R \right|$ and $\delta u_L = \left| u_L - u_R \right|$.\\
 
 From FIG a difference the period $t_P = t_{on} + t_{off}\in \mathbb{R}^+$ consisting of the sum of the half-periods $t_{on} \in \mathbb{R}^+ | u = u_H$ and $t_{off} \in \mathbb{R}^+ | u = u_L$.\\
 

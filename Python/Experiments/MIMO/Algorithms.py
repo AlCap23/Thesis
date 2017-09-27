@@ -516,7 +516,7 @@ def compute_sensitivity(ss,KY,B,D,omega):
     G = tf_system(ss, omega)
     # Compute the controller
     KPR, KIR, KPY, KIY = compute_pi(KY,B,D)
-    # Compute the sensitivity
+    # Compute the sensitivity, here a negative Feedback is assumed
     S = np.linalg.inv(np.eye(2,2)+np.dot(G,np.add(KPY,1/(omega*1j)*KIY)))
     return S
 

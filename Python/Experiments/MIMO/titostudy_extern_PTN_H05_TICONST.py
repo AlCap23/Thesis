@@ -50,7 +50,7 @@ def experimental_setup():
 	# Gain Limits
 	gain_limits = [-20., 20.0]
 	# Lag Limits
-	lag_limits = [80,180]
+	lag_limits = [50,100]
 	# Delay Limits, if small approx. no delay
 	delay_limits = [10,30]
 	# Step size for simulate
@@ -143,11 +143,11 @@ def experiment(num, den, l, R, filename, sample_size, max_deg, dt, t_sim, H, wmi
 		if degree < c_deg:
 			# Change degree
 			degree = c_deg
-			# Clear Simulator
-			sim.clear()
-			# Load new model
-			sim.loadModel("C:/Users/juliu/Documents/Thesis/Modelica/FMU/2_2_n"+str(degree)+"/Masterthesis_Models_mimo_0processmodel.fmu")
-			sim.setOperationMode('FMU for ModelExchange')
+		# Clear Simulator
+		#sim.clear()
+		# Load new model
+		sim.loadModel("/2_2_n"+str(degree)+"/Masterthesis_Models_mimo_0processmodel.fmu")
+		sim.setOperationMode('FMU for ModelExchange')
 			
 		# Preallocat identification parameter
 		K = np.zeros((2,2))

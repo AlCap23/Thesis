@@ -17,7 +17,7 @@ import pandas as pd
 from scipy import stats
 # Import the Algorithms
 import sys
-sys.path.append('../../')
+#sys.path.append('../../')
 import Algorithms as alg
 # Import the MOBA Simulator
 import MoBASimulator as mb 
@@ -48,13 +48,13 @@ def experimental_setup():
 	# Max degree
 	max_deg = 9
 	# Gain Limits
-	gain_limits = [-10., 10.0]
+	gain_limits = [-20., 20.0]
 	# Lag Limits in percent of TSum
 	lag_limits = [.1,1.]
 	# TSum
-	T_Sum = 180; 
+	T_Sum = 100; 
 	# Delay Limits, if small approx. no delay
-	delay_limits = [1,10]
+	delay_limits = [10,30]
 	# Step size for simulate
 	dt = 0.01
 	# Final time for simulation
@@ -145,11 +145,11 @@ def experiment(num, den, l, R, filename, sample_size, max_deg, dt, t_sim, H, wmi
 		if degree < c_deg:
 			# Change degree
 			degree = c_deg
-			# Clear Simulator
-			sim.clear()
-			# Load new model
-			sim.loadModel("C:/Users/juliu/Documents/Thesis/Modelica/FMU/2_2_n"+str(degree)+"/Masterthesis_Models_mimo_0processmodel.fmu")
-			sim.setOperationMode('FMU for ModelExchange')
+		# Clear Simulator
+		#sim.clear()
+		# Load new model
+		sim.loadModel("/2_2_n"+str(degree)+"/Masterthesis_Models_mimo_0processmodel.fmu")
+		sim.setOperationMode('FMU for ModelExchange')
 
 		# Preallocat identification parameter
 		K = np.zeros((2,2))
@@ -186,7 +186,7 @@ def experiment(num, den, l, R, filename, sample_size, max_deg, dt, t_sim, H, wmi
 		# Set the parameter
 		sim.set(params)
 		# Show the Parameter
-		sim.showParameterDialog()
+		# sim.showParameterDialog()
 		# Store the state space rep for later use
 		ss = sim.analyser_getStateSpaceForm()
 
@@ -205,9 +205,9 @@ def experiment(num, den, l, R, filename, sample_size, max_deg, dt, t_sim, H, wmi
 		time = res["time"]
 
 		# Plot the system
-		p.plot(time,y)
-		p.plot(time,y2)
-		p.show()
+		#p.plot(time,y)
+		#p.plot(time,y2)
+		#p.show()
 
 		# Get TF from Input 1 to Output 1
 		K[0][0],T[0][0],L[0][0]=alg.Integral_Identification(y,u,time)

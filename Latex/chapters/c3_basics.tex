@@ -144,14 +144,21 @@ Or rearranged to be:
 
 Due to Eq. \ref{c:control:e:maxsensitivitynyquist} the maximum gain of the open loop is limited by the maximum sensitivity. Hence, the critical point is only encircled iff the maximum sensitivity is zero. Hence the system is only stable in the sense of the Nyquist Criterion if the maximum sensitivity is sufficiently small.\\
 
-\begin{figure}[H]
-\begin{minipage}[b]{\textwidth}
-\centering
-\input{./Graphics/MS.pdf_tex}
-\caption{Maximum Sensitivity}
-\label{c:control:f:MaximumSensitivity}
-\end{minipage}
+
+\begin{figure}[h]\centering
+\includesvg[width = \textwidth]{Maximum_Sensitivity.svg}
+\caption{Illustration of the Connection between the maximum sensitivity, the open loop gain and the Nyquist Criterion}
+\label{c:control:f:maxsensitivitynyquist}
 \end{figure}
+
+
+%\begin{figure}[H]
+%  \centering
+%  \def\svgwidth{\textwidth}
+%  \import{MS.pdf_tex}
+%%  \caption{Illustration of the maximum sensitivity of a given system}
+%%  \label{c:identification:f:MaximumSensitivity}
+%\end{figure}
 
 
 While the maximum sensitivity is well defined for SISO systems, a MIMO system requires a more general approach due to the interconnection of the systems out- and inputs. A general condition is given by the Small Gain Theorem \cite[p.150 ff.]{Skogestad2005}. The theorem states, that a given feedback system is stable iff the open loop transfer function matrix is stable and its sufficient conditioned matrix norm is less than 1 over all frequencies.
@@ -175,8 +182,8 @@ Where $\ma{U} \in \mathbb{C}^{n_a \times n_a}$ and $\ma{V} \in \mathbb{C}^{n_b \
 \begin{figure}[H]
 \begin{minipage}[b]{\textwidth}
 \centering
-\includegraphics[scale=1]{./Graphics/SVD.png}
-\caption{Graphical Interpretation of the Singular Value Decomposition}
+\includesvg[width = \textwidth]{Bode_Singular_Value.svg}
+\caption{Example for the maximum singular value as an upper limit to the gain}
 \label{c:control:f:SVD}
 \end{minipage}
 \end{figure}

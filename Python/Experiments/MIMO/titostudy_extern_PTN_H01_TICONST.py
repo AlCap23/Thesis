@@ -44,13 +44,13 @@ def experimental_setup():
 	# Filename to store in
 	filename  = 'H01_TICONST.csv'
 	# Overall sample_size 
-	sample_size = 90
+	sample_size = 9000
 	# Max degree
 	max_deg = 9
 	# Gain Limits
 	gain_limits = [-20., 20.0]
 	# Lag Limits
-	lag_limits = [80,180]
+	lag_limits = [50,100]
 	# Delay Limits, if small approx. no delay
 	delay_limits = [10,30]
 	# Step size for simulate

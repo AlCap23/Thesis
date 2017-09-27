@@ -1,0 +1,23 @@
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {\relax 3.1}{\ignorespaces Two Degree of Freedom Feedback Control\relax }}{8}{figure.caption.4}
+\contentsline {figure}{\numberline {\relax 3.2}{\ignorespaces Illustration of the Connection between the maximum sensitivity, the open loop gain and the Nyquist Criterion\relax }}{10}{figure.caption.5}
+\contentsline {figure}{\numberline {\relax 3.3}{\ignorespaces Example for the maximum singular value as an upper limit to the gain\relax }}{11}{figure.caption.6}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {\relax 4.1}{\ignorespaces Nyquist Diagram of High Order Transfer Function and Corresponding FOTD model\relax }}{16}{figure.caption.7}
+\contentsline {figure}{\numberline {\relax 4.2}{\ignorespaces Phase of High Order Transfer Function and Corresponding FOTD model\relax }}{17}{figure.caption.8}
+\contentsline {figure}{\numberline {\relax 4.3}{\ignorespaces Interpretation of the Integral Fitting Approach using Areas\relax }}{19}{figure.caption.9}
+\contentsline {figure}{\numberline {\relax 4.4}{\ignorespaces Identification of the Systems Gain using the Supremum of the Step Response\relax }}{20}{figure.caption.10}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {\relax 6.1}{\ignorespaces Simulation of Rosenbrock's System without Detuning\relax }}{49}{figure.caption.11}
+\contentsline {figure}{\numberline {\relax 6.2}{\ignorespaces BEISPIEL- FORMATIERUNG MUSS DRINGEND GEÄNDERT WERDEN\relax }}{51}{figure.caption.13}
+\contentsline {figure}{\numberline {\relax 6.3}{\ignorespaces Simulation of Rosenbrock's System with Detuning\relax }}{52}{figure.caption.14}
+\contentsline {figure}{\numberline {\relax 6.4}{\ignorespaces Step of the MIMO\relax }}{55}{figure.caption.15}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {\relax 7.1}{\ignorespaces Results of the Robustness Study, Maximum Sensitivity of the Real System and the Identified System\relax }}{57}{figure.caption.16}
+\contentsline {figure}{\numberline {\relax 7.2}{\ignorespaces Robusteness of the MIMO\relax }}{58}{figure.caption.17}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }

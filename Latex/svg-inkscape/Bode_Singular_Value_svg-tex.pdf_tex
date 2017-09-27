@@ -1,0 +1,80 @@
+%% Creator: Inkscape inkscape 0.92.2, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'Bode_Singular_Value_svg-tex.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{378.75bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.73245666)%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{Bode_Singular_Value_svg-tex.pdf}}%
+    \put(0.11089109,0.34631804){\color[rgb]{0.26666667,0.26666667,0.26666667}\makebox(0,0)[lb]{\smash{Output 1}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{Bode_Singular_Value_svg-tex.pdf}}%
+    \put(0.11089109,0.30077349){\color[rgb]{0.26666667,0.26666667,0.26666667}\makebox(0,0)[lb]{\smash{Output 2}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{Bode_Singular_Value_svg-tex.pdf}}%
+    \put(0.11089109,0.25522893){\color[rgb]{0.26666667,0.26666667,0.26666667}\makebox(0,0)[lb]{\smash{Singular Values}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{Bode_Singular_Value_svg-tex.pdf}}%
+    \put(0.11089109,0.20968438){\color[rgb]{0.26666667,0.26666667,0.26666667}\makebox(0,0)[lb]{\smash{Maximum Singular Value}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{Bode_Singular_Value_svg-tex.pdf}}%
+    \put(0.06534653,0.12849626){\makebox(0,0)[b]{\smash{10^-3}}}%
+    \put(0.28514851,0.12849626){\makebox(0,0)[b]{\smash{10^-2}}}%
+    \put(0.5049505,0.12849626){\makebox(0,0)[b]{\smash{10^-1}}}%
+    \put(0.72673267,0.12849626){\makebox(0,0)[b]{\smash{10^0}}}%
+    \put(0.94653465,0.12849626){\makebox(0,0)[b]{\smash{10^1}}}%
+    \put(0.92475248,0.12849626){\makebox(0,0)[b]{\smash{}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{Bode_Singular_Value_svg-tex.pdf}}%
+    \put(0,0.43542695){\makebox(0,0)[rb]{\smash{1}}}%
+    \put(0,0.52255567){\makebox(0,0)[rb]{\smash{2}}}%
+    \put(0,0.57206062){\makebox(0,0)[rb]{\smash{3}}}%
+    \put(0,0.60770418){\makebox(0,0)[rb]{\smash{4}}}%
+    \put(0,0.63740715){\makebox(0,0)[rb]{\smash{5}}}%
+    \put(0,0.65918933){\makebox(0,0)[rb]{\smash{6}}}%
+    \put(0,0.67899131){\makebox(0,0)[rb]{\smash{7}}}%
+    \put(0,0.69483289){\makebox(0,0)[rb]{\smash{8}}}%
+    \put(0,0.70869428){\makebox(0,0)[rb]{\smash{9}}}%
+    \put(0,0.72255567){\makebox(0,0)[rb]{\smash{10}}}%
+    \put(0,0.63740715){\rotatebox{90}{\makebox(0,0)[b]{\smash{}}}}%
+  \end{picture}%
+\endgroup%

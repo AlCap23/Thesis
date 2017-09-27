@@ -540,13 +540,20 @@ To evaluate the performance of the controller, a simulation has been performed. 
 
 The controller has been designed using analytical methods. It has a setpoint-weight of $b_i = 0, \forall i \in [1,2]$.\\
 
-To see the effect of the decoupler, at first the system is simulated without the detuned controller.  The initial output is set to zero $\ve{y}_0 = \ve{0}$ and at $t = 0~s$ a jump on the reference value $y_{R,1}$ is given. When the system is in a steady state, at $t = 100~s$, the reference value for the second output is set to $y_{R,2} = 1$. The results for all three controller are presented in FIG. The response of the reference controller is in dashed gray, while the decentralized controller is colored blue, the decoupled controller designed as proposed by Astr\"om is red and the robust relative dynamic detuned controller is given in orange.\\
+To see the effect of the decoupler, at first the system is simulated without the detuned controller.  The initial output is set to zero $\ve{y}_0 = \ve{0}$ and at $t = 0~s$ a jump on the reference value $y_{R,1}$ is given. When the system is in a steady state, at $t = 100~s$, the reference value for the second output is set to $y_{R,2} = 1$. The results for all three controller are presented in Fig.\ref{c:fotd:s:rosenbrock:f:SimNonDetuned}. The response of the reference controller is in dashed gray, while the decentralized controller is colored blue, the decoupled controller designed as proposed by Astr\"om is red and the robust relative dynamic detuned controller is given in orange.\\
+
+\begin{figure}[H]\centering
+\includesvg[width = \textwidth]{Rosenbrock_1_100.svg}
+\includesvg[width = \textwidth]{Rosenbrock_2_100.svg}
+\caption{Simulation of Rosenbrock's System without Detuning}
+\label{c:fotd:s:rosenbrock:f:SimNonDetuned}
+\end{figure}
 
 The performance measurements are given in Tab.\ref{c:fotd:s:rosenbrock:tab:eval1}.
 
 \begin{table}[H]
 \centering
-\caption{Evaluation of closed loop behaviour of Rosenbrock's system, Not Detuned}
+\caption{Evaluation of closed loop behaviour of Rosenbrock's system, Not Detuned, NOCH NICHT FERTIG}
 \label{c:fotd:s:rosenbrock:tab:eval1}
 \begin{tabular}{l|c|c|c|c}
 
@@ -573,7 +580,13 @@ A clear picture is given by the disturbance acting on the first ouput $y_1$ due 
 
 Oppose to that, the decentralized controller acts more reasonable, slowly reducing the error of the output on a monotone decreasing track. The controller in addition to the splitter reduces the effect of the coupling immensely, but shows small undershoots due to the same reasons as mentioned beforehand. However, it is acting smoother and less drastically than the decoupler based on the static inverse. The reference controller shows only slight influences due to the disturbance and limmits the overshoot to $\Delta y_1 = 0.11$. This is reasonable, since it is designed and detuned for that limitation.\\
 
-Regarding the robustness and the tracking performance, the singular values of the closed loops sensitivity and complementary sensitivity have been calculated. The results can be seen in FIG.\\
+Regarding the robustness and the tracking performance, the singular values of the closed loops sensitivity and complementary sensitivity have been calculated. The results can be seen in Fig.\ref{c:fotd:s:rosenbrock:f:SingVal}.\\
+
+\begin{figure}[H]\centering
+\includesvg[width = \textwidth]{Rosenbrock_2_SV_100_RGA.svg}
+\caption{BEISPIEL- FORMATIERUNG MUSS DRINGEND GEÄNDERT WERDEN}
+\label{c:fotd:s:rosenbrock:f:SingVal}
+\end{figure}
 
 The decentralized controller performs reasonable well. Its maximum singular value of the sensitivity is given by $\overline{\sigma} = 1.25$ at the frequency of $\omega = 0.60 ~rad/s$. The process is robust within the frequencies lower than $\omega \leq 0.22$, since this is the first time that the sensitivity exceeds the limit of $\overline{\sigma} \geq 1$. Likewise, the processes tracking performance begins to decrease at that frequency. Until that frequency is reached, the singular values are nearly identical and have a gain of 0 dB, which corresponds to an evenly distributed tracking performance of both outputs. \\
 
@@ -581,8 +594,14 @@ The singular values of the decoupling controller as proposed by Astr\"om differ 
 
 At last, the controller designed by robust relative dynamic decoupling is investigated with respect to its sensitivity and complementary sensitivity. The peark of the sensitivity is given with $\overline{\sigma} = 1.59$ at a frequency of $\omega = 0.88 ~rad/s$. It can be seen that while the decoupler widens the useable frequency range it also amplifies the maximum singular value of the sensitivity function. Furthermore, until the frequency of $\omega = 0.30 rad/s$, the singular values are very evenly distributed. This indicates the effect of the decoupler with respect to tracking efficiency and the distribution of noise or disturbances.\\
 
-Next, the controller are detuned for a maximum interaction of $h_{A,Max} \leq 0.3$. The simulation results are shown in Fig. FIG. with the same color coding as before. \\
+Next, the controller are detuned for a maximum interaction of $h_{A,Max} \leq 0.3$. The simulation results are shown in Fig.\ref{c:fotd:s:rosenbrock:f:SimDetuned} with the same color coding as before. \\
 
+\begin{figure}[H]\centering
+\includesvg[width = \textwidth]{Rosenbrock_1_03.svg}
+\includesvg[width = \textwidth]{Rosenbrock_2_03.svg}
+\caption{Simulation of Rosenbrock's System with Detuning}
+\label{c:fotd:s:rosenbrock:f:SimDetuned}
+\end{figure}
 
 In comparison to the not-detuned closed loop, both decoupled controller show a less aggressive performance as a result of the much lesser values for the proportional and integral gain. This is visible from the step response of the second output $y_2$, where rising times have increased.Likewise, the detuning reduces the interaction enormous. Both decoupled controller have a maximum overshoot of $\Delta y_{1} \leq 0.11$.\\
 

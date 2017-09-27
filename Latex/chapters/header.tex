@@ -1,3 +1,5 @@
+%!TEX root = ../studentischeArbeiten.tex
+
 %
 %		Header-Datei
 %
@@ -5,8 +7,6 @@
 % Tables
 \usepackage{multirow}
 
-% SVG
-\usepackage[svgpath=../Python]{svg}
 % Nummerierungstiefe von section/subsection/subsubsection
 \setcounter{secnumdepth}{3} 
 
@@ -18,6 +18,8 @@
 % Deutsche Rechtschreibung und deutscher Zeichensatz
 %\usepackage{german,ngerman}
 %\usepackage[ansinew]{inputenc}  
+%\usepackage[utf8]{inputenc}
+%\usepackage[T1]{fontenc}
 
 % Aktuelles Datum ermitteln
 \usepackage[ngerman]{datenumber}
@@ -63,11 +65,19 @@
 \usepackage[final]{pdfpages}
 
 % Zum einbinden von Grafiken  
-\usepackage{graphicx,import}
+\usepackage{graphicx,xcolor,import}
 \usepackage{subcaption}  %erlaubt das erstellen von subfigures
 \usepackage{float} %erm�glicht das erstellen von "non-floating figures"
-% Setzen des Verzeichnisses für Grafiken
-\graphicspath{{./Graphics/}}
+\usepackage{svg}
+\setsvg{inkscape=inkscape -z -D, svgpath=Graphics/}
+\svgsetup{clean=true}
+
+%\newcommand{\includesvg}[2]{%
+%\IfFileExists{#1#2.pdf_tex}%
+%{\import{#1}{#2.pdf_tex}}%
+%{\immediate\write18{cd #1; inkscape -z -D --file=#2.svg%
+%--export-pdf=#2.pdf --export-latex}%
+%\import{#1}{#2.pdf_tex}}}
 
 %Hyperref f�r Verlinkungen im Dokument und URL's
 %hyphens f�r verbesserten Zeilenumbruch in url's
@@ -91,8 +101,8 @@
   
 % R�ckseiten-Elemente
 \address{% Addresse
-  Technische Universit�t Braunschweig\\
-  Institut f�r Thermodynamik\\
+  Technische Universit\"at Braunschweig\\
+  Institut f\"ur Thermodynamik\\
   Hans-Sommer-Strasse 5\\
   38106 Braunschweig}
 \backpageinfo{}				
