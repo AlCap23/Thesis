@@ -17,17 +17,13 @@ def Step_Info(y,t, p=0.02, yr = 1):
 
     # Check for Steady State
     # Does series converge?
-    if np.abs(y[-1]-yr) < 1e-2 :
-        yss = y[-1]
-    # If not return error
-    else:
-        return np.NaN, np.NaN, np.NaN, np.NaN
+    yss = y[-1]
 
     # Get the rising time as the time
     # First value above 0.1 steady state
-    index1 = np.where(y>=0.1*yss)
-    # First value equal 0.9 steady stae
-    index2 = np.where(y<=0.9*yss)
+    index1 = np.where(y>0.1*yss)
+    # First value equal 0.9 steady state
+    index2 = np.where(y>0.9*yss)
     # Rising Time
     # Check if empty
     if index1[0].size == 0:
@@ -35,16 +31,16 @@ def Step_Info(y,t, p=0.02, yr = 1):
     elif index2[0].size == 0:
         t_rise = np.NaN
     else:
-        t_rise = t[index1[0][0]]-t[index2[0][0]]
+        t_rise = t[index2[0][-1]]-t[index1[0][0]]
 
     # Overshoot for values above steady state
     # Get all values
     mp = np.abs(y[np.where(abs(y)>abs(yss))])
     # Check if empty
     if mp.size == 0:
-        mp = np.NaN
+        mp = 0.
     else:
-        mp = np.abs(np.max(mp)-np.abs(yss))
+        mp = np.abs((np.max(mp)-np.abs(yss))/np.abs(yss))
 
 
     # Settling time for all value between a certain percentage
@@ -53,12 +49,52 @@ def Step_Info(y,t, p=0.02, yr = 1):
     if index[0].size ==0:
         t_settle = np.NaN
     else:
-        t_settle = t[index[0][0]]
+        t_settle = t[index[0][0]] -t[0]
 
 
     return t_rise,mp,t_settle,yss
 
+def Disturbance_Info(y,t,p=0.02):
+    # Check for Steady State
+    # Does series converge to original value
+    yr = y[0]
+    if np.abs(y[-1]-yr) < 1e-2 :
+        yss = y[-1]
+    else:
+        yss = y[0]    
 
+    # Maximum Overshoot for values above steady state
+    # Get all values
+    mp = np.abs(y-yss)
+    mp_max = np.argmax(mp)
+    if mp[mp_max] < 1e-5:
+        tp = 0.
+    else:
+        tp = t[mp_max]-t[0]
+
+
+    # Check if empty
+    if mp.size == 0:
+        mp = 0.
+    else:
+        mp = mp[mp_max]
+
+
+    # Settling time for all value between a certain percentage, after overshoot
+    if abs(yss) < 1e-2:
+        index = np.where(np.logical_and(abs(y[mp_max:])<(+p), abs(y[mp_max:])>(-p)))
+    else:    
+        index = np.where(np.logical_and(abs(y[mp_max:])<(1+p)*yss, abs(y[mp_max:])>(1-p)*yss))
+    # Ceck if empty
+    if index[0].size ==0:
+        t_settle = 0.
+    elif mp < 1e-3 :
+        t_settle = 0.
+    else:
+        t_settle = t[index[0][0]] - t[0]
+
+
+    return tp,mp,t_settle,yss
 
 # Integral Identification of first order time delay
 
@@ -342,7 +378,7 @@ def Control_Astrom(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
                 # Check if decoupling is needed
 
                 while (np.abs(H[o][o]/(ms*gmax)) - np.sqrt( (b*ky[0]*wc_min)**2 + ky[1]**2 ) < 0):
-                    if counter > 1e6:
+                    if counter > 5:
                         #print('Maximal Iteration for detuning reached! Abort')
                         break
                     # Detune the controller with the shrinking rate    
@@ -359,7 +395,7 @@ def Control_Astrom(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
 
 
 # Modified Detuning
-def Control_Decoupled(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
+def Control_Decoupled(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI', method ='dynamic'):
     # Check Input for Maximum Sensitivity
     if MS is None:
         MS = 1.4*np.eye(K.shape[0],K.shape[1])
@@ -408,12 +444,19 @@ def Control_Decoupled(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
         S = -np.dot(np.linalg.inv(KD),KA)
         
         # Get the interaction relative to the gain
-        #GammaA = np.abs(GA + np.dot(GD,S))
-        # Interaction relative to the dynamic of the interaction
-        GammaA = np.abs(np.dot(np.linalg.inv(GD),GA) + S)
+        
+        if method == 'dynamic':
+            # Interaction relative to the dynamic of the interaction
+            GammaA = np.abs(np.dot(np.linalg.inv(GD),GA) + S)
+        elif method == 'static':
+            # Interaction relative to the gain
+            GammaA = np.abs(np.dot(np.linalg.inv(KD),np.add(GA,np.dot(GD,S))))
+        else:
+            # Interaction relative to the dynamic of the interaction
+            GammaA = np.abs(np.dot(np.linalg.inv(GD),GA) + S)
         #print(GammaA)
-        # Interaction relative to the gain
-        #GammaA = np.abs(np.dot(np.linalg.inv(KD),GA + np.dot(GD,S)))
+        
+        
         # Get the maximum of each row
         GMax = np.argmax(GammaA,axis=1)
         #print(GMax)
@@ -450,7 +493,7 @@ def Control_Decoupled(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
                 shrink_rate = 0.9
                
                 while (np.abs(H[outputs][outputs]/(ms*gmax)) - np.sqrt( (b*ky[0]/wc_min)**2 + ky[1]**2 ) < 0):
-                    if counter > 1e6:
+                    if counter > 5:
                         #print('Maximal Iteration for detuning reached! Abort')
                         break
                     # Detune the controller with the shrinking rate    
@@ -532,3 +575,28 @@ def compute_complementarysensitivity(ss, KY, B, D, omega):
     # Compute the complementary sensitivity
     T = np.dot(S,np.dot(G, np.add(KPR,1/(omega*1j)*KIR) ))
     return T
+
+
+#TUBScolorscale = [
+#    '#ffc82a','#ffd355','#ffde7f','#ffe9aa','#fff4d4', 
+#    '#e16d00','#e78a33','#eda766','#f3c599','#f9e2cc', 
+#    '#711c2f','#8d4959','#aa7782','#c6a4ac','#e3d2d5', 
+#    '#acc13a', '#bdcd61','#cdda89','#dee6b0','#eef3d8','#6d8300','#8a9c33','#a7b566','#c5cd99','#e2e6cc','#00534a','#33756e','#669892','#99bab7','#ccdddb',
+#    '#66b4d3','#85c3dc','#a3d2e5','#c2e1ed','#e0f0f6','#00709b','#338daf','#66a9c3','#99c6d7','#cce2eb','#003f57','#336579','#668c9a','#99b2bc','#ccd9dd',
+#    '#8a307f','#a15999','#b983b2','#d0accc','#e8d6e5','#511246','#74416b','#977190','#b9a0b5','#dcd0da','#4c1830','#704659','#947483','#b7a3ac','#dbd1d6'
+#]
+# Only Main Colors
+# Black, Red, Yellow, Orange, Dark Red, Light Green, Green, Dark Green, Light Blue, Blue, Dark Blue, Light Violet, Violet, Dark Violet
+# 0      1    2       3       4         5            6      7           8           9     10         11             12     13
+TUBScolorscale = [
+    '#000000','#be1e3c','#ffc82a', '#e16d00', '#711c2f', '#acc13a', '#6d8300', '#00534a',
+    '#66b4d3','#00709b','#003f57','#8a307f','#511246','#4c1830'
+]
+
+def cm2in(*tupl):
+    """Stack overflow-> User gns-ank"""
+    inch = 2.54
+    if isinstance(tupl[0], tuple):
+        return tuple(i/inch for i in tupl[0])
+    else:
+        return tuple(i/inch for i in tupl)

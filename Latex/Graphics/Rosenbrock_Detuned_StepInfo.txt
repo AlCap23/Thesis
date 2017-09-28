@@ -1,0 +1,10 @@
+\begin{tabular}{l|c|c|c|c} 
+ \multicolumn{2}{l|}{}  & $T_{Rise}$ & $m_P$ & $T_{Settle}$  \\ \cline{3-5} 
+\multicolumn{2}{l|}{\multirow{-2}{*}} & s         & \%        & s             \\ \hline \hline 
+ & $y_1$& 0.70 & 0.00 & 17.30 \\ \cline{2-5} 
+\multirow{-2}{*}{RGA} & $y_2$& 0.60 & 0.00 & 117.30 \\ \hline \hline
+ & $y_1$& 2.00 & nan & 14.30 \\ \cline{2-5} 
+\multirow{-2}{*}{Astroem} & $y_2$& 1.70 & nan & 133.80 \\ \hline \hline
+ & $y_1$& 2.30 & 0.00 & 9.10 \\ \cline{2-5} 
+\multirow{-2}{*}{R2D2} & $y_2$& 1.70 & nan & 133.90 \\ \hline \hline
+\end{tabular}

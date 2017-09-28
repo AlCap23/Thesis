@@ -1,0 +1,74 @@
+%% Creator: Inkscape inkscape 0.92.2, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'Rosenbrock_NotDetunedAstrom_SV__svg-tex.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{300bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,1)%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{Rosenbrock_NotDetunedAstrom_SV__svg-tex.pdf}}%
+    \put(0.26635,0.29839996){\color[rgb]{0.26666667,0.26666667,0.26666667}\makebox(0,0)[lb]{\smash{Sensitivity Function}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{Rosenbrock_NotDetunedAstrom_SV__svg-tex.pdf}}%
+    \put(0.26635,0.24089996){\color[rgb]{0.26666667,0.26666667,0.26666667}\makebox(0,0)[lb]{\smash{Complementary Sensitivity Function}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{Rosenbrock_NotDetunedAstrom_SV__svg-tex.pdf}}%
+    \put(0.26635,0.18339996){\color[rgb]{0.26666667,0.26666667,0.26666667}\makebox(0,0)[lb]{\smash{Maximum Sensitivity (1.91, 3.40)}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{Rosenbrock_NotDetunedAstrom_SV__svg-tex.pdf}}%
+    \put(0.1925,0.08){\makebox(0,0)[b]{\smash{10^-3}}}%
+    \put(0.38,0.08){\makebox(0,0)[b]{\smash{10^-2}}}%
+    \put(0.57,0.08){\makebox(0,0)[b]{\smash{10^-1}}}%
+    \put(0.76,0.08){\makebox(0,0)[b]{\smash{10^0}}}%
+    \put(0.95,0.08){\makebox(0,0)[b]{\smash{10^1}}}%
+    \put(0.57,0.04){\makebox(0,0)[b]{\smash{\textit{Frequency [rad/s]}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{Rosenbrock_NotDetunedAstrom_SV__svg-tex.pdf}}%
+    \put(0.1275,0.13){\makebox(0,0)[rb]{\smash{10^-3}}}%
+    \put(0.1275,0.345){\makebox(0,0)[rb]{\smash{10^-2}}}%
+    \put(0.1275,0.56){\makebox(0,0)[rb]{\smash{10^-1}}}%
+    \put(0.1275,0.775){\makebox(0,0)[rb]{\smash{10^0}}}%
+    \put(0.04,0.5175){\rotatebox{90}{\makebox(0,0)[b]{\smash{\textit{Gain}}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{Rosenbrock_NotDetunedAstrom_SV__svg-tex.pdf}}%
+    \put(0.15385,0.975){\makebox(0,0)[lb]{\smash{\textbf{Aström}}}}%
+  \end{picture}%
+\endgroup%

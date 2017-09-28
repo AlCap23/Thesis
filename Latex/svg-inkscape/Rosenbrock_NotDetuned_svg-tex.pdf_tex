@@ -1,0 +1,102 @@
+%% Creator: Inkscape inkscape 0.92.2, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'Rosenbrock_NotDetuned_svg-tex.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{538.58267903bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.78947368)%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{Rosenbrock_NotDetuned_svg-tex.pdf}}%
+    \put(0.11850146,0.44876728){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.0}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{Rosenbrock_NotDetuned_svg-tex.pdf}}%
+    \put(0.11850146,0.52148007){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.5}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{Rosenbrock_NotDetuned_svg-tex.pdf}}%
+    \put(0.11850146,0.59419285){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{1.0}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{Rosenbrock_NotDetuned_svg-tex.pdf}}%
+    \put(0.11850146,0.66690564){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{1.5}}}%
+    \put(0.08136696,0.54933686){\rotatebox{90}{\makebox(0,0)[lb]{\smash{\textsl{y}1}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{Rosenbrock_NotDetuned_svg-tex.pdf}}%
+    \put(0.16022727,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{0}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{Rosenbrock_NotDetuned_svg-tex.pdf}}%
+    \put(0.24829545,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{25}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=7]{Rosenbrock_NotDetuned_svg-tex.pdf}}%
+    \put(0.33636363,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{50}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=8]{Rosenbrock_NotDetuned_svg-tex.pdf}}%
+    \put(0.42443183,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{75}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=9]{Rosenbrock_NotDetuned_svg-tex.pdf}}%
+    \put(0.5125,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{100}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=10]{Rosenbrock_NotDetuned_svg-tex.pdf}}%
+    \put(0.6005682,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{125}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=11]{Rosenbrock_NotDetuned_svg-tex.pdf}}%
+    \put(0.68863634,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{150}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=12]{Rosenbrock_NotDetuned_svg-tex.pdf}}%
+    \put(0.77670454,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{175}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=13]{Rosenbrock_NotDetuned_svg-tex.pdf}}%
+    \put(0.86477274,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{200}}}%
+    \put(0.5125,0.05448834){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{Time [s]}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=14]{Rosenbrock_NotDetuned_svg-tex.pdf}}%
+    \put(0.11850146,0.10436313){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.0}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=15]{Rosenbrock_NotDetuned_svg-tex.pdf}}%
+    \put(0.11850146,0.1536089){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.2}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=16]{Rosenbrock_NotDetuned_svg-tex.pdf}}%
+    \put(0.11850146,0.20285467){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.4}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=17]{Rosenbrock_NotDetuned_svg-tex.pdf}}%
+    \put(0.11850146,0.25210049){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.6}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=18]{Rosenbrock_NotDetuned_svg-tex.pdf}}%
+    \put(0.11850146,0.30134626){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.8}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=19]{Rosenbrock_NotDetuned_svg-tex.pdf}}%
+    \put(0.11850146,0.35059203){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{1.0}}}%
+    \put(0.08136696,0.22421724){\rotatebox{90}{\makebox(0,0)[lb]{\smash{\textsl{y}2}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=20]{Rosenbrock_NotDetuned_svg-tex.pdf}}%
+    \put(0.79763061,0.19787684){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Reference}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=21]{Rosenbrock_NotDetuned_svg-tex.pdf}}%
+    \put(0.79763061,0.17161292){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{RGA}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=22]{Rosenbrock_NotDetuned_svg-tex.pdf}}%
+    \put(0.79763061,0.14534894){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Astrom}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=23]{Rosenbrock_NotDetuned_svg-tex.pdf}}%
+    \put(0.79763061,0.11908496){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{R2D2}}}%
+  \end{picture}%
+\endgroup%

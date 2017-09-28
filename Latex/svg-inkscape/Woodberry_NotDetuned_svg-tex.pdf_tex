@@ -1,0 +1,104 @@
+%% Creator: Inkscape inkscape 0.92.2, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'Woodberry_NotDetuned_svg-tex.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{538.58267903bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.78947368)%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{Woodberry_NotDetuned_svg-tex.pdf}}%
+    \put(0.11850146,0.42947393){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.00}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{Woodberry_NotDetuned_svg-tex.pdf}}%
+    \put(0.11850146,0.47513824){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.25}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{Woodberry_NotDetuned_svg-tex.pdf}}%
+    \put(0.11850146,0.52080256){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.50}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{Woodberry_NotDetuned_svg-tex.pdf}}%
+    \put(0.11850146,0.56646686){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.75}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{Woodberry_NotDetuned_svg-tex.pdf}}%
+    \put(0.11850146,0.61213117){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{1.00}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{Woodberry_NotDetuned_svg-tex.pdf}}%
+    \put(0.11850146,0.65779549){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{1.25}}}%
+    \put(0.07104183,0.54933686){\rotatebox{90}{\makebox(0,0)[lb]{\smash{\textsl{y}1}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=7]{Woodberry_NotDetuned_svg-tex.pdf}}%
+    \put(0.16022727,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{0}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=8]{Woodberry_NotDetuned_svg-tex.pdf}}%
+    \put(0.27765152,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{100}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=9]{Woodberry_NotDetuned_svg-tex.pdf}}%
+    \put(0.39507576,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{200}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=10]{Woodberry_NotDetuned_svg-tex.pdf}}%
+    \put(0.5125,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{300}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=11]{Woodberry_NotDetuned_svg-tex.pdf}}%
+    \put(0.62992426,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{400}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=12]{Woodberry_NotDetuned_svg-tex.pdf}}%
+    \put(0.74734847,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{500}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=13]{Woodberry_NotDetuned_svg-tex.pdf}}%
+    \put(0.86477274,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{600}}}%
+    \put(0.5125,0.05448834){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{Time [s]}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=14]{Woodberry_NotDetuned_svg-tex.pdf}}%
+    \put(0.11850146,0.09395418){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{−0.2}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=15]{Woodberry_NotDetuned_svg-tex.pdf}}%
+    \put(0.11850146,0.13310746){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.0}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=16]{Woodberry_NotDetuned_svg-tex.pdf}}%
+    \put(0.11850146,0.17226075){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.2}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=17]{Woodberry_NotDetuned_svg-tex.pdf}}%
+    \put(0.11850146,0.21141403){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.4}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=18]{Woodberry_NotDetuned_svg-tex.pdf}}%
+    \put(0.11850146,0.25056731){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.6}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=19]{Woodberry_NotDetuned_svg-tex.pdf}}%
+    \put(0.11850146,0.2897206){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.8}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=20]{Woodberry_NotDetuned_svg-tex.pdf}}%
+    \put(0.11850146,0.32887385){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{1.0}}}%
+    \put(0.07052252,0.22421724){\rotatebox{90}{\makebox(0,0)[lb]{\smash{\textsl{y}2}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=21]{Woodberry_NotDetuned_svg-tex.pdf}}%
+    \put(0.79763061,0.19787684){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Reference}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=22]{Woodberry_NotDetuned_svg-tex.pdf}}%
+    \put(0.79763061,0.17161292){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{RGA}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=23]{Woodberry_NotDetuned_svg-tex.pdf}}%
+    \put(0.79763061,0.14534894){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Astrom}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=24]{Woodberry_NotDetuned_svg-tex.pdf}}%
+    \put(0.79763061,0.11908496){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{R2D2}}}%
+  \end{picture}%
+\endgroup%

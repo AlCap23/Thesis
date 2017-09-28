@@ -1,0 +1,106 @@
+%% Creator: Inkscape inkscape 0.92.2, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'McAvoy_NotDetuned_svg-tex.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{538.58267903bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.78947368)%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{McAvoy_NotDetuned_svg-tex.pdf}}%
+    \put(0.11850146,0.42947393){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.0}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{McAvoy_NotDetuned_svg-tex.pdf}}%
+    \put(0.11850146,0.47358693){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.2}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{McAvoy_NotDetuned_svg-tex.pdf}}%
+    \put(0.11850146,0.51769993){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.4}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{McAvoy_NotDetuned_svg-tex.pdf}}%
+    \put(0.11850146,0.56181292){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.6}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{McAvoy_NotDetuned_svg-tex.pdf}}%
+    \put(0.11850146,0.60592592){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.8}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{McAvoy_NotDetuned_svg-tex.pdf}}%
+    \put(0.11850146,0.65003891){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{1.0}}}%
+    \put(0.08136696,0.54933686){\rotatebox{90}{\makebox(0,0)[lb]{\smash{\textsl{y}1}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=7]{McAvoy_NotDetuned_svg-tex.pdf}}%
+    \put(0.16022727,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{0}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=8]{McAvoy_NotDetuned_svg-tex.pdf}}%
+    \put(0.24829545,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{250}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=9]{McAvoy_NotDetuned_svg-tex.pdf}}%
+    \put(0.33636363,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{500}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=10]{McAvoy_NotDetuned_svg-tex.pdf}}%
+    \put(0.42443183,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{750}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=11]{McAvoy_NotDetuned_svg-tex.pdf}}%
+    \put(0.5125,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{1000}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=12]{McAvoy_NotDetuned_svg-tex.pdf}}%
+    \put(0.6005682,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{1250}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=13]{McAvoy_NotDetuned_svg-tex.pdf}}%
+    \put(0.68863634,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{1500}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=14]{McAvoy_NotDetuned_svg-tex.pdf}}%
+    \put(0.77670454,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{1750}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=15]{McAvoy_NotDetuned_svg-tex.pdf}}%
+    \put(0.86477274,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{2000}}}%
+    \put(0.5125,0.05448834){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{Time [s]}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=16]{McAvoy_NotDetuned_svg-tex.pdf}}%
+    \put(0.11850146,0.10478396){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{−0.50}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=17]{McAvoy_NotDetuned_svg-tex.pdf}}%
+    \put(0.11850146,0.14531857){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{−0.25}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=18]{McAvoy_NotDetuned_svg-tex.pdf}}%
+    \put(0.11850146,0.18585318){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.00}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=19]{McAvoy_NotDetuned_svg-tex.pdf}}%
+    \put(0.11850146,0.22638779){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.25}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=20]{McAvoy_NotDetuned_svg-tex.pdf}}%
+    \put(0.11850146,0.26692239){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.50}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=21]{McAvoy_NotDetuned_svg-tex.pdf}}%
+    \put(0.11850146,0.307457){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.75}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=22]{McAvoy_NotDetuned_svg-tex.pdf}}%
+    \put(0.11850146,0.34799164){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{1.00}}}%
+    \put(0.06019739,0.22421724){\rotatebox{90}{\makebox(0,0)[lb]{\smash{\textsl{y}2}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=23]{McAvoy_NotDetuned_svg-tex.pdf}}%
+    \put(0.82448932,0.17161292){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{RGA}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=24]{McAvoy_NotDetuned_svg-tex.pdf}}%
+    \put(0.82448932,0.14534894){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Astrom}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=25]{McAvoy_NotDetuned_svg-tex.pdf}}%
+    \put(0.82448932,0.11908496){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{R2D2}}}%
+  \end{picture}%
+\endgroup%
