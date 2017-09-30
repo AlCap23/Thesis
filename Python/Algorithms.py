@@ -101,7 +101,7 @@ def Disturbance_Info(y,t,p=0.02):
 def Integral_Identification(y,u,t):
     """Returns a FOTD Model from the given data.
     y - array of outputs
-    u - array of inputs
+    u - array of inputs -> Maybe change to scalar!
     t - array of time values
     """
     
@@ -120,14 +120,14 @@ def Integral_Identification(y,u,t):
     # Get Gain
     KM = (yp[-1]-yp[0])/(up[-1])
     # Get the Residence Time
-    Tar = 1/KM * np.trapz(yp[-1]-yp,tp)
+    Tar = 1/np.abs(up[-1])*np.sign(up[0])/KM * np.trapz(yp[-1]-yp,tp)
     # Time Constant
-    T = np.exp(1)/KM*np.trapz(yp[np.where(tp<=Tar)],tp[np.where(tp<=Tar)])
+    T = 1/np.abs(up[-1])*np.sign(up[0])* np.exp(1)/KM*np.trapz(yp[np.where(tp<=Tar)],tp[np.where(tp<=Tar)])
     # Delay
     L = Tar-T
     # Check if all arguments are valid
     if (T < 0):
-        print("Error - Negative lag - Using 10 instead")
+        print("Error - Negative lag - Using 20 instead")
         T = 20
     if (L < 1e-2):
         print("Error - Small delay - Using 0 instead")
@@ -262,7 +262,7 @@ def AMIGO_DETUNE(K,T,L,params,KP, MS = 1.4, structure = 'PI'):
 
 # ALgorithm for computing decentralized controller based on RGA
 
-def Control_Decentral(K,T,L, w = 0, b=np.empty, structure = 'PI'):
+def Control_Decentral(K,T,L, w = 0, b=np.empty, structure = 'PI', pairing = np.empty):
     """ Computes decentralised controller with AMIGO algorithm based on RGA pairing"""
     # Compute SISO Case
     if K.ndim <= 1:
@@ -288,7 +288,10 @@ def Control_Decentral(K,T,L, w = 0, b=np.empty, structure = 'PI'):
         # Compute RGA -> Checks for Shape
         LG = RGA(K,T,L,w)
         # Get Pairing as an array for every column
-        Pairing = np.argmax(LG, axis=0)
+        if pairing == np.empty:
+            Pairing = np.argmax(LG, axis=0)
+        else:
+            Pairing = pairing
         # Iterate through the pairing
         for o in range(0,outputs):
             # Best Pairing
@@ -395,7 +398,7 @@ def Control_Astrom(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
 
 
 # Modified Detuning
-def Control_Decoupled(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI', method ='dynamic'):
+def Control_Decoupled(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI', method ='dynamic', pairing = np.empty):
     # Check Input for Maximum Sensitivity
     if MS is None:
         MS = 1.4*np.eye(K.shape[0],K.shape[1])
@@ -411,13 +414,15 @@ def Control_Decoupled(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI', me
     else:
 
         # Compute a decentralized control structure based on RGA
-        Ky, B, D = Control_Decentral(K,T,L, w , b, structure)
+        Ky, B, D = Control_Decentral(K,T,L, w , b, structure, pairing = pairing)
 
         # Calculate the Pairing
-        # Compute RGA -> Checks for Shape
-        LG = RGA(K,T,L,w)
-        # Get Pairing as an array for every column
-        Pairing = np.argmax(LG, axis=0)
+        if pairing == np.empty:
+            # Compute RGA -> Checks for Shape
+            LG = RGA(K,T,L,w)
+            Pairing = np.argmax(LG, axis=0)
+        else:
+            Pairing = pairing
         
         # Compute the Taylor Series 
         Gamma =  np.multiply(-K,T+L)

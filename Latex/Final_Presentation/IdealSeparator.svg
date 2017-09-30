@@ -1,0 +1,11 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg viewBox="0 0 453.000000 538.000000" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<polyline fill="none" stroke="rgb(255,255,255)" stroke-opacity="1" points="114.100000,402.600000 340.900000,402.600000"/>
+	<image x="85.75" y="0.03" width="283.5" height="521.64" preserveAspectRatio="xMidYMid meet" xlink:href="image-nKGvNmIZ.png"/>
+	<text x="227.5" y="411.105" fill="rgb(153,204,0)" dominant-baseline="central" font-size="113" font-family="Arial" text-anchor="middle">(1)</text>
+	<ellipse fill="rgb(153,204,0)" stroke="rgb(153,204,0)" stroke-width="2" stroke-opacity="1" cx="85.75" cy="119.1" rx="22.68" ry="22.68"/>
+	<ellipse fill="rgb(153,204,0)" stroke="rgb(153,204,0)" stroke-width="2" stroke-opacity="1" cx="369.25" cy="119.1" rx="22.68" ry="22.68"/>
+	<ellipse fill="rgb(153,204,0)" stroke="rgb(153,204,0)" stroke-width="2" stroke-opacity="1" cx="227.5" cy="516" rx="22.68" ry="22.68"/>
+	<rect fill="rgb(204,0,0)" stroke="rgb(204,0,0)" stroke-width="2" stroke-opacity="1" x="68.74" y="215.49" width="34.02" height="34.02"/>
+</svg>

@@ -1,0 +1,14 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg viewBox="0 0 510.000000 441.000000" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<image x="12.5" y="12" width="418" height="418" preserveAspectRatio="xMidYMid meet" xlink:href="image-eXN8F0oi.png"/>
+	<text x="331.971" y="86.6429" fill="rgb(153,204,0)" dominant-baseline="central" font-size="60" font-family="Arial" text-anchor="middle">(1)</text>
+	<text x="42.3571" y="250.857" fill="rgb(0,0,0)" dominant-baseline="central" font-size="60" font-family="Arial" text-anchor="middle">1</text>
+	<text x="400.643" y="250.857" fill="rgb(0,0,0)" dominant-baseline="central" font-size="60" font-family="Arial" text-anchor="middle">n</text>
+	<text x="54.3" y="56.7857" fill="rgb(0,0,0)" dominant-baseline="central" font-size="60" font-family="Arial" text-anchor="middle">A</text>
+	<text x="388.7" y="388.2" fill="rgb(0,0,0)" dominant-baseline="central" font-size="60" font-family="Arial" text-anchor="middle">B</text>
+	<ellipse fill="rgb(153,204,0)" stroke="rgb(153,204,0)" stroke-width="2" stroke-opacity="1" cx="430.5" cy="221" rx="11.9429" ry="11.9429"/>
+	<ellipse fill="rgb(153,204,0)" stroke="rgb(153,204,0)" stroke-width="2" stroke-opacity="1" cx="12.5" cy="221" rx="11.9429" ry="11.9429"/>
+	<ellipse fill="rgb(255,153,0)" stroke="rgb(255,153,0)" stroke-width="2" stroke-opacity="1" cx="221.5" cy="12" rx="11.9429" ry="11.9429"/>
+	<ellipse fill="rgb(255,153,0)" stroke="rgb(255,153,0)" stroke-width="2" stroke-opacity="1" cx="221.5" cy="430" rx="11.9429" ry="11.9429"/>
+</svg>

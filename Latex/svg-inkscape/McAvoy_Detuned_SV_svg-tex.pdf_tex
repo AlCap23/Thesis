@@ -55,31 +55,29 @@
     \put(0.27620011,0.02369609){\makebox(0,0)[lb]{\smash{100}}}%
     \put(0.23117234,-0.00071114){\makebox(0,0)[lb]{\smash{\textsl{ω}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=3]{McAvoy_Detuned_SV_svg-tex.pdf}}%
-    \put(0.0817383,0.04773178){\makebox(0,0)[lb]{\smash{10−4}}}%
+    \put(0.0817383,0.07830429){\makebox(0,0)[lb]{\smash{10−3}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=4]{McAvoy_Detuned_SV_svg-tex.pdf}}%
-    \put(0.0817383,0.11491591){\makebox(0,0)[lb]{\smash{10−3}}}%
+    \put(0.0817383,0.15734781){\makebox(0,0)[lb]{\smash{10−2}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=5]{McAvoy_Detuned_SV_svg-tex.pdf}}%
-    \put(0.0817383,0.18219287){\makebox(0,0)[lb]{\smash{10−2}}}%
+    \put(0.0817383,0.23639134){\makebox(0,0)[lb]{\smash{10−1}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=6]{McAvoy_Detuned_SV_svg-tex.pdf}}%
-    \put(0.0817383,0.24946984){\makebox(0,0)[lb]{\smash{10−1}}}%
-    \put(0,0){\includegraphics[width=\unitlength,page=7]{McAvoy_Detuned_SV_svg-tex.pdf}}%
-    \put(0.08935088,0.3167468){\makebox(0,0)[lb]{\smash{100}}}%
+    \put(0.08935088,0.31543486){\makebox(0,0)[lb]{\smash{100}}}%
     \put(0.07062116,0.19835526){\color[rgb]{0.14901961,0.14901961,0.14901961}\rotatebox{90}{\makebox(0,0)[b]{\smash{Gain}}}}%
-    \put(0,0){\includegraphics[width=\unitlength,page=8]{McAvoy_Detuned_SV_svg-tex.pdf}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=7]{McAvoy_Detuned_SV_svg-tex.pdf}}%
     \put(0.23897058,0.35850877){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{RGA}}}%
-    \put(0,0){\includegraphics[width=\unitlength,page=9]{McAvoy_Detuned_SV_svg-tex.pdf}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=8]{McAvoy_Detuned_SV_svg-tex.pdf}}%
     \put(0.44231361,0.02369609){\makebox(0,0)[lb]{\smash{10−2}}}%
-    \put(0,0){\includegraphics[width=\unitlength,page=10]{McAvoy_Detuned_SV_svg-tex.pdf}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=9]{McAvoy_Detuned_SV_svg-tex.pdf}}%
     \put(0.54972952,0.02369609){\makebox(0,0)[lb]{\smash{100}}}%
     \put(0.50470175,-0.00071114){\makebox(0,0)[lb]{\smash{\textsl{ω}}}}%
-    \put(0,0){\includegraphics[width=\unitlength,page=11]{McAvoy_Detuned_SV_svg-tex.pdf}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=10]{McAvoy_Detuned_SV_svg-tex.pdf}}%
     \put(0.5125,0.35850877){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{Astroem}}}%
-    \put(0,0){\includegraphics[width=\unitlength,page=12]{McAvoy_Detuned_SV_svg-tex.pdf}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=11]{McAvoy_Detuned_SV_svg-tex.pdf}}%
     \put(0.71584302,0.02369609){\makebox(0,0)[lb]{\smash{10−2}}}%
-    \put(0,0){\includegraphics[width=\unitlength,page=13]{McAvoy_Detuned_SV_svg-tex.pdf}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=12]{McAvoy_Detuned_SV_svg-tex.pdf}}%
     \put(0.82325893,0.02369609){\makebox(0,0)[lb]{\smash{100}}}%
     \put(0.77823117,-0.00071114){\makebox(0,0)[lb]{\smash{\textsl{ω}}}}%
-    \put(0,0){\includegraphics[width=\unitlength,page=14]{McAvoy_Detuned_SV_svg-tex.pdf}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=13]{McAvoy_Detuned_SV_svg-tex.pdf}}%
     \put(0.78602942,0.35850877){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{R2D2}}}%
   \end{picture}%
 \endgroup%

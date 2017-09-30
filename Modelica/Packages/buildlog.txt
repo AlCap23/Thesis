@@ -2,8 +2,8 @@
 Compiling and linking the model (Visual C++). 
  
 dsmodel.c
-dsmodel.c(14305): warning C4244: 'function': conversion from 'double' to 'int', possible loss of data
-dsmodel.c(14873): warning C4244: 'function': conversion from 'double' to 'int', possible loss of data
+dsmodel.c(14396): warning C4244: 'function': conversion from 'double' to 'int', possible loss of data
+dsmodel.c(14967): warning C4244: 'function': conversion from 'double' to 'int', possible loss of data
 dsmodelext1.c
 dsmodelext2.c
 Generating Code...
