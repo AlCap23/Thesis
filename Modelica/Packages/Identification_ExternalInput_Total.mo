@@ -16017,8 +16017,8 @@ package FMU_Physical "Package for Physical Systems"
         activationTime=200,
         offset={20,5.5},
         use_activeInput=true,
-      B={{1,0},{0,1}},
-      D={{1,0},{0,1}})        annotation (Placement(transformation(
+        B={{1,0},{0,1}},
+        D={{1,0},{0,1}})      annotation (Placement(transformation(
             extent={{-10,-10},{10,10}},
             rotation=180,
             origin={-10,70})));
@@ -16047,16 +16047,38 @@ package FMU_Physical "Package for Physical Systems"
           Placement(transformation(
             extent={{-10,-10},{10,10}},
             rotation=180,
-            origin={68,78})));
+            origin={116,94})));
       Modelica.Blocks.Sources.RealExpression P_R(y=max(50, 1.62124822*T_A -
-          401.68))   annotation (Placement(transformation(
+            401.68)) annotation (Placement(transformation(
             extent={{-10,-10},{10,10}},
             rotation=180,
-            origin={66,60})));
-    Modelica.Blocks.Interfaces.RealInput T_A
-      annotation (Placement(transformation(extent={{-132,-2},{-92,38}})));
-    Modelica.Blocks.Interfaces.RealInput Q_C
-      annotation (Placement(transformation(extent={{-134,-38},{-94,2}})));
+            origin={116,52})));
+      Modelica.Blocks.Interfaces.RealInput T_A
+        annotation (Placement(transformation(extent={{-132,-2},{-92,38}})));
+      Modelica.Blocks.Interfaces.RealInput Q_C
+        annotation (Placement(transformation(extent={{-134,-38},{-94,2}})));
+    Modelica.Blocks.Math.Add add_TR annotation (Placement(transformation(
+          extent={{-10,-10},{10,10}},
+          rotation=180,
+          origin={62,88})));
+    Modelica.Blocks.Math.Add add_PR annotation (Placement(transformation(
+          extent={{-10,-10},{10,10}},
+          rotation=180,
+          origin={64,46})));
+    Modelica.Blocks.Sources.Step step_TR(
+      height=2,
+      offset=0,
+      startTime=6e3) annotation (Placement(transformation(
+          extent={{-10,-10},{10,10}},
+          rotation=180,
+          origin={116,72})));
+    Modelica.Blocks.Sources.Step step_PR(
+      offset=0,
+      height=1,
+      startTime=10e3) annotation (Placement(transformation(
+          extent={{-10,-10},{10,10}},
+          rotation=180,
+          origin={120,30})));
     equation
       connect(Physical_System.yTGC, T_H) annotation (Line(points={{34.8,16.8},{
               58.4,16.8},{58.4,16},{106,16}}, color={0,0,127}));
@@ -16086,15 +16108,22 @@ package FMU_Physical "Package for Physical Systems"
               -50,42},{-50,38},{-62,38}}, color={0,0,127}));
       connect(booleanStep.y, multivariable_Controller.activeInput) annotation (
           Line(points={{19,44},{19,44},{-10,44},{-10,59}}, color={255,0,255}));
-      connect(T_R.y, multivariable_Controller.u_s[1]) annotation (Line(points={{57,78},
-            {1.77636e-015,78},{1.77636e-015,79}},           color={0,0,127}));
-      connect(P_R.y, multivariable_Controller.u_s[2]) annotation (Line(points={
-              {55,60},{34,60},{34,70},{8.88178e-016,70},{8.88178e-016,77}},
-            color={0,0,127}));
-    connect(T_A, Physical_System.TUmgebung) annotation (Line(points={{-112,18},
-            {-72,18},{-72,16.8},{-30,16.8}}, color={0,0,127}));
-    connect(Q_C, Physical_System.Qdotkaelte) annotation (Line(points={{-114,-18},
-            {-72,-18},{-72,-16},{-30,-16}}, color={0,0,127}));
+      connect(T_A, Physical_System.TUmgebung) annotation (Line(points={{-112,18},
+              {-72,18},{-72,16.8},{-30,16.8}}, color={0,0,127}));
+      connect(Q_C, Physical_System.Qdotkaelte) annotation (Line(points={{-114,
+              -18},{-72,-18},{-72,-16},{-30,-16}}, color={0,0,127}));
+    connect(P_R.y, add_PR.u2)
+      annotation (Line(points={{105,52},{84,52},{76,52}}, color={0,0,127}));
+    connect(multivariable_Controller.u_s[2], add_PR.y) annotation (Line(points=
+            {{8.88178e-016,77},{22,77},{22,46},{53,46}}, color={0,0,127}));
+    connect(T_R.y, add_TR.u2)
+      annotation (Line(points={{105,94},{88,94},{74,94}}, color={0,0,127}));
+    connect(multivariable_Controller.u_s[1], add_TR.y) annotation (Line(points=
+            {{8.88178e-016,79},{26,79},{26,88},{51,88},{51,88}}, color={0,0,127}));
+    connect(add_TR.u1, step_TR.y) annotation (Line(points={{74,82},{90,82},{90,
+            72},{105,72}}, color={0,0,127}));
+    connect(add_PR.u1, step_PR.y) annotation (Line(points={{76,40},{92,40},{92,
+            30},{109,30}}, color={0,0,127}));
       annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
             coordinateSystem(preserveAspectRatio=false)));
     end Identification_ExternalInput;

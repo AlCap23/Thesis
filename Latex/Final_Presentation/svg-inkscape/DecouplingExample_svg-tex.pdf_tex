@@ -1,0 +1,95 @@
+%% Creator: Inkscape inkscape 0.92.2, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'DecouplingExample_svg-tex.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{720bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.6)%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{DecouplingExample_svg-tex.pdf}}%
+    \put(0.12013889,0.3164594){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{297.75}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{DecouplingExample_svg-tex.pdf}}%
+    \put(0.12013889,0.35274855){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{298.00}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{DecouplingExample_svg-tex.pdf}}%
+    \put(0.12013889,0.38903768){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{298.25}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{DecouplingExample_svg-tex.pdf}}%
+    \put(0.12013889,0.42532682){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{298.50}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{DecouplingExample_svg-tex.pdf}}%
+    \put(0.12013889,0.46161597){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{298.75}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{DecouplingExample_svg-tex.pdf}}%
+    \put(0.12013889,0.49790511){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{299.00}}}%
+    \put(0.06934678,0.42504545){\color[rgb]{0.14901961,0.14901961,0.14901961}\rotatebox{90}{\makebox(0,0)[b]{\smash{Temperature [K]}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=7]{DecouplingExample_svg-tex.pdf}}%
+    \put(0.125,0.53633333){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{T_{amb}=295 K, Q_C = -60 kW}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=8]{DecouplingExample_svg-tex.pdf}}%
+    \put(0.75395618,0.3569976){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Decentralized Control}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=9]{DecouplingExample_svg-tex.pdf}}%
+    \put(0.75395618,0.33735133){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{R2D2}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=10]{DecouplingExample_svg-tex.pdf}}%
+    \put(0.23061841,0.06019749){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{6000}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=11]{DecouplingExample_svg-tex.pdf}}%
+    \put(0.3715416,0.06019749){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{8000}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=12]{DecouplingExample_svg-tex.pdf}}%
+    \put(0.51246478,0.06019749){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{10000}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=13]{DecouplingExample_svg-tex.pdf}}%
+    \put(0.65338796,0.06019749){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{12000}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=14]{DecouplingExample_svg-tex.pdf}}%
+    \put(0.7943111,0.06019749){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{14000}}}%
+    \put(0.5125,0.0419401){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{Time [s]}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=15]{DecouplingExample_svg-tex.pdf}}%
+    \put(0.12013889,0.08625353){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{76.5}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=16]{DecouplingExample_svg-tex.pdf}}%
+    \put(0.12013889,0.14098104){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{77.0}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=17]{DecouplingExample_svg-tex.pdf}}%
+    \put(0.12013889,0.19570855){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{77.5}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=18]{DecouplingExample_svg-tex.pdf}}%
+    \put(0.12013889,0.25043608){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{78.0}}}%
+    \put(0.08479386,0.17795455){\color[rgb]{0.14901961,0.14901961,0.14901961}\rotatebox{90}{\makebox(0,0)[b]{\smash{Pressure [bar]}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=19]{DecouplingExample_svg-tex.pdf}}%
+    \put(0.24216029,0.10452966){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{\Delta p_R = 1 bar}}}%
+    \put(0.52238587,0.36952822){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{\Delta T_R = 1 K}}}%
+  \end{picture}%
+\endgroup%

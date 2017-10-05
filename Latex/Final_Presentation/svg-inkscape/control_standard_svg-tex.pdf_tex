@@ -36,7 +36,7 @@
   }%
   \providecommand\rotatebox[2]{#2}%
   \ifx\svgwidth\undefined%
-    \setlength{\unitlength}{548.0378632bp}%
+    \setlength{\unitlength}{426.69445815bp}%
     \ifx\svgscale\undefined%
       \relax%
     \else%
@@ -48,21 +48,19 @@
   \global\let\svgwidth\undefined%
   \global\let\svgscale\undefined%
   \makeatother%
-  \begin{picture}(1,0.47379064)%
+  \begin{picture}(1,0.30097468)%
+    \put(0.28557763,0.19992673){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{K_{11}}}}%
+    \put(0.40275563,0.07847809){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{K_{22}}}}%
+    \put(0.61158319,0.19955471){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{G_{11}}}}%
+    \put(0.73267758,0.07910607){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{G_{22}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=1]{control_standard_svg-tex.pdf}}%
-    \put(0.16011038,0.31944248){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$K_r$}}}%
-    \put(0,0){\includegraphics[width=\unitlength,page=2]{control_standard_svg-tex.pdf}}%
-    \put(0.47991918,0.31544813){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{G}}}%
-    \put(0,0){\includegraphics[width=\unitlength,page=3]{control_standard_svg-tex.pdf}}%
-    \put(-0.0017663,0.34758977){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$y_r$}}}%
-    \put(0.37456155,0.34783051){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$e$}}}%
-    \put(0,0){\includegraphics[width=\unitlength,page=4]{control_standard_svg-tex.pdf}}%
-    \put(0.68040285,0.41437865){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$d$}}}%
-    \put(0.86064346,0.34807142){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$y$}}}%
-    \put(0,0){\includegraphics[width=\unitlength,page=5]{control_standard_svg-tex.pdf}}%
-    \put(0.50030607,0.04791286){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$K_y$}}}%
-    \put(0,0){\includegraphics[width=\unitlength,page=6]{control_standard_svg-tex.pdf}}%
-    \put(0.67415484,0.06683635){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\eta$}}}%
-    \put(0.94395067,0.07065236){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$n$}}}%
+    \put(0.11426921,0.20355609){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{-}}}%
+    \put(0.11214519,0.07862573){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{-}}}%
+    \put(-0.00021092,0.23017216){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{y_R}}}%
+    \put(0.93469523,0.23017216){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{y}}}%
+    \put(0.52163618,0.22021655){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{u}}}%
+    \put(0.19395104,0.22021655){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{e}}}%
+    \put(0.35158294,0.15970273){\color[rgb]{0,0,0}\rotatebox{-45}{\makebox(0,0)[lb]{\smash{...}}}}%
+    \put(0.68374631,0.15970277){\color[rgb]{0,0,0}\rotatebox{-45}{\makebox(0,0)[lb]{\smash{...}}}}%
   \end{picture}%
 \endgroup%

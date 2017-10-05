@@ -1,0 +1,79 @@
+%% Creator: Inkscape inkscape 0.92.2, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'Maximum_Sensitivity_svg-tex.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{600bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.5)%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{Maximum_Sensitivity_svg-tex.pdf}}%
+    \put(0.85005859,0.45625){\color[rgb]{0.26666667,0.26666667,0.26666667}\transparent{0.315}\makebox(0,0)[lb]{\smash{Nyquist Circle}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{Maximum_Sensitivity_svg-tex.pdf}}%
+    \put(0.85005859,0.4275){\makebox(0,0)[lb]{\smash{sM}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{Maximum_Sensitivity_svg-tex.pdf}}%
+    \put(0.85005859,0.39875){\makebox(0,0)[lb]{\smash{Open Loop}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{Maximum_Sensitivity_svg-tex.pdf}}%
+    \put(0.25695192,0.2800925){\makebox(0,0)[lb]{\smash{(-1,0)}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{Maximum_Sensitivity_svg-tex.pdf}}%
+    \put(0.11,0.0225){\makebox(0,0)[b]{\smash{-2}}}%
+    \put(0.2575,0.0225){\makebox(0,0)[b]{\smash{-1}}}%
+    \put(0.40375,0.0225){\makebox(0,0)[b]{\smash{0}}}%
+    \put(0.55125,0.0225){\makebox(0,0)[b]{\smash{1}}}%
+    \put(0.69875,0.0225){\makebox(0,0)[b]{\smash{2}}}%
+    \put(0.84625,0.0225){\makebox(0,0)[b]{\smash{3}}}%
+    \put(0.99375,0.0225){\makebox(0,0)[b]{\smash{4}}}%
+    \put(0.515,0.0225){\makebox(0,0)[b]{\smash{\textit{Re}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{Maximum_Sensitivity_svg-tex.pdf}}%
+    \put(0.0225,0.03625){\makebox(0,0)[rb]{\smash{-1.5}}}%
+    \put(0.0225,0.1125){\makebox(0,0)[rb]{\smash{-1}}}%
+    \put(0.0225,0.18875){\makebox(0,0)[rb]{\smash{-0.5}}}%
+    \put(0.0225,0.265){\makebox(0,0)[rb]{\smash{0}}}%
+    \put(0.0225,0.34125){\makebox(0,0)[rb]{\smash{0.5}}}%
+    \put(0.0225,0.4175){\makebox(0,0)[rb]{\smash{1}}}%
+    \put(0.0225,0.49375){\makebox(0,0)[rb]{\smash{1.5}}}%
+    \put(0.0225,0.265){\rotatebox{90}{\makebox(0,0)[b]{\smash{\textit{Im}}}}}%
+  \end{picture}%
+\endgroup%
