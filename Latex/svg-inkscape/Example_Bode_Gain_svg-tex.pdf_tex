@@ -1,0 +1,91 @@
+%% Creator: Inkscape inkscape 0.92.2, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'Example_Bode_Gain_svg-tex.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{566.92914928bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.5)%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{Example_Bode_Gain_svg-tex.pdf}}%
+    \put(0.1075375,0.03831267){\makebox(0,0)[lb]{\smash{10−5}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{Example_Bode_Gain_svg-tex.pdf}}%
+    \put(0.2044125,0.03831267){\makebox(0,0)[lb]{\smash{10−4}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{Example_Bode_Gain_svg-tex.pdf}}%
+    \put(0.3012875,0.03813628){\makebox(0,0)[lb]{\smash{10−3}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{Example_Bode_Gain_svg-tex.pdf}}%
+    \put(0.3981625,0.03813628){\makebox(0,0)[lb]{\smash{10−2}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{Example_Bode_Gain_svg-tex.pdf}}%
+    \put(0.4950375,0.03813628){\makebox(0,0)[lb]{\smash{10−1}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{Example_Bode_Gain_svg-tex.pdf}}%
+    \put(0.59552847,0.03813628){\makebox(0,0)[lb]{\smash{100}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=7]{Example_Bode_Gain_svg-tex.pdf}}%
+    \put(0.69240347,0.03813628){\makebox(0,0)[lb]{\smash{101}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=8]{Example_Bode_Gain_svg-tex.pdf}}%
+    \put(0.78927847,0.03813628){\makebox(0,0)[lb]{\smash{102}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=9]{Example_Bode_Gain_svg-tex.pdf}}%
+    \put(0.88615347,0.03813628){\makebox(0,0)[lb]{\smash{103}}}%
+    \put(0.51249999,0.01473445){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{Frequency [rad/s]}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=10]{Example_Bode_Gain_svg-tex.pdf}}%
+    \put(0.08390139,0.05349314){\makebox(0,0)[lb]{\smash{10−5}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=11]{Example_Bode_Gain_svg-tex.pdf}}%
+    \put(0.08390139,0.11640981){\makebox(0,0)[lb]{\smash{10−4}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=12]{Example_Bode_Gain_svg-tex.pdf}}%
+    \put(0.08390139,0.17923828){\makebox(0,0)[lb]{\smash{10−3}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=13]{Example_Bode_Gain_svg-tex.pdf}}%
+    \put(0.08390139,0.24215495){\makebox(0,0)[lb]{\smash{10−2}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=14]{Example_Bode_Gain_svg-tex.pdf}}%
+    \put(0.08390139,0.30507161){\makebox(0,0)[lb]{\smash{10−1}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=15]{Example_Bode_Gain_svg-tex.pdf}}%
+    \put(0.09113333,0.36798828){\makebox(0,0)[lb]{\smash{100}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=16]{Example_Bode_Gain_svg-tex.pdf}}%
+    \put(0.09113333,0.43090495){\makebox(0,0)[lb]{\smash{101}}}%
+    \put(0.0733401,0.25125){\color[rgb]{0.14901961,0.14901961,0.14901961}\rotatebox{90}{\makebox(0,0)[b]{\smash{Gain [dB]}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=17]{Example_Bode_Gain_svg-tex.pdf}}%
+    \put(0.19026389,0.1070382){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Original}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=18]{Example_Bode_Gain_svg-tex.pdf}}%
+    \put(0.19026389,0.08188074){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Model}}}%
+  \end{picture}%
+\endgroup%

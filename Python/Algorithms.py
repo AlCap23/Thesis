@@ -176,7 +176,7 @@ def RGA(K,T,L,w=0):
 
 # Algorithm for AMIGO Tuning
 
-def AMIGO_Tune(K,T,L, structure = 'PI'):
+def AMIGO_Tune(K,T,L, structure = 'PI', Minimal_Delay=0.3):
     """Computes the PI(D) controller parameter based on AMIGO algorithm;
        Parameter are returned as parallel notation KP,KI,KD and set point;
        Needs first order time delay parameter as input
@@ -184,11 +184,11 @@ def AMIGO_Tune(K,T,L, structure = 'PI'):
        
     """
     # Check for small delay
-    if L < 0.3*T:
-        if 0.3*T < 1e-2:
+    if L < Minimal_Delay*T:
+        if Minimal_Delay*T < 1e-2:
             L_P = 1e-2
         else:
-            L_P = 0.3*T
+            L_P = Minimal_Delay*T
     else:
         L_P = L
     # PI Controller

@@ -65,7 +65,7 @@ The Heavyside step function $\sigma(t): \mathbb{R} \mapsto \mathbb{R}$ is define
 
 and hence models the delay acting on the connection between the output and the input. It is worth noting that in the special case of a SISO system a delay acting on the systems input or output is mathematical equivalent. However, for a given MIMO system model it can be of importance to model correctly where the delay intervenes. \\
 
-An important characteristic with respect to the time behavior of the process is given by the normalized time $\tau, \left[0 \geq \tau \geq 1 \right] $ \cite[p.16]{Astrom1995}
+An important characteristic with respect to the time behavior of the process is given by the normalized time $\tau, \left[0 \leq \tau \leq 1 \right] $ \cite[p.16]{Astrom1995}
 
 \begin{align}
 \begin{split}
@@ -74,9 +74,9 @@ An important characteristic with respect to the time behavior of the process is 
 \label{c:identification:e:normalizedtime}
 \end{align}
 
-Eq. \ref{c:identification:e:normalizedtime} gives the ratio of the delay and the sum of delay and time constant, called average residence time. It can be used as a rating regarding the difficulty of controlling the process, since a high normalized time indicate a delay dominance and hence a very difficult process to control. It can also be connected to the gain ratio \cite[p.27]{Astrom2006}.\\
+Eq. \ref{c:identification:e:normalizedtime} gives the ratio of the delay and the sum of delay and time constant, called average residence time. It can be used as a rating regarding the difficulty of controlling the process, since a high normalized time indicates a delay dominance and hence a very difficult process to control. It can also be connected to the gain ratio \cite[p.27]{Astrom2006}.\\
 
-Since the process model is of utmost interest for the overall process, a detailed investigation of its properties is conducted. This detailed description is started by investigating the model gain over the frequency. It is conventional to substitute the complex variables with the complex frequency $s~=~j~\omega$. The gain of the process model is hence given by:
+Since the process model is of utmost interest for the overall process, a detailed investigation of its properties is conducted. This detailed description is started by investigating the model gain over the frequency. It is conventional to substitute the complex variable $s$ with the complex frequency $s~=~j~\omega$. The gain of the process model is hence given by:
 
 \begin{align}
 \begin{split}
@@ -115,7 +115,7 @@ G &=  \frac{\sum_{i=0}^n a_i s^i}{\sum_{k=0}^m b_k s^k} \\
 
 Eq.\ref{c:identification:e:general_tf} shows the identities of a transfer function given as a polynomial in $s$ and its equivalent representation as a product of linear factor, see \cite[p.269 ff.]{Lunze2016}. The linear factorization consists of its zeros $z_i \in \mathbb{C}$ and poles $p_k \in \mathbb{C}$. Both identities will be useful due to the different properties of the gain and phase. Additionally it is assumed that the first order dynamics have been ideally identified. Hence, the error depends only on dynamics of higher order.\\
 
-The relative error in Gain $\Delta_K \in \mathbb{C}$ can therefore described as
+The relative error in Gain $\Delta_K \in \mathbb{C}$ can therefore be described as
 
 \begin{align}
 \begin{split}
@@ -126,12 +126,17 @@ The relative error in Gain $\Delta_K \in \mathbb{C}$ can therefore described as
 \label{c:identification:e:error_gain}
 \end{align}
 
-From Eq.\ref{c:identification:e:error_gain} two important conclusions can be conducted. First, the error is small near the steady state iff the first order dynamics are estimated correctly. The steady state model is even error free, iff the true gain can be identified. Secondly, the error will increase dramatically for higher order dynamics since the model is not able to project these frequencies in an adequate manner. Another source of error can be found in low order zeros of the system, which will result in an infinite error of the gain. The gain error is visualized in Fig.\ref{c:identification:f:nyquist_fotd}. Here a high order system with a dominant first order dynamics is approximated by a FOTD process model. The gain is nearly identical until the point $\rbrace[2,-j6\lbrace]$. Here the system models time delay rotate the real and imaginary part and hence transforms the position of the trajectory. \\
+\begin{figure}[H]\centering
+  \includesvg[width=\textwidth]{Graphics/Example_Bode_Gain}
+  \caption{Gain of a high order transfer function and corresponding FOTD model}
+  \label{c:identification:f:gain_fotd}
+\end{figure}
+
+From Eq.\ref{c:identification:e:error_gain} two important conclusions can be conducted. First, the error is small near the steady state iff the first order dynamics are estimated correctly. The steady state model is even error free, iff the true gain can be identified. Secondly, the error will increase dramatically for higher order dynamics since the model is not able to project these frequencies in an adequate manner. Another source of error can be found in low order zeros of the system, which will result in an infinite error of the gain. The gain error is visualized in Fig.\ref{c:identification:f:nyquist_fotd}. Here a high order system with a dominant first order dynamics is approximated by a FOTD process model. The gain is nearly identical until the point $\lbrace[2,-j6\rbrace]$. Here the system models time delay rotate the real and imaginary part and hence transforms the position of the trajectory. \\
 
 \begin{figure}[H]\centering
-  \def\svgwidth{\textwidth}
-  \includesvg{Area_Nyquist.svg}
-  \caption{Nyquist Diagram of High Order Transfer Function and Corresponding FOTD model}
+  \includesvg[width = \textwidth]{Graphics/Example_Nyquist_Plot}
+  \caption{Nyquist diagram of high order transfer function and corresponding FOTD model}
   \label{c:identification:f:nyquist_fotd}
 \end{figure}
 
@@ -150,8 +155,7 @@ Eq. \ref{c:identification:e:error_phase} gives an important insight to the funct
 
 
 \begin{figure}[H]\centering
-  \def\svgwidth{\textwidth}
-  \includesvg{Area_Bode_Phase.svg}
+  \includesvg[width=\textwidth]{Graphics/Example_Bode_Phase}
   \caption{Phase of High Order Transfer Function and Corresponding FOTD model}
   \label{c:identification:f:phase_fotd}
 \end{figure}
@@ -198,15 +202,15 @@ At last, the gain $\hat{K}$ has to be computed. With the common definition, e.g.
 \label{c:identification:e:area_gain}
 \end{align}
 
-This interpretation is rooting in the final value theorem. Using Eq. \ref{c:identification:e:area_gain} in combination with the other two relation one is able to compute all needed parameters.\\
+This interpretation is rooting in the final value theorem. Using Eq. \ref{c:identification:e:area_gain} in combination with the other two relations one is able to compute all needed parameters.\\
 
-Assuming a disturbed output $\eta$ as described earlier, where measurement noise is added to the real output one can see the benefits of using Eq.\ref{c:identification:e:area_tar} and \ref{c:identification:e:area_t}. Since the expected value / mean of the noise is given by 
+Assuming a disturbed output $\eta$ as described earlier, where measurement noise is added to the real output, one can see the benefits of using Eq.\ref{c:identification:e:area_tar} and \ref{c:identification:e:area_t}. Since the expected value / mean of the noise is given by 
 
 \begin{align}
 \begin{split}
 \int_{-\infty}^{\infty} \eta \left( t \right) dt&= \int_{-\infty}^{\infty} \left[ y \left(t \right) + n\left(t\right) \right] dt \\
-&\approx \int_{0}^{\infty}  y \left(t \right) dt + \underbrace{\int_{0}^{\infty} n\left(t\right) dt }_{= 0}\\
-&\approx \int_{0}^{\infty}  y \left(t \right) dt
+&= \int_{0}^{\infty}  y \left(t \right) dt + \underbrace{\int_{0}^{\infty} n\left(t\right) dt }_{= 0}\\
+&= \int_{0}^{\infty}  y \left(t \right) dt
 \end{split}
 \label{c:identification:e:integral_noisechancel}
 \end{align}
@@ -220,15 +224,15 @@ From Eq. \ref{c:identification:e:integral_noisechancel} follows that measurement
 \label{c:identification:e:area_averagegain}
 \end{align}
 
-The system of equations as described above are called area-based methods, \cite{Fedele2009a}, with regards to its visualization displayed in Fig.\ref{c:identification:f:Area} . Another, likewise valid understanding is given as the minimization of the integral of the error between the real system and the model over time.\\
+The system of equations as described above are called area-based methods, \cite{Fedele2009a}, with regards to its visualization displayed in Fig.\ref{c:identification:f:Area}, where the response to a unit step of a FOTD system is shown. Another, likewise valid understanding is given as the minimization of the integral of the error between the real system and the model over time.\\
 
 \begin{figure}[H]\centering
-\includesvg[width = \textwidth]{Graphics/FOTD_AREA_INTERPRETATION.svg}
-\caption{Interpretation of the Integral Fitting Approach using Areas}
+\includesvg[width = \textwidth]{Graphics/FOTD_Area}
+\caption{Interpretation of the Integral Fitting Approach using Areas given by a unit step response}
 \label{c:identification:f:Area}
 \end{figure}
 
-However, the algorithm described above is not robust. It only converges iff the systems gain is equivalent with the infinity norm of the output. This resembles a dominant steady state gain. In other words, the integral Eq. \ref{c:identification:e:area_tar} must be positive definite. To ensure this, several options are available. \\
+However, the algorithm described above is not robust. It only converges iff the systems gain is equivalent with the infinity norm of the output. This resembles a dominant steady state gain. In other words, the integral Eq. \ref{c:identification:e:area_tar} must be positive definite, meaning the time response of the process is monotonic increasing. To ensure this, several options are available. \\
 
 Since a conservative estimation of the system will result in a robust controller, the gain is preferred to be calculated to big. Likewise a smaller phase increases the immunity to disturbance. Hence, a conservative bound is established with truncating the data so that the maximum output is corresponding to the end of measurement. The systems gain will be computed as
 
@@ -239,7 +243,7 @@ Since a conservative estimation of the system will result in a robust controller
 \label{c:identification:e:area_sup_gain}
 \end{align}
 
-Eq. \ref{c:identification:e:area_sup_gain} defines the gain as the ratio between the supremum of the measurement data and the change in input. This results in a positive semidefiniteness of the integral given by Eq.\ref{c:identification:e:area_tar}. Furthermore, the results in two extreme cases. The algorithm can provide the real system, iff the output data is monotonically increasing. With that, the supremum of the collected data is equal to the final value and Eq.\ref{c:identification:e:area_sup_gain} converges to Eq. \ref{c:identification:e:area_gain}. On the other hand the system is identified as a (scaled) step response or a strictly proportional element, iff the supremum is equal to the first collected data point. An illustration of the former reasoning is given in Fig.\ref{c:identification:f:SupGain}.\\
+Eq. \ref{c:identification:e:area_sup_gain} defines the gain as the ratio between the supremum of the measurement data and the change in input. This results in a positive semidefinite value of the integral given by Eq.\ref{c:identification:e:area_tar}. Furthermore, the results in two extreme cases. The algorithm can provide the real system, iff the output data is monotonically increasing. With that, the supremum of the collected data is equal to the final value and Eq.\ref{c:identification:e:area_sup_gain} converges to Eq. \ref{c:identification:e:area_gain}. On the other hand the system is identified as a (scaled) step response or a strictly proportional element, iff the supremum is equal to the first collected data point. An illustration of the former reasoning is given in Fig.\ref{c:identification:f:SupGain}, where some responses of a not monotonic behavior are identified using the supremum gain.\\
 
 \begin{figure}[H]\centering
 \includesvg[width = \textwidth]{Graphics/Area_Fitting}
@@ -319,9 +323,9 @@ While computing the gain is robust to measurement noise, see Eq. \ref{c:identifi
 \section{Review}
 \label{c:identification:s:review}
 
-Above two important and well known fitting techniques based on structural knowledge and hence mathematical formulations of the model have been introduced. Even though both methods are used throughout industry, there are certain drawbacks to each method which should be considered.\\
+Above two important and well known fitting techniques based on structural knowledge of a FOTD and hence mathematical formulations of the model have been introduced. Even though both methods are used throughout industry, there are certain drawbacks to each method which should be considered.\\
 
-While the asymmetric relay process introduced in Sec. \ref{c:identification:s:relay} is especially useful in determining the model parameter with a quasi stationary limit cycle it requires several in depth adjustments and process knowledge. Adjusting the asymmetry and the hysteresis in a proper way has an notable impact on the result \cite{Berner2016a}. The noise level, process gain and sampling times influences the algorithm. Hence, prior experiments have to be made. Additionally, not every process is suited to be estimated in the described way \cite{Berner2016a},\cite{Berner2015}. Depending on the normalized time several changes in model structure or additional experiments must be performed. Depending on the process time scale and the requirement of a quasi stationary cycle the experiment can require several hours.\\
+While the asymmetric relay process introduced in Sec. \ref{c:identification:s:relay} is especially useful in determining the model parameter with a quasi stationary limit cycle it requires several in depth adjustments and process knowledge. Adjusting the asymmetry and the hysteresis in a proper way has an notable impact on the result \cite{Berner2016a}. The noise level, process gain and sampling times influences the algorithm. Hence, prior experiments have to be made. Additionally, not every process is suited to be estimated in the described way \cite{Berner2016a},\cite{Berner2015}. Depending on the normalized time delay several changes in model structure or additional experiments must be performed. Depending on the process time scale and the requirement of a quasi stationary cycle the experiment can require several hours.\\
 
 Apparently, the parameter estimation based on area methods as given in Sec.\ref{c:identification:s:area} has the disadvantage of both requiring a steady process output. Hence, the parameter can not fully be estimated. Another drawback is given by the assumption of a dominant static gain. The error in gain and phase get higher by using Eq.\ref{c:identification:e:area_sup_gain}.\\
 

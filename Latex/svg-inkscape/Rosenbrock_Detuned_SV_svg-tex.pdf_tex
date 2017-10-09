@@ -55,13 +55,13 @@
     \put(0.27620011,0.02369609){\makebox(0,0)[lb]{\smash{100}}}%
     \put(0.23117234,-0.00071114){\makebox(0,0)[lb]{\smash{\textsl{ω}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=3]{Rosenbrock_Detuned_SV_svg-tex.pdf}}%
-    \put(0.0817383,0.06808922){\makebox(0,0)[lb]{\smash{10−3}}}%
+    \put(0.0817383,0.06788216){\makebox(0,0)[lb]{\smash{10−3}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=4]{Rosenbrock_Detuned_SV_svg-tex.pdf}}%
-    \put(0.0817383,0.14307019){\makebox(0,0)[lb]{\smash{10−2}}}%
+    \put(0.0817383,0.14181227){\makebox(0,0)[lb]{\smash{10−2}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=5]{Rosenbrock_Detuned_SV_svg-tex.pdf}}%
-    \put(0.0817383,0.21805117){\makebox(0,0)[lb]{\smash{10−1}}}%
+    \put(0.0817383,0.21574238){\makebox(0,0)[lb]{\smash{10−1}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=6]{Rosenbrock_Detuned_SV_svg-tex.pdf}}%
-    \put(0.08935088,0.29303214){\makebox(0,0)[lb]{\smash{100}}}%
+    \put(0.08935088,0.28967249){\makebox(0,0)[lb]{\smash{100}}}%
     \put(0.07062116,0.19835526){\color[rgb]{0.14901961,0.14901961,0.14901961}\rotatebox{90}{\makebox(0,0)[b]{\smash{Gain}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=7]{Rosenbrock_Detuned_SV_svg-tex.pdf}}%
     \put(0.23897058,0.35850877){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{RGA}}}%

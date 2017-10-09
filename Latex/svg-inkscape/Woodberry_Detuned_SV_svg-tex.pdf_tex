@@ -55,17 +55,17 @@
     \put(0.27620011,0.02369609){\makebox(0,0)[lb]{\smash{100}}}%
     \put(0.23117234,-0.00071114){\makebox(0,0)[lb]{\smash{\textsl{ω}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=3]{Woodberry_Detuned_SV_svg-tex.pdf}}%
-    \put(0.0817383,0.05448962){\makebox(0,0)[lb]{\smash{10−5}}}%
+    \put(0.0817383,0.05448754){\makebox(0,0)[lb]{\smash{10−5}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=4]{Woodberry_Detuned_SV_svg-tex.pdf}}%
-    \put(0.0817383,0.10794835){\makebox(0,0)[lb]{\smash{10−4}}}%
+    \put(0.0817383,0.10784346){\makebox(0,0)[lb]{\smash{10−4}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=5]{Woodberry_Detuned_SV_svg-tex.pdf}}%
-    \put(0.0817383,0.16131424){\makebox(0,0)[lb]{\smash{10−3}}}%
+    \put(0.0817383,0.16110654){\makebox(0,0)[lb]{\smash{10−3}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=6]{Woodberry_Detuned_SV_svg-tex.pdf}}%
-    \put(0.0817383,0.21477297){\makebox(0,0)[lb]{\smash{10−2}}}%
+    \put(0.0817383,0.21446245){\makebox(0,0)[lb]{\smash{10−2}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=7]{Woodberry_Detuned_SV_svg-tex.pdf}}%
-    \put(0.0817383,0.2682317){\makebox(0,0)[lb]{\smash{10−1}}}%
+    \put(0.0817383,0.26781837){\makebox(0,0)[lb]{\smash{10−1}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=8]{Woodberry_Detuned_SV_svg-tex.pdf}}%
-    \put(0.08935088,0.32169042){\makebox(0,0)[lb]{\smash{100}}}%
+    \put(0.08935088,0.32117428){\makebox(0,0)[lb]{\smash{100}}}%
     \put(0.07062116,0.19835526){\color[rgb]{0.14901961,0.14901961,0.14901961}\rotatebox{90}{\makebox(0,0)[b]{\smash{Gain}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=9]{Woodberry_Detuned_SV_svg-tex.pdf}}%
     \put(0.23897058,0.35850877){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{RGA}}}%

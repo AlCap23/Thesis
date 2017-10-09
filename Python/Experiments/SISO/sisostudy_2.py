@@ -31,17 +31,17 @@ def experimental_setup():
 	# Set up the Experiment and define the range of system gain, lag and delay as well as filename etc
 	filename = 'SISO_23082017_3.csv'
 	# Sample size per system order
-	sample_size = 3000
+	sample_size = 10
 	# Maximum System Order (-1)
 	max_order = 10
 	# System noise in percent of gain
 	noise_limit = 0
 	# Gain Limits
-	gain_limits = [0.1,10]
+	gain_limits = [-10,10]
 	# Lag Limits 
-	lag_limits = [1,200/max_order]
+	lag_limits = [10,50]
 	# Delay Limits -> If small no delay
-	delay_limits = [1e-2, 1e-3]
+	delay_limits = [1, 10]
 	# Create the system numerator
 	N = np.random.uniform(gain_limits[0],gain_limits[1],(max_order,sample_size))
 	# Create the system denominator -> Several
@@ -49,7 +49,7 @@ def experimental_setup():
 	# Create the system delay
 	L = np.random.uniform(delay_limits[0], delay_limits[1],(max_order,sample_size))
 	# Create an array for the results: sys_no, order, K,T, k,t,l, ms_real,ms_ideal, 4x t_rise, mp, t_settle, yss 
-	columns = ['Sample No.', 'Order', 'K', 'TSum', 'KM', 'TM', 'LM', 'MS Real', 'MS Ideal', 'Tr_RSW', 'Mp_RSW', 'Ts_RSW', 'Ys_RSW', 'Tr_R', 'Mp_R', 'Ts_R', 'Ys_R', 'Tr_ISW', 'Mp_ISW', 'Ts_ISW', 'Ys_ISW', 'Tr_I', 'Mp_I', 'Ts_I', 'Ys_I']
+	columns = ['Sample No.', 'Order', 'K', 'TSum', 'KM', 'TM', 'LM', 'MS Real', 'MS Ideal', 'MT Real', 'MT Ideal']
 	R = pd.DataFrame(columns=columns)
 
 # Experimental Study
@@ -109,6 +109,8 @@ def experiment(N,D,L,R,noise_limit,sample_size,max_order,filename, columns):
 			real_cl = cn.feedback(G*ky,1)
 			# Real system sensitivity
 			real_sens = 1/(1+G*ky)
+			# Real system complementary sensitivity
+			real_comp = real_sens*G*kr
 
 			# IDENTIFIED SYSTEM
 			# Identified system closed loop, setpoint weight
@@ -117,6 +119,8 @@ def experiment(N,D,L,R,noise_limit,sample_size,max_order,filename, columns):
 			iden_cl = cn.feedback(GM*ky,1)
 			# Identified system sensitivity
 			iden_sens = 1/(1+GM*ky)
+			# Identified system complementary sensitivity
+			iden_comp = iden_sens*GM*kr
 			
 			# Step response
 			y_rclsw,t_rclsw = cn.step(real_clsw)
@@ -129,19 +133,23 @@ def experiment(N,D,L,R,noise_limit,sample_size,max_order,filename, columns):
 			omega = np.logspace(-5,5,1000)
 			gain, phase, omega = cn.bode_plot(real_sens)
 			MS_Real = np.max(gain)
+			gain,phase,omega = cn.bode(real_comp)
+			MT_Real = np.max(gain)
 			gain, phase, omega = cn.bode_plot(iden_sens)
 			MS_Iden = np.max(gain)
+			gain,phase,omega = cn.bode(iden_comp)
+			MT_Iden = np.max(gain)
 
 			# Get the Step Information
-			Tr_RSW, Mp_RSW, Ts_RSW, Ys_RSW = alg.Step_Info(y_rclsw,t_rclsw)
-			Tr_R, Mp_R, Ts_R, Ys_R = alg.Step_Info(y_rcl,t_rcl)
-			Tr_ISW, Mp_ISW, Ts_ISW, Ys_ISW = alg.Step_Info(y_iclsw,t_iclsw)
-			Tr_I, Mp_I, Ts_I, Ys_I = alg.Step_Info(y_icl,t_icl)
+			#Tr_RSW, Mp_RSW, Ts_RSW, Ys_RSW = alg.Step_Info(y_rclsw,t_rclsw)
+			#Tr_R, Mp_R, Ts_R, Ys_R = alg.Step_Info(y_rcl,t_rcl)
+			#Tr_ISW, Mp_ISW, Ts_ISW, Ys_ISW = alg.Step_Info(y_iclsw,t_iclsw)
+			#Tr_I, Mp_I, Ts_I, Ys_I = alg.Step_Info(y_icl,t_icl)
 
 			
 			# Append Data
 			#if order == 1:
-			R.loc[sys_no-1] = [sys_no, order, N[order][sample], np.sum(D[order][sample][:order]), km, tm, lm, MS_Real, MS_Iden, Tr_RSW, Mp_RSW, Ts_RSW, Ys_RSW, Tr_R, Mp_R, Ts_R, Ys_R, Tr_ISW, Mp_ISW, Ts_ISW, Ys_ISW, Tr_I, Mp_I, Ts_I, Ys_I]
+			R.loc[sys_no-1] = [sys_no, order, N[order][sample], np.sum(D[order][sample][:order]), km, tm, lm, MS_Real, MS_Iden, MT_Real, MT_Iden]
 			#else:
 			#	R.loc[sys_no-1] = [sys_no, order, N[order][sample], np.sum(D[order][sample][0:order-1]), km, tm, lm, MS_Real, MS_Iden, Tr_RSW, Mp_RSW, Ts_RSW, Ys_RSW, Tr_R, Mp_R, Ts_R, Ys_R, Tr_ISW, Mp_ISW, Ts_ISW, Ys_ISW, Tr_I, Mp_I, Ts_I, Ys_I]
 			per = (order-1)/(max_order-1)*100 + sample/sample_size*10

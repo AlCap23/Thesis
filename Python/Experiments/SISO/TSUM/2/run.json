@@ -1,0 +1,67 @@
+{
+  "artifacts": [], 
+  "command": "experiment", 
+  "experiment": {
+    "base_dir": "C:\\Users\\juliu\\Documents\\Thesis\\Python\\Experiments\\SISO", 
+    "dependencies": [
+      "Algorithms==<unknown>", 
+      "control==0.7.0", 
+      "matplotlib==2.0.2", 
+      "numpy==1.13.1", 
+      "pandas==0.20.1", 
+      "sacred==0.7.0"
+    ], 
+    "mainfile": "sisostudy_TSUM.py", 
+    "name": "sisostudy_TSUM", 
+    "repositories": [], 
+    "sources": [
+      [
+        "sisostudy_TSUM.py", 
+        "_sources\\sisostudy_TSUM_8b17fd128c5ac479ef3b00660873b726.py"
+      ]
+    ]
+  }, 
+  "heartbeat": "2017-10-06T17:15:21.245000", 
+  "host": {
+    "ENV": {}, 
+    "cpu": "Intel64 Family 6 Model 42 Stepping 7, GenuineIntel", 
+    "hostname": "DESKTOP-DTNP2KF", 
+    "os": [
+      "Windows", 
+      "Windows-10-10.0.15063"
+    ], 
+    "python_version": "2.7.13"
+  }, 
+  "meta": {
+    "command": "experiment", 
+    "options": {
+      "--beat_interval": null, 
+      "--capture": null, 
+      "--comment": null, 
+      "--debug": false, 
+      "--enforce_clean": false, 
+      "--file_storage": "TSUM", 
+      "--force": false, 
+      "--help": false, 
+      "--loglevel": null, 
+      "--mongo_db": null, 
+      "--name": null, 
+      "--pdb": false, 
+      "--print_config": false, 
+      "--priority": null, 
+      "--queue": false, 
+      "--sql": null, 
+      "--tiny_db": null, 
+      "--unobserved": false, 
+      "COMMAND": null, 
+      "UPDATE": [], 
+      "help": false, 
+      "with": false
+    }
+  }, 
+  "resources": [], 
+  "result": null, 
+  "start_time": "2017-10-06T16:43:17.976000", 
+  "status": "COMPLETED", 
+  "stop_time": "2017-10-06T17:15:21.244000"
+}
