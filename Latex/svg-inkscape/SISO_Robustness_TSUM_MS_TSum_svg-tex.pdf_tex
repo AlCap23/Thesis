@@ -1,0 +1,97 @@
+%% Creator: Inkscape inkscape 0.92.2, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'SISO_Robustness_TSUM_MS_TSum_svg-tex.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{538.58266172bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,1)%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{SISO_Robustness_TSUM_MS_TSum_svg-tex.pdf}}%
+    \put(0.22022172,0.10521136){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{20}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{SISO_Robustness_TSUM_MS_TSum_svg-tex.pdf}}%
+    \put(0.38013198,0.10521136){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{40}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{SISO_Robustness_TSUM_MS_TSum_svg-tex.pdf}}%
+    \put(0.54004223,0.10521136){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{60}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{SISO_Robustness_TSUM_MS_TSum_svg-tex.pdf}}%
+    \put(0.69995246,0.10521136){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{80}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{SISO_Robustness_TSUM_MS_TSum_svg-tex.pdf}}%
+    \put(0.85986269,0.10521136){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{100}}}%
+    \put(0.5125,0.08057785){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{T_\Sigma Real}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{SISO_Robustness_TSUM_MS_TSum_svg-tex.pdf}}%
+    \put(0.11850146,0.1959282){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{40}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=7]{SISO_Robustness_TSUM_MS_TSum_svg-tex.pdf}}%
+    \put(0.11850146,0.30245922){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{50}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=8]{SISO_Robustness_TSUM_MS_TSum_svg-tex.pdf}}%
+    \put(0.11850146,0.4089903){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{60}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=9]{SISO_Robustness_TSUM_MS_TSum_svg-tex.pdf}}%
+    \put(0.11850146,0.51552132){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{70}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=10]{SISO_Robustness_TSUM_MS_TSum_svg-tex.pdf}}%
+    \put(0.11850146,0.62205237){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{80}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=11]{SISO_Robustness_TSUM_MS_TSum_svg-tex.pdf}}%
+    \put(0.11850146,0.72858342){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{90}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=12]{SISO_Robustness_TSUM_MS_TSum_svg-tex.pdf}}%
+    \put(0.11850146,0.83511447){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{100}}}%
+    \put(0.07640893,0.5025){\color[rgb]{0.14901961,0.14901961,0.14901961}\rotatebox{90}{\makebox(0,0)[b]{\smash{T Identified}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=13]{SISO_Robustness_TSUM_MS_TSum_svg-tex.pdf}}%
+    \put(0.19369884,0.84999938){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Order 9}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=14]{SISO_Robustness_TSUM_MS_TSum_svg-tex.pdf}}%
+    \put(0.19369884,0.82373543){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Order 8}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=15]{SISO_Robustness_TSUM_MS_TSum_svg-tex.pdf}}%
+    \put(0.19369884,0.79747146){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Order 7}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=16]{SISO_Robustness_TSUM_MS_TSum_svg-tex.pdf}}%
+    \put(0.19369884,0.77120751){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Order 6}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=17]{SISO_Robustness_TSUM_MS_TSum_svg-tex.pdf}}%
+    \put(0.19369884,0.74494355){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Order 5}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=18]{SISO_Robustness_TSUM_MS_TSum_svg-tex.pdf}}%
+    \put(0.19369884,0.71867959){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Order 4}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=19]{SISO_Robustness_TSUM_MS_TSum_svg-tex.pdf}}%
+    \put(0.19369884,0.69241564){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Order 3}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=20]{SISO_Robustness_TSUM_MS_TSum_svg-tex.pdf}}%
+    \put(0.19369884,0.66615169){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Order 2}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=21]{SISO_Robustness_TSUM_MS_TSum_svg-tex.pdf}}%
+    \put(0.19369884,0.63988771){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Order 1}}}%
+  \end{picture}%
+\endgroup%

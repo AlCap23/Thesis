@@ -393,6 +393,8 @@ def Control_Astrom(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
                 Ky[o][o][:] = ky
                 B[o][o] = b
         
+        # Get the Minor diagonals
+
 
         return Ky,B,D
 
@@ -595,7 +597,7 @@ def compute_complementarysensitivity(ss, KY, B, D, omega):
 # 0      1    2       3       4         5            6      7           8           9     10         11             12     13
 TUBScolorscale = [
     '#000000','#be1e3c','#ffc82a', '#e16d00', '#711c2f', '#acc13a', '#6d8300', '#00534a',
-    '#66b4d3','#00709b','#003f57','#8a307f','#511246','#4c1830'
+    '#66b4d3','#00709b','#003f57','#8a307f','#511246','#4c1830', '#FF00FF'
 ]
 
 def cm2in(*tupl):

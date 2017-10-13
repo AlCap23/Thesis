@@ -2,31 +2,379 @@
 \chapter{Robustness Study Using Monte Carlo Methods}
 \label{c:robustness}
 
-Monte Carlo Method explained --> Statisitical Approcach etc.
+To benchmark the robustness of the proposed method, a simulation study based on Monte Carlo Methods is performed. Monte Carlo Methods rely on the statistical interpretation and evaluation of problems, which are not necessarily fully describable by precise terms. To perform a simulation, pseudo random numbers within the parameter limits are generated in a sufficiently large amount and used as an input to the process. Afterwards, the outcome can be evaluated and the distribution of possible outcomes can be achieved. Examples for the usage of these methods are statistical thermodynamics, quantum mechanics, population simulation and even the simulation of structural mechanics.\\
 
-\section{Definition of Parameter Boundaries}%
+Basically, Monte Carlo Methods enable the exploration of uncertain systems, which is not describable by in terms of deterministic methods. Imagine a the classical experiment of throwing an ideal coin. The outcome for large samples is given by the probability distribution of heads and tails. If the sample size is small, the outcome will be predicted with a certain bias, e.g. heads is more likely than tails. For large sample sizes, the outcome will be describable as a balanced distribution of heads and tails.\\
+
+The motivation behind the simulation is to get a picture of the overall process of identification, controller tuning, decoupling and detuning. To better understand these steps, the problem is divided into a simulation study for simple, scalar transfer functions and multivariable transfer function matrices.\\
+
+The first section of this chapter gives an overview about the main topics of the evaluation.Parameter distributions, statistical methods and the parameter boundaries are explained as well as the methods used to create them.\\
+
+In Sec.\ref{c:robustness:s:siso} the evaluation of single input single output systems is performed. The maximum sensitivity of an ideal model and the real model is connected and.
+
+\newpage
+\section{Definition of Parameter Boundaries and Evaluation Methods}%
 \label{c:robustness:s:parameter}
 
-Statistical Exploration of the Data from System Identification!
+To determine the effectiveness of the algorithms, the space of all possible parameters needs to be bounded. To establish these boundaries, both physical assumptions and choosing of boundaries based on best guesses are build upon.\\
 
-\section{Robustness of SISO Systems} % (fold)
-\label{c:robustness:s:siso}
+The process itself is governed by the laws of thermodynamics. Due to this, the process is stable. This origins in the conservation of energy, which states that energy can not be destroyed nor created but simply converted. The energy in the system will reach a stable equilibrium when all transportation processes are decayed. Hence, both temperature and pressure will reach a stable configuration. Likewise, the system is causal since it will rest in its equilibrium until an external input of energy occurs.\\
+
+Furthermore, observations of the systems step response show that the output of a given signal is monotonic in its behavior. Due to this the process is modeled as a simple transfer function with delay described by:
+
+\begin{align*}
+g_{ij} = \frac{K_{ij}}{\prod_{k=1}^{m} s - p_k} e^{-Ls} ~, Re\left(p_k\right) \leq 0 ~\forall~p_k 
+\end{align*}
+
+To further discuss the pseudo random parameters, the terms of distribution, mean and variance in the terms of statistics need to be introduced. A distribution describes the outcome $\nu \subset \mathbb{A}$, where $\mathbb{A}$ denotes the set of all possible outcomes, of a random event $\eta \in \mathbb{H}$, where $\mathbb{H}$ denotes all possible events. The probability $\mathbb{P} \left(\nu\right) \in \left[ 0, 1 \right]$ describes the likelyhood by which a specific outcome will occur. Distributions can either be continuous or discrete.\\
+
+The expected value $\mu\left(\eta\right) \in \mathbb{R}$ of all possible outcomes, also called the mean or first statistical moment, describes the center of gravity of a given distribution. Explicitly, it can be calculated for continuous and discrete distribution by:
+
+\begin{align}
+\begin{split}
+\mu\left(\nu\right) &= \int_{-\infty}^{\infty} \nu~\eta\left(\nu \right) d\nu \\
+&= \frac{1}{N-1}\sum_{i = 1}^{N}  \nu_i
+\end{split}
+\label{c:montecarlo:e:mean}
+\end{align}
+
+Furthermore, the second centralized moment $\mu_2\left( \eta\right)$ of a distribution is given by the mean of the deviation with respect to the expected value, and the variance $\sigma\left(\eta\right)$ can be defined:
+
+\begin{align}
+\begin{split}
+\mu_2\left(\nu\right) &= \mu\left( \left(\nu - \mu\right)^2 \right) \\
+&=  \int_{-\infty}^{\infty} \left(\nu - \mu \right)^2 ~\eta\left(\nu \right) d\nu \\
+&= \frac{1}{N-1}\sum_{i=1}^N \left(\nu_i - \mu\right)^2 \\
+&= \sigma^2
+\end{split}
+\label{c:montecarlo:e:variance}
+\end{align}
+
+To investigate the dependency of two random variables, $\nu_X$ and $\nu_Y$, the correlation coefficient $\varsigma_{XY} \in \left[-1,1 \right]$ is given in terms of the covariance $\sigma_{XY}$:
+
+\begin{align}
+\begin{split}
+\varsigma_{XY} &= \frac{\sigma_{XY}}{\sigma_X \sigma_Y} \\
+&= \frac{\mu\left(\sigma\left(\nu_X\right) \sigma\left(\nu_Y\right) \right)}{\sigma_X \sigma_Y}
+\end{split}
+\label{c:montecarlo:e:correlation}
+\end{align}
+
+The correlation describes the dependency of two outcomes. If they are strongly correlated, meaning $\nu_X = \nu_Y$, than $\varsigma_{XY} = 1$. Likewise, if $\nu_X = -\nu_Y$, than $\varsigma_{XY} = -1$. If $\varsigma_{XY} \approx 0$ than both samples are nearly unrelated to each other.\\
+
+Next on, the generation of the pseudo random samples is described. 
+Since no prior knowledge of the process is given, a general uniform distribution of all parameters is chosen. This means that every value in the interval is equally likely to be drawn from within the boundaries. \\
+
+The gain is scalable, and hence the interval can be selected freely as long as its symmetric to zero. These relies on the fact that the likelyhood to choose a process gain with a negative or positive sign. With that, the gain can be describes to be:
+
+\begin{align*}
+\begin{split}
+K \in \left[ -10, 10\right],~\mu\left( K \right) = 0,~\mu_2\left(K\right) = \frac{20^2}{12}
+\end{split}
+\end{align*}
+
+The system's lag holds more difficulties to generate. Several cases can be imagined and must be taken to account. Therefore, three simulation scenarios are devised.\\
+
+The first process model of order $m$ is given by a constant sum time $T_\Sigma = \sum_{k=1}^m= 100$, hence the rise time of the process will be hold constant. The poles of the system are divided by dividing the sum time in several distances. Therefore, the system can be described by:
+
+\begin{align*}
+\begin{split}
+g_{ij} &= \frac{K_{ij}}{\prod_{k=1}^{m} s - p_k} e^{-Ls} \\
+&= \frac{K_{ij}}{\prod_{k=1}^{m} \left( T_k s +1 \right)} e^{-Ls} \\
+&= \frac{K_{ij}}{\prod_{k=1}^{m} \left(T_\Sigma  t_k s +1 \right)} e^{-Ls}
+\end{split}
+\end{align*}
+
+With $t_k \in \left[ 0,1\right], \sum_{k=1}^m t_k = 1$. Hence, the process can variate strongly in the individual time constants but behaves similar with respect to its step response.\\
+
+To generate the delay of each system, the samples are drawn from a uniform distribution which can be characterized by the following key figures:
+
+\begin{align*}
+\begin{split}
+L \in \left[ 1 , 10 \right],~\mu\left( L \right) = 5.5,~\mu_2\left(L\right) = \frac{9^2}{12}
+\end{split}
+\end{align*}
+
+Second, the process model of order $m$ is modified to be given by:
+
+\begin{align*}
+\begin{split}
+g_{ij} &= \frac{K_{ij}}{\prod_{k=1}^{m} s - p_k} e^{-Ls} \\
+&= \frac{K_{ij}}{\left( \frac{T}{m}s+1\right)^m} e^{-Ls}
+\end{split}
+\end{align*}
+ 
+Which is equal to a system with a pole multiplicity of $m$ at $s = \frac{-m}{T}$. The time constant $T$ is drawn from a random distribution described by:
+
+\begin{align*}
+\begin{split}
+T \in \left[ 50 , 100 \right],~\mu\left( T \right) = 75,~\mu_2\left(T\right) = \frac{50^2}{12}
+\end{split}
+\end{align*}
+
+By dividing the time constant by its order, a bounded rising time of the step response is given. In other words, the sum time constant $T_\Sigma = \sum_{k=1}^m T_k$ is bounded within the limits of T.
+Systems with pole multiplicity are hard to control, since the poles come in complex conjugated pairs which represent the damping. An example is given by Fig.\ref{c:montecarlo:f:pole_example}, where the poles of a system described by the process model with $T=90$ is shown for $m\in \left[1,9\right]$.
+
+\begin{figure}[h]\centering
+\includesvg[width = 0.7\textwidth]{Graphics/Poles_PTN_Example}
+\caption{Example of a system with pole multiplicity}
+\label{c:montecarlo:f:pole_example}
+\end{figure}
+
+To generate the delay of each system, the samples are drawn from a uniform distribution which can be characterized by the following key figures:
+
+\begin{align*}
+\begin{split}
+L \in \left[ 15 , 30 \right],~\mu\left( L \right) = 22.5 ,~\mu_2\left(L\right) = \frac{15^2}{12}
+\end{split}
+\end{align*}
+
+
+The last parameter study draws the lag from a uniform distribution described by:
+
+\begin{align*}
+\begin{split}
+T \in \left[ 1 , 20 \right],~\mu\left( T \right) = \frac{19}{2},~\mu_2\left(T\right) = \frac{21^2}{12}
+\end{split}
+\end{align*}
+
+Hence, both sum time constant $T_\Sigma$ and hence the rising time can show significant variation. The delay distribution is given by:
+
+\begin{align*}
+\begin{split}
+L \in \left[ 1 , 20 \right],~\mu\left( L \right) = 11.5 ,~\mu_2\left(L\right) = \frac{19^2}{12}
+\end{split}
+\end{align*}
+
+All three cases described above can be used to evaluate the closed loop behavior with regards to several key figures such as the maximum sensitivity, maximum complementary sensitivity, sum time constant, delay and normalized time delay.
+
+\newpage
+\section{Robustness of SISO Systems} % (fold){}
+\label{c:montecarlo:s:siso}
+
+The following section describes the results of samples containing SISO systems. All three lag generation methods have been investigated to observe the robustness within the variation of single time constants and sum time. The gain and delay have been chosen according to the description above.
+
+\subsection{Constant Sum Time}
+\label{c:montecarlo:ss:siso_constant}
+
+The first simulation run contains the results of the systems described by a constant sum time. In Fig.\ref{c:montecarlo:f:robustness_tsum} the maximum sensitivity of the closed loop with the identified FOTD model is shown over the maximum  sensitivity of the closed loop with the real transfer function. The sample size is 9000 systems from order one to nine. Therefore, every order itself contains 1000 system samples. 
 
 \begin{figure}[H]\centering
-\includesvg[width = \textwidth]{SISO_Robustness_Study}
-\caption{Results of the Robustness Study, Maximum Sensitivity of the Real System and the Identified System}
-\label{c:control:f:robustness_study}
-
+\includesvg[width = \textwidth]{Graphics/SISO_Robustness_TSUM_MS_CORR}
+\caption{Results of the robustness study, maximum Sensitivity of the real System and the identified system}
+\label{c:montecarlo:f:robustness_tsum}
 \end{figure}
 
-\section{Robustness of MIMO Systems}
-\label{c:robustness:s:mimo}
+The robustness in terms of the maximum sensitivity never exceeds the value of $M_S \leq 1.40$. Hence, the minimum distance to the critical point of the open loop is given by $s_M \geq \frac{1}{1.40} = 0.7143$. From Fig.\ref{c:montecarlo:f:robustness_tsum} it is obvious that the values of $M_S$ are increasing with the order. Moreover, from the correlation of the real and identified system a nearly identical behavior is given, with $\varsigma \in \left[0.87,1.00\right]$. It can be seen that lower order are tendentially more robust and second and third order processes are distributed more widely and show less correlation. This can be explained with regards to the limitation of a minimal delay for the controller parameter estimation, $L \geq 0.3 T$. This bound can be equally expressed in terms of the normalized time delay $\tau = \frac{L}{T+L} = \frac{0.3 T}{1.3 T} = 0.231$. Fig.\ref{c:montecarlo:f:robustness_normalizeddelay_tsum} shows that below that value a significant change in the robustness of the process occurs. 
 
-\begin{figure}[H]
-\begin{minipage}[b]{\textwidth}
-\centering
-\includegraphics[width=0.9\textwidth]{./Graphics/SVD_MATLAB.png}
-\caption{Robusteness of the MIMO}
-\label{c:robustness:f:mimo_svd}
-\end{minipage}
+
+\begin{figure}[H]\centering
+\includesvg[width = \textwidth]{Graphics/SISO_Robustness_TSUM_MS_Tau}
+\caption{Results of the robustness study, maximum sensitivity of the real System over normalized time delay}
+\label{c:montecarlo:f:robustness_normalizeddelay_tsum}
 \end{figure}
+
+Furthermore, the distribution over the process lag and delay will be investigated. In Fig.\ref{c:montecarlo:f:parameter_tsum} the model time constant of the FOTD is shown over the maximum time constant of the process $T_{Max} \geq T_k ~\forall k \in \left[1,m\right]$ in addition to the model delay and the real systems delay. It can be seen that the model lag is estimated correctly for first order systems, but spreads more widely for higher orders $m \geq 2$. 
+
+\begin{figure}[H]\centering
+\includesvg[width = \textwidth]{Graphics/SISO_Robustness_TSUM_MS_TL}
+\caption{Results of the robustness study,model delay and lag over the process parameter}
+\label{c:montecarlo:f:parameter_tsum}
+\end{figure}
+
+It is visible that the real delay estimated correctly for first order systems while a higher order adds an offset to it, which indicates the compensation of high order dynamics via the model delay. This observation can also be expressed in terms of Fig.\ref{c:montecarlo:f:violin_tsum} where the normalized time delay of the real process with respect to the sum time constant and the FOTD model is shown. Additionally the probability distribution over the order is given along with its interquartile marked by the box.
+
+
+
+\begin{figure}[H]\centering
+\includesvg[width = \columnwidth]{Graphics/SISO_Robustness_TSUM_NormalizedTime}
+\caption{Results of the robustness study, normalized time delay of the real system and the FOTD model}
+\label{c:montecarlo:f:violin_tsum}
+\end{figure}
+
+
+\subsection{Pole Multiplicity}
+\label{c:montecarlo:ss:polemultiplicity}
+
+The following subsection describes the results of the study performed by 
+the process model described with multiple poles of random time constants. Hence $T_\Sigma$ will vary and the performance for different process speeds is given. In Fig. \ref{c:montecarlo:f:robustness_poles} the maximum sensitivity of the model systems closed loop over the closed loop with the real system model is shown. The results coincide with the results shown given in SS.\ref{c:montecarlo:ss:siso_constant}. Only the second order model is more concentrated, but shows a strong correlation nonetheless.
+
+\begin{figure}[H]\centering
+\includesvg[width = \columnwidth]{Graphics/SISO_Robustness_PTN_MS_CORR}
+\caption{Results of the robustness study, maximum sensitivity of the model system over the maximum sensitivity of the real system}
+\label{c:montecarlo:f:robustness_poles}
+\end{figure}
+
+Likewise the model parameter estimated do not differ significantly from the previous results, as shown in Fig.\ref{c:montecarlo:f:parameter_poles}.
+Neither do other results, which will not be discussed further.
+
+\begin{figure}[H]\centering
+\includesvg[width = \columnwidth ]{Graphics/SISO_Robustness_PTN_MS_TL}
+\caption{Results of the robustness study, model delay and lag over the process parameter}
+\label{c:montecarlo:f:parameter_poles}
+\end{figure}
+
+\subsection{Random Time Constants}
+\label{c:montecarlo:ss:siso_tsumrand}
+
+Next, the results given by processes with pole multiplicity as described earlier are investigated. At first, the correlation analysis between the maximum sensitivity of the FOTD model and the real process as shown in Fig.\ref{c:montecarlo:f:robustness_trand} is examined. With respect to the results above, the sensitivity is spread more widely . With the exception of first, second and third order systems, which range between $\left[1.0,1.5\right]$, the systems maximum sensitivity is bounded within $\left[ 1.2, 1.5 \right]$. The correlation coefficient of all samples is $\varsigma = 1.0$, which indicates that the sensitivity of the real system and model system are identical.
+
+\begin{figure}[H]\centering
+\includesvg[width = \textwidth ]{Graphics/SISO_Robustness_TRAND_MS_CORR}
+\caption{Results of the robustness study, maximum sensitivity of the real system and the identified system}
+\label{c:montecarlo:f:robustness_trand}
+\end{figure}
+
+These observations can be confirmed by the cumulative density plot of the system, shown in Fig.\ref{c:montecarlo:f:robustnesscdf_trand}. The distribution of samples over the maximum sensitivity of the closed loop is shown as fraction of the total sample size. It can be seen that nearly 90 \% of all systems maximum sensitivity is less than 1.4 .
+
+\begin{figure}[H]\centering
+\includesvg[width = \textwidth]{Graphics/SISO_Robustness_TRAND_MS_CDF}
+\caption{Results of the robustness study, cumulative density plot of the maximum sensitivity of the real system}
+\label{c:montecarlo:f:robustnesscdf_trand}
+\end{figure}
+
+Like earlier, the distribution of the delay and the sum time are shown below. Both model parameter vary much more than before, as shown in Fig.
+\ref{c:montecarlo:f:parameter_trand}.
+
+\begin{figure}[H]\centering
+\includesvg[width = \textwidth]{Graphics/SISO_Robustness_TRAND_MS_TL}
+\caption{Results of the robustness study,model delay and lag over the process parameter}
+\label{c:montecarlo:f:parameter_trand}
+\end{figure}
+
+\newpage
+\section{Robustness of Multivariable Systems}
+\label{c:montecarlo:s:mimo}
+
+Likewise, multiple input multiple output systems have been investigated with respect to the robustness, e.g. the maximum singular value $\overline{\sigma}$ of the sensitivity function. Furthermore, the effect of detuning is examined by varying the upper boundary of interaction $h_{ij,Max}$ for every control loop.\\
+
+As before, the transfer functions are created by a constant sum time $T_\Sigma$ and by drawing a random system with pole multiplicity. The maximum allowed interaction for both cases is limited to either $h_{ij,Max} \leq 0.5$ or $h_{ij,Max} \leq 0.1$. The system order ranges from first to ninth order.\\
+
+\subsection{Constant Sum Time}
+\label{c:montecarlo:ss:sumtime_mimo}
+
+First, the maximum singular value of the sensitivity $\overline{\sigma}$ and the corresponding frequency $\omega\left(\overline{\sigma}\right)$ of all three multivariable control algorithms is investigated. The results for a purely decentralized control are given in Fig.\ref{c:montecarlo:f:msv_rga_tsum}. Since the controller is not subject to detuning, this result is valid for all $h_{ij}$.
+
+\begin{figure}[H]\centering
+\includesvg[width = \textwidth]{Graphics/MIMO_H05_TICONST_MS_RGA}
+\caption{Results of the robustness study,maximum singular values and corresponding frequency for decentralized control}
+\label{c:montecarlo:f:msv_rga_tsum}
+\end{figure}
+
+It can be observed that the results with regard to the magnitude of the maximum singular value range widely in the inverval. The corresponding frequencies show a concentration between the values of $\omega\left(\overline{\sigma}\right) \in \left[10^{-2}, 10^{-1} \right]$, where they are most likely to occur around $\omega\left(\overline{\sigma}\right) \approx 2~10^{-2}$. \\
+
+In Fig.\ref{c:montecarlo:f:msv_a_tsum} the results for a static decoupled system, as proposed by Astr\"om, are shown with a maximum interaction of $h_{ij,Max} \leq 0.5$.
+
+\begin{figure}[H]\centering
+\includesvg[width = \textwidth]{Graphics/MIMO_H05_TICONST_MS_A}
+\caption{Results of the robustness study,maximum singular values and corresponding frequency for static decoupled control, $h_{ij,Max} \leq 0.5$}
+\label{c:montecarlo:f:msv_a_tsum}
+\end{figure}
+
+The results show a much more concentrated distribution over the samples. Most maximum singular values are within $\overline{\sigma} \leq 1.4$, while the corresponding frequency is highly concentrated around $\omega\left(\overline{\sigma}\right) \approx 1.5~10^{-2}$. In comparison to purely decentralized control, the controller tends to reduce the uncertainty of the systems characteristics with respect to robustness.\\
+
+\begin{figure}[H]\centering
+\includesvg[width = \textwidth]{Graphics/MIMO_H05_TICONST_MS_R2D2}
+\caption{Results of the robustness study,maximum singular values and corresponding frequency for R2D2 control, $h_{ij,Max} \leq 0.5$}
+\label{c:montecarlo:f:msv_d_tsum}
+\end{figure}
+
+In Fig.\ref{c:montecarlo:f:msv_d_tsum} the same sample systems are controlled using the developed robust routine. It can be seen that the maximum singular values of the sensitivity function are distributed more widely with respect to the static decoupled system but more precise than using just decentralized control. This observation is also visible in the distribution of the occurence frequency of the maximum singular value.\\
+
+\newpage
+These conclusions can be confirmed by using the cumulative density functions off the three methods, shown in Fig. \ref{c:montecarlo:f:mimo_cdf_tsum} below. Here, the relative distribution of all samples over the maximum singular values is shown. The green area shows the limits which hold 80\% of all sample systems.
+
+\begin{figure}[H]\centering
+\includesvg[width = \textwidth]{Graphics/MIMO_H05_TICONST_MS_CDF}
+\caption{Results of the robustness study,maximum singular values cumulative densities of all methods, $h_{ij,Max} \leq 0.5$}
+\label{c:montecarlo:f:mimo_cdf_tsum}
+\end{figure}
+
+From Fig.\ref{c:montecarlo:f:mimo_cdf_tsum} it can be seen that the static decoupling improves the robustness of the systems drastically with respect to purely decentralized control. Likewise the distribution of the sensitivity is less fuzzy, but instead shows clear limits per order. The proposed method is less precise in the distribution of the individual orders, but nonetheless show a major improvement with respect to the decentralized controller design based on RGA. This is cleary visible by examining the first order sample systems. The decentralized controller maximum singular value are within the range of $\overline{\sigma} \in \left[1.0, 2.25 \right]$, while R2D2 limits the gain to $\overline{\sigma} \in \left[1.0, 1.65 \right]$. Attenuated behaviors can be observed for all orders. Another remark with respect to the relative distribution of the maximum singular value can be made comparing decentralized, static and simple decoupled control. The relative density of systems around $\overline{\sigma} \approx 1$ is much higher for the purely RGA controller and the corresponding controller extended by a compensation. Nearly 20\% of all systems are concentrated at the beginning of scale, hence much more robustness is given.\\
+
+To investigate the effect of detuning, the cumulative density functions detuned for a maximum interaction of $h_{ij,Max} \leq 0.1$ are shown in Fig.\ref{c:montecarlo:f:mimo_cdf_detuned_tsum}. The effect on the static decoupled systems is obvious, tightening the bounds of the maximum singular values. The controller using a simple decoupler is much less. This relies mostly on the constant sum time for all processes, which results in small differences between the average residence times of the coupled systems. Hence, the dynamic difference between the processes is small and hence not detuned. Therefore, only the maximum singular values of the static decoupled system are shown in Fig.\ref{c:montecarlo:f:msv_a_detuned_tsum}, where the effect is also visible.
+
+\begin{figure}[H]\centering
+\includesvg[width = \textwidth]{Graphics/MIMO_H01_TICONST_MS_A}
+\caption{Results of the robustness study,maximum singular values and corresponding frequency for static decoupled control, $h_{ij,Max} \leq 0.1$}
+\label{c:montecarlo:f:msv_a_detuned_tsum}
+\end{figure}
+
+From Fig.\ref{c:montecarlo:f:msv_a_detuned_tsum} the effect on the corresponding frequencies is also visible. The frequencies tend to get smaller with detuning, which can be conclued from the connection between the sensitivity and complementary sensitivity function. Hence, if the controller is detuned, the bandwidth of the tracking performance is reduced and likewise the maximum singular value is located at lower frequencies.
+
+\begin{figure}[H]\centering
+\includesvg[width = \textwidth]{Graphics/MIMO_H01_TICONST_MS_CDF}
+\caption{Results of the robustness study,maximum singular values cumulative densities of all methods, $h_{ij,Max} \leq 0.1$}
+\label{c:montecarlo:f:mimo_cdf_detuned_tsum}
+\end{figure}
+
+\newpage
+\subsection{Random Pole Multiplicity}
+\label{c:montecarlo:ss:poles_mimo}
+
+The simulation study has also been performed with a random sum time constant with a pole multiplicity.The maximum singular values and the corresponding frequencies of a decentralized control are shown in Fig.\ref{c:montecarlo:f:msv_rga_poles}. Like earlier, the maximum magnitude of the sensitivity function is distributed highly over the sample systems. The frequency $\omega_{\overline{\sigma}}$ has for significant peaks, the first at $10^{-2}$ for first order time delay systems. The other peaks occur at $9~10^{-3}$, $1.5~10^{-2}$ and $8~10^{-2}$ and are distributed more evenly. 
+
+\begin{figure}[H]\centering
+\includesvg[width = \textwidth]{Graphics/MIMO_H05_TIRAND_MS_RGA}
+\caption{Results of the robustness study,maximum singular values and corresponding frequency for decentralized control, $h_{ij,Max} \leq 0.5$}
+\label{c:montecarlo:f:msv_rga_poles}
+\end{figure}
+
+The corresponding systems characteristics with a static decoupler are shown in Fig.\ref{c:montecarlo:f:msv_a_poles}. The distribution of $\overline{\sigma}$ is dense in the range of $\overline{\sigma} \in \left[ 1.0, 1.4\right]$. The corresponding frequencies show a dominant peak around $1.4~10^{-2}$ and for FOTD systems a peak at $10^{-2}$. Hence, a more precise bandwidth is given while concentrating the maximum singular values within denser limits.
+
+\begin{figure}[H]\centering
+\includesvg[width = \textwidth]{Graphics/MIMO_H05_TIRAND_MS_A}
+\caption{Results of the robustness study,maximum singular values and corresponding frequency for static decoupled control, $h_{ij,Max} \leq 0.5$}
+\label{c:montecarlo:f:msv_a_poles}
+\end{figure}
+
+For the sample systems controlled with a simple decoupler show a less precise distribution of the maximum singular values, but nonetheless a better performance than the decentralized control. The results are shown in Fig.\ref{c:montecarlo:f:msv_d_poles}. The corresponding frequencies that nearly all systems have  $\omega_{\overline{\sigma}} \geq 1.3~10^{-2}$, the location of the dominant peak. Another peak, which is less dense, occurs at $9.0~10^{-1}$. Hence, the system concentrates the maximum singular value within stricter bounds and at higher frequencies.
+
+\begin{figure}[H]\centering
+\includesvg[width = \textwidth]{Graphics/MIMO_H05_TIRAND_MS_R2D2}
+\caption{Results of the robustness study,maximum singular values and corresponding frequency for simple decoupled control, $h_{ij,Max} \leq 0.5$}
+\label{c:montecarlo:f:msv_d_poles}
+\end{figure}
+
+The results can be also shown through the cumulative density functions, shown in Fig.\ref{c:montecarlo:f:mimo_cdf_poles} below. Like earlier, the green area marks 80\% of all sample systems. It is obvious that R2D2 is must more robust than the purely decentralized control but less precise in terms of the distribution of the samples than a static decoupled system. 
+
+\begin{figure}[H]\centering
+\includesvg[width = \textwidth]{Graphics/MIMO_H05_TIRAND_MS_CDF}
+\caption{Results of the robustness study,maximum singular values cumulative densities of all methods, $h_{ij,Max} \leq 0.5$}
+\label{c:montecarlo:f:mimo_cdf_poles}
+\end{figure}
+
+Next, the effects of the detuning with a maximum allowed interaction of $h_{ij,Max} \leq 0.1$ are discussed. Since the dynamics of the interacting transfer functions differ, both the static decoupled system described by Astr\"om and R2D2 are affected. Fig.\ref{c:montecarlo:f:msv_a_detuned_poles} show the maximum singular values and the corresponding frequencies for a static decoupled and detuned system. In comparison to Fig.\ref{c:montecarlo:f:msv_a_poles} the frequency spectrum is slightly more balanced around the peak at $1.3~10^{-2}$. Hence, the minimization of interaction leads to a limited bandwidth of the tracking performance as discussed earlier. 
+
+\begin{figure}[H]\centering
+\includesvg[width = \textwidth]{Graphics/MIMO_H01_TIRAND_MS_A}
+\caption{Results of the robustness study,maximum singular values and corresponding frequency for static decoupled control, $h_{ij,Max} \leq 0.1$}
+\label{c:montecarlo:f:msv_a_detuned_poles}
+\end{figure}
+
+In Fig.\ref{c:montecarlo:f:msv_d_detuned_poles} the characteristics of the sensitivity function for the sample systems with a detuned simple decoupler are shown. Like above, the frequency spectrum is shifted to lower frequencies and is much less concentrated around the appearing peaks.
+
+\begin{figure}[H]\centering
+\includesvg[width = \textwidth]{Graphics/MIMO_H01_TIRAND_MS_R2D2}
+\caption{Results of the robustness study,maximum singular values and corresponding frequency for simple decoupled control, $h_{ij,Max} \leq 0.1$}
+\label{c:montecarlo:f:msv_d_detuned_poles}
+\end{figure}
+
+The cumulative density function for all processes have been plotted in Fig.\ref{c:montecarlo:f:mimo_cdf_detuned_poles}. It can be seen that the influence of detuning is much more significant to the static decoupled system, while its influence within R2D2 is only of lesser importance to the maximum singular value distribution. Like before, the distribution of $\overline{\sigma} \approx 1$ is much higher for the controller given by the RGA and R2D2.
+
+\begin{figure}[H]\centering
+\includesvg[width = \textwidth]{Graphics/MIMO_H01_TIRAND_MS_CDF}
+\caption{Results of the robustness study,maximum singular values cumulative densities of all methods, $h_{ij,Max} \leq 0.1$}
+\label{c:montecarlo:f:mimo_cdf_detuned_poles}
+\end{figure}
+
+\section{Review}
+\label{c:montecarlo:s:review}
+
+It could be seen that the identification process in addition to the AMIGO tuning rules gives good results. The correlation of the models maximum sensitivity and its corresponding sensitivity of the real system is strongly correlated. Hence, the robustness of the algorithm for the class of systems with the anticipated behavior could be shown.\\
+
+The multivariable robustness study show a significant influence with regards to the bounds of the maximum singular values. While a simple decentralized controller shows a strong usually a strong concentration around $\overline{\sigma} \approx 1.0$ it also spreads widely to much higher values.\\
+
+The controller designed with a static decoupler and an approximated FOTD from a linear combination of two FOTD tend to give a more stricter bound within the maximal magnitude of the sensitivity function. But the values are usually dense around the middle of the spectrum.\\
+
+The robust routine for decoupled detuning combines both aspects. Hence, a strong concentration around the lower bound of the maximum singular value is given in addition to much less higher bound. Hence, both performance and robustness can be assumed.\\

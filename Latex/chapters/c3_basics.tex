@@ -144,21 +144,12 @@ Or rearranged to be:
 
 Due to Eq. \ref{c:control:e:maxsensitivitynyquist} the maximum gain of the open loop is limited by the maximum sensitivity. Hence, the critical point is only encircled iff the maximum sensitivity is zero. Hence the system is only stable in the sense of the Nyquist Criterion if the maximum sensitivity is sufficiently small.\\
 
-
-\begin{figure}[h]\centering
-\includesvg[width = \textwidth]{Maximum_Sensitivity.svg}
+\begin{figure}[H]\centering
+\includesvg[width = 0.5\textwidth]{Graphics/Sensitivity_Nyquist}
 \caption{Illustration of the Connection between the maximum sensitivity, the open loop gain and the Nyquist Criterion}
 \label{c:control:f:maxsensitivitynyquist}
 \end{figure}
 
-
-%\begin{figure}[H]
-%  \centering
-%  \def\svgwidth{\textwidth}
-%  \import{MS.pdf_tex}
-%%  \caption{Illustration of the maximum sensitivity of a given system}
-%%  \label{c:identification:f:MaximumSensitivity}
-%\end{figure}
 
 
 While the maximum sensitivity is well defined for SISO systems, a MIMO system requires a more general approach due to the interconnection of the systems out- and inputs. A general condition is given by the Small Gain Theorem \cite[p.150 ff.]{Skogestad2005}. The theorem states, that a given feedback system is stable iff the open loop transfer function matrix is stable and its sufficient conditioned matrix norm is less than 1 over all frequencies.
@@ -180,16 +171,22 @@ For further robustness analysis, the concept of singular values has to be invest
 Where $\ma{U} \in \mathbb{C}^{n_a \times n_a}$ and $\ma{V} \in \mathbb{C}^{n_b \times n_b} $ are unitary matrices representing the left and right eigenvectors of the transfer function matrix. The matrix $\ma{\sigma} \in \mathbb{C}^{n_a \times n_b}$ is a quadratic, diagonal matrix consisting of the singular values $\sigma \in \mathbb{C}$ of $\ma{G}$. A practical point of view suggest a rotation of any given input vector via $\ma{V}^*$, distributing the magnitude of the input over the columns of $\ma{\sigma}$, where they are scaled according to the magnitude of the corresponding singular value. Then the scaled and rotated vector is once again rotated by $\ma{U}$ and distributed over the output vector. \\
 
 \begin{figure}[H]
-\begin{minipage}[b]{\textwidth}
+  \centering
+  \includesvg[scale = 1]{Graphics/SingularValueTransform}
+  \caption{Illustration of the singular value decomposition}
+  \label{c:identification:f:svd}
+\end{figure}
+
+An example of this process is illustrated in Fig. \ref{c:control:f:SVD} for a system with two inputs $u_1,u_2$ and two outputs $y_1,y_2$. The output is bounded by the ellipsoid described by the maximum singular value $\overline{\sigma}$ and the minimum singular value $\underline{\sigma}$. The orientation and the magnitude of the outputs change depending on the frequency but will never exceed these limits. The singular values of a matrix are hence representing the highest possible gain for any given input if $\ma{U} = \ma{V}^* = \ma{I}$.
+
+\begin{figure}[H]
 \centering
 \includesvg[width = \textwidth]{Graphics/MaximumSingularValue_Bode}
 \caption{Example for the maximum singular value as an upper limit to the gain}
 \label{c:control:f:SVD}
-\end{minipage}
 \end{figure}
 
-
-An example of this process is illustrated in Fig. \ref{c:control:f:SVD} for a system with two inputs $u_1,u_2$ and two outputs $y_1,y_2$. The output is bounded by the ellipsoid described by the maximum singular value $\overline{\sigma}$ and the minimum singular value $\underline{\sigma}$. The orientation and the magnitude of the outputs change depending on the frequency but will never exceed these limits. The singular values of a matrix are hence representing the highest possible gain for any given input if $\ma{U} = \ma{V}^* = \ma{I}$. With that, the induced 2-Norm for a matrix can be defined as:
+With that, the induced 2-Norm for a matrix can be defined as:
 
 \begin{align}
 \begin{split}

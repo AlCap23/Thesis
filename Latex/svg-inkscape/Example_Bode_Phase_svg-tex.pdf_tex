@@ -36,7 +36,7 @@
   }%
   \providecommand\rotatebox[2]{#2}%
   \ifx\svgwidth\undefined%
-    \setlength{\unitlength}{432bp}%
+    \setlength{\unitlength}{566.92914928bp}%
     \ifx\svgscale\undefined%
       \relax%
     \else%
@@ -48,7 +48,46 @@
   \global\let\svgwidth\undefined%
   \global\let\svgscale\undefined%
   \makeatother%
-  \begin{picture}(1,0.66666667)%
+  \begin{picture}(1,0.5)%
     \put(0,0){\includegraphics[width=\unitlength,page=1]{Example_Bode_Phase_svg-tex.pdf}}%
+    \put(0.1075375,0.03831267){\makebox(0,0)[lb]{\smash{10−5}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{Example_Bode_Phase_svg-tex.pdf}}%
+    \put(0.2044125,0.03831267){\makebox(0,0)[lb]{\smash{10−4}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{Example_Bode_Phase_svg-tex.pdf}}%
+    \put(0.3012875,0.03813628){\makebox(0,0)[lb]{\smash{10−3}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{Example_Bode_Phase_svg-tex.pdf}}%
+    \put(0.3981625,0.03813628){\makebox(0,0)[lb]{\smash{10−2}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{Example_Bode_Phase_svg-tex.pdf}}%
+    \put(0.4950375,0.03813628){\makebox(0,0)[lb]{\smash{10−1}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{Example_Bode_Phase_svg-tex.pdf}}%
+    \put(0.59552847,0.03813628){\makebox(0,0)[lb]{\smash{100}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=7]{Example_Bode_Phase_svg-tex.pdf}}%
+    \put(0.69240347,0.03813628){\makebox(0,0)[lb]{\smash{101}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=8]{Example_Bode_Phase_svg-tex.pdf}}%
+    \put(0.78927847,0.03813628){\makebox(0,0)[lb]{\smash{102}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=9]{Example_Bode_Phase_svg-tex.pdf}}%
+    \put(0.88615347,0.03813628){\makebox(0,0)[lb]{\smash{103}}}%
+    \put(0.51249999,0.01473445){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{Frequency [rad/s]}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=10]{Example_Bode_Phase_svg-tex.pdf}}%
+    \put(0.11882639,0.09875646){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{−1750}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=11]{Example_Bode_Phase_svg-tex.pdf}}%
+    \put(0.11882639,0.14415248){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{−1500}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=12]{Example_Bode_Phase_svg-tex.pdf}}%
+    \put(0.11882639,0.18954848){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{−1250}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=13]{Example_Bode_Phase_svg-tex.pdf}}%
+    \put(0.11882639,0.2349445){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{−1000}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=14]{Example_Bode_Phase_svg-tex.pdf}}%
+    \put(0.11882639,0.2803405){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{−750}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=15]{Example_Bode_Phase_svg-tex.pdf}}%
+    \put(0.11882639,0.32573651){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{−500}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=16]{Example_Bode_Phase_svg-tex.pdf}}%
+    \put(0.11882639,0.37113253){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{−250}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=17]{Example_Bode_Phase_svg-tex.pdf}}%
+    \put(0.11882639,0.41652853){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0}}}%
+    \put(0.05872739,0.25125){\color[rgb]{0.14901961,0.14901961,0.14901961}\rotatebox{90}{\makebox(0,0)[b]{\smash{Phase [rad]}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=18]{Example_Bode_Phase_svg-tex.pdf}}%
+    \put(0.19026389,0.1070382){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Original}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=19]{Example_Bode_Phase_svg-tex.pdf}}%
+    \put(0.19026389,0.08188074){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Model}}}%
   \end{picture}%
 \endgroup%

@@ -17,17 +17,13 @@ def Step_Info(y,t, p=0.02, yr = 1):
 
     # Check for Steady State
     # Does series converge?
-    if np.abs(y[-1]-yr) < 1e-2 :
-        yss = y[-1]
-    # If not return error
-    else:
-        return np.NaN, np.NaN, np.NaN, np.NaN
+    yss = y[-1]
 
     # Get the rising time as the time
     # First value above 0.1 steady state
-    index1 = np.where(y>=0.1*yss)
-    # First value equal 0.9 steady stae
-    index2 = np.where(y<=0.9*yss)
+    index1 = np.where(y>0.1*yss)
+    # First value equal 0.9 steady state
+    index2 = np.where(y>0.9*yss)
     # Rising Time
     # Check if empty
     if index1[0].size == 0:
@@ -35,16 +31,16 @@ def Step_Info(y,t, p=0.02, yr = 1):
     elif index2[0].size == 0:
         t_rise = np.NaN
     else:
-        t_rise = t[index1[0][0]]-t[index2[0][0]]
+        t_rise = t[index2[0][-1]]-t[index1[0][0]]
 
     # Overshoot for values above steady state
     # Get all values
     mp = np.abs(y[np.where(abs(y)>abs(yss))])
     # Check if empty
     if mp.size == 0:
-        mp = np.NaN
+        mp = 0.
     else:
-        mp = np.abs(np.max(mp)-np.abs(yss))
+        mp = np.abs((np.max(mp)-np.abs(yss))/np.abs(yss))
 
 
     # Settling time for all value between a certain percentage
@@ -53,19 +49,59 @@ def Step_Info(y,t, p=0.02, yr = 1):
     if index[0].size ==0:
         t_settle = np.NaN
     else:
-        t_settle = t[index[0][0]]
+        t_settle = t[index[0][0]] -t[0]
 
 
     return t_rise,mp,t_settle,yss
 
+def Disturbance_Info(y,t,p=0.02):
+    # Check for Steady State
+    # Does series converge to original value
+    yr = y[0]
+    if np.abs(y[-1]-yr) < 1e-2 :
+        yss = y[-1]
+    else:
+        yss = y[0]    
 
+    # Maximum Overshoot for values above steady state
+    # Get all values
+    mp = np.abs(y-yss)
+    mp_max = np.argmax(mp)
+    if mp[mp_max] < 1e-5:
+        tp = 0.
+    else:
+        tp = t[mp_max]-t[0]
+
+
+    # Check if empty
+    if mp.size == 0:
+        mp = 0.
+    else:
+        mp = mp[mp_max]
+
+
+    # Settling time for all value between a certain percentage, after overshoot
+    if abs(yss) < 1e-2:
+        index = np.where(np.logical_and(abs(y[mp_max:])<(+p), abs(y[mp_max:])>(-p)))
+    else:    
+        index = np.where(np.logical_and(abs(y[mp_max:])<(1+p)*yss, abs(y[mp_max:])>(1-p)*yss))
+    # Ceck if empty
+    if index[0].size ==0:
+        t_settle = 0.
+    elif mp < 1e-3 :
+        t_settle = 0.
+    else:
+        t_settle = t[index[0][0]] - t[0]
+
+
+    return tp,mp,t_settle,yss
 
 # Integral Identification of first order time delay
 
 def Integral_Identification(y,u,t):
     """Returns a FOTD Model from the given data.
     y - array of outputs
-    u - array of inputs
+    u - array of inputs -> Maybe change to scalar!
     t - array of time values
     """
     
@@ -84,14 +120,14 @@ def Integral_Identification(y,u,t):
     # Get Gain
     KM = (yp[-1]-yp[0])/(up[-1])
     # Get the Residence Time
-    Tar = 1/KM * np.trapz(yp[-1]-yp,tp)
+    Tar = 1/np.abs(up[-1])*np.sign(up[0])/KM * np.trapz(yp[-1]-yp,tp)
     # Time Constant
-    T = np.exp(1)/KM*np.trapz(yp[np.where(tp<=Tar)],tp[np.where(tp<=Tar)])
+    T = 1/np.abs(up[-1])*np.sign(up[0])* np.exp(1)/KM*np.trapz(yp[np.where(tp<=Tar)],tp[np.where(tp<=Tar)])
     # Delay
     L = Tar-T
     # Check if all arguments are valid
     if (T < 0):
-        print("Error - Negative lag - Using 10 instead")
+        print("Error - Negative lag - Using 20 instead")
         T = 20
     if (L < 1e-2):
         print("Error - Small delay - Using 0 instead")
@@ -124,7 +160,7 @@ def FOTD_Gain(K,T,L,w=0):
             for o in range(0,outputs):
                 # Using system Identity by multiplying with the complex conjugate
                 G[o][i] = 1 /(T[o][i]**2 * w**2 +1) * ( K[o][i] - 1j*T[o][i]*w) *(np.cos(-L[o][i]*w)+1j*np.sin(-L[o][i]*w))
-    return np.real(G)
+    return G
 
 # Algorithm for computing the RGA
 
@@ -133,14 +169,14 @@ def RGA(K,T,L,w=0):
     if (K.shape != T.shape) or (K.shape != L.shape) or (L.shape != T.shape):
         print("Shapes of parameter array are not equal!")
     # Compute the System
-    G = np.absolute(FOTD_Gain(K,T,L,w))
+    G = FOTD_Gain(K,T,L,w)
     # Calculate the RGA
     RGA = np.multiply(G, np.transpose(np.linalg.inv(G)))
     return RGA
 
 # Algorithm for AMIGO Tuning
 
-def AMIGO_Tune(K,T,L, structure = 'PI'):
+def AMIGO_Tune(K,T,L, structure = 'PI', Minimal_Delay=0.3):
     """Computes the PI(D) controller parameter based on AMIGO algorithm;
        Parameter are returned as parallel notation KP,KI,KD and set point;
        Needs first order time delay parameter as input
@@ -148,11 +184,11 @@ def AMIGO_Tune(K,T,L, structure = 'PI'):
        
     """
     # Check for small delay
-    if L < 0.3*T:
-        if 0.3*T < 1e-2:
+    if L < Minimal_Delay*T:
+        if Minimal_Delay*T < 1e-2:
             L_P = 1e-2
         else:
-            L_P = 0.3*T
+            L_P = Minimal_Delay*T
     else:
         L_P = L
     # PI Controller
@@ -226,7 +262,7 @@ def AMIGO_DETUNE(K,T,L,params,KP, MS = 1.4, structure = 'PI'):
 
 # ALgorithm for computing decentralized controller based on RGA
 
-def Control_Decentral(K,T,L, w = 0, b=np.empty, structure = 'PI'):
+def Control_Decentral(K,T,L, w = 0, b=np.empty, structure = 'PI', pairing = np.empty):
     """ Computes decentralised controller with AMIGO algorithm based on RGA pairing"""
     # Compute SISO Case
     if K.ndim <= 1:
@@ -252,7 +288,10 @@ def Control_Decentral(K,T,L, w = 0, b=np.empty, structure = 'PI'):
         # Compute RGA -> Checks for Shape
         LG = RGA(K,T,L,w)
         # Get Pairing as an array for every column
-        Pairing = np.argmax(LG, axis=0)
+        if pairing == np.empty:
+            Pairing = np.argmax(LG, axis=0)
+        else:
+            Pairing = pairing
         # Iterate through the pairing
         for o in range(0,outputs):
             # Best Pairing
@@ -295,10 +334,12 @@ def Control_Astrom(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
         # Compute the interaction indeces
         # Since d/ds(Q*K) = d/ds(Q)*K = d/ds(G) we can write the Taylor coefficient
         Gamma = np.abs(np.dot(np.multiply(-K,T+L),D))
+        #print(Gamma)
         # Set main diagonal to zero
         np.fill_diagonal(Gamma,0)
         # Get the maximum of each row 
         GMax = np.argmax(Gamma,axis=1)
+        #print(GMax)
         # Get the new System
         Tt = np.dot(np.multiply(K,np.add(T,L)),D)-np.diag(np.max(L,axis=1))#np.dot(K,np.dot(np.transpose(np.add(T,L)),D))-np.diag(np.max(L,axis=1))
         Lt = np.diag(np.max(np.transpose(L),axis=0))
@@ -319,13 +360,12 @@ def Control_Astrom(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
             # Calculate the detuning frequency
             R = 0.8
             wc_min = 2.0/R * (t+l)/((t+l)**2 + t**2)
-            print(wc_min)
             # Design a controller based on estimated system
             ky, b0, d = Control_Decentral(k,t,l,w,b,structure)
             # Test for Interaction
             # We detune the controller of the n-th output in such a way that the maximum of the n-th row is sufficiently small
             # Current maximum interaction
-            gmax = Gamma[o][GMax[o]]
+            gmax = Gamma[GMax[o]][o]
             
             # Check for set point weight, either given
             if b == np.empty:
@@ -341,7 +381,7 @@ def Control_Astrom(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
                 # Check if decoupling is needed
 
                 while (np.abs(H[o][o]/(ms*gmax)) - np.sqrt( (b*ky[0]*wc_min)**2 + ky[1]**2 ) < 0):
-                    if counter > 1e6:
+                    if counter > 5:
                         #print('Maximal Iteration for detuning reached! Abort')
                         break
                     # Detune the controller with the shrinking rate    
@@ -358,7 +398,7 @@ def Control_Astrom(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
 
 
 # Modified Detuning
-def Control_Decoupled(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
+def Control_Decoupled(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI', method ='dynamic', pairing = np.empty):
     # Check Input for Maximum Sensitivity
     if MS is None:
         MS = 1.4*np.eye(K.shape[0],K.shape[1])
@@ -374,13 +414,15 @@ def Control_Decoupled(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
     else:
 
         # Compute a decentralized control structure based on RGA
-        Ky, B, D = Control_Decentral(K,T,L, w , b, structure)
+        Ky, B, D = Control_Decentral(K,T,L, w , b, structure, pairing = pairing)
 
         # Calculate the Pairing
-        # Compute RGA -> Checks for Shape
-        LG = RGA(K,T,L,w)
-        # Get Pairing as an array for every column
-        Pairing = np.argmax(LG, axis=0)
+        if pairing == np.empty:
+            # Compute RGA -> Checks for Shape
+            LG = RGA(K,T,L,w)
+            Pairing = np.argmax(LG, axis=0)
+        else:
+            Pairing = pairing
         
         # Compute the Taylor Series 
         Gamma =  np.multiply(-K,T+L)
@@ -405,17 +447,24 @@ def Control_Decoupled(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
         
         # Define the splitter
         S = -np.dot(np.linalg.inv(KD),KA)
-
-        # Get the interaction relative to the gain
-        #GammaA = np.abs(GA + np.dot(GD,S))
-        # Interaction relative to the dynamic of the interaction
-        GammaA = np.abs(np.dot(np.linalg.inv(GD),GA) + S)
-        # Interaction relative to the gain
-        #GammaA = np.abs(np.dot(np.linalg.inv(KD),GA + np.dot(GD,S)))
-        print(GammaA)
-        # Get the maximum of each row 
-        GMax = np.argmax(GammaA,axis=1)
         
+        # Get the interaction relative to the gain
+        
+        if method == 'dynamic':
+            # Interaction relative to the dynamic of the interaction
+            GammaA = np.abs(np.dot(np.linalg.inv(GD),GA) + S)
+        elif method == 'static':
+            # Interaction relative to the gain
+            GammaA = np.abs(np.dot(np.linalg.inv(KD),np.add(GA,np.dot(GD,S))))
+        else:
+            # Interaction relative to the dynamic of the interaction
+            GammaA = np.abs(np.dot(np.linalg.inv(GD),GA) + S)
+        #print(GammaA)
+        
+        
+        # Get the maximum of each row
+        GMax = np.argmax(GammaA,axis=1)
+        #print(GMax)
         #Iterate through the outputs
         for outputs in range(0,K.shape[0]):
             inputs = Pairing[outputs]
@@ -433,16 +482,14 @@ def Control_Decoupled(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
             # Calculate the detuning frequency
             R = 0.8
             wc_min = 2.0/R * (t+l)/((t+l)**2 + t**2)
-            print(wc_min)
 
             # Check for set point weight, either given
             if b == np.empty:
                 # Or computed from AMIGO_TUNE
                 b = B[outputs][inputs]
             
-            gmax = GammaA[outputs][GMax[outputs]]
-            print(gmax, H[outputs][outputs])
-
+            gmax = GammaA[GMax[outputs]][outputs]
+            #print(gmax)
             # Check for PI Structure
             if structure == 'PI':
                 # Define the counter
@@ -451,7 +498,7 @@ def Control_Decoupled(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
                 shrink_rate = 0.9
                
                 while (np.abs(H[outputs][outputs]/(ms*gmax)) - np.sqrt( (b*ky[0]/wc_min)**2 + ky[1]**2 ) < 0):
-                    if counter > 1e6:
+                    if counter > 5:
                         #print('Maximal Iteration for detuning reached! Abort')
                         break
                     # Detune the controller with the shrinking rate    
@@ -465,3 +512,96 @@ def Control_Decoupled(K,T,L,H, MS= None, w = 0, b=np.empty, structure = 'PI'):
             
         # Return the controller with splitter
         return Ky,B,np.eye(K.shape[0],K.shape[1])+S
+
+
+################################# MIMO FUNCTIONS FOR SIMULATION############################
+
+def tf_system(ss, omega):
+    # Get the matrices
+    A = ss['A']
+    B = ss['B']
+    C = ss['C']
+    D = ss['D']
+    # Make a I matrix ( depends on the states)
+    I = np.eye(A.shape[0])
+    # The Transfer Function
+    G = np.dot(np.dot(C,np.linalg.inv(omega*1j*I-A)),B)+D
+    
+    return G
+
+# Compute a controller for a given KY, B, D
+def compute_pi(KY, B, D):
+    # Make KPR,KPY, KIR and KIY
+    KPR = np.zeros((2,2))
+    KPY = np.zeros((2,2))
+    KIR = np.zeros((2,2))
+    KIY = np.zeros((2,2))
+
+    # Fill with values
+    for outputs in range(0,2):
+        for inputs in range(0,2):
+            # Proportional Controller
+            KPY[outputs,inputs] = KY[outputs,inputs,0]
+            # Intergral Controller
+            KIY[outputs,inputs] = KY[outputs,inputs,1]
+
+    # Implement Set-point Weight
+    KPR = np.dot(B,KPY)
+    KIR = KIY
+
+    # Implement Decoupler
+    KPR = np.dot(D,KPR)
+    KIR = np.dot(D,KIR)
+    KPY = np.dot(D,KPY)
+    KIY = np.dot(D,KIY)
+
+    return KPR, KIR, KPY, KIY
+
+# Compute the sensitivity function of a closed loop
+# Takes system, controller and frequency
+def compute_sensitivity(ss,KY,B,D,omega):
+    # Compute the transfer function matrix
+    G = tf_system(ss, omega)
+    # Compute the controller
+    KPR, KIR, KPY, KIY = compute_pi(KY,B,D)
+    # Compute the sensitivity
+    S = np.linalg.inv(np.eye(2,2)+np.dot(G,np.add(KPY,1/(omega*1j)*KIY)))
+    return S
+
+# Compute complementary sensitivity of a closed loop
+# Takes system, controller and frequency
+def compute_complementarysensitivity(ss, KY, B, D, omega):
+    # Compute the transfer function matrix
+    G = tf_system(ss, omega)
+    # Compute the controller
+    KPR, KIR, KPY, KIY = compute_pi(KY,B,D)
+    # Compute the sensitivitiy
+    S = compute_sensitivity(ss, KY, B, D, omega)
+    # Compute the complementary sensitivity
+    T = np.dot(S,np.dot(G, np.add(KPR,1/(omega*1j)*KIR) ))
+    return T
+
+
+#TUBScolorscale = [
+#    '#ffc82a','#ffd355','#ffde7f','#ffe9aa','#fff4d4', 
+#    '#e16d00','#e78a33','#eda766','#f3c599','#f9e2cc', 
+#    '#711c2f','#8d4959','#aa7782','#c6a4ac','#e3d2d5', 
+#    '#acc13a', '#bdcd61','#cdda89','#dee6b0','#eef3d8','#6d8300','#8a9c33','#a7b566','#c5cd99','#e2e6cc','#00534a','#33756e','#669892','#99bab7','#ccdddb',
+#    '#66b4d3','#85c3dc','#a3d2e5','#c2e1ed','#e0f0f6','#00709b','#338daf','#66a9c3','#99c6d7','#cce2eb','#003f57','#336579','#668c9a','#99b2bc','#ccd9dd',
+#    '#8a307f','#a15999','#b983b2','#d0accc','#e8d6e5','#511246','#74416b','#977190','#b9a0b5','#dcd0da','#4c1830','#704659','#947483','#b7a3ac','#dbd1d6'
+#]
+# Only Main Colors
+# Black, Red, Yellow, Orange, Dark Red, Light Green, Green, Dark Green, Light Blue, Blue, Dark Blue, Light Violet, Violet, Dark Violet
+# 0      1    2       3       4         5            6      7           8           9     10         11             12     13
+TUBScolorscale = [
+    '#000000','#be1e3c','#ffc82a', '#e16d00', '#711c2f', '#acc13a', '#6d8300', '#00534a',
+    '#66b4d3','#00709b','#003f57','#8a307f','#511246','#4c1830'
+]
+
+def cm2in(*tupl):
+    """Stack overflow-> User gns-ank"""
+    inch = 2.54
+    if isinstance(tupl[0], tuple):
+        return tuple(i/inch for i in tupl[0])
+    else:
+        return tuple(i/inch for i in tupl)

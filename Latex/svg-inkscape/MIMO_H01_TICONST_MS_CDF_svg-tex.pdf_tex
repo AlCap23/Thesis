@@ -1,0 +1,128 @@
+%% Creator: Inkscape inkscape 0.92.2, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'MIMO_H01_TICONST_MS_CDF_svg-tex.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{572.51054411bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,1.11403234)%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{MIMO_H01_TICONST_MS_CDF_svg-tex.pdf}}%
+    \put(0.11147888,0.73796108){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.0}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{MIMO_H01_TICONST_MS_CDF_svg-tex.pdf}}%
+    \put(0.11147888,0.78294439){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.2}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{MIMO_H01_TICONST_MS_CDF_svg-tex.pdf}}%
+    \put(0.11147888,0.8279277){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.4}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{MIMO_H01_TICONST_MS_CDF_svg-tex.pdf}}%
+    \put(0.11147888,0.872911){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.6}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{MIMO_H01_TICONST_MS_CDF_svg-tex.pdf}}%
+    \put(0.11147888,0.91789431){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.8}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{MIMO_H01_TICONST_MS_CDF_svg-tex.pdf}}%
+    \put(0.11147888,0.96287762){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{1.0}}}%
+    \put(0.07674154,0.8566581){\color[rgb]{0.14901961,0.14901961,0.14901961}\rotatebox{90}{\makebox(0,0)[b]{\smash{CDF - RGA}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=7]{MIMO_H01_TICONST_MS_CDF_svg-tex.pdf}}%
+    \put(0.11147888,0.44110422){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.0}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=8]{MIMO_H01_TICONST_MS_CDF_svg-tex.pdf}}%
+    \put(0.11147888,0.48608752){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.2}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=9]{MIMO_H01_TICONST_MS_CDF_svg-tex.pdf}}%
+    \put(0.11147888,0.53107083){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.4}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=10]{MIMO_H01_TICONST_MS_CDF_svg-tex.pdf}}%
+    \put(0.11147888,0.57605414){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.6}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=11]{MIMO_H01_TICONST_MS_CDF_svg-tex.pdf}}%
+    \put(0.11147888,0.62103744){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.8}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=12]{MIMO_H01_TICONST_MS_CDF_svg-tex.pdf}}%
+    \put(0.11147888,0.66602075){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{1.0}}}%
+    \put(0.07674155,0.55980125){\color[rgb]{0.14901961,0.14901961,0.14901961}\rotatebox{90}{\makebox(0,0)[b]{\smash{CDF - Astr\"om}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=13]{MIMO_H01_TICONST_MS_CDF_svg-tex.pdf}}%
+    \put(0.91129223,0.66763791){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{All samples}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=14]{MIMO_H01_TICONST_MS_CDF_svg-tex.pdf}}%
+    \put(0.91129223,0.64293038){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Order 1}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=15]{MIMO_H01_TICONST_MS_CDF_svg-tex.pdf}}%
+    \put(0.91129223,0.6182229){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Order 2}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=16]{MIMO_H01_TICONST_MS_CDF_svg-tex.pdf}}%
+    \put(0.91129223,0.59351536){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Order 3}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=17]{MIMO_H01_TICONST_MS_CDF_svg-tex.pdf}}%
+    \put(0.91129223,0.56880788){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Order 4}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=18]{MIMO_H01_TICONST_MS_CDF_svg-tex.pdf}}%
+    \put(0.91129223,0.54410034){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Order 5}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=19]{MIMO_H01_TICONST_MS_CDF_svg-tex.pdf}}%
+    \put(0.91129223,0.51939281){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Order 6}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=20]{MIMO_H01_TICONST_MS_CDF_svg-tex.pdf}}%
+    \put(0.91129223,0.49468533){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Order 7}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=21]{MIMO_H01_TICONST_MS_CDF_svg-tex.pdf}}%
+    \put(0.91129223,0.46997779){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Order 8}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=22]{MIMO_H01_TICONST_MS_CDF_svg-tex.pdf}}%
+    \put(0.91129223,0.44527026){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Order 9}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=23]{MIMO_H01_TICONST_MS_CDF_svg-tex.pdf}}%
+    \put(0.11759231,0.12063808){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{1.0}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=24]{MIMO_H01_TICONST_MS_CDF_svg-tex.pdf}}%
+    \put(0.23910436,0.12063808){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{1.5}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=25]{MIMO_H01_TICONST_MS_CDF_svg-tex.pdf}}%
+    \put(0.3606164,0.12063808){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{2.0}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=26]{MIMO_H01_TICONST_MS_CDF_svg-tex.pdf}}%
+    \put(0.48212844,0.12063808){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{2.5}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=27]{MIMO_H01_TICONST_MS_CDF_svg-tex.pdf}}%
+    \put(0.60364047,0.12063808){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{3.0}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=28]{MIMO_H01_TICONST_MS_CDF_svg-tex.pdf}}%
+    \put(0.72515251,0.12063808){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{3.5}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=29]{MIMO_H01_TICONST_MS_CDF_svg-tex.pdf}}%
+    \put(0.84666455,0.12063808){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{4.0}}}%
+    \put(0.4704256,0.0976773){\makebox(0,0)[lb]{\smash{\textsl{M}\textsl{S}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=30]{MIMO_H01_TICONST_MS_CDF_svg-tex.pdf}}%
+    \put(0.11147888,0.14424733){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.0}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=31]{MIMO_H01_TICONST_MS_CDF_svg-tex.pdf}}%
+    \put(0.11147888,0.18923063){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.2}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=32]{MIMO_H01_TICONST_MS_CDF_svg-tex.pdf}}%
+    \put(0.11147888,0.23421399){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.4}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=33]{MIMO_H01_TICONST_MS_CDF_svg-tex.pdf}}%
+    \put(0.11147888,0.2791973){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.6}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=34]{MIMO_H01_TICONST_MS_CDF_svg-tex.pdf}}%
+    \put(0.11147888,0.32418061){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.8}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=35]{MIMO_H01_TICONST_MS_CDF_svg-tex.pdf}}%
+    \put(0.11147888,0.36916391){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{1.0}}}%
+    \put(0.07674153,0.26294439){\color[rgb]{0.14901961,0.14901961,0.14901961}\rotatebox{90}{\makebox(0,0)[b]{\smash{CDF - R2D2}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=36]{MIMO_H01_TICONST_MS_CDF_svg-tex.pdf}}%
+  \end{picture}%
+\endgroup%

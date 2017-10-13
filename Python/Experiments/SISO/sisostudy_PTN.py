@@ -44,7 +44,7 @@ def experimental_setup():
 	# Sum Time Constant
 	TSum = 100
 	# Delay Limits -> If small no delay
-	delay_limits = [1, 10]
+	delay_limits = [15, 30]
 	# Create the system numerator -> Gains
 	K = np.random.uniform(gain_limits[0],gain_limits[1],(sample_size))
 	Num = np.zeros((sample_size))

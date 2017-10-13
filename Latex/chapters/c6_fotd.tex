@@ -740,12 +740,30 @@ To conclude the evaluation of the process, both advantages and disadvantages of 
 
 The system in the following subsection has been introduced by REFERENz and reused for theoretical research since, e.g. REFERENZ INTERACTION. It is given by the following transfer function matrix:
 
+\begin{align*}
+\begin{split}
+\ma{G} &= \begin{bmatrix}
+\frac{5}{100s+1}~e^{-40s} & \frac{1}{10s+1}~e^{-4s} \\
+\frac{-5}{10s+1}~e^{-4s} & \frac{5}{100s+1}~e^{-40s}
+\end{bmatrix}
+\end{split}
+\end{align*}
+
+The RGA holds a diagonal pairing within the steady state, since $y_1$ is mainly dominated by $g_{11}$ in the steady state. For dynamic control it can be shown that a cross coupling consisting of the pairing $\left(y_1,u_2\right)$ and $\left(y_2,u_1\right)$ is more suitable, QUELLE. This approach clearly relies on the corresponding delays, which enable to react much faster.\\
+
+Furthermore it can be seen that the coupling is strong, since $y_2$ is influenced both by $g_{21}$ and $g_{22}$ with the same magnitude. The not detuned controller used are given by the following parameter:\\
+
+HIER TABLE\\
+
+The simulation is of the closed loop is shown in Fig. \ref{c:fotd:s:mcavoy:f:SimNotDetuned}. The interaction from $u_1$ to $y_2$ are clearly visible. While not able to fully compensate the dynamic effects, both the controller designed by a fully static decoupling and the compensator are able to reduce the magnitude of the interaction. However, the dynamic effects provoked by the decentralized controller are much faster to be decay.
 
 \begin{figure}[H]\centering
 \includesvg[width = \textwidth]{McAvoy_NotDetuned.svg}
 \caption{Simulation of McAvoy's system without detuning}
 \label{c:fotd:s:mcavoy:f:SimNotDetuned}
 \end{figure}
+
+The tracking and disturbance performance is shown in Tab.\ref{c:fotd:s:mcavoy:tab:eval1}. The reasoning for the poor performance of the decoupling and compensation lies within the difference of the dynamics. While the main diagonals are dominant in lower frequencies it loses declines much faster than the minor diagonals. Hence, the static decoupling will not work properly, since the effects transfered via the main diagonals are scaled down significantly.
 
 \begin{table}[H]
 \centering
@@ -754,11 +772,19 @@ The system in the following subsection has been introduced by REFERENz and reuse
 \input{./Graphics/mcavoy_NotDetuned_StepInfo}
 \end{table}
 
+The singular values of the complementary sensitivity and sensitivity transfer function matrices are shown in Fig.\ref{c:fotd:s:mcavoy:f:SingValNotDetuned}. With respect to the bandwidth, the decoupled and compensated controller show better performance and lower the magnitude of the maximum sensitivity. However, while both processes seem more balanced with respect to the tracking performance near the steady state, but lose influence much faster.\\
+
 \begin{figure}[H]\centering
 \includesvg[width = \textwidth]{McAvoy_NotDetuned_SV.svg}
 \caption{Singular values of the sensitivity (red) and complementary sensitivity (green) function of  McAvoy's system without detuning}
 \label{c:fotd:s:mcavoy:f:SingValNotDetuned}
 \end{figure}
+
+Next, the system will be detuned to a maximum interaction of $h_{ij}\leq 0.5~,\forall i\neq j \left[ 0,1\right]$ with a maximum iteration counter of $5$. The parameter for the controller are given in the Tab. TABELLE! below.\\
+
+TABELLE\\
+
+The simulation of the closed loop is shown in Fig.\ref{c:fotd:s:mcavoy:f:SimDetuned}, the tracking behavior and disturbance rejection evaluation is given in Tab.\ref{c:fotd:s:mcavoy:tab:eval2}. It is clearly visible that both detuned controller are significantly slower while only slightly decreasing the interaction of both loops. 
 
 \begin{figure}[H]\centering
 \includesvg[width = \textwidth]{McAvoy_Detuned.svg}
@@ -769,9 +795,11 @@ The system in the following subsection has been introduced by REFERENz and reuse
 \begin{table}[H]
 \centering
 \caption{Evaluation of tracking performance and disturbance rejection performance of McAvoy's system with detuning}
-\label{c:fotd:s:mcavoy:tab:eval1}
+\label{c:fotd:s:mcavoy:tab:eval2}
 \input{./Graphics/mcavoy_Detuned_StepInfo}
 \end{table}
+
+These results are underlined by the evaluation of the singular values of both the complementary sensitivity and sensitivity function, as shown in Fig.\ref{c:fotd:s:mcavoy:f:SingValDetuned}. Both bandwidth are reduced while the maximum singular value of the sensitivity is increased. The tracking behaviors balancedness, given by the singular values of the complementary sensitivity, decreases at much lower frequencies than before.
 
 \begin{figure}[H]\centering
 \includesvg[width = \textwidth]{McAvoy_Detuned_SV.svg}
@@ -779,7 +807,9 @@ The system in the following subsection has been introduced by REFERENz and reuse
 \label{c:fotd:s:mcavoy:f:SingValDetuned}
 \end{figure}
 
-\section{Identified System at WP 2}%
+The evaluation of Mc Avoy's system shows the limits of both a static decoupling and the compensator. With near dynamics, the static methods can be used to enhance the controllers performance and the dampen the effects of measurement noise and output disturbances. However, from the dynamics of the current example it can be seen that the presented methods are much likely to have no beneficial effect.
+
+\section{}%
 \label{c:fotd:s:wp1}
 
 Working point 2

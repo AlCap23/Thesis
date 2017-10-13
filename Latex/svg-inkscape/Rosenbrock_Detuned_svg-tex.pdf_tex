@@ -50,53 +50,59 @@
   \makeatother%
   \begin{picture}(1,0.78947368)%
     \put(0,0){\includegraphics[width=\unitlength,page=1]{Rosenbrock_Detuned_svg-tex.pdf}}%
-    \put(0.11850146,0.47250745){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.0}}}%
+    \put(0.11850146,0.45021558){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.00}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=2]{Rosenbrock_Detuned_svg-tex.pdf}}%
-    \put(0.11850146,0.53450452){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.5}}}%
+    \put(0.11850146,0.48930016){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.25}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=3]{Rosenbrock_Detuned_svg-tex.pdf}}%
-    \put(0.11850146,0.59650158){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{1.0}}}%
+    \put(0.11850146,0.52838474){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.50}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=4]{Rosenbrock_Detuned_svg-tex.pdf}}%
-    \put(0.11850146,0.65849863){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{1.5}}}%
-    \put(0.08136696,0.54933686){\rotatebox{90}{\makebox(0,0)[lb]{\smash{\textsl{y}1}}}}%
+    \put(0.11850146,0.56746931){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.75}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=5]{Rosenbrock_Detuned_svg-tex.pdf}}%
-    \put(0.16022727,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{0}}}%
+    \put(0.11850146,0.60655389){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{1.00}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=6]{Rosenbrock_Detuned_svg-tex.pdf}}%
-    \put(0.24829545,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{25}}}%
+    \put(0.11850146,0.64563847){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{1.25}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=7]{Rosenbrock_Detuned_svg-tex.pdf}}%
-    \put(0.33636363,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{50}}}%
+    \put(0.11850146,0.68472303){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{1.50}}}%
+    \put(0.07104183,0.54933686){\rotatebox{90}{\makebox(0,0)[lb]{\smash{\textsl{y}1}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=8]{Rosenbrock_Detuned_svg-tex.pdf}}%
-    \put(0.42443183,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{75}}}%
+    \put(0.16022727,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{0}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=9]{Rosenbrock_Detuned_svg-tex.pdf}}%
-    \put(0.5125,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{100}}}%
+    \put(0.24829545,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{25}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=10]{Rosenbrock_Detuned_svg-tex.pdf}}%
-    \put(0.6005682,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{125}}}%
+    \put(0.33636363,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{50}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=11]{Rosenbrock_Detuned_svg-tex.pdf}}%
-    \put(0.68863634,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{150}}}%
+    \put(0.42443183,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{75}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=12]{Rosenbrock_Detuned_svg-tex.pdf}}%
-    \put(0.77670454,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{175}}}%
+    \put(0.5125,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{100}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=13]{Rosenbrock_Detuned_svg-tex.pdf}}%
+    \put(0.6005682,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{125}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=14]{Rosenbrock_Detuned_svg-tex.pdf}}%
+    \put(0.68863634,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{150}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=15]{Rosenbrock_Detuned_svg-tex.pdf}}%
+    \put(0.77670454,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{175}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=16]{Rosenbrock_Detuned_svg-tex.pdf}}%
     \put(0.86477274,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{200}}}%
     \put(0.5125,0.05448834){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{Time [s]}}}%
-    \put(0,0){\includegraphics[width=\unitlength,page=14]{Rosenbrock_Detuned_svg-tex.pdf}}%
-    \put(0.11850146,0.10436726){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.0}}}%
-    \put(0,0){\includegraphics[width=\unitlength,page=15]{Rosenbrock_Detuned_svg-tex.pdf}}%
-    \put(0.11850146,0.15361224){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.2}}}%
-    \put(0,0){\includegraphics[width=\unitlength,page=16]{Rosenbrock_Detuned_svg-tex.pdf}}%
-    \put(0.11850146,0.20285722){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.4}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=17]{Rosenbrock_Detuned_svg-tex.pdf}}%
-    \put(0.11850146,0.25210214){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.6}}}%
+    \put(0.11850146,0.104365){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.0}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=18]{Rosenbrock_Detuned_svg-tex.pdf}}%
-    \put(0.11850146,0.30134711){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.8}}}%
+    \put(0.11850146,0.15359484){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.2}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=19]{Rosenbrock_Detuned_svg-tex.pdf}}%
-    \put(0.11850146,0.35059203){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{1.0}}}%
-    \put(0.08136696,0.22421724){\rotatebox{90}{\makebox(0,0)[lb]{\smash{\textsl{y}2}}}}%
+    \put(0.11850146,0.20282464){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.4}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=20]{Rosenbrock_Detuned_svg-tex.pdf}}%
-    \put(0.79763061,0.19787684){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Reference}}}%
+    \put(0.11850146,0.25205448){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.6}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=21]{Rosenbrock_Detuned_svg-tex.pdf}}%
-    \put(0.79763061,0.17161292){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{RGA}}}%
+    \put(0.11850146,0.30128427){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.8}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=22]{Rosenbrock_Detuned_svg-tex.pdf}}%
-    \put(0.79763061,0.14534894){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Astrom}}}%
+    \put(0.11850146,0.35051409){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{1.0}}}%
+    \put(0.08136696,0.22421724){\rotatebox{90}{\makebox(0,0)[lb]{\smash{\textsl{y}2}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=23]{Rosenbrock_Detuned_svg-tex.pdf}}%
+    \put(0.79763061,0.19787684){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Reference}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=24]{Rosenbrock_Detuned_svg-tex.pdf}}%
+    \put(0.79763061,0.17161292){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{RGA}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=25]{Rosenbrock_Detuned_svg-tex.pdf}}%
+    \put(0.79763061,0.14534894){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Astrom}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=26]{Rosenbrock_Detuned_svg-tex.pdf}}%
     \put(0.79763061,0.11908496){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{R2D2}}}%
   \end{picture}%
 \endgroup%
