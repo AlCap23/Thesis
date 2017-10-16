@@ -584,18 +584,17 @@ Which holds the relative error in dynamics given by:
 \label{c:controller:e:relativedynamicerror}
 \end{align}
 
-From Eq.\ref{c:controller:e:relativedynamicerror} the relative error dynamics are given in terms of the splitter. Another way to interpret the error is by giving a complex scalar error $\Delta_D \in \mathbb{C}$:
+From Eq.\ref{c:controller:e:relativedynamicerror} the relative error dynamics are given in terms of the splitter. Another way to interpret the error is by giving a complex scalar error $\Delta_D \in \mathbb{C}$ with respect to the maximum singular value $\overline{\sigma} \in \mathbb{C}$ and the minimum singular value$\underline{\sigma} \in \mathbb{C}$:
 
 \begin{align}
 \begin{split}
-\Delta_D \ma{G}_D &\geq   \ma{G}_A \ma{\Sigma} \\
-\Delta_D \det\left( \ma{G}_D \right) &\geq \det\left( \ma{G}_A \ma{\Sigma} \right) \\
-\Delta_D &\geq \frac{\det\left( \ma{G}_A \ma{\Sigma} \right) }{\det\left( \ma{G}_D \right)}
+\Delta_D \underline{\sigma}\left( \ma{G}_D \right)  &\leq   \overline{\sigma}\left(\ma{G}_A \ma{\Sigma} \right)\\
+\Delta_D &\leq \frac{\overline{\sigma}\left( \ma{G}_A \ma{\Sigma} \right) }{\underline{\sigma}\left( \ma{G}_D \right)} 
 \end{split}
 \label{c:controller:e:complexerror}
 \end{align}
 
-Hence, by Eq.\ref{c:controller:e:complexerror} we have an upper bound as well as an indicator for the usefulness. Assuming diagonal dominance requires the splitter to be small, hence the error is neglectable.\\
+Hence, by Eq.\ref{c:controller:e:complexerror} an upper bound is established as well as an indicator for the usefulness. Assuming diagonal dominance requires the elements of the splitter to be small, hence the error is neglectable.\\
 
 It is clearly visible that the splitter weights the minor with the main diagonals. It can be connected both to feedforward control and disturbance rejection by dividing the system as shown in Fig.\ref{c:controller:f:splitter_disturbance} and Fig.\ref{c:controller:f:splitter_feedforward}. Since the used model used for the estimation of the couplings is crude, a feed forward architecture is better suited since the real delay of the system is not known. Hence, a disturbance rejection based upon a smith predictor would most likely result in an uncontrollable system due to the model error.\\
 

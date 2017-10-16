@@ -109,16 +109,17 @@ def Integral_Identification(y,u,t):
     if np.max(abs(y)) == 0:
         return 0,0,0
 
-    # Truncate for Maximum value of abs
-    i_end = np.argmax(abs(y),axis=0)
+    # Truncate for Maximum value of abs(y) has reached 98 %
+    #i_end = np.argmax(abs(y),axis=0)
+    i_end = np.argmax(abs(y)[np.where(abs(y)<=0.98*np.max(abs(y)))])
     # If Last indice is used
     if i_end <= 0:
         i_end = 1
     yp = y[0:i_end]
     up = u[0:i_end]
     tp = t[0:i_end]
-    # Get Gain
-    KM = (yp[-1]-yp[0])/(up[-1])
+    # Get steady state Gain
+    KM = (y[np.argmax(abs(y),axis=0)]-y[0])/(u[-1])
     # Get the Residence Time
     Tar = 1/np.abs(up[-1])*np.sign(up[0])/KM * np.trapz(yp[-1]-yp,tp)
     # Time Constant

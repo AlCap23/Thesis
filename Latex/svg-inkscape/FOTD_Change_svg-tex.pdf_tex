@@ -1,0 +1,209 @@
+%% Creator: Inkscape inkscape 0.92.2, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'FOTD_Change_svg-tex.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{566.92913485bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,1.125)%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.11882639,0.73607477){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{−10}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.11882639,0.78712947){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{−8}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.11882639,0.83818417){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{−6}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.11882639,0.88923887){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{−4}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.11882639,0.94029356){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{−2}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.20923913,1.00058334){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{K_{11}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=7]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.3210003,0.7632787){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{2}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=8]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.3210003,0.80964237){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{3}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=9]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.3210003,0.85600606){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{4}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=10]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.3210003,0.90236972){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{5}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=11]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.3210003,0.94873339){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{6}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=12]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.41141303,1.00058334){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{K_{12}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=13]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.52317419,0.76068855){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{−8}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=14]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.52317419,0.82804819){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{−6}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=15]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.52317419,0.8954078){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{−4}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=16]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.52317419,0.96276745){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{−2}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=17]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.61358696,1.00058334){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{K_{21}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=18]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.72534811,0.76389029){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{−16}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=19]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.72534811,0.80593875){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{−14}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=20]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.72534811,0.84798719){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{−12}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=21]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.72534811,0.89003566){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{−10}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=22]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.72534811,0.93208413){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{−8}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=23]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.72534811,0.97413258){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{−6}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=24]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.81576088,1.00058334){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{K_{22}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=25]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.11882639,0.43441042){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{10}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=26]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.11882639,0.47448496){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{20}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=27]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.11882639,0.51455944){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{30}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=28]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.11882639,0.55463398){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{40}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=29]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.11882639,0.59470846){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{50}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=30]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.11882639,0.63478299){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{60}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=31]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.11882639,0.6748575){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{70}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=32]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.20923913,0.70080391){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{T_{11}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=33]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.3210003,0.44773718){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{10}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=34]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.3210003,0.5152027){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{20}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=35]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.3210003,0.58266822){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{30}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=36]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.3210003,0.65013374){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{40}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=37]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.41141303,0.70080391){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{T_{12}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=38]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.52317419,0.44773718){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{10}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=39]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.52317419,0.5152027){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{20}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=40]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.52317419,0.58266822){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{30}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=41]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.52317419,0.65013374){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{40}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=42]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.61358696,0.70080391){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{T_{21}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=43]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.72534811,0.45853772){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{20}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=44]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.72534811,0.52055827){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{40}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=45]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.72534811,0.58257881){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{60}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=46]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.72534811,0.64459936){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{80}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=47]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.81576088,0.70080391){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{T_{22}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=48]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.15946147,0.12182577){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{280}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=49]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.23604249,0.12182577){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{300}}}%
+    \put(0.20923913,0.09842399){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{T_{amb} [K]}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=50]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.11882639,0.17533499){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{10}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=51]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.11882639,0.23638924){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{20}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=52]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.11882639,0.29744349){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{30}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=53]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.11882639,0.3584978){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{40}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=54]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.20923913,0.40102449){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{L_{11}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=55]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.36163539,0.12182577){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{280}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=56]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.43821641,0.12182577){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{300}}}%
+    \put(0.41141303,0.09842399){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{T_{amb} [K]}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=57]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.3210003,0.16189567){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{10}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=58]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.3210003,0.23191918){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{20}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=59]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.3210003,0.30194263){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{30}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=60]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.3210003,0.37196613){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{40}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=61]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.41141303,0.40102449){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{L_{12}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=62]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.56380931,0.12182577){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{280}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=63]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.64039034,0.12182577){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{300}}}%
+    \put(0.61358696,0.09842399){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{T_{amb} [K]}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=64]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.52317419,0.16691798){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{5.0}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=65]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.52317419,0.2106877){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{7.5}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=66]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.52317419,0.25445748){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{10.0}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=67]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.52317419,0.2982272){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{12.5}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=68]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.52317419,0.34199698){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{15.0}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=69]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.61358696,0.40102449){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{L_{21}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=70]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.76598318,0.12182577){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{280}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=71]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.8425642,0.12182577){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{300}}}%
+    \put(0.81576088,0.09842399){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{T_{amb} [K]}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=72]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.72534811,0.15715081){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{10}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=73]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.72534811,0.21992099){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{20}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=74]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.72534811,0.28269122){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{30}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=75]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.72534811,0.34546145){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{40}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=76]{FOTD_Change_svg-tex.pdf}}%
+    \put(0.81576088,0.40102449){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{L_{22}}}}%
+  \end{picture}%
+\endgroup%

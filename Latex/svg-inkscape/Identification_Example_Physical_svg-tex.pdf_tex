@@ -1,0 +1,99 @@
+%% Creator: Inkscape inkscape 0.92.2, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'Identification_Example_Physical_svg-tex.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{538.58267903bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.78947368)%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{Identification_Example_Physical_svg-tex.pdf}}%
+    \put(0.11850146,0.42947393){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.0}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{Identification_Example_Physical_svg-tex.pdf}}%
+    \put(0.11850146,0.48622329){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.5}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{Identification_Example_Physical_svg-tex.pdf}}%
+    \put(0.11850146,0.54297268){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{1.0}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{Identification_Example_Physical_svg-tex.pdf}}%
+    \put(0.11850146,0.59972205){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{1.5}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{Identification_Example_Physical_svg-tex.pdf}}%
+    \put(0.11850146,0.65647142){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{2.0}}}%
+    \put(0.08157584,0.55927033){\color[rgb]{0.14901961,0.14901961,0.14901961}\rotatebox{90}{\makebox(0,0)[b]{\smash{Temperature [K]}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{Identification_Example_Physical_svg-tex.pdf}}%
+    \put(0.12500001,0.7058772){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{T_{amb}=290 K, Q_C = -50000 W}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=7]{Identification_Example_Physical_svg-tex.pdf}}%
+    \put(0.83686554,0.47046855){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Fan}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=8]{Identification_Example_Physical_svg-tex.pdf}}%
+    \put(0.83686554,0.4442046){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Valve}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=9]{Identification_Example_Physical_svg-tex.pdf}}%
+    \put(0.15904911,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{0}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=10]{Identification_Example_Physical_svg-tex.pdf}}%
+    \put(0.27686606,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{100}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=11]{Identification_Example_Physical_svg-tex.pdf}}%
+    \put(0.39468303,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{200}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=12]{Identification_Example_Physical_svg-tex.pdf}}%
+    \put(0.5125,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{300}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=13]{Identification_Example_Physical_svg-tex.pdf}}%
+    \put(0.63031699,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{400}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=14]{Identification_Example_Physical_svg-tex.pdf}}%
+    \put(0.74813393,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{500}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=15]{Identification_Example_Physical_svg-tex.pdf}}%
+    \put(0.86595087,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{600}}}%
+    \put(0.5125,0.05448834){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{Time [s]}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=16]{Identification_Example_Physical_svg-tex.pdf}}%
+    \put(0.11850146,0.13143257){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{−1.0}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=17]{Identification_Example_Physical_svg-tex.pdf}}%
+    \put(0.11850146,0.17378225){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{−0.5}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=18]{Identification_Example_Physical_svg-tex.pdf}}%
+    \put(0.11850146,0.216132){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.0}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=19]{Identification_Example_Physical_svg-tex.pdf}}%
+    \put(0.11850146,0.25848168){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.5}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=20]{Identification_Example_Physical_svg-tex.pdf}}%
+    \put(0.11850146,0.30083137){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{1.0}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=21]{Identification_Example_Physical_svg-tex.pdf}}%
+    \put(0.11850146,0.34318108){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{1.5}}}%
+    \put(0.07073143,0.23415072){\color[rgb]{0.14901961,0.14901961,0.14901961}\rotatebox{90}{\makebox(0,0)[b]{\smash{Pressure [bar]}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=22]{Identification_Example_Physical_svg-tex.pdf}}%
+  \end{picture}%
+\endgroup%

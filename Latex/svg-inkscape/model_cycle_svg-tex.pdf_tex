@@ -1,0 +1,97 @@
+%% Creator: Inkscape inkscape 0.92.2, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'model_cycle_svg-tex.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{225.66242249bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,1.05549909)%
+    \put(0.06993818,0.80124153){\color[rgb]{0,0,0}\rotatebox{-90}{\makebox(0,0)[b]{\smash{}}}}%
+    \put(0.28492622,0.47528886){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{}}}%
+    \put(-0.08957022,0.39900343){\color[rgb]{0,0,0}\rotatebox{90}{\makebox(0,0)[b]{\smash{}}}}%
+    \put(-0.07569973,0.39900343){\color[rgb]{0,0,0}\rotatebox{90}{\makebox(0,0)[b]{\smash{}}}}%
+    \put(1.07553195,0.68334298){\color[rgb]{0,0,0}\rotatebox{90}{\makebox(0,0)[b]{\smash{}}}}%
+    \put(1.08940445,0.68334301){\color[rgb]{0,0,0}\rotatebox{90}{\makebox(0,0)[b]{\smash{}}}}%
+    \put(0.97844109,0.93994418){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{}}}%
+    \put(0.97844109,0.92607402){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{}}}%
+    \put(0.3889533,0.48222508){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{}}}%
+    \put(0.3889533,0.4683559){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{}}}%
+    \put(0.42363122,0.18401308){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{}}}%
+    \put(0.42363122,0.1701439){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{}}}%
+    \put(1.08246819,0.32965097){\color[rgb]{0,0,0}\rotatebox{90}{\makebox(0,0)[b]{\smash{}}}}%
+    \put(1.09633736,0.32965098){\color[rgb]{0,0,0}\rotatebox{90}{\makebox(0,0)[b]{\smash{}}}}%
+    \put(0.2433154,0.21869096){\color[rgb]{0,0,0}\rotatebox{-90}{\makebox(0,0)[b]{\smash{}}}}%
+    \put(0.22944624,0.21869095){\color[rgb]{0,0,0}\rotatebox{-90}{\makebox(0,0)[b]{\smash{}}}}%
+    \put(0.59700745,0.48222508){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{}}}%
+    \put(0.59700745,0.4683559){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{}}}%
+    \put(0.56926908,0.04531139){\color[rgb]{0,0,0}\rotatebox{90}{\makebox(0,0)[b]{\smash{}}}}%
+    \put(-0.13811606,0.7249538){\color[rgb]{0,0,0}\rotatebox{90}{\makebox(0,0)[b]{\smash{}}}}%
+    \put(-0.12424579,0.7249538){\color[rgb]{0,0,0}\rotatebox{90}{\makebox(0,0)[b]{\smash{}}}}%
+    \put(0.20864083,0.94687943){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{}}}%
+    \put(1.20036442,0.68334298){\color[rgb]{0,0,0}\rotatebox{-90}{\makebox(0,0)[b]{\smash{}}}}%
+    \put(1.0824682,0.50996677){\color[rgb]{0,0,0}\rotatebox{90}{\makebox(0,0)[b]{\smash{}}}}%
+    \put(0.84667245,0.19094934){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{}}}%
+    \put(0.84667245,0.17708016){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{}}}%
+    \put(0.0976785,0.48222508){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{}}}%
+    \put(0.0976785,0.4683559){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{}}}%
+    \put(-0.13118093,0.76656463){\color[rgb]{0,0,0}\rotatebox{90}{\makebox(0,0)[b]{\smash{}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{model_cycle_svg-tex.pdf}}%
+    \put(0.95540892,0.61266883){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{1}}}%
+    \put(0.82638874,0.88814125){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{2}}}%
+    \put(0.23479542,0.90135297){\color[rgb]{0.74509804,0.11764706,0.23529412}\makebox(0,0)[lb]{\smash{3}}}%
+    \put(0.01566692,0.53901624){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{4}}}%
+    \put(0.16190657,0.31678888){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{5}}}%
+    \put(-0.00055836,0.71477293){\color[rgb]{0.74509804,0.11764706,0.23529412}\makebox(0,0)[lb]{\smash{A_{eff}}}}%
+    \put(0.55279086,0.01574312){\color[rgb]{0.88235294,0.42745098,0}\makebox(0,0)[lb]{\smash{ \dot{Q}_{In}}}}%
+    \put(0.67460518,0.61007646){\color[rgb]{0.88235294,0.42745098,0}\makebox(0,0)[lb]{\smash{T_{amb}}}}%
+    \put(0.4910663,0.6625074){\color[rgb]{0.74509804,0.11764706,0.23529412}\makebox(0,0)[lb]{\smash{n}}}%
+    \put(0.43495034,1.01147776){\color[rgb]{0.88235294,0.42745098,0}\makebox(0,0)[lb]{\smash{ \dot{Q}_{Out}}}}%
+    \put(0.65501762,0.54797556){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{}}}%
+    \put(0.67014951,0.53710009){\color[rgb]{0.88235294,0.42745098,0}\makebox(0,0)[lb]{\smash{p_{amb}}}}%
+    \put(0.29290612,0.53413965){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{7}}}%
+    \put(0.43478613,0.308216){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{6}}}%
+  \end{picture}%
+\endgroup%

@@ -1,0 +1,93 @@
+%% Creator: Inkscape inkscape 0.92.2, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'DisturbanceExample_Physical3_svg-tex.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{538.58267903bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.78947368)%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{DisturbanceExample_Physical3_svg-tex.pdf}}%
+    \put(0.11850146,0.41867148){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{274.5}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{DisturbanceExample_Physical3_svg-tex.pdf}}%
+    \put(0.11850146,0.47510643){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{275.0}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{DisturbanceExample_Physical3_svg-tex.pdf}}%
+    \put(0.11850146,0.53154137){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{275.5}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{DisturbanceExample_Physical3_svg-tex.pdf}}%
+    \put(0.11850146,0.58797628){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{276.0}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{DisturbanceExample_Physical3_svg-tex.pdf}}%
+    \put(0.11850146,0.64441122){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{276.5}}}%
+    \put(0.06092558,0.55927034){\color[rgb]{0.14901961,0.14901961,0.14901961}\rotatebox{90}{\makebox(0,0)[b]{\smash{Temperature [K]}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{DisturbanceExample_Physical3_svg-tex.pdf}}%
+    \put(0.12500001,0.7058772){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{T_{amb}=272 K, Q_C = -65000 W}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=7]{DisturbanceExample_Physical3_svg-tex.pdf}}%
+    \put(0.70476245,0.47046855){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Decentralized Control}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=8]{DisturbanceExample_Physical3_svg-tex.pdf}}%
+    \put(0.70476245,0.4442046){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{R2D2}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=9]{DisturbanceExample_Physical3_svg-tex.pdf}}%
+    \put(0.16789295,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{6000}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=10]{DisturbanceExample_Physical3_svg-tex.pdf}}%
+    \put(0.32275513,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{8000}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=11]{DisturbanceExample_Physical3_svg-tex.pdf}}%
+    \put(0.47761727,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{10000}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=12]{DisturbanceExample_Physical3_svg-tex.pdf}}%
+    \put(0.63247947,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{12000}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=13]{DisturbanceExample_Physical3_svg-tex.pdf}}%
+    \put(0.78734167,0.0788956){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{14000}}}%
+    \put(0.5125,0.05448834){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{Time [s]}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=14]{DisturbanceExample_Physical3_svg-tex.pdf}}%
+    \put(0.11850146,0.13544695){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{49.8}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=15]{DisturbanceExample_Physical3_svg-tex.pdf}}%
+    \put(0.11850146,0.18732471){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{50.0}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=16]{DisturbanceExample_Physical3_svg-tex.pdf}}%
+    \put(0.11850146,0.23920252){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{50.2}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=17]{DisturbanceExample_Physical3_svg-tex.pdf}}%
+    \put(0.11850146,0.29108028){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{50.4}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=18]{DisturbanceExample_Physical3_svg-tex.pdf}}%
+    \put(0.11850146,0.34295806){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{50.6}}}%
+    \put(0.07125073,0.23415072){\color[rgb]{0.14901961,0.14901961,0.14901961}\rotatebox{90}{\makebox(0,0)[b]{\smash{Pressure [bar]}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=19]{DisturbanceExample_Physical3_svg-tex.pdf}}%
+  \end{picture}%
+\endgroup%

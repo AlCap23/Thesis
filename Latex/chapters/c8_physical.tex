@@ -1,6 +1,295 @@
+%!TEX root = ../studentischeArbeiten.tex
 \chapter{Application to Physical Process Models}
 \label{c:physical}
 
-\section{Simulation Model Description} \label{c:physical:s:sim}
+\section{Process Description and Problem Statement} \label{c:physical:s:process}
 
-\section{Simulation Results} \label{c:physical:s:results}
+The aim of enginnering thermodynamics is - as stated earlier in Chap. \ref{c:intro} - to understand and optimize the  behaviour of technical systems used for energy transformation and transportation. Hence, a connection to the field of optimal control is a logical extension to maximize the efficiency. As described in sec. \ref{c:thermo:s:process} the systems states are general interconnected by both physical components and physical phenomena. In the following section the coupling due to physical phenomena will be investigated.\\
+
+The process at hand is an anticlockwise refrigeration process, shown in Fig.\ref{c:physical:f:model} in technical schematics and in Fig.\ref{c:physical:f:ph} in the pressure-specific enthalpy diagram. The model used for simulation in the scope of this work was provided and consists of a simple valve, according to Eq.\ref{c:thermo:e:throttle}, heat exchanger model fitted to experimentation data and a compressor modeled with a linear efficiency.\\
+
+\begin{minipage}[c]{0.45\textwidth}
+\includesvg[width = \textwidth]{Graphics/model_cycle}
+\caption{Refrigeration cycle, component view}
+\label{c:physical:f:model}
+\end{minipage}%
+\hspace{0.05\textwidth}%
+\begin{minipage}[c]{0.45\textwidth}
+\includesvg[width = \textwidth]{Graphics/ph_cycle}
+\caption{Pressure over specific enthalpy diagram of the refrigeration cycle. }
+\label{c:physical:f:ph}
+\end{minipage}
+
+Starting at the inlet of the compressor, Point 1, mechanical energy is given into the refrigerant increasing pressure and specific enthalpy in an isentropic process. Then, energy is subtracted isobaric in form of heat between the point 2 and 3 via a heat exchanger, called gascooler. Afterwards, the pressure drops to via a throttle valve from point 3 to point 4 isothermal, where it reaches a settling tank. There, the fluid phase is separated from the gas phase. The purely gas phase is transported to the inlet of the compressor via another isothermal throttle between point 7 and 1. The pressure of the liquid phase is also reduced via a throttle between point 5 and 6, before another heat exchanger adds energy isobaric to the system.\\
+
+The problem description from a control perspective involves the control of five variables, the high pressure, medium pressure, the overheating and undercooling. In the scope of this work, the control of high pressure and undercooling is investigated.This is conducted via the revolutions of the fan to control the difference in temperature between point 2 and 3 and the effective area of the valve, which controls the pressure drop between point 3 and 4.\\
+
+At first, the theoretical properties of the individual parts are investigated. The process can be divided in three basic processes:
+\begin{itemize}
+\item Isobaric process with heat supply
+\item Adiabatic isenthalpic process 
+\item Isentropic process with exchange of (mechanical) work
+\end{itemize}
+These processes can be characterized using the First Law of Thermodynamics in differential form, see e.g. \cite[p.25]{Weigand2013}:
+
+\begin{align}
+\begin{split}
+du &= d \left( h - pv \right ) \\ &= dh - v dp - p dv \\
+&= \delta q + \delta w_{diss} - p dv
+\end{split}
+\label{c:thermo:e:firstlaw}
+\end{align}
+\nomenclature{$u$}{Specific Inner Energy}
+\nomenclature{$h$}{Specific Enthalpy}
+\nomenclature{$p$}{Pressure}
+\nomenclature{$v$}{Specific Volume}
+\nomenclature{$q$}{Specific Heat}
+\nomenclature{$w$}{Specific Work}
+
+Which states that the change in inner energy $u \in \mathbb{R}$ is equal to the sum of heat $\delta Q \in \mathbb{R}$ and dissipated work $\delta w_{diss} \in \mathbb{R}$ minus the pressure-volume work, depending on the pressure $p \in \mathbb{R}^+$ times the change in specific volume $v \in \mathbb{R}^+$. The internal energy can be related to the specific enthalpy $h = u +pv \in \mathbb{R}$.\\
+
+The Second Law of Thermodynamics as formulated by Gibbs \cite[p.59]{Struchtrup2014} is given by:
+
+\begin{align}
+\begin{split}
+T ds &= du + p dv \\
+ &= d( h - pv ) + p dv \\
+ &= dh - vdp
+\end{split}
+\label{c:thermo:e:secondlaw}
+\end{align}
+\nomenclature{$T$}{Temperature}
+\nomenclature{$s$}{Specific Enthropy}
+
+Defining two independent to be state variables the specific volume $v$ and temperature $T$ and substitute Eq.\ref{c:thermo:e:firstlaw} in Eq.\ref{c:thermo:e:secondlaw}:
+
+\begin{align}
+\begin{split}
+T ds &= du + p dv \\
+&= \delta q  + \delta w_{diss}
+\end{split}
+\label{c:thermo:e:firstandsecondlaw}
+\end{align}
+
+Since the total differential of the inner energy is given by
+
+
+\begin{align}
+\begin{split}
+du &= \left( \frac{du}{dT} \right)_v dT  + \left( \frac{du}{dv} \right)_T dv
+\end{split}
+\label{c:thermo:e:innerenergydiff}
+\end{align}
+
+Substitute Eq. \ref{c:thermo:e:innerenergydiff} in \ref{c:thermo:e:firstandsecondlaw} while using the definition for the specific heat capacity at constant volume $c_V = \left(\frac{\partial u}{\partial T}\right)_v \in \mathbb{R}^+$ holds:
+
+\begin{align*}
+\begin{split}
+T ds &= \left( \frac{\partial u}{\partial T} \right)_v dT  + \left( \frac{\partial u}{ \partial v} \right)_T dv + p dv \\
+&= c_v dT + \left[ p + \left( \frac{\partial u}{\partial v}\right)_T\right] dv
+\end{split}
+\end{align*}
+
+Using the relation \cite[p.375]{Struchtrup2014} $T\left( \frac{\partial s}{\partial v}\right)_T = \left( \frac{\partial u}{\partial v}\right)_T + p $ and the Maxwell Relation $\left( \frac{\partial s}{\partial v}\right)_T = \left( \frac{\partial p}{\partial T}\right)_v = \frac{\beta}{\kappa} $ the equation becomes:
+
+\begin{align}
+\begin{split}
+T ds &= \left( \frac{\partial u}{\partial T} \right)_v dT  + \left( \frac{\partial u}{ \partial v} \right)_T dv + p dv \\
+\delta q &= c_v dT + T \frac{\beta}{\kappa} dv
+\end{split}
+\label{c:thermo:e:isobaricHeat}
+\end{align}
+\nomenclature{$c_v$}{Specific Heat Capacity at Constant Volume}
+\nomenclature{$\beta$}{Coefficient of Thermal Expansion at Constant Pressure}
+\nomenclature{$\kappa$}{Coefficient of Compressibility}
+
+The coefficient of thermal expansion at constant pressure $\beta \in \mathbb{R}$ is defined by $\frac{1}{v}\left( \frac{dv}{dT} \right)_p = \beta$ and the compressibility $\kappa = \left( \frac{\partial v}{\partial p} \right)_T \in \mathbb{R}^+$ substitute the differential change of pressure due to temperature at constant volume via the chain rule.\newline
+
+Eq. \ref{c:thermo:e:isobaricHeat} states that the exchange of heat in the isobaric process results in a change of specific volume and temperature. \\
+
+The massflow $\frac{dm}{dt} = \dot{m} \in \mathbb{R}$ from A to B through a throttle can be described by a function of the density $\rho = \frac{1}{v} \in \mathbb{R}^+$, the effective area $A_{eff} \in \mathbb{R}^+$ and the difference in pressure 
+
+\begin{align}
+\begin{split}
+\dot{m} & = A_{eff} \sqrt{2 \rho_A  \left( p_A -p_B \right) }
+\end{split}
+\label{c:thermo:e:throttle}
+\end{align}
+\nomenclature{$A_{eff}$}{Effective Area}
+\nomenclature{$\rho$}{Density , Specific Mass}
+\nomenclature{$\dot{m}$}{Massflow}
+
+which directly relates the difference pressure $p_A - p_B = \Delta p > 0$ to the exchange of heat. Assume a constant mass flow, a constant effective Area and a constant pressure niveau $p_B$ due to perfect controller of the system, the energetic coupling between fan and pressure can be seen. If heat is added before A as described by Eq. \ref{c:thermo:e:isobaricHeat} the Temperature in A will be influenced as well the pressure due to the change in the specific volume and therefore the density via Eq.\ref{c:thermo:e:throttle}.\\
+
+The isenthalpic, adiabat throttling process can be described by the Joule-Thomson Coefficient \cite[p.387]{Struchtrup2014}. The equation relates the change in temperature and pressure to each other via
+
+\begin{align}
+\begin{split}
+\left( \frac{\partial T}{\partial p}\right)_h &= -\frac{1}{c_p} \left(\frac{\partial h}{ \partial p} \right)_T \\
+&= \frac{v}{c_p}\left( T\beta - 1 \right) 
+\end{split}
+\label{c:thermo:e:joulethomson}
+\end{align}
+
+Where $c_p = \left(\frac{\partial h}{\partial T} \right)_p \in \mathbb{R}^+$ is the specific heat at constant pressure which relates the change in entropy due to a change in temperature.
+Eq. \ref{c:thermo:e:joulethomson} and Eq. \ref{c:thermo:e:throttle} relate the change in pressure via variation of the effective Area to the change in temperature. \\
+
+Eq. \ref{c:thermo:e:isobaricHeat}, \ref{c:thermo:e:throttle} and \ref{c:thermo:e:joulethomson} show the thermodynamic coupling of the system. They are highly nonlinear and give an ideal coupling for the quasi stationary processes and the choosen states pressure and temperature. Since both couplings take effect at the same time, a reasonable estimation of the process trajectory is difficult. \\
+
+An important fact is that none of the equations above depend explicitly on the time. Rather,all coefficients above are functions of the thermodynamic states $p,v,T,s$ which are depending on time. Assuming quasi stationary behavior of the system for every coefficient $c \in \left\lbrace \beta, \kappa, c_v, c_p \right\rbrace$ can be related to the static gain of the couplings.\\
+
+\section{Identification of the FOTD model} \label{c:physical:s:identification}
+
+In the following section, the identification process is laid out and investigated within the simulation model. At first, some basics of the behavior shall be discussed. In Sec.\ref{c:physical:s:process} the thermodynamic properties of the gain has been investigated. The relations established before can be qualitatively extended to the whole technical system including the valve and the fan.\\
+
+To estimate the effects of a change in input, the energy of Point 3 is evaluated. Assuming that the initial change in input result in a change of the internal energy at the outlet of the gascooler, the energy conservation can be formulated as:
+
+\begin{align*}
+\begin{split}
+\int \left(\dot{m} c_p T_3 + \frac{\dot{m}}{\rho} p_3 \right) dt &=
+\int \left(\dot{m} c_p T_{3'} + \frac{\dot{m}}{\rho} p_{3'} \right) dt \\
+\rho c_p\left(T_{3} - T_{3'}\right)  + p_{3} - p_{3'} &= 0 \\
+\rho c_p \Delta T_u + \Delta p_u &= 0
+\end{split}
+\end{align*}
+
+From which can be concluded that the pressure and temperature change due to an external input $\Delta p_u, \Delta T_u \in \mathbb{R}$ are of opposite sign. \\
+
+Increasing the revolution speed of a fan will increase the amount of heat transported out of the systems boundaries. Hence, the gain will be negative, since the temperature will decrease. If the temperature will decrease $\Delta T_u > 0$ and therefore the pressure at Point 3 will decrease to ensure that the energy of the system is conserved by $\Delta p_u < 0$.\\
+
+Likewise, if the effective area of the throttle is increased, the pressure at the outlet of the gascooler will decrease, meaning $\Delta p_u > 0$. Hence, $\Delta T_u < 0$, meaning that the temperature after the excitation of the valve must be greater than before.\\
+
+\begin{figure}[H]
+\includesvg[width = \textwidth]{Graphics/ph_cycle_2}
+\caption{Pressure over specific enthalpy diagram of the refrigeration cycle, Effects of an increase in $A_{eff}$ (blue) and $n$ (green) }
+\label{c:physical:f:ph2}
+\end{figure}
+
+This is illustrated in Fig.\ref{c:physical:f:ph2}, where both processes are given qualitatively. In terms of the steady state gain of the transfer function matrix, this can be written as:
+
+\begin{align*}
+sign\left(\ma{G}_0 \right)
+= \begin{bmatrix}
+-1 & +1 \\
+-1 & -1 
+\end{bmatrix}
+\end{align*}
+
+This effect can be seen in Fig. \ref{c:physical:f:identification_example}, where a simulation of the system with an identification has been performed. Both the rotational speed of the fan and the effective area have been decreased to avoid crossing the saturated liquid line. The full line shows the impact of a change in the effective area on both the pressure and the temperature while the dashed line represents the influence of a change in the rotational speed of the fan. The identification has been performed at a ambient temperature $T_{amb} = 295 K $ with a heat of $\dot{Q}_{In} = -60 kW$ applied to the system. This results at an optimal working point of $\left( p_2, T_2 \right) = \left( 76.60 bar , 298.00 K\right)$ which is calculated using an formula based on optimization studies.
+
+\begin{figure}[H]
+\includesvg[width = \textwidth]{Graphics/Identification_Example_Physical}
+\caption{Example of the influence of scaled input steps within the simulation model}
+\label{c:physical:f:identification_example}
+\end{figure}
+
+It can be seen that the system is monotonic increasing and shows a very similar behavior to a higher order system. The system is identified using the area approach described in Ch.\ref{c:identification}. The transfer function matrix consisting of FOTD models is given by :
+
+\begin{align*}
+\ma{\hat{G}} = \begin{bmatrix}
+\frac{-2.363}{45.943s+1}e^{-17.381s} & 
+\frac{7.236}{49.723s+1}e^{-14.230s} \\
+\frac{-3.177}{26.225s+1}e^{-15.645s} &
+\frac{-4.399}{72.381s+1}e^{-7.953s}
+\end{bmatrix}
+\end{align*}
+
+However, these results can vary depending on the operating conditions, e.g. ambient temperature, the systems state, e.g. pressure and temperature at the outlet of the gascooler, and the parameter like piping length, compressor model etc.. Parameter studies have been performed to estimate the effect of dominant parameters of the system, e.g. the valve dynamics, fan dynamics and number of tubes of the heat exchanger. The evaluation of all results of this study would go beyond the scope of this work, but for reasons of completeness the influence of the cooling capacity and the ambient temperature on the FOTD parameter is shown in Fig. \ref{c:physical:f:parameter_variation}.
+
+\begin{figure}[H]
+\includesvg[width = \textwidth]{Graphics/FOTD_Change}
+\caption{Variation of the FOTD model parameter due to simulation parameter and operating conditions}
+\label{c:physical:f:parameter_variation}
+\end{figure}
+
+It can be noticed that while the gain of the transfer functions connected to the fan are sensitive to changes in the model parameter, the gain of transfer functions related to the valve are only different in an offset. $K_{11}$, the gain of the fan to the temperature, is decreasing over the ambient temperature. If the temperature difference between point 2 and 3 is large, smaller changes will occur because most of the heat is already transported out of the system. If the difference is small, large variations of the rotational speed will significantly increase the heat transported out of the system. Therefore the gain is large at lower ambient temperatures which correspond to lower pressure levels, where the distance between isotherms is large. The same reasoning can be used to explain the decrease of the gain from fan to pressure $K_{21}$ where an appropriate scaling with the nonlinear material values has to be taken into account.\\
+
+Likewise the transfer function gain $K_{22}$ is most likely depending on variations of the density and the mass flow through the valve, hence the nearly quadratic form and a variation given only by an offset. The same can be said for the gain $K_{12}$, also scaled with the nonlinear material values. An interesting property is given in form of the lags $T_{12},T_{21}$ which are identical for the marked example scenario. Hence, the time dependent behavior of the processes is most likely governed by its physical properties and not by the technical components. With the difference in delay, $L_{12} \geq L_{21}$, the assumption that the delay is strongly dependent on the mass flow and hence the fluid flow direction is obvious.\\
+
+To estimate the error $\Delta_D \in \mathbb{C}$ of the simple decoupling, given in terms of Eq.\ref{c:controller:e:complexerror}, the steady state of the system is evaluated for all parameter values and shown in Fig.\ref{c:physical:f:complex_error}. It can be seen that the error is within a certain limits and does not exceed $0.68$. Also, all variations of the system show a similar behavior, only scaled for ambient temperatures $T_{amb}\geq 283 ~K$. Hence, it is most likely that the error is strongly dominated by the transfer functions connected to the valve. The error can be also used to indicate the usefulness of deriving a model for the combined transfer functions $g_{ii}^* = g_{ii}+ \sum_{j=1}^{n_y} \Sigma_{ji}g_{ij}$, which is obviously useful for higher ambient temperatures.
+
+\begin{figure}[H]
+\includesvg[width = \textwidth]{Graphics/Physical_ErrorSteadyState}
+\caption{Error within the model use of the main diagonal within R2D2, steady state of the system}
+\label{c:physical:f:complex_error}
+\end{figure}
+
+Likewise, the relative magnitude of the transfer functions, $\ma{E} \in \mathbb{C}^{n_y \times n_y}$ as given in Eq.\ref{c:controller:e:InteractionMagnitude}, can be calculated. Fig.\ref{c:physical:f:relative_mag} shows the determinant of the relative magnitudes for the decentralized controller and the added simple decoupler, which indicates the usefulness with respect to tracking behavior even though an error is dynamics is given.
+
+\begin{figure}[H]
+\includesvg[width = \textwidth]{Graphics/Physical_Dominance_SteadyState}
+\caption{Relative magnitude within the model for decentralized control (full) and simple decoupling (dashed), steady state of the system}
+\label{c:physical:f:relative_mag}
+\end{figure}
+
+It is also important to notice that while in theory only the physical effects are measured, in practice effects of all other controllers will be measured and taken into account. Hence, not only the influence of the valve to the temperature of point 2 is measured but the effect of the valve on point 2 and all closed loops of the system, meaning the loops for controlling points $(1,3,4,5,6,7)$.\\
+
+
+\newpage
+\section{Closed Loop Results} \label{c:physical:s:closedloop}
+
+In the following section, some results of the autotuning methods are shown. The simulation has used a very robust controller to derive a steady state, where the controller was switched of and the experiment for identification has been performed. Afterwards, the model with the calculated controller parameters has been started and evaluated with respect to disturbance rejection and tracking performance. A static decoupled system is not explicitly given, since the simulation was not been able to start in all cases with the controller at hand.\\
+
+Three cases are presented and the closed loop behavior with respect to tracking performance and disturbance rejection is shown. At first, the identification example as shown in Fig.\ref{c:physical:f:identification_example} is examined. The process operates with $T_{amb} = 290 K,~Q_C = -50 kW$. In Fig.\ref{c:physical:f:disturbance1} an input disturbance is simulated with a scaled step function acting on the effective Area at $6000~s$ and likewise at $10000~s$ for the rotational speed.
+
+\begin{figure}[H]
+\includesvg[width = \textwidth]{Graphics/DisturbanceExample_Physical}
+\caption{Disturbance rejection of the closed loop simulated by a step acting on the systems input, Example 1}
+\label{c:physical:f:disturbance1}
+\end{figure}
+
+It can be seen that both temperature and pressure act immediately on the disturbance. However, the controller enhanced by a simple decoupling method is able to return to the set point much faster than its purely decentralized counterpart. This is an indicator for the effect of the interconnections in the system, since the disturbance signal is able to spread out over all loops and hence last longer in the control loop if no compensation in form of the splitter is given.\\
+
+Additionally, the overshoot due to the rejections is decreased, which can be related to the interconnections as well, since any error acts on every output for a purely decentralized control.\\
+
+In Fig.\ref{c:physical:f:tracking1} the set point of pressure has been changed at $6000~s$ by a unit step, so is the set point of the temperature at $10000~s$. The effects due to interaction are visible immediately, since the temperature is influenced by the excitation of the valve. Due to the coupling of the loops, this resembles in an overshoot of the pressure. Likewise the set point change in temperature acts on the pressure, where the effects are also minimized due to the splitter.
+
+\begin{figure}[H]
+\includesvg[width = \textwidth]{Graphics/TrackingExample_Physical}
+\caption{Tracking behavior of the closed loop simulated by a step acting on the systems set point, Example 1}
+\label{c:physical:f:tracking1}
+\end{figure}
+
+Next, both ambient temperature and cooling capacity have been changed to 
+$T_{amb} = 295 K,~Q_C = -60 kW$. The disturbance rejection is shown in Fig.\ref{c:physical:f:disturbance2}, the tracking performance in Fig.\ref{c:physical:f:tracking2}. Both scenarios show similar behavior by reducing both settling time and magnitude of the interaction while performing better with respect to tracking behavior.
+
+\begin{figure}[H]
+\includesvg[width = \textwidth]{Graphics/DisturbanceExample_Physical2}
+\caption{Disturbance rejection of the closed loop simulated by a step acting on the systems input, Example 2}
+\label{c:physical:f:disturbance2}
+\end{figure}
+
+It is worth noticing that the coupling between the valve and temperature has nearly canceled out, as can be seen in Fig.\ref{c:physical:f:tracking2}. This indicates a strong similarity between both processes with respect to its dynamics. Likewise, the strong interconnection between the fan and the pressure is weakened by the use of a splitter.
+
+\begin{figure}[H]
+\includesvg[width = \textwidth]{Graphics/TrackingExample_Physical2}
+\caption{Tracking behavior of the closed loop simulated by a step acting on the systems set point, Example 2}
+\label{c:physical:f:tracking2}
+\end{figure}
+
+The last example is operated at $T_{amb} = 272 K,~Q_C = -65 kW$. Again, the use of a splitter minimizes the distribution of disturbances throughout the closed loop system, as can be seen in Fig.\ref{c:physical:f:disturbance3}. While the settling time is not enhanced significant, the overshoot due to a disturbance in the rotational speed is compensated quicker.\\
+
+The tracking behavior of the process is shown in Fig.\ref{c:physical:f:tracking3}. The benefits of the splitter with respect to set point change are clearly visible, since both disturbances due to interconnections can be minimized while keeping the performance of the decentralized control.\\
+
+\begin{figure}[H]
+\includesvg[width = \textwidth]{Graphics/DisturbanceExample_Physical3}
+\caption{Disturbance rejection of the closed loop simulated by a step acting on the systems input, Example 3}
+\label{c:physical:f:disturbance3}
+\end{figure}
+
+
+From the examples given above, the nonlinearity of the system is clearly visible in the performance of the closed loop and the splitter. While not being always useful with respect to disturbance rejection, the compensation of the signals never amplifies the unwanted behavior. Instead in almost all cases the tracking performance is enhanced while the disturbance rejection is at least as good as given by the not compensated controller.\\
+
+\section{Review}\label{c:physical:s:review}
+
+This chapter has given some important insights to the system and the behavior of the applied identification process. The FOTD model of all transfer functions is shown to be sensitive to change in physical parameter and operational conditions.
+
+\begin{figure}[H]
+\includesvg[width = \textwidth]{Graphics/TrackingExample_Physical3}
+\caption{Tracking behavior of the closed loop simulated by a step acting on the systems set point, Example 3}
+\label{c:physical:f:tracking3}
+\end{figure}
+
+However, over all changes a similar behavior with respect to the ambient temperature is visible. The two major remarks with respect to the change in behavior and interconnection are visible in the gain of valve related transfer functions and the time constants of the cross couplings. Both $K_{12}$ and $K_{22}$ show only two characteristic curves over the ambient temperature, which indicates a dominant parameter for both curves. Likewise, the lag of the interconnections is equal while the delay differs strongly. As mentioned, this can most likely be related to the fluids physical properties and its flow direction.\\
+
+The examples given in Sec.\ref{c:physical:s:closedloop} show the benefits of the usage of a compensation of unwanted effects by applying the splitter. The behavior of all processes with respect to disturbance rejection have been at least as bad as the purely decentralized controller but mostly better. The tracking performance is enhanced in all cases, even though the error in the transfer function, shown in Fig.\ref{c:physical:f:complex_error}, is quite large.\\

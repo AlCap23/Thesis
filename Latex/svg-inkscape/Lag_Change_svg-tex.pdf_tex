@@ -1,0 +1,114 @@
+%% Creator: Inkscape inkscape 0.92.2, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'Lag_Change_svg-tex.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{538.58266172bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,1)%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{Lag_Change_svg-tex.pdf}}%
+    \put(0.11850146,0.54710698){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{10}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{Lag_Change_svg-tex.pdf}}%
+    \put(0.11850146,0.58642258){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{20}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{Lag_Change_svg-tex.pdf}}%
+    \put(0.11850146,0.62573814){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{30}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{Lag_Change_svg-tex.pdf}}%
+    \put(0.11850146,0.66505374){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{40}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{Lag_Change_svg-tex.pdf}}%
+    \put(0.11850146,0.70436933){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{50}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{Lag_Change_svg-tex.pdf}}%
+    \put(0.11850146,0.74368492){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{60}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=7]{Lag_Change_svg-tex.pdf}}%
+    \put(0.11850146,0.7830005){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{70}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=8]{Lag_Change_svg-tex.pdf}}%
+    \put(0.11850146,0.82231608){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{80}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=9]{Lag_Change_svg-tex.pdf}}%
+    \put(0.11850146,0.86163168){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{90}}}%
+    \put(0.08651646,0.70840909){\color[rgb]{0.14901961,0.14901961,0.14901961}\rotatebox{90}{\makebox(0,0)[b]{\smash{T_{11} [s ]}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=10]{Lag_Change_svg-tex.pdf}}%
+    \put(0.53639254,0.70840907){\color[rgb]{0.14901961,0.14901961,0.14901961}\rotatebox{90}{\makebox(0,0)[b]{\smash{T_{12} [s]}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=11]{Lag_Change_svg-tex.pdf}}%
+    \put(0.19705578,0.10521136){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{280}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=12]{Lag_Change_svg-tex.pdf}}%
+    \put(0.27711776,0.10521136){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{290}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=13]{Lag_Change_svg-tex.pdf}}%
+    \put(0.35717977,0.10521136){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{300}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=14]{Lag_Change_svg-tex.pdf}}%
+    \put(0.43724174,0.10521136){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{310}}}%
+    \put(0.30113636,0.08057785){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{T_{amb} [K]}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=15]{Lag_Change_svg-tex.pdf}}%
+    \put(0.11850146,0.1352888){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{10}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=16]{Lag_Change_svg-tex.pdf}}%
+    \put(0.11850146,0.17460436){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{20}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=17]{Lag_Change_svg-tex.pdf}}%
+    \put(0.11850146,0.21391998){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{30}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=18]{Lag_Change_svg-tex.pdf}}%
+    \put(0.11850146,0.25323555){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{40}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=19]{Lag_Change_svg-tex.pdf}}%
+    \put(0.11850146,0.29255117){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{50}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=20]{Lag_Change_svg-tex.pdf}}%
+    \put(0.11850146,0.33186674){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{60}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=21]{Lag_Change_svg-tex.pdf}}%
+    \put(0.11850146,0.3711823){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{70}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=22]{Lag_Change_svg-tex.pdf}}%
+    \put(0.11850146,0.41049793){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{80}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=23]{Lag_Change_svg-tex.pdf}}%
+    \put(0.11850146,0.44981349){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{90}}}%
+    \put(0.08651649,0.29659091){\color[rgb]{0.14901961,0.14901961,0.14901961}\rotatebox{90}{\makebox(0,0)[b]{\smash{T_{21} [s]}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=24]{Lag_Change_svg-tex.pdf}}%
+    \put(0.61978305,0.10521136){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{280}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=25]{Lag_Change_svg-tex.pdf}}%
+    \put(0.69984503,0.10521136){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{290}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=26]{Lag_Change_svg-tex.pdf}}%
+    \put(0.77990701,0.10521136){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{300}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=27]{Lag_Change_svg-tex.pdf}}%
+    \put(0.85996899,0.10521136){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{310}}}%
+    \put(0.72386363,0.08057785){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{T_{amb} [K]}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=28]{Lag_Change_svg-tex.pdf}}%
+    \put(0.53639257,0.29659089){\color[rgb]{0.14901961,0.14901961,0.14901961}\rotatebox{90}{\makebox(0,0)[b]{\smash{T_{22} [s]}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=29]{Lag_Change_svg-tex.pdf}}%
+  \end{picture}%
+\endgroup%
