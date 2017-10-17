@@ -1,2 +1,27 @@
+%!TEX root = ../studentischeArbeiten.tex
 \chapter{Conclusion and Outlook}
 \label{c:conclusion}
+
+The auto tuning strategy developed in this thesis has shown huge potential for the improvement of controlling refrigeration cycles. With an increase in controller performance likewise the usage of better operational conditions can be achieved. While a purely decentralized controller without prior knowledge of the couplings has been able to control the process fairly, huge improvement have been shown due to the usage of decoupling strategies.\\
+
+While no new methods have been developed, a robust toolchain of already existing practices was assembled. Certain aspects of these techniques have been refined and adapted to be fully automated, e.g. the use of an upper frequency bound for detuning. Moreover the detuning has been modified to allow a detuning for dynamic similarity instead of an upper bound to its amplitude.\\
+
+The FOTD model and the area based identification process have proven to work efficiently. Additionally, the applied AMIGO tuning rules have provided viable controller based on the information gained via the identification experiments. Monte Carlo studies for SISO systems have shown that even though the process model tend to high frequency error in gain and phase, the overall robustness of the closed loop system is within suitable limits. Moreover, the maximum sensitivity of the feedback system never exceeds a safe limit for scalar transfer functions within the samples of the study.\\
+
+The application of the methods to simple examples have shown the enhancement of leveraging further information given by the identification experiment given in form of a decoupler or compensator. The tracking performance can be enhanced significantly even though only the steady state gain has been used as a base. Furthermore the robustness of the given examples is evidentially increased and the tracking performance has been tightened. Likewise the effect of detuning could be investigate to increase the immunity to effects of load disturbances and measurement noise. The unfavorable effects of detuning could be observed via the decrease of the closed loops bandwidth.\\
+
+These effects have been supported by the results of the Monte Carlo simulation for multivariable systems. While the decentralized controller has shown to be robust for large sample sizes, the distribution of the maximum singular values tend to disperse to large values. The static decoupled system showed a precise, compact distribution within much tighter limits. Adversely the lower boundary of the robustness measures have been slightly larger than before. The compensation of the cross couplings merged the two results, giving both a high density of samples at lower values and likewise a smaller upper boundary. As before, the effects of detuning tend to decrease the mean of the maximum singular value and additionally lose tracking precision.\\
+
+The proposed methods have been evaluated for a physical simulation model. Several observations regarding the transfer function model parameter could be made within the variation of the simulation model parameter and approximately linked to physical effects and signal causalities. The simulation for controlling the chosen controlled variables, the temperature and pressure at the outlet of the gas cooler, have proven a good results for the decentralized control. These results have been provable enhanced by the use of a decoupler with regards to disturbance rejection and tracking performance.\\
+
+Further investigation on the subject can be viewed both from a control and thermodynamic perspective. A main focus of future work should be the investigation of the correlation of the refrigeration cycles parameterization and its effects on the FOTD model parameter to devise an effective gain scheduling strategy and hence enable the controller to be feasible over the full operational range.\\
+
+Additionally the conduct of the identification experiments have to be examined. A strategy has to be developed to ensure the safe identification of all transfer functions without the influence of controllers already active in the system subject to the experiment. This enables the design of a holistic control architecture.\\
+
+Likewise the effects of a dynamic decoupler should be investigated and evaluated with respect to model uncertainty, robustness and tracking performance. Presumably a dynamic compensation of cross couplings will further enhance the tracking performance, but due to the model error negative effects should be estimated as well.\\
+
+The systems performance has not yet been evaluated with respect to its thermodynamic performance. Hence, a simulation study including the calculation of the COP would be beneficial to estimate the effects of a robust controller.\\
+
+Most importantly the algorithm should be benchmarked on a testing facility not only to see the beneficial effects but also to reveal practical issues in the implementation.\\
+
+Another, more theoretical approach could consider the shift from PID control to sliding mode control. This modern, structure variable and robust control technique could enable a better overall performance with respect to robustness, tracking performance and nonlinearity of the process. A set of detuning rules could be developed with respect to the chosen implementation of the controllers architecture.

@@ -1,13 +1,28 @@
+%!TEX root = ../studentischeArbeiten.tex
 \chapter{Introduction}\label{c:intro}
 
-\section{Motivation}\label{c:intro:s:motivation}
+Refrigeration cycles play an important role in a variety of technical systems. They are key components to heating, ventilation, and air conditioning (HVAC) systems used in controlling the climate conditions of buildings, cars and trains. Additionally, refrigeration is used in applications ranging from industrial processes, e.g. in the beverage or pharmaceutical industry, supermarket refrigeration up to simple household refrigeration.\\
 
-The great motivational Speak follows in this section.
+The impact of these thermodynamical process with regards to energy consumption and likewise their impact on climate change is large. To reduce this impact, several options lay at hand. One major improvement is given by the use of new refrigerants, e.g. CO\textsubscript{2}. Oppose to conventional refrigerants, like R-134a which is still used in most systems as a working fluid, CO\textsubscript{2} (R-744) occurs naturally within the earth atmosphere. Due to this, the impact on global warming is much lower while also being non-flammable and non-toxic. Oppose to that, refrigeration cycles using R-744 can have a much lower coefficient of performance (COP) depending on the operational conditions, which results not only in higher operational costs but also in a high energy consumption of the given system.\\
 
-Hier schon folgende Quellen erwähnen:
+Recent studies estimated the share of supermarkets of Europe's total energy consumption with 3\% \cite{Arias2005b}, where the refrigeration is responsible for up to 50\% \cite{Rhiemeier2009} within each supermarket. Hence, the optimization of these cooling cycles holds major improvements for both the environmental impact and the cost efficiency. While improvements can be made by exchanging components or via heat recovery, the overall performance of a process is mostly governed by its regulation.\\
 
-\cite{Astrom1973}
+The optimal operational conditions for refrigeration cycle have been studied extensively, see e.g. \cite{Jensen2007}. While the optimal operational point is known, practical issues prevent its exploitation. Mostly, these issues originate in the insufficient design of the used controllers. Over 97\% of the controller used in process industry are proportional integral derivative (PID) controller \cite{Desborough2002}. Even though the technology is well known and has been established since the steam engine, recent studies show that a large amount does not work within its full potential. In \cite{Desborough2002}, where a large dataset of industrial implementations has been evaluated, only 30\% of all samples have been evaluated as acceptable and over 60\% show opportunity for large improvements. A more recent study, \cite{Starr2016}, show that up to 75\% of a process automation do not operate optimal due to a lag of tuning.\\
 
-\section{Literature Review}\label{c:intro:s:literature}
+Since most of the optimal operational conditions are near the saturated liquid line, the process is suspect to highly nonlinear behavior if the controlled variables exceed certain limits which most commonly results in an unstable system. To avoid these negative effects, the working points used are rather suboptimal, since the uncertainty of the controllers performance limits the optimal exploitation of the process. Recently, energy savings up to 15\% have been accomplished by the optimization of the control performance \cite{ATMOSPHERE}.\\
 
-The great literature review follows in this section.
+Therefore a logical step is to improve the operational performance of the refrigeration cycle by using an automated tuning for the PID controller. This thesis provides a robust automated tuning method for PID controller suited for controlling the class of thermodynamic processes at hand. To establish the algorithm, a suitable identification methods and tuning procedure are chosen. Moreover, the tracking performance and robustness is increased by leveraging the information about the physical coupling gained within the identification process.\\
+
+In Ch.\ref{c:control}, the basic concepts of control theory are laid out. The terms of stability and robustness are defined in the context of control and indicators for the systems robustness are introduced, explained and interpreted.\\
+
+Ch.\ref{c:identification} introduces the field of system identification. The chapter provides a detailed analysis of the model chosen to represent the variety of possible process designs. Furthermore two main identification methods based are introduced and evaluated for risks and advantages.\\
+
+Afterwards Ch.\ref{c:controller} gives an overview of the tuning rules used in this work. Furthermore it introduces the measures used to identify optimal pairings in multivariable process control and supplements brief examples. Moreover the effects of interconnections within the process and actions to minimize these effects are presented.\\
+
+In Ch.\ref{c:fotd} the established procedures are applied to simple theoretical models used throughout literature. The tuning process is explained in detail for the given model structure and applied to these system. The systems are then evaluated for their tracking performance and robustness.\\
+
+Ch.\ref{c:robustness} the methods used for identification are verified using monte carlo methods. Both scalar and multivariable transfer function models are generated and the identification and tuning methods are applied. The samples are then evaluated for robustness.\\
+
+The application on the simulation model based on the physical process is presented in Ch.\ref{c:physical}. Here the results of identification experiments and parameter variations are given. The effectiveness of the controller is outlined for both disturbance rejection and tracking performance.\\
+
+In Ch.\ref{c:conclusion} a conclusion of this work is drawn and proposals for future investigation on the subject are given.

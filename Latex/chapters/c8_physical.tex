@@ -2,9 +2,19 @@
 \chapter{Application to Physical Process Models}
 \label{c:physical}
 
+The following chapter applies the developed algorithms to a simulation model of the physical process. The aim of this chapter is to give an example of the algorithm applied to the physical process as well as to explain briefly the causalities acting inside the system from a physical perspective. \\
+
+In Sec.\ref{c:physical:s:process} the thermodynamic process is explained in detail. Furthermore an explanation for the coupling of the process is given in terms of the thermodynamic states.\\
+
+Sec.\ref{c:physical:s:identification} the identification results of the process are laid out. Estimates for the sign of the transfer functions are given. Furthermore the results of a parameter study varying the simulation model parameter is investigated briefly to show the effects of plant architecture and operational conditions.\\
+
+After Sec.\ref{c:physical:s:closedloop} the closed loop system is investigated. The behavior of the feedback system is qualitatively analyzed for disturbance rejection and tracking performance. The beneficial effects of a decoupling of the control process are shown.\\
+
+The chapter concludes with a short review in Sec.\ref{c:physical:s:review}.
+
 \section{Process Description and Problem Statement} \label{c:physical:s:process}
 
-The aim of enginnering thermodynamics is - as stated earlier in Chap. \ref{c:intro} - to understand and optimize the  behaviour of technical systems used for energy transformation and transportation. Hence, a connection to the field of optimal control is a logical extension to maximize the efficiency. As described in sec. \ref{c:thermo:s:process} the systems states are general interconnected by both physical components and physical phenomena. In the following section the coupling due to physical phenomena will be investigated.\\
+The aim of engineering thermodynamics is to understand and optimize the  behavior of technical systems used for energy transformation and transportation. Hence, a connection to the field of optimal control is a logical extension to maximize the efficiency. In the following section the process model of a refrigeration cycle is explained alongside a physical interpretation of the coupling.\\
 
 The process at hand is an anticlockwise refrigeration process, shown in Fig.\ref{c:physical:f:model} in technical schematics and in Fig.\ref{c:physical:f:ph} in the pressure-specific enthalpy diagram. The model used for simulation in the scope of this work was provided and consists of a simple valve, according to Eq.\ref{c:thermo:e:throttle}, heat exchanger model fitted to experimentation data and a compressor modeled with a linear efficiency.\\
 
@@ -20,16 +30,18 @@ The process at hand is an anticlockwise refrigeration process, shown in Fig.\ref
 \label{c:physical:f:ph}
 \end{minipage}
 
-Starting at the inlet of the compressor, Point 1, mechanical energy is given into the refrigerant increasing pressure and specific enthalpy in an isentropic process. Then, energy is subtracted isobaric in form of heat between the point 2 and 3 via a heat exchanger, called gascooler. Afterwards, the pressure drops to via a throttle valve from point 3 to point 4 isothermal, where it reaches a settling tank. There, the fluid phase is separated from the gas phase. The purely gas phase is transported to the inlet of the compressor via another isothermal throttle between point 7 and 1. The pressure of the liquid phase is also reduced via a throttle between point 5 and 6, before another heat exchanger adds energy isobaric to the system.\\
+Starting at the inlet of the compressor, Point 1, mechanical energy is given into the refrigerant increasing pressure and specific enthalpy in an isentropic process. Then, energy is subtracted isobaric in form of heat between the point 2 and 3 via a heat exchanger, also known as gas cooler. Afterwards, the pressure drops via a throttle valve from point 3 to point 4 isothermally, where it reaches the settling tank. The fluid phase is separated from the gas phase. The pure gas phase is transported to the inlet of the compressor via another isothermal throttle between point 7 and 1. The pressure of the liquid phase is also reduced via a throttle between point 5 and 6, before another heat exchanger adds energy to the system in an isobaric process step.\\
 
-The problem description from a control perspective involves the control of five variables, the high pressure, medium pressure, the overheating and undercooling. In the scope of this work, the control of high pressure and undercooling is investigated.This is conducted via the revolutions of the fan to control the difference in temperature between point 2 and 3 and the effective area of the valve, which controls the pressure drop between point 3 and 4.\\
+The problem description from a control perspective involves the control of five variables, the high pressure, medium pressure, the super heating and sub cooling. In the scope of this work, the control of high pressure level and sub cooling in form of the pressure and temperature at point 3 is investigated. This is controlling variables are the revolutions of the fan to control the difference in temperature between point 2 and 3 and the effective area of the valve, which controls the pressure drop between point 3 and 4.\\
 
-At first, the theoretical properties of the individual parts are investigated. The process can be divided in three basic processes:
+To investigate the physical background of the coupling, the theoretical properties of the individual parts are investigated. The process can be divided in three basic processes:
+
 \begin{itemize}
 \item Isobaric process with heat supply
 \item Adiabatic isenthalpic process 
 \item Isentropic process with exchange of (mechanical) work
 \end{itemize}
+
 These processes can be characterized using the First Law of Thermodynamics in differential form, see e.g. \cite[p.25]{Weigand2013}:
 
 \begin{align}
@@ -81,7 +93,7 @@ du &= \left( \frac{du}{dT} \right)_v dT  + \left( \frac{du}{dv} \right)_T dv
 \label{c:thermo:e:innerenergydiff}
 \end{align}
 
-Substitute Eq. \ref{c:thermo:e:innerenergydiff} in \ref{c:thermo:e:firstandsecondlaw} while using the definition for the specific heat capacity at constant volume $c_V = \left(\frac{\partial u}{\partial T}\right)_v \in \mathbb{R}^+$ holds:
+Substitute Eq.\ref{c:thermo:e:innerenergydiff} in \ref{c:thermo:e:firstandsecondlaw} while using the definition for the specific heat capacity at constant volume $c_V = \left(\frac{\partial u}{\partial T}\right)_v \in \mathbb{R}^+$ holds:
 
 \begin{align*}
 \begin{split}
@@ -119,9 +131,9 @@ The massflow $\frac{dm}{dt} = \dot{m} \in \mathbb{R}$ from A to B through a thro
 \nomenclature{$\rho$}{Density , Specific Mass}
 \nomenclature{$\dot{m}$}{Massflow}
 
-which directly relates the difference pressure $p_A - p_B = \Delta p > 0$ to the exchange of heat. Assume a constant mass flow, a constant effective Area and a constant pressure niveau $p_B$ due to perfect controller of the system, the energetic coupling between fan and pressure can be seen. If heat is added before A as described by Eq. \ref{c:thermo:e:isobaricHeat} the Temperature in A will be influenced as well the pressure due to the change in the specific volume and therefore the density via Eq.\ref{c:thermo:e:throttle}.\\
+which directly relates the difference pressure $p_A - p_B = \Delta p > 0$ to the exchange of heat. Assume a constant mass flow, a constant effective Area and a constant pressure $p_B$ due to perfect controller of the system, the energetic coupling between fan and pressure can be seen. If heat is added before A as described by Eq.\ref{c:thermo:e:isobaricHeat} the Temperature in A will be influenced as well the pressure due to the change in the specific volume and therefore the density via Eq.\ref{c:thermo:e:throttle}.\\
 
-The isenthalpic, adiabat throttling process can be described by the Joule-Thomson Coefficient \cite[p.387]{Struchtrup2014}. The equation relates the change in temperature and pressure to each other via
+The isenthalpic, adiabatic throttling process can be described by the Joule-Thomson Coefficient \cite[p.387]{Struchtrup2014}. The equation relates the change in temperature and pressure to each other via
 
 \begin{align}
 \begin{split}
@@ -134,7 +146,7 @@ The isenthalpic, adiabat throttling process can be described by the Joule-Thomso
 Where $c_p = \left(\frac{\partial h}{\partial T} \right)_p \in \mathbb{R}^+$ is the specific heat at constant pressure which relates the change in entropy due to a change in temperature.
 Eq. \ref{c:thermo:e:joulethomson} and Eq. \ref{c:thermo:e:throttle} relate the change in pressure via variation of the effective Area to the change in temperature. \\
 
-Eq. \ref{c:thermo:e:isobaricHeat}, \ref{c:thermo:e:throttle} and \ref{c:thermo:e:joulethomson} show the thermodynamic coupling of the system. They are highly nonlinear and give an ideal coupling for the quasi stationary processes and the choosen states pressure and temperature. Since both couplings take effect at the same time, a reasonable estimation of the process trajectory is difficult. \\
+Eq. \ref{c:thermo:e:isobaricHeat}, \ref{c:thermo:e:throttle} and \ref{c:thermo:e:joulethomson} show the thermodynamic coupling of the system. They are highly nonlinear and give an ideal coupling for the quasi stationary processes and the chosen states pressure and temperature. Since both couplings take effect at the same time, a reasonable estimation of the process trajectory is difficult. \\
 
 An important fact is that none of the equations above depend explicitly on the time. Rather,all coefficients above are functions of the thermodynamic states $p,v,T,s$ which are depending on time. Assuming quasi stationary behavior of the system for every coefficient $c \in \left\lbrace \beta, \kappa, c_v, c_p \right\rbrace$ can be related to the static gain of the couplings.\\
 
@@ -142,7 +154,7 @@ An important fact is that none of the equations above depend explicitly on the t
 
 In the following section, the identification process is laid out and investigated within the simulation model. At first, some basics of the behavior shall be discussed. In Sec.\ref{c:physical:s:process} the thermodynamic properties of the gain has been investigated. The relations established before can be qualitatively extended to the whole technical system including the valve and the fan.\\
 
-To estimate the effects of a change in input, the energy of Point 3 is evaluated. Assuming that the initial change in input result in a change of the internal energy at the outlet of the gascooler, the energy conservation can be formulated as:
+To estimate the effects of a change in input, the energy of Point 3 is evaluated. Assuming that the initial change in input result in a change of the internal energy at the outlet of the gas cooler, the energy conservation can be formulated as:
 
 \begin{align*}
 \begin{split}
@@ -157,7 +169,7 @@ From which can be concluded that the pressure and temperature change due to an e
 
 Increasing the revolution speed of a fan will increase the amount of heat transported out of the systems boundaries. Hence, the gain will be negative, since the temperature will decrease. If the temperature will decrease $\Delta T_u > 0$ and therefore the pressure at Point 3 will decrease to ensure that the energy of the system is conserved by $\Delta p_u < 0$.\\
 
-Likewise, if the effective area of the throttle is increased, the pressure at the outlet of the gascooler will decrease, meaning $\Delta p_u > 0$. Hence, $\Delta T_u < 0$, meaning that the temperature after the excitation of the valve must be greater than before.\\
+Likewise, if the effective area of the throttle is increased, the pressure at the outlet of the gas cooler will decrease, meaning $\Delta p_u > 0$. Hence, $\Delta T_u < 0$, meaning that the temperature after the excitation of the valve must be greater than before.\\
 
 \begin{figure}[H]
 \includesvg[width = \textwidth]{Graphics/ph_cycle_2}
@@ -194,7 +206,7 @@ It can be seen that the system is monotonic increasing and shows a very similar 
 \end{bmatrix}
 \end{align*}
 
-However, these results can vary depending on the operating conditions, e.g. ambient temperature, the systems state, e.g. pressure and temperature at the outlet of the gascooler, and the parameter like piping length, compressor model etc.. Parameter studies have been performed to estimate the effect of dominant parameters of the system, e.g. the valve dynamics, fan dynamics and number of tubes of the heat exchanger. The evaluation of all results of this study would go beyond the scope of this work, but for reasons of completeness the influence of the cooling capacity and the ambient temperature on the FOTD parameter is shown in Fig. \ref{c:physical:f:parameter_variation}.
+However, these results can vary depending on the operating conditions, e.g. ambient temperature, the systems state, e.g. pressure and temperature at the outlet of the gas cooler, and the parameter like piping length, compressor model etc.. Parameter studies have been performed to estimate the effect of dominant parameters of the system, e.g. the valve dynamics, fan dynamics and number of tubes of the heat exchanger. The evaluation of all results of this study would go beyond the scope of this work, but for reasons of completeness the influence of the cooling demand and the ambient temperature on the FOTD parameter is shown in Fig. \ref{c:physical:f:parameter_variation}.
 
 \begin{figure}[H]
 \includesvg[width = \textwidth]{Graphics/FOTD_Change}
@@ -228,7 +240,7 @@ It is also important to notice that while in theory only the physical effects ar
 \newpage
 \section{Closed Loop Results} \label{c:physical:s:closedloop}
 
-In the following section, some results of the autotuning methods are shown. The simulation has used a very robust controller to derive a steady state, where the controller was switched of and the experiment for identification has been performed. Afterwards, the model with the calculated controller parameters has been started and evaluated with respect to disturbance rejection and tracking performance. A static decoupled system is not explicitly given, since the simulation was not been able to start in all cases with the controller at hand.\\
+In the following section, some results of the automated tuning methods are shown. The simulation has used a very robust controller to derive a steady state, where the controller was switched of and the experiment for identification has been performed. Afterwards, the model with the calculated controller parameters has been started and evaluated with respect to disturbance rejection and tracking performance. A static decoupled system is not explicitly given, since the simulation was not been able to start in all cases with the controller at hand.\\
 
 Three cases are presented and the closed loop behavior with respect to tracking performance and disturbance rejection is shown. At first, the identification example as shown in Fig.\ref{c:physical:f:identification_example} is examined. The process operates with $T_{amb} = 290 K,~Q_C = -50 kW$. In Fig.\ref{c:physical:f:disturbance1} an input disturbance is simulated with a scaled step function acting on the effective Area at $6000~s$ and likewise at $10000~s$ for the rotational speed.
 
@@ -250,7 +262,7 @@ In Fig.\ref{c:physical:f:tracking1} the set point of pressure has been changed a
 \label{c:physical:f:tracking1}
 \end{figure}
 
-Next, both ambient temperature and cooling capacity have been changed to 
+Next, both ambient temperature and cooling demand have been changed to 
 $T_{amb} = 295 K,~Q_C = -60 kW$. The disturbance rejection is shown in Fig.\ref{c:physical:f:disturbance2}, the tracking performance in Fig.\ref{c:physical:f:tracking2}. Both scenarios show similar behavior by reducing both settling time and magnitude of the interaction while performing better with respect to tracking behavior.
 
 \begin{figure}[H]

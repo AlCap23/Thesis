@@ -17,15 +17,28 @@
 
 % Deutsche Rechtschreibung und deutscher Zeichensatz
 %\usepackage{german,ngerman}
-%\usepackage[ansinew]{inputenc}  
-%\usepackage[utf8]{inputenc}
-%\usepackage[T1]{fontenc}
+%\usepackage[ansinew]{inputenc}
+\usepackage[english, german]{babel}  
+\usepackage{iftex}
+\ifPDFTeX
+   \usepackage[utf8]{inputenc}
+   \usepackage[T1]{fontenc}
+   \usepackage{lmodern}
+\else
+   \ifXeTeX
+     \usepackage{fontspec}
+   \else 
+     \usepackage{luatextra}
+   \fi
+   \defaultfontfeatures{Ligatures=TeX}
+\fi
+\usepackage{blindtext}
 
 % Aktuelles Datum ermitteln
 \usepackage[ngerman]{datenumber}
 
 % Erweiterung f�r ein deutsches Literaturverzeichnis
-\bibliographystyle{abbrvdin}
+%\bibliographystyle{abbrvdin}
 
 % Erweiterte Mathematikbibliotheken
 \usepackage{amsmath}
@@ -72,12 +85,13 @@
 \setsvg{inkscape=inkscape -z -D, svgpath=Graphics/}
 \svgsetup{clean=true}
 
-%\newcommand{\includesvg}[2]{%
-%\IfFileExists{#1#2.pdf_tex}%
-%{\import{#1}{#2.pdf_tex}}%
-%{\immediate\write18{cd #1; inkscape -z -D --file=#2.svg%
-%--export-pdf=#2.pdf --export-latex}%
-%\import{#1}{#2.pdf_tex}}}
+% Underscores in Graphics
+\makeatletter
+\DeclareRobustCommand*{\escapeus}[1]{%
+    \begingroup\@activeus\scantokens{#1\endinput}\endgroup}
+\begingroup\lccode`\~=`\_\relax
+    \lowercase{\endgroup\def\@activeus{\catcode`\_=\active \let~\_}}
+\makeatother
 
 %Hyperref f�r Verlinkungen im Dokument und URL's
 %hyphens f�r verbesserten Zeilenumbruch in url's

@@ -1,0 +1,83 @@
+%% Creator: Inkscape inkscape 0.92.2, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'GraphicsRosenbrock_Testing_SV2_svg-tex.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{538.55999236bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.39724187)%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{GraphicsRosenbrock_Testing_SV2_svg-tex.pdf}}%
+    \put(0.16534834,0.02854219){\makebox(0,0)[lb]{\smash{10−2}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{GraphicsRosenbrock_Testing_SV2_svg-tex.pdf}}%
+    \put(0.27443553,0.02854219){\makebox(0,0)[lb]{\smash{100}}}%
+    \put(0.23897058,0.00390763){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{\omega}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{GraphicsRosenbrock_Testing_SV2_svg-tex.pdf}}%
+    \put(0.08173648,0.07279943){\makebox(0,0)[lb]{\smash{$10^{-3}$}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{GraphicsRosenbrock_Testing_SV2_svg-tex.pdf}}%
+    \put(0.08173648,0.14536968){\makebox(0,0)[lb]{\smash{$10^{-2}$}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{GraphicsRosenbrock_Testing_SV2_svg-tex.pdf}}%
+    \put(0.08173648,0.21793993){\makebox(0,0)[lb]{\smash{$10^{-1}$}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{GraphicsRosenbrock_Testing_SV2_svg-tex.pdf}}%
+    \put(0.08934938,0.29051019){\makebox(0,0)[lb]{\smash{$10^{0}$}}}%
+    \put(0.07040128,0.1994277){\color[rgb]{0.14901961,0.14901961,0.14901961}\rotatebox{90}{\makebox(0,0)[b]{\smash{\overline{\sigma}}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=7]{GraphicsRosenbrock_Testing_SV2_svg-tex.pdf}}%
+    \put(0.23897058,0.36137734){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{RGA}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=8]{GraphicsRosenbrock_Testing_SV2_svg-tex.pdf}}%
+    \put(0.43887775,0.02854219){\makebox(0,0)[lb]{\smash{10−2}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=9]{GraphicsRosenbrock_Testing_SV2_svg-tex.pdf}}%
+    \put(0.54796494,0.02854219){\makebox(0,0)[lb]{\smash{100}}}%
+    \put(0.51249999,0.00390763){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{\omega}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=10]{GraphicsRosenbrock_Testing_SV2_svg-tex.pdf}}%
+    \put(0.51249999,0.36137734){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{Aström}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=11]{GraphicsRosenbrock_Testing_SV2_svg-tex.pdf}}%
+    \put(0.71240716,0.02854219){\makebox(0,0)[lb]{\smash{10−2}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=12]{GraphicsRosenbrock_Testing_SV2_svg-tex.pdf}}%
+    \put(0.82149436,0.02854219){\makebox(0,0)[lb]{\smash{100}}}%
+    \put(0.78602942,0.00390763){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{\omega}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=13]{GraphicsRosenbrock_Testing_SV2_svg-tex.pdf}}%
+    \put(0.78602942,0.36137734){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{R2D2}}}%
+  \end{picture}%
+\endgroup%

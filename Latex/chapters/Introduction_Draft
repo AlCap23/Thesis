@@ -1,0 +1,17 @@
+Introduction
+
+Refrigeration cycles are an important part for many technical systems, covering application areas ranging from HVAC system for climate control in buildings to applications in autombobile and process industry to the cooling of food in supermarkets, slaughterhouses and the beverage industry. As a more detailed example, supermarkets hold a share of approximately 3% of the total energy consumption within europe [Arais Lundquist] and the refrigeration cycle alone is responsible for 50% of the used energy [Nordvedt]. Thus, to reduce the amount of energy consumed and the overall atmospheric footprint by these systems the refrigeration cycle is the main target within optimization.
+
+Several possibilities arise and are investigated from a technical perspective. The use of new, natural refrigerants like CO2 have several key advantages with respect to traditional, synthetic refrigerants, e.g. it is non-toxic, non-flammable and has a lower impact on the global warming because of its natural occurence. 
+
+The usage of these new refrigerants bring also certain drawbacks from system perspective. The optimal points of operation are typically characterized by a high pressure and are near the saturated liquid line. Moreover, oppose to classical refrigeration cycles a collection tank at the outlet of the gascooler is not given. All these aspects lead to high demands on precision control while amplify the interconnection and -action of thermodynamic states like pressure and temperature. For these reasons the optimal operational point is not used because of the extended uncertainty due to interaction and closeness to the wet steam region.
+
+Hence, the perofrmance and precision of these systems rely heavily on the controller used to regulate the process. Studies, sdjflsd isajfoj, have shown that despite the fact that the proportional, integral derivative controller is a well established technology, most processes are still not giving good performance. The reason for this lies in the incomplete or missing tuning of the controller for the process at hand. With a variety of components, architectures and refrigerants used within the refrigeration technology, these flaws in the implementation therefore strongly dictate the efficiency of the hole system. 
+
+In the field of process control, several autotuning methods do exist, e.g. [Relay, Etc.pp]. Not all methods are suitable for the regulation of the refrigeration cycles nor are they easy to implement or well-suited for the nonliearities of the process. To ensure the efficiency of the cycle while being robust for input disturbances and measurement noise, this work proposes a auto tuning strategy.
+
+In chapter 2 the basics of control theory are
+
+in chapter 3
+
+....
